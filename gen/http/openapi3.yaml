@@ -1,0 +1,22 @@
+openapi: 3.0.3
+info:
+  title: SDK utilities
+  description: Service for execution of various Cosmos SDK-related functionalities,
+    with a focus on version-specific types and unmarshaling
+  version: "1.0"
+servers:
+- url: http://localhost:8080
+paths:
+  /openapi.json:
+    get:
+      tags:
+      - sdk-utilities
+      summary: Download ./gen/http/openapi.json
+      operationId: sdk-utilities#/openapi.json
+      responses:
+        "200":
+          description: File downloaded
+components: {}
+tags:
+- name: sdk-utilities
+  description: sdk-utilities performs Cosmos SDK-related operations

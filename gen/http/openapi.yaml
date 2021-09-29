@@ -1,0 +1,29 @@
+swagger: "2.0"
+info:
+  title: SDK utilities
+  description: Service for execution of various Cosmos SDK-related functionalities,
+    with a focus on version-specific types and unmarshaling
+  version: ""
+host: localhost:8080
+consumes:
+- application/json
+- application/xml
+- application/gob
+produces:
+- application/json
+- application/xml
+- application/gob
+paths:
+  /openapi.json:
+    get:
+      tags:
+      - sdk-utilities
+      summary: Download ./gen/http/openapi.json
+      operationId: sdk-utilities#/openapi.json
+      responses:
+        "200":
+          description: File downloaded
+          schema:
+            type: file
+      schemes:
+      - http
