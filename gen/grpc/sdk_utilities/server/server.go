@@ -18,7 +18,8 @@ import (
 
 // Server implements the sdk_utilitiespb.SdkUtilitiesServer interface.
 type Server struct {
-	SupplyH goagrpc.UnaryHandler
+	SupplyH  goagrpc.UnaryHandler
+	QueryTxH goagrpc.UnaryHandler
 	sdk_utilitiespb.UnimplementedSdkUtilitiesServer
 }
 
@@ -31,7 +32,8 @@ type ErrorNamer interface {
 // New instantiates the server struct with the sdk-utilities service endpoints.
 func New(e *sdkutilities.Endpoints, uh goagrpc.UnaryHandler) *Server {
 	return &Server{
-		SupplyH: NewSupplyHandler(e.Supply, uh),
+		SupplyH:  NewSupplyHandler(e.Supply, uh),
+		QueryTxH: NewQueryTxHandler(e.QueryTx, uh),
 	}
 }
 
@@ -54,4 +56,25 @@ func (s *Server) Supply(ctx context.Context, message *sdk_utilitiespb.SupplyRequ
 		return nil, goagrpc.EncodeError(err)
 	}
 	return resp.(*sdk_utilitiespb.SupplyResponse), nil
+}
+
+// NewQueryTxHandler creates a gRPC handler which serves the "sdk-utilities"
+// service "queryTx" endpoint.
+func NewQueryTxHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+	if h == nil {
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeQueryTxRequest, EncodeQueryTxResponse)
+	}
+	return h
+}
+
+// QueryTx implements the "QueryTx" method in
+// sdk_utilitiespb.SdkUtilitiesServer interface.
+func (s *Server) QueryTx(ctx context.Context, message *sdk_utilitiespb.QueryTxRequest) (*sdk_utilitiespb.QueryTxResponse, error) {
+	ctx = context.WithValue(ctx, goa.MethodKey, "queryTx")
+	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
+	resp, err := s.QueryTxH.Handle(ctx, message)
+	if err != nil {
+		return nil, goagrpc.EncodeError(err)
+	}
+	return resp.(*sdk_utilitiespb.QueryTxResponse), nil
 }

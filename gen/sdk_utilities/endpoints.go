@@ -15,13 +15,15 @@ import (
 
 // Endpoints wraps the "sdk-utilities" service endpoints.
 type Endpoints struct {
-	Supply goa.Endpoint
+	Supply  goa.Endpoint
+	QueryTx goa.Endpoint
 }
 
 // NewEndpoints wraps the methods of the "sdk-utilities" service with endpoints.
 func NewEndpoints(s Service) *Endpoints {
 	return &Endpoints{
-		Supply: NewSupplyEndpoint(s),
+		Supply:  NewSupplyEndpoint(s),
+		QueryTx: NewQueryTxEndpoint(s),
 	}
 }
 
@@ -29,6 +31,7 @@ func NewEndpoints(s Service) *Endpoints {
 // endpoints.
 func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
 	e.Supply = m(e.Supply)
+	e.QueryTx = m(e.QueryTx)
 }
 
 // NewSupplyEndpoint returns an endpoint function that calls the method
@@ -37,5 +40,14 @@ func NewSupplyEndpoint(s Service) goa.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
 		p := req.(*SupplyPayload)
 		return s.Supply(ctx, p)
+	}
+}
+
+// NewQueryTxEndpoint returns an endpoint function that calls the method
+// "queryTx" of service "sdk-utilities".
+func NewQueryTxEndpoint(s Service) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*QueryTxPayload)
+		return s.QueryTx(ctx, p)
 	}
 }

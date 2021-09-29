@@ -24,12 +24,37 @@ func BuildSupplyPayload(sdkUtilitiesSupplyMessage string) (*sdkutilities.SupplyP
 		if sdkUtilitiesSupplyMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesSupplyMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Ea eos.\",\n      \"port\": 2673035619671438831\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Et eos totam quia aut.\",\n      \"port\": 1179222412831237988\n   }'")
 			}
 		}
 	}
 	v := &sdkutilities.SupplyPayload{
 		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+
+	return v, nil
+}
+
+// BuildQueryTxPayload builds the payload for the sdk-utilities queryTx
+// endpoint from CLI flags.
+func BuildQueryTxPayload(sdkUtilitiesQueryTxMessage string) (*sdkutilities.QueryTxPayload, error) {
+	var err error
+	var message sdk_utilitiespb.QueryTxRequest
+	{
+		if sdkUtilitiesQueryTxMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesQueryTxMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Voluptatem voluptatem et magnam illo.\",\n      \"hash\": \"Cupiditate error ipsum.\",\n      \"port\": 3816701183119414715\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.QueryTxPayload{
+		ChainName: message.ChainName,
+		Hash:      message.Hash,
 	}
 	if message.Port != 0 {
 		portptr := int(message.Port)

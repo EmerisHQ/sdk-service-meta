@@ -45,3 +45,33 @@ func DecodeSupplyRequest(ctx context.Context, v interface{}, md metadata.MD) (in
 	}
 	return payload, nil
 }
+
+// EncodeQueryTxResponse encodes responses from the "sdk-utilities" service
+// "queryTx" endpoint.
+func EncodeQueryTxResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.([]byte)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "queryTx", "[]byte", v)
+	}
+	resp := NewQueryTxResponse(result)
+	return resp, nil
+}
+
+// DecodeQueryTxRequest decodes requests sent to "sdk-utilities" service
+// "queryTx" endpoint.
+func DecodeQueryTxRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.QueryTxRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.QueryTxRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "queryTx", "*sdk_utilitiespb.QueryTxRequest", v)
+		}
+	}
+	var payload *sdkutilities.QueryTxPayload
+	{
+		payload = NewQueryTxPayload(message)
+	}
+	return payload, nil
+}

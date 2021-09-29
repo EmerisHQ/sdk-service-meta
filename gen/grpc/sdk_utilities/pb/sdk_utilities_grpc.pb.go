@@ -20,6 +20,8 @@ const _ = grpc.SupportPackageIsVersion7
 type SdkUtilitiesClient interface {
 	// Supply implements supply.
 	Supply(ctx context.Context, in *SupplyRequest, opts ...grpc.CallOption) (*SupplyResponse, error)
+	// QueryTx implements queryTx.
+	QueryTx(ctx context.Context, in *QueryTxRequest, opts ...grpc.CallOption) (*QueryTxResponse, error)
 }
 
 type sdkUtilitiesClient struct {
@@ -39,12 +41,23 @@ func (c *sdkUtilitiesClient) Supply(ctx context.Context, in *SupplyRequest, opts
 	return out, nil
 }
 
+func (c *sdkUtilitiesClient) QueryTx(ctx context.Context, in *QueryTxRequest, opts ...grpc.CallOption) (*QueryTxResponse, error) {
+	out := new(QueryTxResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/QueryTx", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SdkUtilitiesServer is the server API for SdkUtilities service.
 // All implementations must embed UnimplementedSdkUtilitiesServer
 // for forward compatibility
 type SdkUtilitiesServer interface {
 	// Supply implements supply.
 	Supply(context.Context, *SupplyRequest) (*SupplyResponse, error)
+	// QueryTx implements queryTx.
+	QueryTx(context.Context, *QueryTxRequest) (*QueryTxResponse, error)
 	mustEmbedUnimplementedSdkUtilitiesServer()
 }
 
@@ -54,6 +67,9 @@ type UnimplementedSdkUtilitiesServer struct {
 
 func (UnimplementedSdkUtilitiesServer) Supply(context.Context, *SupplyRequest) (*SupplyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Supply not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) QueryTx(context.Context, *QueryTxRequest) (*QueryTxResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryTx not implemented")
 }
 func (UnimplementedSdkUtilitiesServer) mustEmbedUnimplementedSdkUtilitiesServer() {}
 
@@ -86,6 +102,24 @@ func _SdkUtilities_Supply_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SdkUtilities_QueryTx_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryTxRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).QueryTx(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/QueryTx",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).QueryTx(ctx, req.(*QueryTxRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SdkUtilities_ServiceDesc is the grpc.ServiceDesc for SdkUtilities service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -96,6 +130,10 @@ var SdkUtilities_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Supply",
 			Handler:    _SdkUtilities_Supply_Handler,
+		},
+		{
+			MethodName: "QueryTx",
+			Handler:    _SdkUtilities_QueryTx_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

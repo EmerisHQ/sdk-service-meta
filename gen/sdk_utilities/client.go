@@ -15,13 +15,15 @@ import (
 
 // Client is the "sdk-utilities" service client.
 type Client struct {
-	SupplyEndpoint goa.Endpoint
+	SupplyEndpoint  goa.Endpoint
+	QueryTxEndpoint goa.Endpoint
 }
 
 // NewClient initializes a "sdk-utilities" service client given the endpoints.
-func NewClient(supply goa.Endpoint) *Client {
+func NewClient(supply, queryTx goa.Endpoint) *Client {
 	return &Client{
-		SupplyEndpoint: supply,
+		SupplyEndpoint:  supply,
+		QueryTxEndpoint: queryTx,
 	}
 }
 
@@ -33,4 +35,14 @@ func (c *Client) Supply(ctx context.Context, p *SupplyPayload) (res *Supply2, er
 		return
 	}
 	return ires.(*Supply2), nil
+}
+
+// QueryTx calls the "queryTx" endpoint of the "sdk-utilities" service.
+func (c *Client) QueryTx(ctx context.Context, p *QueryTxPayload) (res []byte, err error) {
+	var ires interface{}
+	ires, err = c.QueryTxEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]byte), nil
 }

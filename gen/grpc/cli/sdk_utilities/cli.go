@@ -22,15 +22,15 @@ import (
 //    command (subcommand1|subcommand2|...)
 //
 func UsageCommands() string {
-	return `sdk-utilities supply
+	return `sdk-utilities (supply|query-tx)
 `
 }
 
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` sdk-utilities supply --message '{
-      "chainName": "Ea eos.",
-      "port": 2673035619671438831
+      "chainName": "Et eos totam quia aut.",
+      "port": 1179222412831237988
    }'` + "\n" +
 		""
 }
@@ -43,9 +43,13 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 
 		sdkUtilitiesSupplyFlags       = flag.NewFlagSet("supply", flag.ExitOnError)
 		sdkUtilitiesSupplyMessageFlag = sdkUtilitiesSupplyFlags.String("message", "", "")
+
+		sdkUtilitiesQueryTxFlags       = flag.NewFlagSet("query-tx", flag.ExitOnError)
+		sdkUtilitiesQueryTxMessageFlag = sdkUtilitiesQueryTxFlags.String("message", "", "")
 	)
 	sdkUtilitiesFlags.Usage = sdkUtilitiesUsage
 	sdkUtilitiesSupplyFlags.Usage = sdkUtilitiesSupplyUsage
+	sdkUtilitiesQueryTxFlags.Usage = sdkUtilitiesQueryTxUsage
 
 	if err := flag.CommandLine.Parse(os.Args[1:]); err != nil {
 		return nil, nil, err
@@ -84,6 +88,9 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "supply":
 				epf = sdkUtilitiesSupplyFlags
 
+			case "query-tx":
+				epf = sdkUtilitiesQueryTxFlags
+
 			}
 
 		}
@@ -112,6 +119,9 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "supply":
 				endpoint = c.Supply()
 				data, err = sdkutilitiesc.BuildSupplyPayload(*sdkUtilitiesSupplyMessageFlag)
+			case "query-tx":
+				endpoint = c.QueryTx()
+				data, err = sdkutilitiesc.BuildQueryTxPayload(*sdkUtilitiesQueryTxMessageFlag)
 			}
 		}
 	}
@@ -131,6 +141,7 @@ Usage:
 
 COMMAND:
     supply: Supply implements supply.
+    query-tx: QueryTx implements queryTx.
 
 Additional help:
     %[1]s sdk-utilities COMMAND --help
@@ -144,8 +155,23 @@ Supply implements supply.
 
 Example:
     %[1]s sdk-utilities supply --message '{
-      "chainName": "Ea eos.",
-      "port": 2673035619671438831
+      "chainName": "Et eos totam quia aut.",
+      "port": 1179222412831237988
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesQueryTxUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities query-tx -message JSON
+
+QueryTx implements queryTx.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities query-tx --message '{
+      "chainName": "Voluptatem voluptatem et magnam illo.",
+      "hash": "Cupiditate error ipsum.",
+      "port": 3816701183119414715
    }'
 `, os.Args[0])
 }

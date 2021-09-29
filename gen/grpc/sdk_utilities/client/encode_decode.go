@@ -53,3 +53,37 @@ func DecodeSupplyResponse(ctx context.Context, v interface{}, hdr, trlr metadata
 	res := NewSupplyResult(message)
 	return res, nil
 }
+
+// BuildQueryTxFunc builds the remote method to invoke for "sdk-utilities"
+// service "queryTx" endpoint.
+func BuildQueryTxFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.QueryTx(ctx, reqpb.(*sdk_utilitiespb.QueryTxRequest), opts...)
+		}
+		return grpccli.QueryTx(ctx, &sdk_utilitiespb.QueryTxRequest{}, opts...)
+	}
+}
+
+// EncodeQueryTxRequest encodes requests sent to sdk-utilities queryTx endpoint.
+func EncodeQueryTxRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.QueryTxPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "queryTx", "*sdkutilities.QueryTxPayload", v)
+	}
+	return NewQueryTxRequest(payload), nil
+}
+
+// DecodeQueryTxResponse decodes responses from the sdk-utilities queryTx
+// endpoint.
+func DecodeQueryTxResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.QueryTxResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "queryTx", "*sdk_utilitiespb.QueryTxResponse", v)
+	}
+	res := NewQueryTxResult(message)
+	return res, nil
+}

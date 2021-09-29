@@ -40,3 +40,25 @@ func NewSupplyResponse(result *sdkutilities.Supply2) *sdk_utilitiespb.SupplyResp
 	}
 	return message
 }
+
+// NewQueryTxPayload builds the payload of the "queryTx" endpoint of the
+// "sdk-utilities" service from the gRPC request type.
+func NewQueryTxPayload(message *sdk_utilitiespb.QueryTxRequest) *sdkutilities.QueryTxPayload {
+	v := &sdkutilities.QueryTxPayload{
+		ChainName: message.ChainName,
+		Hash:      message.Hash,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+	return v
+}
+
+// NewQueryTxResponse builds the gRPC response type from the result of the
+// "queryTx" endpoint of the "sdk-utilities" service.
+func NewQueryTxResponse(result []byte) *sdk_utilitiespb.QueryTxResponse {
+	message := &sdk_utilitiespb.QueryTxResponse{}
+	message.Field = result
+	return message
+}
