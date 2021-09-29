@@ -15,6 +15,8 @@ option go_package = "/sdk_utilitiespb";
 service SdkUtilities {
 	// Supply implements supply.
 	rpc Supply (SupplyRequest) returns (SupplyResponse);
+	// QueryTx implements queryTx.
+	rpc QueryTx (QueryTxRequest) returns (QueryTxResponse);
 }
 
 message SupplyRequest {
@@ -31,4 +33,17 @@ message SupplyResponse {
 message Coin {
 	string denom = 1;
 	string amount = 2;
+}
+
+message QueryTxRequest {
+	// Chain to get data from
+	string chain_name = 1;
+	// gRPC port for selected chain, defaults to 9090
+	sint32 port = 2;
+	// Transaction hash to query
+	string hash = 3;
+}
+
+message QueryTxResponse {
+	bytes field = 1;
 }

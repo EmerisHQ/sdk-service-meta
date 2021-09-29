@@ -41,5 +41,21 @@ var _ = Service(sdkUtilities, func() {
 		})
 	})
 
+	Method("queryTx", func() {
+		Payload(func() {
+			Field(1, "chainName", String, "Chain to get data from")
+			Field(2, "port", Int, "gRPC port for selected chain, defaults to 9090")
+			Field(3, "hash", String, "Transaction hash to query")
+
+			Required("chainName", "hash")
+		})
+
+		Result(Bytes)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
 	Files("/openapi.json", "./gen/http/openapi.json")
 })
