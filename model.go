@@ -57,3 +57,11 @@ var TxMetadata = Type("TxMetadata", func() {
 
 	Required("txType")
 })
+
+var TxMessagesMetadata = Type("TxMessagesMetadata", func() {
+	Description("Metadata for all messages contained in a transaction")
+
+	Field(1, "messagesMetadata", ArrayOf(TxMetadata))
+
+	Required("messagesMetadata")
+})

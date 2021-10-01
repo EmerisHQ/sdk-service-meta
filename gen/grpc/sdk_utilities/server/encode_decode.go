@@ -109,20 +109,20 @@ func DecodeBroadcastTxRequest(ctx context.Context, v interface{}, md metadata.MD
 	return payload, nil
 }
 
-// EncodeTxMetadataResponse encodes responses from the "sdk-utilities" service
-// "txMetadata" endpoint.
-func EncodeTxMetadataResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
-	result, ok := v.(*sdkutilities.TxMetadata2)
+// EncodeTxMetadataEndpointResponse encodes responses from the "sdk-utilities"
+// service "txMetadata" endpoint.
+func EncodeTxMetadataEndpointResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.(*sdkutilities.TxMessagesMetadata)
 	if !ok {
-		return nil, goagrpc.ErrInvalidType("sdk-utilities", "txMetadata", "*sdkutilities.TxMetadata2", v)
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "txMetadata", "*sdkutilities.TxMessagesMetadata", v)
 	}
 	resp := NewTxMetadataResponse(result)
 	return resp, nil
 }
 
-// DecodeTxMetadataRequest decodes requests sent to "sdk-utilities" service
-// "txMetadata" endpoint.
-func DecodeTxMetadataRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+// DecodeTxMetadataEndpointRequest decodes requests sent to "sdk-utilities"
+// service "txMetadata" endpoint.
+func DecodeTxMetadataEndpointRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
 	var (
 		message *sdk_utilitiespb.TxMetadataRequest
 		ok      bool

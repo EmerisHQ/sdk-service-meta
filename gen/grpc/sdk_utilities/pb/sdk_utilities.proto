@@ -20,7 +20,7 @@ service SdkUtilities {
 	// BroadcastTx implements broadcastTx.
 	rpc BroadcastTx (BroadcastTxRequest) returns (BroadcastTxResponse);
 	// TxMetadata implements txMetadata.
-	rpc TxMetadata (TxMetadataRequest) returns (TxMetadataResponse);
+	rpc TxMetadataEndpoint (TxMetadataRequest) returns (TxMetadataResponse);
 }
 
 message SupplyRequest {
@@ -71,6 +71,10 @@ message TxMetadataRequest {
 }
 
 message TxMetadataResponse {
+	repeated TxMetadata messages_metadata = 1;
+}
+// Metadata related to some transaction bytes
+message TxMetadata {
 	string tx_type = 1;
 	IBCTransferMetadata ibc_transfer_metadata = 2;
 }

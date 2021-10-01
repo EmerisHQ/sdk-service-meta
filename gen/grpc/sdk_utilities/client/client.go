@@ -78,14 +78,14 @@ func (c *Client) BroadcastTx() goa.Endpoint {
 	}
 }
 
-// TxMetadata calls the "TxMetadata" function in
+// TxMetadataEndpoint calls the "TxMetadataEndpoint" function in
 // sdk_utilitiespb.SdkUtilitiesClient interface.
-func (c *Client) TxMetadata() goa.Endpoint {
+func (c *Client) TxMetadataEndpoint() goa.Endpoint {
 	return func(ctx context.Context, v interface{}) (interface{}, error) {
 		inv := goagrpc.NewInvoker(
-			BuildTxMetadataFunc(c.grpccli, c.opts...),
-			EncodeTxMetadataRequest,
-			DecodeTxMetadataResponse)
+			BuildTxMetadataEndpointFunc(c.grpccli, c.opts...),
+			EncodeTxMetadataEndpointRequest,
+			DecodeTxMetadataEndpointResponse)
 		res, err := inv.Invoke(ctx, v)
 		if err != nil {
 			return nil, goa.Fault(err.Error())

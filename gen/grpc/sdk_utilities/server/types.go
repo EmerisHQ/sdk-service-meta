@@ -98,12 +98,18 @@ func NewTxMetadataPayload(message *sdk_utilitiespb.TxMetadataRequest) *sdkutilit
 
 // NewTxMetadataResponse builds the gRPC response type from the result of the
 // "txMetadata" endpoint of the "sdk-utilities" service.
-func NewTxMetadataResponse(result *sdkutilities.TxMetadata2) *sdk_utilitiespb.TxMetadataResponse {
-	message := &sdk_utilitiespb.TxMetadataResponse{
-		TxType: result.TxType,
-	}
-	if result.IbcTransferMetadata != nil {
-		message.IbcTransferMetadata = svcSdkutilitiesIBCTransferMetadataToSdkUtilitiespbIBCTransferMetadata(result.IbcTransferMetadata)
+func NewTxMetadataResponse(result *sdkutilities.TxMessagesMetadata) *sdk_utilitiespb.TxMetadataResponse {
+	message := &sdk_utilitiespb.TxMetadataResponse{}
+	if result.MessagesMetadata != nil {
+		message.MessagesMetadata = make([]*sdk_utilitiespb.TxMetadata, len(result.MessagesMetadata))
+		for i, val := range result.MessagesMetadata {
+			message.MessagesMetadata[i] = &sdk_utilitiespb.TxMetadata{
+				TxType: val.TxType,
+			}
+			if val.IbcTransferMetadata != nil {
+				message.MessagesMetadata[i].IbcTransferMetadata = svcSdkutilitiesIBCTransferMetadataToSdkUtilitiespbIBCTransferMetadata(val.IbcTransferMetadata)
+			}
+		}
 	}
 	return message
 }

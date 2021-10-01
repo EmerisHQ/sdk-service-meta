@@ -20,7 +20,7 @@ type Service interface {
 	// BroadcastTx implements broadcastTx.
 	BroadcastTx(context.Context, *BroadcastTxPayload) (res *TransactionResult, err error)
 	// TxMetadata implements txMetadata.
-	TxMetadata(context.Context, *TxMetadataPayload) (res *TxMetadata2, err error)
+	TxMetadataEndpoint(context.Context, *TxMetadataPayload) (res *TxMessagesMetadata, err error)
 }
 
 // ServiceName is the name of the service as defined in the design. This is the
@@ -81,17 +81,22 @@ type TxMetadataPayload struct {
 	TxBytes []byte
 }
 
-// TxMetadata2 is the result type of the sdk-utilities service txMetadata
-// method.
-type TxMetadata2 struct {
-	TxType              string
-	IbcTransferMetadata *IBCTransferMetadata
+// TxMessagesMetadata is the result type of the sdk-utilities service
+// txMetadata method.
+type TxMessagesMetadata struct {
+	MessagesMetadata []*TxMetadata
 }
 
 // SDK service representation of a Cosmos SDK types.Coin
 type Coin struct {
 	Denom  string
 	Amount string
+}
+
+// Metadata related to some transaction bytes
+type TxMetadata struct {
+	TxType              string
+	IbcTransferMetadata *IBCTransferMetadata
 }
 
 // Metadata related to an IBC Transfer

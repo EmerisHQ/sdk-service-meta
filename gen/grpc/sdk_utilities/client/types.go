@@ -94,12 +94,18 @@ func NewTxMetadataRequest(payload *sdkutilities.TxMetadataPayload) *sdk_utilitie
 
 // NewTxMetadataResult builds the result type of the "txMetadata" endpoint of
 // the "sdk-utilities" service from the gRPC response type.
-func NewTxMetadataResult(message *sdk_utilitiespb.TxMetadataResponse) *sdkutilities.TxMetadata2 {
-	result := &sdkutilities.TxMetadata2{
-		TxType: message.TxType,
-	}
-	if message.IbcTransferMetadata != nil {
-		result.IbcTransferMetadata = protobufSdkUtilitiespbIBCTransferMetadataToSdkutilitiesIBCTransferMetadata(message.IbcTransferMetadata)
+func NewTxMetadataResult(message *sdk_utilitiespb.TxMetadataResponse) *sdkutilities.TxMessagesMetadata {
+	result := &sdkutilities.TxMessagesMetadata{}
+	if message.MessagesMetadata != nil {
+		result.MessagesMetadata = make([]*sdkutilities.TxMetadata, len(message.MessagesMetadata))
+		for i, val := range message.MessagesMetadata {
+			result.MessagesMetadata[i] = &sdkutilities.TxMetadata{
+				TxType: val.TxType,
+			}
+			if val.IbcTransferMetadata != nil {
+				result.MessagesMetadata[i].IbcTransferMetadata = protobufSdkUtilitiespbIBCTransferMetadataToSdkutilitiesIBCTransferMetadata(val.IbcTransferMetadata)
+			}
+		}
 	}
 	return result
 }
@@ -114,6 +120,34 @@ func ValidateSupplyResponse(message *sdk_utilitiespb.SupplyResponse) (err error)
 
 // ValidateCoin runs the validations defined on Coin.
 func ValidateCoin(message *sdk_utilitiespb.Coin) (err error) {
+
+	return
+}
+
+// ValidateTxMetadataResponse runs the validations defined on
+// TxMetadataResponse.
+func ValidateTxMetadataResponse(message *sdk_utilitiespb.TxMetadataResponse) (err error) {
+	if message.MessagesMetadata == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("messagesMetadata", "message"))
+	}
+	return
+}
+
+// ValidateTxMetadata runs the validations defined on TxMetadata.
+func ValidateTxMetadata(message *sdk_utilitiespb.TxMetadata) (err error) {
+
+	return
+}
+
+// ValidateIBCTransferMetadata runs the validations defined on
+// IBCTransferMetadata.
+func ValidateIBCTransferMetadata(message *sdk_utilitiespb.IBCTransferMetadata) (err error) {
+
+	return
+}
+
+// ValidateIBCHeight runs the validations defined on IBCHeight.
+func ValidateIBCHeight(message *sdk_utilitiespb.IBCHeight) (err error) {
 
 	return
 }

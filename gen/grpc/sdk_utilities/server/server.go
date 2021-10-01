@@ -18,10 +18,10 @@ import (
 
 // Server implements the sdk_utilitiespb.SdkUtilitiesServer interface.
 type Server struct {
-	SupplyH      goagrpc.UnaryHandler
-	QueryTxH     goagrpc.UnaryHandler
-	BroadcastTxH goagrpc.UnaryHandler
-	TxMetadataH  goagrpc.UnaryHandler
+	SupplyH             goagrpc.UnaryHandler
+	QueryTxH            goagrpc.UnaryHandler
+	BroadcastTxH        goagrpc.UnaryHandler
+	TxMetadataEndpointH goagrpc.UnaryHandler
 	sdk_utilitiespb.UnimplementedSdkUtilitiesServer
 }
 
@@ -34,10 +34,10 @@ type ErrorNamer interface {
 // New instantiates the server struct with the sdk-utilities service endpoints.
 func New(e *sdkutilities.Endpoints, uh goagrpc.UnaryHandler) *Server {
 	return &Server{
-		SupplyH:      NewSupplyHandler(e.Supply, uh),
-		QueryTxH:     NewQueryTxHandler(e.QueryTx, uh),
-		BroadcastTxH: NewBroadcastTxHandler(e.BroadcastTx, uh),
-		TxMetadataH:  NewTxMetadataHandler(e.TxMetadata, uh),
+		SupplyH:             NewSupplyHandler(e.Supply, uh),
+		QueryTxH:            NewQueryTxHandler(e.QueryTx, uh),
+		BroadcastTxH:        NewBroadcastTxHandler(e.BroadcastTx, uh),
+		TxMetadataEndpointH: NewTxMetadataEndpointHandler(e.TxMetadataEndpoint, uh),
 	}
 }
 
@@ -104,21 +104,21 @@ func (s *Server) BroadcastTx(ctx context.Context, message *sdk_utilitiespb.Broad
 	return resp.(*sdk_utilitiespb.BroadcastTxResponse), nil
 }
 
-// NewTxMetadataHandler creates a gRPC handler which serves the "sdk-utilities"
-// service "txMetadata" endpoint.
-func NewTxMetadataHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+// NewTxMetadataEndpointHandler creates a gRPC handler which serves the
+// "sdk-utilities" service "txMetadata" endpoint.
+func NewTxMetadataEndpointHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
 	if h == nil {
-		h = goagrpc.NewUnaryHandler(endpoint, DecodeTxMetadataRequest, EncodeTxMetadataResponse)
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeTxMetadataEndpointRequest, EncodeTxMetadataEndpointResponse)
 	}
 	return h
 }
 
-// TxMetadata implements the "TxMetadata" method in
+// TxMetadataEndpoint implements the "TxMetadataEndpoint" method in
 // sdk_utilitiespb.SdkUtilitiesServer interface.
-func (s *Server) TxMetadata(ctx context.Context, message *sdk_utilitiespb.TxMetadataRequest) (*sdk_utilitiespb.TxMetadataResponse, error) {
+func (s *Server) TxMetadataEndpoint(ctx context.Context, message *sdk_utilitiespb.TxMetadataRequest) (*sdk_utilitiespb.TxMetadataResponse, error) {
 	ctx = context.WithValue(ctx, goa.MethodKey, "txMetadata")
 	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
-	resp, err := s.TxMetadataH.Handle(ctx, message)
+	resp, err := s.TxMetadataEndpointH.Handle(ctx, message)
 	if err != nil {
 		return nil, goagrpc.EncodeError(err)
 	}

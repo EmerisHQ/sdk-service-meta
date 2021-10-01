@@ -84,7 +84,7 @@ var _ = Service(sdkUtilities, func() {
 			Required("txBytes")
 		})
 
-		Result(TxMetadata)
+		Result(TxMessagesMetadata)
 
 		GRPC(func() {
 			Response(CodeOK)
