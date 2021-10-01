@@ -80,9 +80,6 @@ func NewBroadcastTxResult(message *sdk_utilitiespb.BroadcastTxResponse) *sdkutil
 	result := &sdkutilities.TransactionResult{
 		Hash: message.Hash,
 	}
-	if message.Error != "" {
-		result.Error = &message.Error
-	}
 	return result
 }
 

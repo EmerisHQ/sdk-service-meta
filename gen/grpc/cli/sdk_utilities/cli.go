@@ -29,8 +29,8 @@ func UsageCommands() string {
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` sdk-utilities supply --message '{
-      "chainName": "Reprehenderit quia suscipit rerum corrupti vero.",
-      "port": 4143417830780283778
+      "chainName": "Molestias aut sit nobis et sit temporibus.",
+      "port": 4276607318535473132
    }'` + "\n" +
 		""
 }
@@ -177,8 +177,8 @@ Supply implements supply.
 
 Example:
     %[1]s sdk-utilities supply --message '{
-      "chainName": "Reprehenderit quia suscipit rerum corrupti vero.",
-      "port": 4143417830780283778
+      "chainName": "Molestias aut sit nobis et sit temporibus.",
+      "port": 4276607318535473132
    }'
 `, os.Args[0])
 }
@@ -191,9 +191,9 @@ QueryTx implements queryTx.
 
 Example:
     %[1]s sdk-utilities query-tx --message '{
-      "chainName": "Architecto dolorem ut illo earum aut.",
-      "hash": "Molestias aspernatur cupiditate ut.",
-      "port": 8071391266333357157
+      "chainName": "Suscipit rerum corrupti.",
+      "hash": "Vitae porro architecto dolorem.",
+      "port": 8026972786014809817
    }'
 `, os.Args[0])
 }
@@ -206,9 +206,9 @@ BroadcastTx implements broadcastTx.
 
 Example:
     %[1]s sdk-utilities broadcast-tx --message '{
-      "chainName": "Consequuntur beatae animi reprehenderit ducimus optio sunt.",
-      "port": 7243591604751086628,
-      "txBytes": "Vm9sdXB0YXRlIG5vYmlzIGlwc3VtIGV2ZW5pZXQu"
+      "chainName": "Voluptas magnam voluptatem dolore quae quasi quia.",
+      "port": 5026848979338219803,
+      "txBytes": "QmVhdGFlIHNlZCBjb25zZXF1dW50dXIgYmVhdGFlLg=="
    }'
 `, os.Args[0])
 }
@@ -221,7 +221,7 @@ TxMetadata implements txMetadata.
 
 Example:
     %[1]s sdk-utilities tx-metadata --message '{
-      "txBytes": "VG90YW0gcXVpYSBoaWMgaWQgdXQu"
+      "txBytes": "SXBzdW0gZXZlbmlldCBlbmltIHF1aWEgZG9sb3J1bSBhbWV0IGVvcy4="
    }'
 `, os.Args[0])
 }

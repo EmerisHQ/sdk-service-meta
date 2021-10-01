@@ -63,7 +63,6 @@ message BroadcastTxRequest {
 
 message BroadcastTxResponse {
 	string hash = 1;
-	string error = 2;
 }
 
 message TxMetadataRequest {

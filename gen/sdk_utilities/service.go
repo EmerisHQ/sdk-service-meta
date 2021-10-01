@@ -71,8 +71,7 @@ type BroadcastTxPayload struct {
 // TransactionResult is the result type of the sdk-utilities service
 // broadcastTx method.
 type TransactionResult struct {
-	Hash  string
-	Error *string
+	Hash string
 }
 
 // TxMetadataPayload is the payload type of the sdk-utilities service

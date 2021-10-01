@@ -25,7 +25,6 @@ var TransactionResult = Type("TransactionResult", func() {
 	Description("Result of a transaction broadcast operation")
 
 	Field(1, "hash", String)
-	Field(2, "error", String)
 
 	Required("hash")
 })

@@ -84,9 +84,6 @@ func NewBroadcastTxResponse(result *sdkutilities.TransactionResult) *sdk_utiliti
 	message := &sdk_utilitiespb.BroadcastTxResponse{
 		Hash: result.Hash,
 	}
-	if result.Error != nil {
-		message.Error = *result.Error
-	}
 	return message
 }
 
