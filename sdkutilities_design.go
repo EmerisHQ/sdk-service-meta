@@ -11,6 +11,14 @@ const (
 	sdkUtilities = "sdk-utilities"
 )
 
+func standardArguments() int {
+	Field(1, "chainName", String, "Chain to get data from")
+	Field(2, "port", Int, "gRPC port for selected chain, defaults to 9090")
+	Required("chainName")
+
+	return 3
+}
+
 var _ = API(sdkUtilities, func() {
 	Title("SDK utilities")
 	Description(
@@ -29,9 +37,7 @@ var _ = Service(sdkUtilities, func() {
 
 	Method("supply", func() {
 		Payload(func() {
-			Field(1, "chainName", String, "Chain to get data from")
-			Field(2, "port", Int, "gRPC port for selected chain, defaults to 9090")
-			Required("chainName")
+			_ = standardArguments()
 		})
 
 		Result(Supply)
@@ -43,14 +49,42 @@ var _ = Service(sdkUtilities, func() {
 
 	Method("queryTx", func() {
 		Payload(func() {
-			Field(1, "chainName", String, "Chain to get data from")
-			Field(2, "port", Int, "gRPC port for selected chain, defaults to 9090")
-			Field(3, "hash", String, "Transaction hash to query")
+			nextFieldIdx := standardArguments()
+			Field(nextFieldIdx, "hash", String, "Transaction hash to query")
 
-			Required("chainName", "hash")
+			Required("hash")
 		})
 
 		Result(Bytes)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
+	Method("broadcastTx", func() {
+		Payload(func() {
+			nextFieldIdx := standardArguments()
+			Field(nextFieldIdx, "txBytes", Bytes, "Transaction bytes")
+
+			Required("txBytes")
+		})
+
+		Result(TransactionResult)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
+	Method("txMetadata", func() {
+		Payload(func() {
+			Field(1, "txBytes", Bytes, "Transaction bytes")
+
+			Required("txBytes")
+		})
+
+		Result(TxMetadata)
 
 		GRPC(func() {
 			Response(CodeOK)
