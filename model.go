@@ -48,20 +48,20 @@ var IBCTransferMetadata = Type("IBCTransferMetadata", func() {
 	Field(7, "tiemoutTimestamp", UInt64)
 })
 
-var TxMetadata = Type("TxMetadata", func() {
-	Description("Metadata related to some transaction bytes")
+var MsgMetadata = Type("TxMetadata", func() {
+	Description("Metadata related to some message contained in a transaction")
 
-	Field(1, "txType", String)
+	Field(1, "msgType", String)
 
 	Field(2, "ibcTransferMetadata", IBCTransferMetadata)
 
-	Required("txType")
+	Required("msgType")
 })
 
 var TxMessagesMetadata = Type("TxMessagesMetadata", func() {
 	Description("Metadata for all messages contained in a transaction")
 
-	Field(1, "messagesMetadata", ArrayOf(TxMetadata))
+	Field(1, "messagesMetadata", ArrayOf(MsgMetadata))
 
 	Required("messagesMetadata")
 })

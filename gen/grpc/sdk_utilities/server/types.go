@@ -104,7 +104,7 @@ func NewTxMetadataResponse(result *sdkutilities.TxMessagesMetadata) *sdk_utiliti
 		message.MessagesMetadata = make([]*sdk_utilitiespb.TxMetadata, len(result.MessagesMetadata))
 		for i, val := range result.MessagesMetadata {
 			message.MessagesMetadata[i] = &sdk_utilitiespb.TxMetadata{
-				TxType: val.TxType,
+				MsgType: val.MsgType,
 			}
 			if val.IbcTransferMetadata != nil {
 				message.MessagesMetadata[i].IbcTransferMetadata = svcSdkutilitiesIBCTransferMetadataToSdkUtilitiespbIBCTransferMetadata(val.IbcTransferMetadata)

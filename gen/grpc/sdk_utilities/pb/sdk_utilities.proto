@@ -73,9 +73,9 @@ message TxMetadataRequest {
 message TxMetadataResponse {
 	repeated TxMetadata messages_metadata = 1;
 }
-// Metadata related to some transaction bytes
+// Metadata related to some message contained in a transaction
 message TxMetadata {
-	string tx_type = 1;
+	string msg_type = 1;
 	IBCTransferMetadata ibc_transfer_metadata = 2;
 }
 // Metadata related to an IBC Transfer

@@ -93,9 +93,9 @@ type Coin struct {
 	Amount string
 }
 
-// Metadata related to some transaction bytes
+// Metadata related to some message contained in a transaction
 type TxMetadata struct {
-	TxType              string
+	MsgType             string
 	IbcTransferMetadata *IBCTransferMetadata
 }
 
