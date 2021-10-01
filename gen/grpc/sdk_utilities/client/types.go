@@ -163,8 +163,8 @@ func svcSdkutilitiesIBCTransferMetadataToSdkUtilitiespbIBCTransferMetadata(v *sd
 	if v.SourcePort != nil {
 		res.SourcePort = *v.SourcePort
 	}
-	if v.SourceCannel != nil {
-		res.SourceCannel = *v.SourceCannel
+	if v.SourceChannel != nil {
+		res.SourceChannel = *v.SourceChannel
 	}
 	if v.Sender != nil {
 		res.Sender = *v.Sender
@@ -227,8 +227,8 @@ func protobufSdkUtilitiespbIBCTransferMetadataToSdkutilitiesIBCTransferMetadata(
 	if v.SourcePort != "" {
 		res.SourcePort = &v.SourcePort
 	}
-	if v.SourceCannel != "" {
-		res.SourceCannel = &v.SourceCannel
+	if v.SourceChannel != "" {
+		res.SourceChannel = &v.SourceChannel
 	}
 	if v.Sender != "" {
 		res.Sender = &v.Sender

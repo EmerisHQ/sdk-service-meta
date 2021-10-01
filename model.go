@@ -40,7 +40,7 @@ var IBCTransferMetadata = Type("IBCTransferMetadata", func() {
 	Description("Metadata related to an IBC Transfer")
 
 	Field(1, "sourcePort", String)
-	Field(2, "sourceCannel", String)
+	Field(2, "sourceChannel", String)
 	Field(3, "token", Coin)
 	Field(4, "sender", String)
 	Field(5, "receiver", String)

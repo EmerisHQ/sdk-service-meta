@@ -102,7 +102,7 @@ type MsgMetadata struct {
 // Metadata related to an IBC Transfer
 type IBCTransferMetadata struct {
 	SourcePort       *string
-	SourceCannel     *string
+	SourceChannel    *string
 	Token            *Coin
 	Sender           *string
 	Receiver         *string
