@@ -140,8 +140,8 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 				endpoint = c.BroadcastTx()
 				data, err = sdkutilitiesc.BuildBroadcastTxPayload(*sdkUtilitiesBroadcastTxMessageFlag)
 			case "tx-metadata":
-				endpoint = c.TxMetadataEndpoint()
-				data, err = sdkutilitiesc.BuildTxMetadataEndpointPayload(*sdkUtilitiesTxMetadataMessageFlag)
+				endpoint = c.TxMetadata()
+				data, err = sdkutilitiesc.BuildTxMetadataPayload(*sdkUtilitiesTxMetadataMessageFlag)
 			}
 		}
 	}

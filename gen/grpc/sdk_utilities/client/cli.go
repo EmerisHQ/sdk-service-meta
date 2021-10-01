@@ -89,9 +89,9 @@ func BuildBroadcastTxPayload(sdkUtilitiesBroadcastTxMessage string) (*sdkutiliti
 	return v, nil
 }
 
-// BuildTxMetadataEndpointPayload builds the payload for the sdk-utilities
-// txMetadata endpoint from CLI flags.
-func BuildTxMetadataEndpointPayload(sdkUtilitiesTxMetadataMessage string) (*sdkutilities.TxMetadataPayload, error) {
+// BuildTxMetadataPayload builds the payload for the sdk-utilities txMetadata
+// endpoint from CLI flags.
+func BuildTxMetadataPayload(sdkUtilitiesTxMetadataMessage string) (*sdkutilities.TxMetadataPayload, error) {
 	var err error
 	var message sdk_utilitiespb.TxMetadataRequest
 	{

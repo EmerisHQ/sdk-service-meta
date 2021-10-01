@@ -101,9 +101,9 @@ func NewTxMetadataPayload(message *sdk_utilitiespb.TxMetadataRequest) *sdkutilit
 func NewTxMetadataResponse(result *sdkutilities.TxMessagesMetadata) *sdk_utilitiespb.TxMetadataResponse {
 	message := &sdk_utilitiespb.TxMetadataResponse{}
 	if result.MessagesMetadata != nil {
-		message.MessagesMetadata = make([]*sdk_utilitiespb.TxMetadata, len(result.MessagesMetadata))
+		message.MessagesMetadata = make([]*sdk_utilitiespb.MsgMetadata, len(result.MessagesMetadata))
 		for i, val := range result.MessagesMetadata {
-			message.MessagesMetadata[i] = &sdk_utilitiespb.TxMetadata{
+			message.MessagesMetadata[i] = &sdk_utilitiespb.MsgMetadata{
 				MsgType: val.MsgType,
 			}
 			if val.IbcTransferMetadata != nil {

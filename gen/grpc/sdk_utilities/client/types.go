@@ -97,9 +97,9 @@ func NewTxMetadataRequest(payload *sdkutilities.TxMetadataPayload) *sdk_utilitie
 func NewTxMetadataResult(message *sdk_utilitiespb.TxMetadataResponse) *sdkutilities.TxMessagesMetadata {
 	result := &sdkutilities.TxMessagesMetadata{}
 	if message.MessagesMetadata != nil {
-		result.MessagesMetadata = make([]*sdkutilities.TxMetadata, len(message.MessagesMetadata))
+		result.MessagesMetadata = make([]*sdkutilities.MsgMetadata, len(message.MessagesMetadata))
 		for i, val := range message.MessagesMetadata {
-			result.MessagesMetadata[i] = &sdkutilities.TxMetadata{
+			result.MessagesMetadata[i] = &sdkutilities.MsgMetadata{
 				MsgType: val.MsgType,
 			}
 			if val.IbcTransferMetadata != nil {
@@ -133,8 +133,8 @@ func ValidateTxMetadataResponse(message *sdk_utilitiespb.TxMetadataResponse) (er
 	return
 }
 
-// ValidateTxMetadata runs the validations defined on TxMetadata.
-func ValidateTxMetadata(message *sdk_utilitiespb.TxMetadata) (err error) {
+// ValidateMsgMetadata runs the validations defined on MsgMetadata.
+func ValidateMsgMetadata(message *sdk_utilitiespb.MsgMetadata) (err error) {
 
 	return
 }

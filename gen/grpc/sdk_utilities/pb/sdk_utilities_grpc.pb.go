@@ -25,7 +25,7 @@ type SdkUtilitiesClient interface {
 	// BroadcastTx implements broadcastTx.
 	BroadcastTx(ctx context.Context, in *BroadcastTxRequest, opts ...grpc.CallOption) (*BroadcastTxResponse, error)
 	// TxMetadata implements txMetadata.
-	TxMetadataEndpoint(ctx context.Context, in *TxMetadataRequest, opts ...grpc.CallOption) (*TxMetadataResponse, error)
+	TxMetadata(ctx context.Context, in *TxMetadataRequest, opts ...grpc.CallOption) (*TxMetadataResponse, error)
 }
 
 type sdkUtilitiesClient struct {
@@ -63,9 +63,9 @@ func (c *sdkUtilitiesClient) BroadcastTx(ctx context.Context, in *BroadcastTxReq
 	return out, nil
 }
 
-func (c *sdkUtilitiesClient) TxMetadataEndpoint(ctx context.Context, in *TxMetadataRequest, opts ...grpc.CallOption) (*TxMetadataResponse, error) {
+func (c *sdkUtilitiesClient) TxMetadata(ctx context.Context, in *TxMetadataRequest, opts ...grpc.CallOption) (*TxMetadataResponse, error) {
 	out := new(TxMetadataResponse)
-	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/TxMetadataEndpoint", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/TxMetadata", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +83,7 @@ type SdkUtilitiesServer interface {
 	// BroadcastTx implements broadcastTx.
 	BroadcastTx(context.Context, *BroadcastTxRequest) (*BroadcastTxResponse, error)
 	// TxMetadata implements txMetadata.
-	TxMetadataEndpoint(context.Context, *TxMetadataRequest) (*TxMetadataResponse, error)
+	TxMetadata(context.Context, *TxMetadataRequest) (*TxMetadataResponse, error)
 	mustEmbedUnimplementedSdkUtilitiesServer()
 }
 
@@ -100,8 +100,8 @@ func (UnimplementedSdkUtilitiesServer) QueryTx(context.Context, *QueryTxRequest)
 func (UnimplementedSdkUtilitiesServer) BroadcastTx(context.Context, *BroadcastTxRequest) (*BroadcastTxResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BroadcastTx not implemented")
 }
-func (UnimplementedSdkUtilitiesServer) TxMetadataEndpoint(context.Context, *TxMetadataRequest) (*TxMetadataResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TxMetadataEndpoint not implemented")
+func (UnimplementedSdkUtilitiesServer) TxMetadata(context.Context, *TxMetadataRequest) (*TxMetadataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TxMetadata not implemented")
 }
 func (UnimplementedSdkUtilitiesServer) mustEmbedUnimplementedSdkUtilitiesServer() {}
 
@@ -170,20 +170,20 @@ func _SdkUtilities_BroadcastTx_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SdkUtilities_TxMetadataEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SdkUtilities_TxMetadata_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TxMetadataRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SdkUtilitiesServer).TxMetadataEndpoint(ctx, in)
+		return srv.(SdkUtilitiesServer).TxMetadata(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sdk_utilities.SdkUtilities/TxMetadataEndpoint",
+		FullMethod: "/sdk_utilities.SdkUtilities/TxMetadata",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SdkUtilitiesServer).TxMetadataEndpoint(ctx, req.(*TxMetadataRequest))
+		return srv.(SdkUtilitiesServer).TxMetadata(ctx, req.(*TxMetadataRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -208,8 +208,8 @@ var SdkUtilities_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SdkUtilities_BroadcastTx_Handler,
 		},
 		{
-			MethodName: "TxMetadataEndpoint",
-			Handler:    _SdkUtilities_TxMetadataEndpoint_Handler,
+			MethodName: "TxMetadata",
+			Handler:    _SdkUtilities_TxMetadata_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
