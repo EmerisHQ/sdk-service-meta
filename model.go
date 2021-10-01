@@ -48,7 +48,7 @@ var IBCTransferMetadata = Type("IBCTransferMetadata", func() {
 	Field(7, "tiemoutTimestamp", UInt64)
 })
 
-var MsgMetadata = Type("TxMetadata", func() {
+var MsgMetadata = Type("MsgMetadata", func() {
 	Description("Metadata related to some message contained in a transaction")
 
 	Field(1, "msgType", String)
