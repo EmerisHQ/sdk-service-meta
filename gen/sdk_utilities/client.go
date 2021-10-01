@@ -15,15 +15,19 @@ import (
 
 // Client is the "sdk-utilities" service client.
 type Client struct {
-	SupplyEndpoint  goa.Endpoint
-	QueryTxEndpoint goa.Endpoint
+	SupplyEndpoint      goa.Endpoint
+	QueryTxEndpoint     goa.Endpoint
+	BroadcastTxEndpoint goa.Endpoint
+	TxMetadataEndpoint  goa.Endpoint
 }
 
 // NewClient initializes a "sdk-utilities" service client given the endpoints.
-func NewClient(supply, queryTx goa.Endpoint) *Client {
+func NewClient(supply, queryTx, broadcastTx, txMetadata goa.Endpoint) *Client {
 	return &Client{
-		SupplyEndpoint:  supply,
-		QueryTxEndpoint: queryTx,
+		SupplyEndpoint:      supply,
+		QueryTxEndpoint:     queryTx,
+		BroadcastTxEndpoint: broadcastTx,
+		TxMetadataEndpoint:  txMetadata,
 	}
 }
 
@@ -45,4 +49,24 @@ func (c *Client) QueryTx(ctx context.Context, p *QueryTxPayload) (res []byte, er
 		return
 	}
 	return ires.([]byte), nil
+}
+
+// BroadcastTx calls the "broadcastTx" endpoint of the "sdk-utilities" service.
+func (c *Client) BroadcastTx(ctx context.Context, p *BroadcastTxPayload) (res *TransactionResult, err error) {
+	var ires interface{}
+	ires, err = c.BroadcastTxEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*TransactionResult), nil
+}
+
+// TxMetadata calls the "txMetadata" endpoint of the "sdk-utilities" service.
+func (c *Client) TxMetadata(ctx context.Context, p *TxMetadataPayload) (res *TxMetadata2, err error) {
+	var ires interface{}
+	ires, err = c.TxMetadataEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*TxMetadata2), nil
 }

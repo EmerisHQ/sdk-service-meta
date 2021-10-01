@@ -10,6 +10,7 @@ package server
 import (
 	sdk_utilitiespb "github.com/allinbits/sdk-service-meta/gen/grpc/sdk_utilities/pb"
 	sdkutilities "github.com/allinbits/sdk-service-meta/gen/sdk_utilities"
+	goa "goa.design/goa/v3/pkg"
 )
 
 // NewSupplyPayload builds the payload of the "supply" endpoint of the
@@ -61,4 +62,196 @@ func NewQueryTxResponse(result []byte) *sdk_utilitiespb.QueryTxResponse {
 	message := &sdk_utilitiespb.QueryTxResponse{}
 	message.Field = result
 	return message
+}
+
+// NewBroadcastTxPayload builds the payload of the "broadcastTx" endpoint of
+// the "sdk-utilities" service from the gRPC request type.
+func NewBroadcastTxPayload(message *sdk_utilitiespb.BroadcastTxRequest) *sdkutilities.BroadcastTxPayload {
+	v := &sdkutilities.BroadcastTxPayload{
+		ChainName: message.ChainName,
+		TxBytes:   message.TxBytes,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+	return v
+}
+
+// NewBroadcastTxResponse builds the gRPC response type from the result of the
+// "broadcastTx" endpoint of the "sdk-utilities" service.
+func NewBroadcastTxResponse(result *sdkutilities.TransactionResult) *sdk_utilitiespb.BroadcastTxResponse {
+	message := &sdk_utilitiespb.BroadcastTxResponse{
+		Hash: result.Hash,
+	}
+	if result.Error != nil {
+		message.Error = *result.Error
+	}
+	return message
+}
+
+// NewTxMetadataPayload builds the payload of the "txMetadata" endpoint of the
+// "sdk-utilities" service from the gRPC request type.
+func NewTxMetadataPayload(message *sdk_utilitiespb.TxMetadataRequest) *sdkutilities.TxMetadataPayload {
+	v := &sdkutilities.TxMetadataPayload{
+		TxBytes: message.TxBytes,
+	}
+	return v
+}
+
+// NewTxMetadataResponse builds the gRPC response type from the result of the
+// "txMetadata" endpoint of the "sdk-utilities" service.
+func NewTxMetadataResponse(result *sdkutilities.TxMetadata2) *sdk_utilitiespb.TxMetadataResponse {
+	message := &sdk_utilitiespb.TxMetadataResponse{
+		TxType: result.TxType,
+	}
+	if result.IbcTransferMetadata != nil {
+		message.IbcTransferMetadata = svcSdkutilitiesIBCTransferMetadataToSdkUtilitiespbIBCTransferMetadata(result.IbcTransferMetadata)
+	}
+	return message
+}
+
+// ValidateBroadcastTxRequest runs the validations defined on
+// BroadcastTxRequest.
+func ValidateBroadcastTxRequest(message *sdk_utilitiespb.BroadcastTxRequest) (err error) {
+	if message.TxBytes == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("txBytes", "message"))
+	}
+	return
+}
+
+// ValidateTxMetadataRequest runs the validations defined on TxMetadataRequest.
+func ValidateTxMetadataRequest(message *sdk_utilitiespb.TxMetadataRequest) (err error) {
+	if message.TxBytes == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("txBytes", "message"))
+	}
+	return
+}
+
+// svcSdkutilitiesIBCTransferMetadataToSdkUtilitiespbIBCTransferMetadata builds
+// a value of type *sdk_utilitiespb.IBCTransferMetadata from a value of type
+// *sdkutilities.IBCTransferMetadata.
+func svcSdkutilitiesIBCTransferMetadataToSdkUtilitiespbIBCTransferMetadata(v *sdkutilities.IBCTransferMetadata) *sdk_utilitiespb.IBCTransferMetadata {
+	if v == nil {
+		return nil
+	}
+	res := &sdk_utilitiespb.IBCTransferMetadata{}
+	if v.SourcePort != nil {
+		res.SourcePort = *v.SourcePort
+	}
+	if v.SourceCannel != nil {
+		res.SourceCannel = *v.SourceCannel
+	}
+	if v.Sender != nil {
+		res.Sender = *v.Sender
+	}
+	if v.Receiver != nil {
+		res.Receiver = *v.Receiver
+	}
+	if v.TiemoutTimestamp != nil {
+		res.TiemoutTimestamp = *v.TiemoutTimestamp
+	}
+	if v.Token != nil {
+		res.Token = svcSdkutilitiesCoinToSdkUtilitiespbCoin(v.Token)
+	}
+	if v.TimeoutHeight != nil {
+		res.TimeoutHeight = svcSdkutilitiesIBCHeightToSdkUtilitiespbIBCHeight(v.TimeoutHeight)
+	}
+
+	return res
+}
+
+// svcSdkutilitiesCoinToSdkUtilitiespbCoin builds a value of type
+// *sdk_utilitiespb.Coin from a value of type *sdkutilities.Coin.
+func svcSdkutilitiesCoinToSdkUtilitiespbCoin(v *sdkutilities.Coin) *sdk_utilitiespb.Coin {
+	if v == nil {
+		return nil
+	}
+	res := &sdk_utilitiespb.Coin{
+		Denom:  v.Denom,
+		Amount: v.Amount,
+	}
+
+	return res
+}
+
+// svcSdkutilitiesIBCHeightToSdkUtilitiespbIBCHeight builds a value of type
+// *sdk_utilitiespb.IBCHeight from a value of type *sdkutilities.IBCHeight.
+func svcSdkutilitiesIBCHeightToSdkUtilitiespbIBCHeight(v *sdkutilities.IBCHeight) *sdk_utilitiespb.IBCHeight {
+	if v == nil {
+		return nil
+	}
+	res := &sdk_utilitiespb.IBCHeight{}
+	if v.RevisionNumber != nil {
+		res.RevisionNumber = *v.RevisionNumber
+	}
+	if v.RevisionHeight != nil {
+		res.RevisionHeight = *v.RevisionHeight
+	}
+
+	return res
+}
+
+// protobufSdkUtilitiespbIBCTransferMetadataToSdkutilitiesIBCTransferMetadata
+// builds a value of type *sdkutilities.IBCTransferMetadata from a value of
+// type *sdk_utilitiespb.IBCTransferMetadata.
+func protobufSdkUtilitiespbIBCTransferMetadataToSdkutilitiesIBCTransferMetadata(v *sdk_utilitiespb.IBCTransferMetadata) *sdkutilities.IBCTransferMetadata {
+	if v == nil {
+		return nil
+	}
+	res := &sdkutilities.IBCTransferMetadata{}
+	if v.SourcePort != "" {
+		res.SourcePort = &v.SourcePort
+	}
+	if v.SourceCannel != "" {
+		res.SourceCannel = &v.SourceCannel
+	}
+	if v.Sender != "" {
+		res.Sender = &v.Sender
+	}
+	if v.Receiver != "" {
+		res.Receiver = &v.Receiver
+	}
+	if v.TiemoutTimestamp != 0 {
+		res.TiemoutTimestamp = &v.TiemoutTimestamp
+	}
+	if v.Token != nil {
+		res.Token = protobufSdkUtilitiespbCoinToSdkutilitiesCoin(v.Token)
+	}
+	if v.TimeoutHeight != nil {
+		res.TimeoutHeight = protobufSdkUtilitiespbIBCHeightToSdkutilitiesIBCHeight(v.TimeoutHeight)
+	}
+
+	return res
+}
+
+// protobufSdkUtilitiespbCoinToSdkutilitiesCoin builds a value of type
+// *sdkutilities.Coin from a value of type *sdk_utilitiespb.Coin.
+func protobufSdkUtilitiespbCoinToSdkutilitiesCoin(v *sdk_utilitiespb.Coin) *sdkutilities.Coin {
+	if v == nil {
+		return nil
+	}
+	res := &sdkutilities.Coin{
+		Denom:  v.Denom,
+		Amount: v.Amount,
+	}
+
+	return res
+}
+
+// protobufSdkUtilitiespbIBCHeightToSdkutilitiesIBCHeight builds a value of
+// type *sdkutilities.IBCHeight from a value of type *sdk_utilitiespb.IBCHeight.
+func protobufSdkUtilitiespbIBCHeightToSdkutilitiesIBCHeight(v *sdk_utilitiespb.IBCHeight) *sdkutilities.IBCHeight {
+	if v == nil {
+		return nil
+	}
+	res := &sdkutilities.IBCHeight{}
+	if v.RevisionNumber != 0 {
+		res.RevisionNumber = &v.RevisionNumber
+	}
+	if v.RevisionHeight != 0 {
+		res.RevisionHeight = &v.RevisionHeight
+	}
+
+	return res
 }

@@ -87,3 +87,73 @@ func DecodeQueryTxResponse(ctx context.Context, v interface{}, hdr, trlr metadat
 	res := NewQueryTxResult(message)
 	return res, nil
 }
+
+// BuildBroadcastTxFunc builds the remote method to invoke for "sdk-utilities"
+// service "broadcastTx" endpoint.
+func BuildBroadcastTxFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.BroadcastTx(ctx, reqpb.(*sdk_utilitiespb.BroadcastTxRequest), opts...)
+		}
+		return grpccli.BroadcastTx(ctx, &sdk_utilitiespb.BroadcastTxRequest{}, opts...)
+	}
+}
+
+// EncodeBroadcastTxRequest encodes requests sent to sdk-utilities broadcastTx
+// endpoint.
+func EncodeBroadcastTxRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.BroadcastTxPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "broadcastTx", "*sdkutilities.BroadcastTxPayload", v)
+	}
+	return NewBroadcastTxRequest(payload), nil
+}
+
+// DecodeBroadcastTxResponse decodes responses from the sdk-utilities
+// broadcastTx endpoint.
+func DecodeBroadcastTxResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.BroadcastTxResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "broadcastTx", "*sdk_utilitiespb.BroadcastTxResponse", v)
+	}
+	res := NewBroadcastTxResult(message)
+	return res, nil
+}
+
+// BuildTxMetadataFunc builds the remote method to invoke for "sdk-utilities"
+// service "txMetadata" endpoint.
+func BuildTxMetadataFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.TxMetadata(ctx, reqpb.(*sdk_utilitiespb.TxMetadataRequest), opts...)
+		}
+		return grpccli.TxMetadata(ctx, &sdk_utilitiespb.TxMetadataRequest{}, opts...)
+	}
+}
+
+// EncodeTxMetadataRequest encodes requests sent to sdk-utilities txMetadata
+// endpoint.
+func EncodeTxMetadataRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.TxMetadataPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "txMetadata", "*sdkutilities.TxMetadataPayload", v)
+	}
+	return NewTxMetadataRequest(payload), nil
+}
+
+// DecodeTxMetadataResponse decodes responses from the sdk-utilities txMetadata
+// endpoint.
+func DecodeTxMetadataResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.TxMetadataResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "txMetadata", "*sdk_utilitiespb.TxMetadataResponse", v)
+	}
+	res := NewTxMetadataResult(message)
+	return res, nil
+}

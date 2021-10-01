@@ -61,3 +61,35 @@ func (c *Client) QueryTx() goa.Endpoint {
 		return res, nil
 	}
 }
+
+// BroadcastTx calls the "BroadcastTx" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) BroadcastTx() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildBroadcastTxFunc(c.grpccli, c.opts...),
+			EncodeBroadcastTxRequest,
+			DecodeBroadcastTxResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// TxMetadata calls the "TxMetadata" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) TxMetadata() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildTxMetadataFunc(c.grpccli, c.opts...),
+			EncodeTxMetadataRequest,
+			DecodeTxMetadataResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}

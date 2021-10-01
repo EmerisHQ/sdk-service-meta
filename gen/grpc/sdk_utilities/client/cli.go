@@ -24,7 +24,7 @@ func BuildSupplyPayload(sdkUtilitiesSupplyMessage string) (*sdkutilities.SupplyP
 		if sdkUtilitiesSupplyMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesSupplyMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Et eos totam quia aut.\",\n      \"port\": 1179222412831237988\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Reprehenderit quia suscipit rerum corrupti vero.\",\n      \"port\": 4143417830780283778\n   }'")
 			}
 		}
 	}
@@ -48,7 +48,7 @@ func BuildQueryTxPayload(sdkUtilitiesQueryTxMessage string) (*sdkutilities.Query
 		if sdkUtilitiesQueryTxMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesQueryTxMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Voluptatem voluptatem et magnam illo.\",\n      \"hash\": \"Cupiditate error ipsum.\",\n      \"port\": 3816701183119414715\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Architecto dolorem ut illo earum aut.\",\n      \"hash\": \"Molestias aspernatur cupiditate ut.\",\n      \"port\": 8071391266333357157\n   }'")
 			}
 		}
 	}
@@ -59,6 +59,51 @@ func BuildQueryTxPayload(sdkUtilitiesQueryTxMessage string) (*sdkutilities.Query
 	if message.Port != 0 {
 		portptr := int(message.Port)
 		v.Port = &portptr
+	}
+
+	return v, nil
+}
+
+// BuildBroadcastTxPayload builds the payload for the sdk-utilities broadcastTx
+// endpoint from CLI flags.
+func BuildBroadcastTxPayload(sdkUtilitiesBroadcastTxMessage string) (*sdkutilities.BroadcastTxPayload, error) {
+	var err error
+	var message sdk_utilitiespb.BroadcastTxRequest
+	{
+		if sdkUtilitiesBroadcastTxMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesBroadcastTxMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Consequuntur beatae animi reprehenderit ducimus optio sunt.\",\n      \"port\": 7243591604751086628,\n      \"txBytes\": \"Vm9sdXB0YXRlIG5vYmlzIGlwc3VtIGV2ZW5pZXQu\"\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.BroadcastTxPayload{
+		ChainName: message.ChainName,
+		TxBytes:   message.TxBytes,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+
+	return v, nil
+}
+
+// BuildTxMetadataPayload builds the payload for the sdk-utilities txMetadata
+// endpoint from CLI flags.
+func BuildTxMetadataPayload(sdkUtilitiesTxMetadataMessage string) (*sdkutilities.TxMetadataPayload, error) {
+	var err error
+	var message sdk_utilitiespb.TxMetadataRequest
+	{
+		if sdkUtilitiesTxMetadataMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesTxMetadataMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"txBytes\": \"VG90YW0gcXVpYSBoaWMgaWQgdXQu\"\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.TxMetadataPayload{
+		TxBytes: message.TxBytes,
 	}
 
 	return v, nil

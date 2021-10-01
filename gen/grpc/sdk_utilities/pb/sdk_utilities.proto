@@ -17,6 +17,10 @@ service SdkUtilities {
 	rpc Supply (SupplyRequest) returns (SupplyResponse);
 	// QueryTx implements queryTx.
 	rpc QueryTx (QueryTxRequest) returns (QueryTxResponse);
+	// BroadcastTx implements broadcastTx.
+	rpc BroadcastTx (BroadcastTxRequest) returns (BroadcastTxResponse);
+	// TxMetadata implements txMetadata.
+	rpc TxMetadata (TxMetadataRequest) returns (TxMetadataResponse);
 }
 
 message SupplyRequest {
@@ -46,4 +50,43 @@ message QueryTxRequest {
 
 message QueryTxResponse {
 	bytes field = 1;
+}
+
+message BroadcastTxRequest {
+	// Chain to get data from
+	string chain_name = 1;
+	// gRPC port for selected chain, defaults to 9090
+	sint32 port = 2;
+	// Transaction bytes
+	bytes tx_bytes = 3;
+}
+
+message BroadcastTxResponse {
+	string hash = 1;
+	string error = 2;
+}
+
+message TxMetadataRequest {
+	// Transaction bytes
+	bytes tx_bytes = 1;
+}
+
+message TxMetadataResponse {
+	string tx_type = 1;
+	IBCTransferMetadata ibc_transfer_metadata = 2;
+}
+// Metadata related to an IBC Transfer
+message IBCTransferMetadata {
+	string source_port = 1;
+	string source_cannel = 2;
+	Coin token = 3;
+	string sender = 4;
+	string receiver = 5;
+	IBCHeight timeout_height = 6;
+	uint64 tiemout_timestamp = 7;
+}
+// The plain type associated with ibc-go types.Height struct
+message IBCHeight {
+	uint64 revision_number = 1;
+	uint64 revision_height = 2;
 }

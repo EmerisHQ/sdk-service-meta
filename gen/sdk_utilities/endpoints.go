@@ -15,15 +15,19 @@ import (
 
 // Endpoints wraps the "sdk-utilities" service endpoints.
 type Endpoints struct {
-	Supply  goa.Endpoint
-	QueryTx goa.Endpoint
+	Supply      goa.Endpoint
+	QueryTx     goa.Endpoint
+	BroadcastTx goa.Endpoint
+	TxMetadata  goa.Endpoint
 }
 
 // NewEndpoints wraps the methods of the "sdk-utilities" service with endpoints.
 func NewEndpoints(s Service) *Endpoints {
 	return &Endpoints{
-		Supply:  NewSupplyEndpoint(s),
-		QueryTx: NewQueryTxEndpoint(s),
+		Supply:      NewSupplyEndpoint(s),
+		QueryTx:     NewQueryTxEndpoint(s),
+		BroadcastTx: NewBroadcastTxEndpoint(s),
+		TxMetadata:  NewTxMetadataEndpoint(s),
 	}
 }
 
@@ -32,6 +36,8 @@ func NewEndpoints(s Service) *Endpoints {
 func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
 	e.Supply = m(e.Supply)
 	e.QueryTx = m(e.QueryTx)
+	e.BroadcastTx = m(e.BroadcastTx)
+	e.TxMetadata = m(e.TxMetadata)
 }
 
 // NewSupplyEndpoint returns an endpoint function that calls the method
@@ -49,5 +55,23 @@ func NewQueryTxEndpoint(s Service) goa.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
 		p := req.(*QueryTxPayload)
 		return s.QueryTx(ctx, p)
+	}
+}
+
+// NewBroadcastTxEndpoint returns an endpoint function that calls the method
+// "broadcastTx" of service "sdk-utilities".
+func NewBroadcastTxEndpoint(s Service) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*BroadcastTxPayload)
+		return s.BroadcastTx(ctx, p)
+	}
+}
+
+// NewTxMetadataEndpoint returns an endpoint function that calls the method
+// "txMetadata" of service "sdk-utilities".
+func NewTxMetadataEndpoint(s Service) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*TxMetadataPayload)
+		return s.TxMetadata(ctx, p)
 	}
 }

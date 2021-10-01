@@ -22,15 +22,15 @@ import (
 //    command (subcommand1|subcommand2|...)
 //
 func UsageCommands() string {
-	return `sdk-utilities (supply|query-tx)
+	return `sdk-utilities (supply|query-tx|broadcast-tx|tx-metadata)
 `
 }
 
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` sdk-utilities supply --message '{
-      "chainName": "Et eos totam quia aut.",
-      "port": 1179222412831237988
+      "chainName": "Reprehenderit quia suscipit rerum corrupti vero.",
+      "port": 4143417830780283778
    }'` + "\n" +
 		""
 }
@@ -46,10 +46,18 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 
 		sdkUtilitiesQueryTxFlags       = flag.NewFlagSet("query-tx", flag.ExitOnError)
 		sdkUtilitiesQueryTxMessageFlag = sdkUtilitiesQueryTxFlags.String("message", "", "")
+
+		sdkUtilitiesBroadcastTxFlags       = flag.NewFlagSet("broadcast-tx", flag.ExitOnError)
+		sdkUtilitiesBroadcastTxMessageFlag = sdkUtilitiesBroadcastTxFlags.String("message", "", "")
+
+		sdkUtilitiesTxMetadataFlags       = flag.NewFlagSet("tx-metadata", flag.ExitOnError)
+		sdkUtilitiesTxMetadataMessageFlag = sdkUtilitiesTxMetadataFlags.String("message", "", "")
 	)
 	sdkUtilitiesFlags.Usage = sdkUtilitiesUsage
 	sdkUtilitiesSupplyFlags.Usage = sdkUtilitiesSupplyUsage
 	sdkUtilitiesQueryTxFlags.Usage = sdkUtilitiesQueryTxUsage
+	sdkUtilitiesBroadcastTxFlags.Usage = sdkUtilitiesBroadcastTxUsage
+	sdkUtilitiesTxMetadataFlags.Usage = sdkUtilitiesTxMetadataUsage
 
 	if err := flag.CommandLine.Parse(os.Args[1:]); err != nil {
 		return nil, nil, err
@@ -91,6 +99,12 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "query-tx":
 				epf = sdkUtilitiesQueryTxFlags
 
+			case "broadcast-tx":
+				epf = sdkUtilitiesBroadcastTxFlags
+
+			case "tx-metadata":
+				epf = sdkUtilitiesTxMetadataFlags
+
 			}
 
 		}
@@ -122,6 +136,12 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "query-tx":
 				endpoint = c.QueryTx()
 				data, err = sdkutilitiesc.BuildQueryTxPayload(*sdkUtilitiesQueryTxMessageFlag)
+			case "broadcast-tx":
+				endpoint = c.BroadcastTx()
+				data, err = sdkutilitiesc.BuildBroadcastTxPayload(*sdkUtilitiesBroadcastTxMessageFlag)
+			case "tx-metadata":
+				endpoint = c.TxMetadata()
+				data, err = sdkutilitiesc.BuildTxMetadataPayload(*sdkUtilitiesTxMetadataMessageFlag)
 			}
 		}
 	}
@@ -142,6 +162,8 @@ Usage:
 COMMAND:
     supply: Supply implements supply.
     query-tx: QueryTx implements queryTx.
+    broadcast-tx: BroadcastTx implements broadcastTx.
+    tx-metadata: TxMetadata implements txMetadata.
 
 Additional help:
     %[1]s sdk-utilities COMMAND --help
@@ -155,8 +177,8 @@ Supply implements supply.
 
 Example:
     %[1]s sdk-utilities supply --message '{
-      "chainName": "Et eos totam quia aut.",
-      "port": 1179222412831237988
+      "chainName": "Reprehenderit quia suscipit rerum corrupti vero.",
+      "port": 4143417830780283778
    }'
 `, os.Args[0])
 }
@@ -169,9 +191,37 @@ QueryTx implements queryTx.
 
 Example:
     %[1]s sdk-utilities query-tx --message '{
-      "chainName": "Voluptatem voluptatem et magnam illo.",
-      "hash": "Cupiditate error ipsum.",
-      "port": 3816701183119414715
+      "chainName": "Architecto dolorem ut illo earum aut.",
+      "hash": "Molestias aspernatur cupiditate ut.",
+      "port": 8071391266333357157
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesBroadcastTxUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities broadcast-tx -message JSON
+
+BroadcastTx implements broadcastTx.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities broadcast-tx --message '{
+      "chainName": "Consequuntur beatae animi reprehenderit ducimus optio sunt.",
+      "port": 7243591604751086628,
+      "txBytes": "Vm9sdXB0YXRlIG5vYmlzIGlwc3VtIGV2ZW5pZXQu"
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesTxMetadataUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities tx-metadata -message JSON
+
+TxMetadata implements txMetadata.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities tx-metadata --message '{
+      "txBytes": "VG90YW0gcXVpYSBoaWMgaWQgdXQu"
    }'
 `, os.Args[0])
 }
