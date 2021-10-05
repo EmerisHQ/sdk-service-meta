@@ -15,19 +15,33 @@ import (
 
 // Client is the "sdk-utilities" service client.
 type Client struct {
-	SupplyEndpoint      goa.Endpoint
-	QueryTxEndpoint     goa.Endpoint
-	BroadcastTxEndpoint goa.Endpoint
-	TxMetadataEndpoint  goa.Endpoint
+	SupplyEndpoint             goa.Endpoint
+	QueryTxEndpoint            goa.Endpoint
+	BroadcastTxEndpoint        goa.Endpoint
+	TxMetadataEndpoint         goa.Endpoint
+	AuthEndpointEndpoint       goa.Endpoint
+	BankEndpoint               goa.Endpoint
+	DelegationEndpointEndpoint goa.Endpoint
+	IbcChannelEndpoint         goa.Endpoint
+	IbcClientStateEndpoint     goa.Endpoint
+	IbcConnectionEndpoint      goa.Endpoint
+	IbcDenomTraceEndpoint      goa.Endpoint
 }
 
 // NewClient initializes a "sdk-utilities" service client given the endpoints.
-func NewClient(supply, queryTx, broadcastTx, txMetadata goa.Endpoint) *Client {
+func NewClient(supply, queryTx, broadcastTx, txMetadata, authEndpoint, bank, delegationEndpoint, ibcChannel, ibcClientState, ibcConnection, ibcDenomTrace goa.Endpoint) *Client {
 	return &Client{
-		SupplyEndpoint:      supply,
-		QueryTxEndpoint:     queryTx,
-		BroadcastTxEndpoint: broadcastTx,
-		TxMetadataEndpoint:  txMetadata,
+		SupplyEndpoint:             supply,
+		QueryTxEndpoint:            queryTx,
+		BroadcastTxEndpoint:        broadcastTx,
+		TxMetadataEndpoint:         txMetadata,
+		AuthEndpointEndpoint:       authEndpoint,
+		BankEndpoint:               bank,
+		DelegationEndpointEndpoint: delegationEndpoint,
+		IbcChannelEndpoint:         ibcChannel,
+		IbcClientStateEndpoint:     ibcClientState,
+		IbcConnectionEndpoint:      ibcConnection,
+		IbcDenomTraceEndpoint:      ibcDenomTrace,
 	}
 }
 
@@ -69,4 +83,78 @@ func (c *Client) TxMetadata(ctx context.Context, p *TxMetadataPayload) (res *TxM
 		return
 	}
 	return ires.(*TxMessagesMetadata), nil
+}
+
+// AuthEndpoint calls the "auth" endpoint of the "sdk-utilities" service.
+func (c *Client) AuthEndpoint(ctx context.Context, p *AuthPayload) (res []*Auth, err error) {
+	var ires interface{}
+	ires, err = c.AuthEndpointEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*Auth), nil
+}
+
+// Bank calls the "bank" endpoint of the "sdk-utilities" service.
+func (c *Client) Bank(ctx context.Context, p *BankPayload) (res []*Balance, err error) {
+	var ires interface{}
+	ires, err = c.BankEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*Balance), nil
+}
+
+// DelegationEndpoint calls the "delegation" endpoint of the "sdk-utilities"
+// service.
+func (c *Client) DelegationEndpoint(ctx context.Context, p *DelegationPayload) (res []*Delegation, err error) {
+	var ires interface{}
+	ires, err = c.DelegationEndpointEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*Delegation), nil
+}
+
+// IbcChannel calls the "ibc_channel" endpoint of the "sdk-utilities" service.
+func (c *Client) IbcChannel(ctx context.Context, p *IbcChannelPayload) (res []*IBCChannel, err error) {
+	var ires interface{}
+	ires, err = c.IbcChannelEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*IBCChannel), nil
+}
+
+// IbcClientState calls the "ibc_client_state" endpoint of the "sdk-utilities"
+// service.
+func (c *Client) IbcClientState(ctx context.Context, p *IbcClientStatePayload) (res []*IBCClientState, err error) {
+	var ires interface{}
+	ires, err = c.IbcClientStateEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*IBCClientState), nil
+}
+
+// IbcConnection calls the "ibc_connection" endpoint of the "sdk-utilities"
+// service.
+func (c *Client) IbcConnection(ctx context.Context, p *IbcConnectionPayload) (res []*IBCConnection, err error) {
+	var ires interface{}
+	ires, err = c.IbcConnectionEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*IBCConnection), nil
+}
+
+// IbcDenomTrace calls the "ibc_denom_trace" endpoint of the "sdk-utilities"
+// service.
+func (c *Client) IbcDenomTrace(ctx context.Context, p *IbcDenomTracePayload) (res []*IBCDenomTrace, err error) {
+	var ires interface{}
+	ires, err = c.IbcDenomTraceEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*IBCDenomTrace), nil
 }

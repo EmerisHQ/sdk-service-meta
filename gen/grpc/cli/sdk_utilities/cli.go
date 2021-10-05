@@ -22,15 +22,15 @@ import (
 //    command (subcommand1|subcommand2|...)
 //
 func UsageCommands() string {
-	return `sdk-utilities (supply|query-tx|broadcast-tx|tx-metadata)
+	return `sdk-utilities (supply|query-tx|broadcast-tx|tx-metadata|auth|bank|delegation|ibc-channel|ibc-client-state|ibc-connection|ibc-denom-trace)
 `
 }
 
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` sdk-utilities supply --message '{
-      "chainName": "Molestias aut sit nobis et sit temporibus.",
-      "port": 4276607318535473132
+      "chainName": "Atque dolores esse dicta velit velit dicta.",
+      "port": 8651610214817669303
    }'` + "\n" +
 		""
 }
@@ -52,12 +52,40 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 
 		sdkUtilitiesTxMetadataFlags       = flag.NewFlagSet("tx-metadata", flag.ExitOnError)
 		sdkUtilitiesTxMetadataMessageFlag = sdkUtilitiesTxMetadataFlags.String("message", "", "")
+
+		sdkUtilitiesAuthFlags       = flag.NewFlagSet("auth", flag.ExitOnError)
+		sdkUtilitiesAuthMessageFlag = sdkUtilitiesAuthFlags.String("message", "", "")
+
+		sdkUtilitiesBankFlags       = flag.NewFlagSet("bank", flag.ExitOnError)
+		sdkUtilitiesBankMessageFlag = sdkUtilitiesBankFlags.String("message", "", "")
+
+		sdkUtilitiesDelegationFlags       = flag.NewFlagSet("delegation", flag.ExitOnError)
+		sdkUtilitiesDelegationMessageFlag = sdkUtilitiesDelegationFlags.String("message", "", "")
+
+		sdkUtilitiesIbcChannelFlags       = flag.NewFlagSet("ibc-channel", flag.ExitOnError)
+		sdkUtilitiesIbcChannelMessageFlag = sdkUtilitiesIbcChannelFlags.String("message", "", "")
+
+		sdkUtilitiesIbcClientStateFlags       = flag.NewFlagSet("ibc-client-state", flag.ExitOnError)
+		sdkUtilitiesIbcClientStateMessageFlag = sdkUtilitiesIbcClientStateFlags.String("message", "", "")
+
+		sdkUtilitiesIbcConnectionFlags       = flag.NewFlagSet("ibc-connection", flag.ExitOnError)
+		sdkUtilitiesIbcConnectionMessageFlag = sdkUtilitiesIbcConnectionFlags.String("message", "", "")
+
+		sdkUtilitiesIbcDenomTraceFlags       = flag.NewFlagSet("ibc-denom-trace", flag.ExitOnError)
+		sdkUtilitiesIbcDenomTraceMessageFlag = sdkUtilitiesIbcDenomTraceFlags.String("message", "", "")
 	)
 	sdkUtilitiesFlags.Usage = sdkUtilitiesUsage
 	sdkUtilitiesSupplyFlags.Usage = sdkUtilitiesSupplyUsage
 	sdkUtilitiesQueryTxFlags.Usage = sdkUtilitiesQueryTxUsage
 	sdkUtilitiesBroadcastTxFlags.Usage = sdkUtilitiesBroadcastTxUsage
 	sdkUtilitiesTxMetadataFlags.Usage = sdkUtilitiesTxMetadataUsage
+	sdkUtilitiesAuthFlags.Usage = sdkUtilitiesAuthUsage
+	sdkUtilitiesBankFlags.Usage = sdkUtilitiesBankUsage
+	sdkUtilitiesDelegationFlags.Usage = sdkUtilitiesDelegationUsage
+	sdkUtilitiesIbcChannelFlags.Usage = sdkUtilitiesIbcChannelUsage
+	sdkUtilitiesIbcClientStateFlags.Usage = sdkUtilitiesIbcClientStateUsage
+	sdkUtilitiesIbcConnectionFlags.Usage = sdkUtilitiesIbcConnectionUsage
+	sdkUtilitiesIbcDenomTraceFlags.Usage = sdkUtilitiesIbcDenomTraceUsage
 
 	if err := flag.CommandLine.Parse(os.Args[1:]); err != nil {
 		return nil, nil, err
@@ -105,6 +133,27 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "tx-metadata":
 				epf = sdkUtilitiesTxMetadataFlags
 
+			case "auth":
+				epf = sdkUtilitiesAuthFlags
+
+			case "bank":
+				epf = sdkUtilitiesBankFlags
+
+			case "delegation":
+				epf = sdkUtilitiesDelegationFlags
+
+			case "ibc-channel":
+				epf = sdkUtilitiesIbcChannelFlags
+
+			case "ibc-client-state":
+				epf = sdkUtilitiesIbcClientStateFlags
+
+			case "ibc-connection":
+				epf = sdkUtilitiesIbcConnectionFlags
+
+			case "ibc-denom-trace":
+				epf = sdkUtilitiesIbcDenomTraceFlags
+
 			}
 
 		}
@@ -142,6 +191,27 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "tx-metadata":
 				endpoint = c.TxMetadata()
 				data, err = sdkutilitiesc.BuildTxMetadataPayload(*sdkUtilitiesTxMetadataMessageFlag)
+			case "auth":
+				endpoint = c.AuthEndpoint()
+				data, err = sdkutilitiesc.BuildAuthEndpointPayload(*sdkUtilitiesAuthMessageFlag)
+			case "bank":
+				endpoint = c.Bank()
+				data, err = sdkutilitiesc.BuildBankPayload(*sdkUtilitiesBankMessageFlag)
+			case "delegation":
+				endpoint = c.DelegationEndpoint()
+				data, err = sdkutilitiesc.BuildDelegationEndpointPayload(*sdkUtilitiesDelegationMessageFlag)
+			case "ibc-channel":
+				endpoint = c.IbcChannel()
+				data, err = sdkutilitiesc.BuildIbcChannelPayload(*sdkUtilitiesIbcChannelMessageFlag)
+			case "ibc-client-state":
+				endpoint = c.IbcClientState()
+				data, err = sdkutilitiesc.BuildIbcClientStatePayload(*sdkUtilitiesIbcClientStateMessageFlag)
+			case "ibc-connection":
+				endpoint = c.IbcConnection()
+				data, err = sdkutilitiesc.BuildIbcConnectionPayload(*sdkUtilitiesIbcConnectionMessageFlag)
+			case "ibc-denom-trace":
+				endpoint = c.IbcDenomTrace()
+				data, err = sdkutilitiesc.BuildIbcDenomTracePayload(*sdkUtilitiesIbcDenomTraceMessageFlag)
 			}
 		}
 	}
@@ -164,6 +234,13 @@ COMMAND:
     query-tx: QueryTx implements queryTx.
     broadcast-tx: BroadcastTx implements broadcastTx.
     tx-metadata: TxMetadata implements txMetadata.
+    auth: Auth implements auth.
+    bank: Bank implements bank.
+    delegation: Delegation implements delegation.
+    ibc-channel: IbcChannel implements ibc_channel.
+    ibc-client-state: IbcClientState implements ibc_client_state.
+    ibc-connection: IbcConnection implements ibc_connection.
+    ibc-denom-trace: IbcDenomTrace implements ibc_denom_trace.
 
 Additional help:
     %[1]s sdk-utilities COMMAND --help
@@ -177,8 +254,8 @@ Supply implements supply.
 
 Example:
     %[1]s sdk-utilities supply --message '{
-      "chainName": "Molestias aut sit nobis et sit temporibus.",
-      "port": 4276607318535473132
+      "chainName": "Atque dolores esse dicta velit velit dicta.",
+      "port": 8651610214817669303
    }'
 `, os.Args[0])
 }
@@ -191,9 +268,9 @@ QueryTx implements queryTx.
 
 Example:
     %[1]s sdk-utilities query-tx --message '{
-      "chainName": "Suscipit rerum corrupti.",
-      "hash": "Vitae porro architecto dolorem.",
-      "port": 8026972786014809817
+      "chainName": "Ea est sed laborum laborum quam.",
+      "hash": "Natus animi adipisci.",
+      "port": 5821463860621388109
    }'
 `, os.Args[0])
 }
@@ -206,9 +283,9 @@ BroadcastTx implements broadcastTx.
 
 Example:
     %[1]s sdk-utilities broadcast-tx --message '{
-      "chainName": "Voluptas magnam voluptatem dolore quae quasi quia.",
-      "port": 5026848979338219803,
-      "txBytes": "QmVhdGFlIHNlZCBjb25zZXF1dW50dXIgYmVhdGFlLg=="
+      "chainName": "Omnis et iure.",
+      "port": 6610216662945158602,
+      "txBytes": "QWNjdXNhbnRpdW0gc3VudCByZW0gdm9sdXB0YXMgc2VkLg=="
    }'
 `, os.Args[0])
 }
@@ -221,7 +298,193 @@ TxMetadata implements txMetadata.
 
 Example:
     %[1]s sdk-utilities tx-metadata --message '{
-      "txBytes": "SXBzdW0gZXZlbmlldCBlbmltIHF1aWEgZG9sb3J1bSBhbWV0IGVvcy4="
+      "txBytes": "UXVpcyBjdWxwYSBldCBibGFuZGl0aWlzIHZlcml0YXRpcyBoYXJ1bSBwb3NzaW11cy4="
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesAuthUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities auth -message JSON
+
+Auth implements auth.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities auth --message '{
+      "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         }
+      ]
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesBankUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities bank -message JSON
+
+Bank implements bank.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities bank --message '{
+      "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         }
+      ]
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesDelegationUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities delegation -message JSON
+
+Delegation implements delegation.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities delegation --message '{
+      "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         }
+      ]
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesIbcChannelUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities ibc-channel -message JSON
+
+IbcChannel implements ibc_channel.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities ibc-channel --message '{
+      "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         }
+      ]
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesIbcClientStateUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities ibc-client-state -message JSON
+
+IbcClientState implements ibc_client_state.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities ibc-client-state --message '{
+      "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         }
+      ]
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesIbcConnectionUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities ibc-connection -message JSON
+
+IbcConnection implements ibc_connection.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities ibc-connection --message '{
+      "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         }
+      ]
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesIbcDenomTraceUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities ibc-denom-trace -message JSON
+
+IbcDenomTrace implements ibc_denom_trace.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities ibc-denom-trace --message '{
+      "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         }
+      ]
    }'
 `, os.Args[0])
 }

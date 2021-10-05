@@ -141,3 +141,213 @@ func DecodeTxMetadataRequest(ctx context.Context, v interface{}, md metadata.MD)
 	}
 	return payload, nil
 }
+
+// EncodeAuthEndpointResponse encodes responses from the "sdk-utilities"
+// service "auth" endpoint.
+func EncodeAuthEndpointResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.([]*sdkutilities.Auth)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "auth", "[]*sdkutilities.Auth", v)
+	}
+	resp := NewAuthResponse(result)
+	return resp, nil
+}
+
+// DecodeAuthEndpointRequest decodes requests sent to "sdk-utilities" service
+// "auth" endpoint.
+func DecodeAuthEndpointRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.AuthRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.AuthRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "auth", "*sdk_utilitiespb.AuthRequest", v)
+		}
+	}
+	var payload *sdkutilities.AuthPayload
+	{
+		payload = NewAuthPayload(message)
+	}
+	return payload, nil
+}
+
+// EncodeBankResponse encodes responses from the "sdk-utilities" service "bank"
+// endpoint.
+func EncodeBankResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.([]*sdkutilities.Balance)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "bank", "[]*sdkutilities.Balance", v)
+	}
+	resp := NewBankResponse(result)
+	return resp, nil
+}
+
+// DecodeBankRequest decodes requests sent to "sdk-utilities" service "bank"
+// endpoint.
+func DecodeBankRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.BankRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.BankRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "bank", "*sdk_utilitiespb.BankRequest", v)
+		}
+	}
+	var payload *sdkutilities.BankPayload
+	{
+		payload = NewBankPayload(message)
+	}
+	return payload, nil
+}
+
+// EncodeDelegationEndpointResponse encodes responses from the "sdk-utilities"
+// service "delegation" endpoint.
+func EncodeDelegationEndpointResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.([]*sdkutilities.Delegation)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "delegation", "[]*sdkutilities.Delegation", v)
+	}
+	resp := NewDelegationResponse(result)
+	return resp, nil
+}
+
+// DecodeDelegationEndpointRequest decodes requests sent to "sdk-utilities"
+// service "delegation" endpoint.
+func DecodeDelegationEndpointRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.DelegationRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.DelegationRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "delegation", "*sdk_utilitiespb.DelegationRequest", v)
+		}
+	}
+	var payload *sdkutilities.DelegationPayload
+	{
+		payload = NewDelegationPayload(message)
+	}
+	return payload, nil
+}
+
+// EncodeIbcChannelResponse encodes responses from the "sdk-utilities" service
+// "ibc_channel" endpoint.
+func EncodeIbcChannelResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.([]*sdkutilities.IBCChannel)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_channel", "[]*sdkutilities.IBCChannel", v)
+	}
+	resp := NewIbcChannelResponse(result)
+	return resp, nil
+}
+
+// DecodeIbcChannelRequest decodes requests sent to "sdk-utilities" service
+// "ibc_channel" endpoint.
+func DecodeIbcChannelRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.IbcChannelRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.IbcChannelRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_channel", "*sdk_utilitiespb.IbcChannelRequest", v)
+		}
+	}
+	var payload *sdkutilities.IbcChannelPayload
+	{
+		payload = NewIbcChannelPayload(message)
+	}
+	return payload, nil
+}
+
+// EncodeIbcClientStateResponse encodes responses from the "sdk-utilities"
+// service "ibc_client_state" endpoint.
+func EncodeIbcClientStateResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.([]*sdkutilities.IBCClientState)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_client_state", "[]*sdkutilities.IBCClientState", v)
+	}
+	resp := NewIbcClientStateResponse(result)
+	return resp, nil
+}
+
+// DecodeIbcClientStateRequest decodes requests sent to "sdk-utilities" service
+// "ibc_client_state" endpoint.
+func DecodeIbcClientStateRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.IbcClientStateRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.IbcClientStateRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_client_state", "*sdk_utilitiespb.IbcClientStateRequest", v)
+		}
+	}
+	var payload *sdkutilities.IbcClientStatePayload
+	{
+		payload = NewIbcClientStatePayload(message)
+	}
+	return payload, nil
+}
+
+// EncodeIbcConnectionResponse encodes responses from the "sdk-utilities"
+// service "ibc_connection" endpoint.
+func EncodeIbcConnectionResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.([]*sdkutilities.IBCConnection)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_connection", "[]*sdkutilities.IBCConnection", v)
+	}
+	resp := NewIbcConnectionResponse(result)
+	return resp, nil
+}
+
+// DecodeIbcConnectionRequest decodes requests sent to "sdk-utilities" service
+// "ibc_connection" endpoint.
+func DecodeIbcConnectionRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.IbcConnectionRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.IbcConnectionRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_connection", "*sdk_utilitiespb.IbcConnectionRequest", v)
+		}
+	}
+	var payload *sdkutilities.IbcConnectionPayload
+	{
+		payload = NewIbcConnectionPayload(message)
+	}
+	return payload, nil
+}
+
+// EncodeIbcDenomTraceResponse encodes responses from the "sdk-utilities"
+// service "ibc_denom_trace" endpoint.
+func EncodeIbcDenomTraceResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.([]*sdkutilities.IBCDenomTrace)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_denom_trace", "[]*sdkutilities.IBCDenomTrace", v)
+	}
+	resp := NewIbcDenomTraceResponse(result)
+	return resp, nil
+}
+
+// DecodeIbcDenomTraceRequest decodes requests sent to "sdk-utilities" service
+// "ibc_denom_trace" endpoint.
+func DecodeIbcDenomTraceRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.IbcDenomTraceRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.IbcDenomTraceRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_denom_trace", "*sdk_utilitiespb.IbcDenomTraceRequest", v)
+		}
+	}
+	var payload *sdkutilities.IbcDenomTracePayload
+	{
+		payload = NewIbcDenomTracePayload(message)
+	}
+	return payload, nil
+}

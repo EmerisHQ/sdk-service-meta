@@ -110,6 +110,264 @@ func NewTxMetadataResult(message *sdk_utilitiespb.TxMetadataResponse) *sdkutilit
 	return result
 }
 
+// NewAuthRequest builds the gRPC request type from the payload of the "auth"
+// endpoint of the "sdk-utilities" service.
+func NewAuthRequest(payload *sdkutilities.AuthPayload) *sdk_utilitiespb.AuthRequest {
+	message := &sdk_utilitiespb.AuthRequest{}
+	if payload.Payload != nil {
+		message.Payload = make([]*sdk_utilitiespb.TracePayload, len(payload.Payload))
+		for i, val := range payload.Payload {
+			message.Payload[i] = &sdk_utilitiespb.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+		}
+	}
+	return message
+}
+
+// NewAuthResult builds the result type of the "auth" endpoint of the
+// "sdk-utilities" service from the gRPC response type.
+func NewAuthResult(message *sdk_utilitiespb.AuthResponse) []*sdkutilities.Auth {
+	result := make([]*sdkutilities.Auth, len(message.Field))
+	for i, val := range message.Field {
+		result[i] = &sdkutilities.Auth{}
+		if val.Address != "" {
+			result[i].Address = &val.Address
+		}
+		if val.SequenceNumber != 0 {
+			result[i].SequenceNumber = &val.SequenceNumber
+		}
+		if val.AccountNumber != 0 {
+			result[i].AccountNumber = &val.AccountNumber
+		}
+	}
+	return result
+}
+
+// NewBankRequest builds the gRPC request type from the payload of the "bank"
+// endpoint of the "sdk-utilities" service.
+func NewBankRequest(payload *sdkutilities.BankPayload) *sdk_utilitiespb.BankRequest {
+	message := &sdk_utilitiespb.BankRequest{}
+	if payload.Payload != nil {
+		message.Payload = make([]*sdk_utilitiespb.TracePayload, len(payload.Payload))
+		for i, val := range payload.Payload {
+			message.Payload[i] = &sdk_utilitiespb.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+		}
+	}
+	return message
+}
+
+// NewBankResult builds the result type of the "bank" endpoint of the
+// "sdk-utilities" service from the gRPC response type.
+func NewBankResult(message *sdk_utilitiespb.BankResponse) []*sdkutilities.Balance {
+	result := make([]*sdkutilities.Balance, len(message.Field))
+	for i, val := range message.Field {
+		result[i] = &sdkutilities.Balance{
+			Address: val.Address,
+			Amount:  val.Amount,
+			Denom:   val.Denom,
+		}
+	}
+	return result
+}
+
+// NewDelegationRequest builds the gRPC request type from the payload of the
+// "delegation" endpoint of the "sdk-utilities" service.
+func NewDelegationRequest(payload *sdkutilities.DelegationPayload) *sdk_utilitiespb.DelegationRequest {
+	message := &sdk_utilitiespb.DelegationRequest{}
+	if payload.Payload != nil {
+		message.Payload = make([]*sdk_utilitiespb.TracePayload, len(payload.Payload))
+		for i, val := range payload.Payload {
+			message.Payload[i] = &sdk_utilitiespb.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+		}
+	}
+	return message
+}
+
+// NewDelegationResult builds the result type of the "delegation" endpoint of
+// the "sdk-utilities" service from the gRPC response type.
+func NewDelegationResult(message *sdk_utilitiespb.DelegationResponse) []*sdkutilities.Delegation {
+	result := make([]*sdkutilities.Delegation, len(message.Field))
+	for i, val := range message.Field {
+		result[i] = &sdkutilities.Delegation{}
+		if val.Delegator != "" {
+			result[i].Delegator = &val.Delegator
+		}
+		if val.Validator != "" {
+			result[i].Validator = &val.Validator
+		}
+		if val.Amount != "" {
+			result[i].Amount = &val.Amount
+		}
+	}
+	return result
+}
+
+// NewIbcChannelRequest builds the gRPC request type from the payload of the
+// "ibc_channel" endpoint of the "sdk-utilities" service.
+func NewIbcChannelRequest(payload *sdkutilities.IbcChannelPayload) *sdk_utilitiespb.IbcChannelRequest {
+	message := &sdk_utilitiespb.IbcChannelRequest{}
+	if payload.Payload != nil {
+		message.Payload = make([]*sdk_utilitiespb.TracePayload, len(payload.Payload))
+		for i, val := range payload.Payload {
+			message.Payload[i] = &sdk_utilitiespb.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+		}
+	}
+	return message
+}
+
+// NewIbcChannelResult builds the result type of the "ibc_channel" endpoint of
+// the "sdk-utilities" service from the gRPC response type.
+func NewIbcChannelResult(message *sdk_utilitiespb.IbcChannelResponse) []*sdkutilities.IBCChannel {
+	result := make([]*sdkutilities.IBCChannel, len(message.Field))
+	for i, val := range message.Field {
+		result[i] = &sdkutilities.IBCChannel{}
+		if val.ChannelId != "" {
+			result[i].ChannelID = &val.ChannelId
+		}
+		if val.CounterChannelId != "" {
+			result[i].CounterChannelID = &val.CounterChannelId
+		}
+		if val.Port != "" {
+			result[i].Port = &val.Port
+		}
+		if val.State != 0 {
+			result[i].State = &val.State
+		}
+		if val.Hops != nil {
+			result[i].Hops = make([]string, len(val.Hops))
+			for j, val := range val.Hops {
+				result[i].Hops[j] = val
+			}
+		}
+	}
+	return result
+}
+
+// NewIbcClientStateRequest builds the gRPC request type from the payload of
+// the "ibc_client_state" endpoint of the "sdk-utilities" service.
+func NewIbcClientStateRequest(payload *sdkutilities.IbcClientStatePayload) *sdk_utilitiespb.IbcClientStateRequest {
+	message := &sdk_utilitiespb.IbcClientStateRequest{}
+	if payload.Payload != nil {
+		message.Payload = make([]*sdk_utilitiespb.TracePayload, len(payload.Payload))
+		for i, val := range payload.Payload {
+			message.Payload[i] = &sdk_utilitiespb.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+		}
+	}
+	return message
+}
+
+// NewIbcClientStateResult builds the result type of the "ibc_client_state"
+// endpoint of the "sdk-utilities" service from the gRPC response type.
+func NewIbcClientStateResult(message *sdk_utilitiespb.IbcClientStateResponse) []*sdkutilities.IBCClientState {
+	result := make([]*sdkutilities.IBCClientState, len(message.Field))
+	for i, val := range message.Field {
+		result[i] = &sdkutilities.IBCClientState{}
+		if val.ChainId != "" {
+			result[i].ChainID = &val.ChainId
+		}
+		if val.ClientId != "" {
+			result[i].ClientID = &val.ClientId
+		}
+		if val.LatestHeight != 0 {
+			result[i].LatestHeight = &val.LatestHeight
+		}
+		if val.TrustingPeriod != 0 {
+			result[i].TrustingPeriod = &val.TrustingPeriod
+		}
+	}
+	return result
+}
+
+// NewIbcConnectionRequest builds the gRPC request type from the payload of the
+// "ibc_connection" endpoint of the "sdk-utilities" service.
+func NewIbcConnectionRequest(payload *sdkutilities.IbcConnectionPayload) *sdk_utilitiespb.IbcConnectionRequest {
+	message := &sdk_utilitiespb.IbcConnectionRequest{}
+	if payload.Payload != nil {
+		message.Payload = make([]*sdk_utilitiespb.TracePayload, len(payload.Payload))
+		for i, val := range payload.Payload {
+			message.Payload[i] = &sdk_utilitiespb.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+		}
+	}
+	return message
+}
+
+// NewIbcConnectionResult builds the result type of the "ibc_connection"
+// endpoint of the "sdk-utilities" service from the gRPC response type.
+func NewIbcConnectionResult(message *sdk_utilitiespb.IbcConnectionResponse) []*sdkutilities.IBCConnection {
+	result := make([]*sdkutilities.IBCConnection, len(message.Field))
+	for i, val := range message.Field {
+		result[i] = &sdkutilities.IBCConnection{}
+		if val.ConnectionId != "" {
+			result[i].ConnectionID = &val.ConnectionId
+		}
+		if val.ClientId != "" {
+			result[i].ClientID = &val.ClientId
+		}
+		if val.State != "" {
+			result[i].State = &val.State
+		}
+		if val.CounterConnectionId != "" {
+			result[i].CounterConnectionID = &val.CounterConnectionId
+		}
+		if val.CounterClientId != "" {
+			result[i].CounterClientID = &val.CounterClientId
+		}
+	}
+	return result
+}
+
+// NewIbcDenomTraceRequest builds the gRPC request type from the payload of the
+// "ibc_denom_trace" endpoint of the "sdk-utilities" service.
+func NewIbcDenomTraceRequest(payload *sdkutilities.IbcDenomTracePayload) *sdk_utilitiespb.IbcDenomTraceRequest {
+	message := &sdk_utilitiespb.IbcDenomTraceRequest{}
+	if payload.Payload != nil {
+		message.Payload = make([]*sdk_utilitiespb.TracePayload, len(payload.Payload))
+		for i, val := range payload.Payload {
+			message.Payload[i] = &sdk_utilitiespb.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+		}
+	}
+	return message
+}
+
+// NewIbcDenomTraceResult builds the result type of the "ibc_denom_trace"
+// endpoint of the "sdk-utilities" service from the gRPC response type.
+func NewIbcDenomTraceResult(message *sdk_utilitiespb.IbcDenomTraceResponse) []*sdkutilities.IBCDenomTrace {
+	result := make([]*sdkutilities.IBCDenomTrace, len(message.Field))
+	for i, val := range message.Field {
+		result[i] = &sdkutilities.IBCDenomTrace{}
+		if val.Path != "" {
+			result[i].Path = &val.Path
+		}
+		if val.BaseDenom != "" {
+			result[i].BaseDenom = &val.BaseDenom
+		}
+		if val.Hash != "" {
+			result[i].Hash = &val.Hash
+		}
+	}
+	return result
+}
+
 // ValidateSupplyResponse runs the validations defined on SupplyResponse.
 func ValidateSupplyResponse(message *sdk_utilitiespb.SupplyResponse) (err error) {
 	if message.Coins == nil {
