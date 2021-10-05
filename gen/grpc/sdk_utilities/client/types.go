@@ -215,6 +215,9 @@ func NewDelegationResult(message *sdk_utilitiespb.DelegationResponse) []*sdkutil
 		if val.Amount != "" {
 			result[i].Amount = &val.Amount
 		}
+		if val.Type != "" {
+			result[i].Type = &val.Type
+		}
 	}
 	return result
 }
@@ -428,6 +431,27 @@ func ValidateIBCTransferMetadata(message *sdk_utilitiespb.IBCTransferMetadata) (
 // ValidateIBCHeight runs the validations defined on IBCHeight.
 func ValidateIBCHeight(message *sdk_utilitiespb.IBCHeight) (err error) {
 
+	return
+}
+
+// ValidateDelegationResponse runs the validations defined on
+// DelegationResponse.
+func ValidateDelegationResponse(message *sdk_utilitiespb.DelegationResponse) (err error) {
+	for _, e := range message.Field {
+		if e != nil {
+			if err2 := ValidateDelegation(e); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
+	}
+	return
+}
+
+// ValidateDelegation runs the validations defined on Delegation.
+func ValidateDelegation(message *sdk_utilitiespb.Delegation) (err error) {
+	if !(message.Type == "delete" || message.Type == "create") {
+		err = goa.MergeErrors(err, goa.InvalidEnumValueError("message.type", message.Type, []interface{}{"delete", "create"}))
+	}
 	return
 }
 

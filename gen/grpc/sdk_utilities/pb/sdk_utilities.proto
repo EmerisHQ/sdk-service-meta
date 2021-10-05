@@ -154,6 +154,7 @@ message Delegation {
 	string delegator = 1;
 	string validator = 2;
 	string amount = 3;
+	string type = 4;
 }
 
 message IbcChannelRequest {

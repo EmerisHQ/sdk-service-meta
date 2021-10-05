@@ -8,12 +8,20 @@ func init() {
 	registerServiceDefinition(delegationsDesign)
 }
 
+const (
+	TypeDeleteDelegation = "delete"
+	TypeCreateDelegation = "create"
+)
+
 var DelegationDesignType = Type("Delegation", func() {
 	Description("Staking delegation as unmarshaled from trace bytes")
 
 	Field(1, "delegator", String)
 	Field(2, "validator", String)
 	Field(3, "amount", String)
+	Field(4, "type", String, func() {
+		Enum(TypeDeleteDelegation, TypeCreateDelegation)
+	})
 })
 
 func delegationsDesign() {

@@ -196,6 +196,7 @@ type Delegation struct {
 	Delegator *string
 	Validator *string
 	Amount    *string
+	Type      *string
 }
 
 // IBC channel as unmarshaled from trace bytes

@@ -260,6 +260,9 @@ func DecodeDelegationEndpointResponse(ctx context.Context, v interface{}, hdr, t
 	if !ok {
 		return nil, goagrpc.ErrInvalidType("sdk-utilities", "delegation", "*sdk_utilitiespb.DelegationResponse", v)
 	}
+	if err := ValidateDelegationResponse(message); err != nil {
+		return nil, err
+	}
 	res := NewDelegationResult(message)
 	return res, nil
 }

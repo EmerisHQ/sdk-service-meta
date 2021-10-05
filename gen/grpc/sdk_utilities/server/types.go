@@ -222,6 +222,9 @@ func NewDelegationResponse(result []*sdkutilities.Delegation) *sdk_utilitiespb.D
 		if val.Amount != nil {
 			message.Field[i].Amount = *val.Amount
 		}
+		if val.Type != nil {
+			message.Field[i].Type = *val.Type
+		}
 	}
 	return message
 }
