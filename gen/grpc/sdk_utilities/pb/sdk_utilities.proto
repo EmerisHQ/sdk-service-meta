@@ -21,6 +21,20 @@ service SdkUtilities {
 	rpc BroadcastTx (BroadcastTxRequest) returns (BroadcastTxResponse);
 	// TxMetadata implements txMetadata.
 	rpc TxMetadata (TxMetadataRequest) returns (TxMetadataResponse);
+	// Auth implements auth.
+	rpc Auth (AuthRequest) returns (AuthResponse);
+	// Bank implements bank.
+	rpc Bank (BankRequest) returns (BankResponse);
+	// Delegation implements delegation.
+	rpc Delegation (DelegationRequest) returns (DelegationResponse);
+	// IbcChannel implements ibc_channel.
+	rpc IbcChannel (IbcChannelRequest) returns (IbcChannelResponse);
+	// IbcClientState implements ibc_client_state.
+	rpc IbcClientState (IbcClientStateRequest) returns (IbcClientStateResponse);
+	// IbcConnection implements ibc_connection.
+	rpc IbcConnection (IbcConnectionRequest) returns (IbcConnectionResponse);
+	// IbcDenomTrace implements ibc_denom_trace.
+	rpc IbcDenomTrace (IbcDenomTraceRequest) returns (IbcDenomTraceResponse);
 }
 
 message SupplyRequest {
@@ -92,4 +106,88 @@ message IBCTransferMetadata {
 message IBCHeight {
 	uint64 revision_number = 1;
 	uint64 revision_height = 2;
+}
+
+message AuthRequest {
+	TracePayload payload = 1;
+}
+// Data read off Cosmos SDK tracing facility
+message TracePayload {
+	bytes key = 1;
+	bytes value = 2;
+}
+
+message AuthResponse {
+	string address = 1;
+	uint64 sequence_number = 2;
+	uint64 account_number = 3;
+}
+
+message BankRequest {
+	TracePayload payload = 1;
+}
+
+message BankResponse {
+	repeated Balance field = 1;
+}
+// Balance of a given address as unmarshaled from trace bytes
+message Balance {
+	string address = 1;
+	string amount = 2;
+	string denom = 3;
+}
+
+message DelegationRequest {
+	TracePayload payload = 1;
+}
+
+message DelegationResponse {
+	string delegator = 1;
+	string validator = 2;
+	string amount = 3;
+}
+
+message IbcChannelRequest {
+	TracePayload payload = 1;
+}
+
+message IbcChannelResponse {
+	string channel_id = 1;
+	string counter_channel_id = 2;
+	repeated string hops = 3;
+	string port = 4;
+	sint32 state = 5;
+}
+
+message IbcClientStateRequest {
+	TracePayload payload = 1;
+}
+
+message IbcClientStateResponse {
+	string chain_id = 1;
+	string client_id = 2;
+	uint64 latest_height = 3;
+	sint64 trusting_period = 4;
+}
+
+message IbcConnectionRequest {
+	TracePayload payload = 1;
+}
+
+message IbcConnectionResponse {
+	string connection_id = 1;
+	string client_id = 2;
+	string state = 3;
+	string counter_connection_id = 4;
+	string counter_client_id = 5;
+}
+
+message IbcDenomTraceRequest {
+	TracePayload payload = 1;
+}
+
+message IbcDenomTraceResponse {
+	string path = 1;
+	string base_denom = 2;
+	string hash = 3;
 }

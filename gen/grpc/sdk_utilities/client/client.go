@@ -93,3 +93,115 @@ func (c *Client) TxMetadata() goa.Endpoint {
 		return res, nil
 	}
 }
+
+// Auth calls the "Auth" function in sdk_utilitiespb.SdkUtilitiesClient
+// interface.
+func (c *Client) Auth() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildAuthFunc(c.grpccli, c.opts...),
+			EncodeAuthRequest,
+			DecodeAuthResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// Bank calls the "Bank" function in sdk_utilitiespb.SdkUtilitiesClient
+// interface.
+func (c *Client) Bank() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildBankFunc(c.grpccli, c.opts...),
+			EncodeBankRequest,
+			DecodeBankResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// Delegation calls the "Delegation" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) Delegation() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildDelegationFunc(c.grpccli, c.opts...),
+			EncodeDelegationRequest,
+			DecodeDelegationResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// IbcChannel calls the "IbcChannel" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) IbcChannel() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildIbcChannelFunc(c.grpccli, c.opts...),
+			EncodeIbcChannelRequest,
+			DecodeIbcChannelResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// IbcClientState calls the "IbcClientState" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) IbcClientState() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildIbcClientStateFunc(c.grpccli, c.opts...),
+			EncodeIbcClientStateRequest,
+			DecodeIbcClientStateResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// IbcConnection calls the "IbcConnection" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) IbcConnection() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildIbcConnectionFunc(c.grpccli, c.opts...),
+			EncodeIbcConnectionRequest,
+			DecodeIbcConnectionResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// IbcDenomTrace calls the "IbcDenomTrace" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) IbcDenomTrace() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildIbcDenomTraceFunc(c.grpccli, c.opts...),
+			EncodeIbcDenomTraceRequest,
+			DecodeIbcDenomTraceResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}

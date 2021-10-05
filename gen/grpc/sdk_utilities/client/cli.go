@@ -24,7 +24,7 @@ func BuildSupplyPayload(sdkUtilitiesSupplyMessage string) (*sdkutilities.SupplyP
 		if sdkUtilitiesSupplyMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesSupplyMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Molestias aut sit nobis et sit temporibus.\",\n      \"port\": 4276607318535473132\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Perferendis quisquam sint quia et magnam.\",\n      \"port\": 6846816609772976668\n   }'")
 			}
 		}
 	}
@@ -48,7 +48,7 @@ func BuildQueryTxPayload(sdkUtilitiesQueryTxMessage string) (*sdkutilities.Query
 		if sdkUtilitiesQueryTxMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesQueryTxMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Suscipit rerum corrupti.\",\n      \"hash\": \"Vitae porro architecto dolorem.\",\n      \"port\": 8026972786014809817\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Dolorem quisquam rerum fugiat.\",\n      \"hash\": \"Molestias ut non aut temporibus.\",\n      \"port\": 8925443299217281982\n   }'")
 			}
 		}
 	}
@@ -73,7 +73,7 @@ func BuildBroadcastTxPayload(sdkUtilitiesBroadcastTxMessage string) (*sdkutiliti
 		if sdkUtilitiesBroadcastTxMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesBroadcastTxMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Voluptas magnam voluptatem dolore quae quasi quia.\",\n      \"port\": 5026848979338219803,\n      \"txBytes\": \"QmVhdGFlIHNlZCBjb25zZXF1dW50dXIgYmVhdGFlLg==\"\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Velit dicta.\",\n      \"port\": 8651610214817669303,\n      \"txBytes\": \"RXN0IGVhIGVzdC4=\"\n   }'")
 			}
 		}
 	}
@@ -98,12 +98,159 @@ func BuildTxMetadataPayload(sdkUtilitiesTxMetadataMessage string) (*sdkutilities
 		if sdkUtilitiesTxMetadataMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesTxMetadataMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"txBytes\": \"SXBzdW0gZXZlbmlldCBlbmltIHF1aWEgZG9sb3J1bSBhbWV0IGVvcy4=\"\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"txBytes\": \"TmF0dXMgYW5pbWkgYWRpcGlzY2ku\"\n   }'")
 			}
 		}
 	}
 	v := &sdkutilities.TxMetadataPayload{
 		TxBytes: message.TxBytes,
+	}
+
+	return v, nil
+}
+
+// BuildAuthPayload builds the payload for the sdk-utilities auth endpoint from
+// CLI flags.
+func BuildAuthPayload(sdkUtilitiesAuthMessage string) (*sdkutilities.AuthPayload, error) {
+	var err error
+	var message sdk_utilitiespb.AuthRequest
+	{
+		if sdkUtilitiesAuthMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesAuthMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": {\n         \"key\": \"TW9sZXN0aWFzIGF1dCBzaXQgbm9iaXMgZXQgc2l0IHRlbXBvcmlidXMu\",\n         \"value\": \"UmVwcmVoZW5kZXJpdCBxdWlhIHN1c2NpcGl0IHJlcnVtIGNvcnJ1cHRpIHZlcm8u\"\n      }\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.AuthPayload{}
+	if message.Payload != nil {
+		v.Payload = protobufSdkUtilitiespbTracePayloadToSdkutilitiesTracePayload(message.Payload)
+	}
+
+	return v, nil
+}
+
+// BuildBankPayload builds the payload for the sdk-utilities bank endpoint from
+// CLI flags.
+func BuildBankPayload(sdkUtilitiesBankMessage string) (*sdkutilities.BankPayload, error) {
+	var err error
+	var message sdk_utilitiespb.BankRequest
+	{
+		if sdkUtilitiesBankMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesBankMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": {\n         \"key\": \"TW9sZXN0aWFzIGF1dCBzaXQgbm9iaXMgZXQgc2l0IHRlbXBvcmlidXMu\",\n         \"value\": \"UmVwcmVoZW5kZXJpdCBxdWlhIHN1c2NpcGl0IHJlcnVtIGNvcnJ1cHRpIHZlcm8u\"\n      }\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.BankPayload{}
+	if message.Payload != nil {
+		v.Payload = protobufSdkUtilitiespbTracePayloadToSdkutilitiesTracePayload(message.Payload)
+	}
+
+	return v, nil
+}
+
+// BuildDelegationPayload builds the payload for the sdk-utilities delegation
+// endpoint from CLI flags.
+func BuildDelegationPayload(sdkUtilitiesDelegationMessage string) (*sdkutilities.DelegationPayload, error) {
+	var err error
+	var message sdk_utilitiespb.DelegationRequest
+	{
+		if sdkUtilitiesDelegationMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesDelegationMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": {\n         \"key\": \"TW9sZXN0aWFzIGF1dCBzaXQgbm9iaXMgZXQgc2l0IHRlbXBvcmlidXMu\",\n         \"value\": \"UmVwcmVoZW5kZXJpdCBxdWlhIHN1c2NpcGl0IHJlcnVtIGNvcnJ1cHRpIHZlcm8u\"\n      }\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.DelegationPayload{}
+	if message.Payload != nil {
+		v.Payload = protobufSdkUtilitiespbTracePayloadToSdkutilitiesTracePayload(message.Payload)
+	}
+
+	return v, nil
+}
+
+// BuildIbcChannelPayload builds the payload for the sdk-utilities ibc_channel
+// endpoint from CLI flags.
+func BuildIbcChannelPayload(sdkUtilitiesIbcChannelMessage string) (*sdkutilities.IbcChannelPayload, error) {
+	var err error
+	var message sdk_utilitiespb.IbcChannelRequest
+	{
+		if sdkUtilitiesIbcChannelMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesIbcChannelMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": {\n         \"key\": \"TW9sZXN0aWFzIGF1dCBzaXQgbm9iaXMgZXQgc2l0IHRlbXBvcmlidXMu\",\n         \"value\": \"UmVwcmVoZW5kZXJpdCBxdWlhIHN1c2NpcGl0IHJlcnVtIGNvcnJ1cHRpIHZlcm8u\"\n      }\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.IbcChannelPayload{}
+	if message.Payload != nil {
+		v.Payload = protobufSdkUtilitiespbTracePayloadToSdkutilitiesTracePayload(message.Payload)
+	}
+
+	return v, nil
+}
+
+// BuildIbcClientStatePayload builds the payload for the sdk-utilities
+// ibc_client_state endpoint from CLI flags.
+func BuildIbcClientStatePayload(sdkUtilitiesIbcClientStateMessage string) (*sdkutilities.IbcClientStatePayload, error) {
+	var err error
+	var message sdk_utilitiespb.IbcClientStateRequest
+	{
+		if sdkUtilitiesIbcClientStateMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesIbcClientStateMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": {\n         \"key\": \"TW9sZXN0aWFzIGF1dCBzaXQgbm9iaXMgZXQgc2l0IHRlbXBvcmlidXMu\",\n         \"value\": \"UmVwcmVoZW5kZXJpdCBxdWlhIHN1c2NpcGl0IHJlcnVtIGNvcnJ1cHRpIHZlcm8u\"\n      }\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.IbcClientStatePayload{}
+	if message.Payload != nil {
+		v.Payload = protobufSdkUtilitiespbTracePayloadToSdkutilitiesTracePayload(message.Payload)
+	}
+
+	return v, nil
+}
+
+// BuildIbcConnectionPayload builds the payload for the sdk-utilities
+// ibc_connection endpoint from CLI flags.
+func BuildIbcConnectionPayload(sdkUtilitiesIbcConnectionMessage string) (*sdkutilities.IbcConnectionPayload, error) {
+	var err error
+	var message sdk_utilitiespb.IbcConnectionRequest
+	{
+		if sdkUtilitiesIbcConnectionMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesIbcConnectionMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": {\n         \"key\": \"TW9sZXN0aWFzIGF1dCBzaXQgbm9iaXMgZXQgc2l0IHRlbXBvcmlidXMu\",\n         \"value\": \"UmVwcmVoZW5kZXJpdCBxdWlhIHN1c2NpcGl0IHJlcnVtIGNvcnJ1cHRpIHZlcm8u\"\n      }\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.IbcConnectionPayload{}
+	if message.Payload != nil {
+		v.Payload = protobufSdkUtilitiespbTracePayloadToSdkutilitiesTracePayload(message.Payload)
+	}
+
+	return v, nil
+}
+
+// BuildIbcDenomTracePayload builds the payload for the sdk-utilities
+// ibc_denom_trace endpoint from CLI flags.
+func BuildIbcDenomTracePayload(sdkUtilitiesIbcDenomTraceMessage string) (*sdkutilities.IbcDenomTracePayload, error) {
+	var err error
+	var message sdk_utilitiespb.IbcDenomTraceRequest
+	{
+		if sdkUtilitiesIbcDenomTraceMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesIbcDenomTraceMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": {\n         \"key\": \"TW9sZXN0aWFzIGF1dCBzaXQgbm9iaXMgZXQgc2l0IHRlbXBvcmlidXMu\",\n         \"value\": \"UmVwcmVoZW5kZXJpdCBxdWlhIHN1c2NpcGl0IHJlcnVtIGNvcnJ1cHRpIHZlcm8u\"\n      }\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.IbcDenomTracePayload{}
+	if message.Payload != nil {
+		v.Payload = protobufSdkUtilitiespbTracePayloadToSdkutilitiesTracePayload(message.Payload)
 	}
 
 	return v, nil

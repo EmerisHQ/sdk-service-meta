@@ -26,6 +26,20 @@ type SdkUtilitiesClient interface {
 	BroadcastTx(ctx context.Context, in *BroadcastTxRequest, opts ...grpc.CallOption) (*BroadcastTxResponse, error)
 	// TxMetadata implements txMetadata.
 	TxMetadata(ctx context.Context, in *TxMetadataRequest, opts ...grpc.CallOption) (*TxMetadataResponse, error)
+	// Auth implements auth.
+	Auth(ctx context.Context, in *AuthRequest, opts ...grpc.CallOption) (*AuthResponse, error)
+	// Bank implements bank.
+	Bank(ctx context.Context, in *BankRequest, opts ...grpc.CallOption) (*BankResponse, error)
+	// Delegation implements delegation.
+	Delegation(ctx context.Context, in *DelegationRequest, opts ...grpc.CallOption) (*DelegationResponse, error)
+	// IbcChannel implements ibc_channel.
+	IbcChannel(ctx context.Context, in *IbcChannelRequest, opts ...grpc.CallOption) (*IbcChannelResponse, error)
+	// IbcClientState implements ibc_client_state.
+	IbcClientState(ctx context.Context, in *IbcClientStateRequest, opts ...grpc.CallOption) (*IbcClientStateResponse, error)
+	// IbcConnection implements ibc_connection.
+	IbcConnection(ctx context.Context, in *IbcConnectionRequest, opts ...grpc.CallOption) (*IbcConnectionResponse, error)
+	// IbcDenomTrace implements ibc_denom_trace.
+	IbcDenomTrace(ctx context.Context, in *IbcDenomTraceRequest, opts ...grpc.CallOption) (*IbcDenomTraceResponse, error)
 }
 
 type sdkUtilitiesClient struct {
@@ -72,6 +86,69 @@ func (c *sdkUtilitiesClient) TxMetadata(ctx context.Context, in *TxMetadataReque
 	return out, nil
 }
 
+func (c *sdkUtilitiesClient) Auth(ctx context.Context, in *AuthRequest, opts ...grpc.CallOption) (*AuthResponse, error) {
+	out := new(AuthResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/Auth", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sdkUtilitiesClient) Bank(ctx context.Context, in *BankRequest, opts ...grpc.CallOption) (*BankResponse, error) {
+	out := new(BankResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/Bank", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sdkUtilitiesClient) Delegation(ctx context.Context, in *DelegationRequest, opts ...grpc.CallOption) (*DelegationResponse, error) {
+	out := new(DelegationResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/Delegation", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sdkUtilitiesClient) IbcChannel(ctx context.Context, in *IbcChannelRequest, opts ...grpc.CallOption) (*IbcChannelResponse, error) {
+	out := new(IbcChannelResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/IbcChannel", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sdkUtilitiesClient) IbcClientState(ctx context.Context, in *IbcClientStateRequest, opts ...grpc.CallOption) (*IbcClientStateResponse, error) {
+	out := new(IbcClientStateResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/IbcClientState", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sdkUtilitiesClient) IbcConnection(ctx context.Context, in *IbcConnectionRequest, opts ...grpc.CallOption) (*IbcConnectionResponse, error) {
+	out := new(IbcConnectionResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/IbcConnection", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sdkUtilitiesClient) IbcDenomTrace(ctx context.Context, in *IbcDenomTraceRequest, opts ...grpc.CallOption) (*IbcDenomTraceResponse, error) {
+	out := new(IbcDenomTraceResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/IbcDenomTrace", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SdkUtilitiesServer is the server API for SdkUtilities service.
 // All implementations must embed UnimplementedSdkUtilitiesServer
 // for forward compatibility
@@ -84,6 +161,20 @@ type SdkUtilitiesServer interface {
 	BroadcastTx(context.Context, *BroadcastTxRequest) (*BroadcastTxResponse, error)
 	// TxMetadata implements txMetadata.
 	TxMetadata(context.Context, *TxMetadataRequest) (*TxMetadataResponse, error)
+	// Auth implements auth.
+	Auth(context.Context, *AuthRequest) (*AuthResponse, error)
+	// Bank implements bank.
+	Bank(context.Context, *BankRequest) (*BankResponse, error)
+	// Delegation implements delegation.
+	Delegation(context.Context, *DelegationRequest) (*DelegationResponse, error)
+	// IbcChannel implements ibc_channel.
+	IbcChannel(context.Context, *IbcChannelRequest) (*IbcChannelResponse, error)
+	// IbcClientState implements ibc_client_state.
+	IbcClientState(context.Context, *IbcClientStateRequest) (*IbcClientStateResponse, error)
+	// IbcConnection implements ibc_connection.
+	IbcConnection(context.Context, *IbcConnectionRequest) (*IbcConnectionResponse, error)
+	// IbcDenomTrace implements ibc_denom_trace.
+	IbcDenomTrace(context.Context, *IbcDenomTraceRequest) (*IbcDenomTraceResponse, error)
 	mustEmbedUnimplementedSdkUtilitiesServer()
 }
 
@@ -102,6 +193,27 @@ func (UnimplementedSdkUtilitiesServer) BroadcastTx(context.Context, *BroadcastTx
 }
 func (UnimplementedSdkUtilitiesServer) TxMetadata(context.Context, *TxMetadataRequest) (*TxMetadataResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TxMetadata not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) Auth(context.Context, *AuthRequest) (*AuthResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Auth not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) Bank(context.Context, *BankRequest) (*BankResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Bank not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) Delegation(context.Context, *DelegationRequest) (*DelegationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delegation not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) IbcChannel(context.Context, *IbcChannelRequest) (*IbcChannelResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IbcChannel not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) IbcClientState(context.Context, *IbcClientStateRequest) (*IbcClientStateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IbcClientState not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) IbcConnection(context.Context, *IbcConnectionRequest) (*IbcConnectionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IbcConnection not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) IbcDenomTrace(context.Context, *IbcDenomTraceRequest) (*IbcDenomTraceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IbcDenomTrace not implemented")
 }
 func (UnimplementedSdkUtilitiesServer) mustEmbedUnimplementedSdkUtilitiesServer() {}
 
@@ -188,6 +300,132 @@ func _SdkUtilities_TxMetadata_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SdkUtilities_Auth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AuthRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).Auth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/Auth",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).Auth(ctx, req.(*AuthRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SdkUtilities_Bank_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BankRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).Bank(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/Bank",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).Bank(ctx, req.(*BankRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SdkUtilities_Delegation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelegationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).Delegation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/Delegation",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).Delegation(ctx, req.(*DelegationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SdkUtilities_IbcChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IbcChannelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).IbcChannel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/IbcChannel",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).IbcChannel(ctx, req.(*IbcChannelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SdkUtilities_IbcClientState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IbcClientStateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).IbcClientState(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/IbcClientState",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).IbcClientState(ctx, req.(*IbcClientStateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SdkUtilities_IbcConnection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IbcConnectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).IbcConnection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/IbcConnection",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).IbcConnection(ctx, req.(*IbcConnectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SdkUtilities_IbcDenomTrace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IbcDenomTraceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).IbcDenomTrace(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/IbcDenomTrace",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).IbcDenomTrace(ctx, req.(*IbcDenomTraceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SdkUtilities_ServiceDesc is the grpc.ServiceDesc for SdkUtilities service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -210,6 +448,34 @@ var SdkUtilities_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TxMetadata",
 			Handler:    _SdkUtilities_TxMetadata_Handler,
+		},
+		{
+			MethodName: "Auth",
+			Handler:    _SdkUtilities_Auth_Handler,
+		},
+		{
+			MethodName: "Bank",
+			Handler:    _SdkUtilities_Bank_Handler,
+		},
+		{
+			MethodName: "Delegation",
+			Handler:    _SdkUtilities_Delegation_Handler,
+		},
+		{
+			MethodName: "IbcChannel",
+			Handler:    _SdkUtilities_IbcChannel_Handler,
+		},
+		{
+			MethodName: "IbcClientState",
+			Handler:    _SdkUtilities_IbcClientState_Handler,
+		},
+		{
+			MethodName: "IbcConnection",
+			Handler:    _SdkUtilities_IbcConnection_Handler,
+		},
+		{
+			MethodName: "IbcDenomTrace",
+			Handler:    _SdkUtilities_IbcDenomTrace_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

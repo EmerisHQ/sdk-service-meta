@@ -21,6 +21,20 @@ type Service interface {
 	BroadcastTx(context.Context, *BroadcastTxPayload) (res *TransactionResult, err error)
 	// TxMetadata implements txMetadata.
 	TxMetadata(context.Context, *TxMetadataPayload) (res *TxMessagesMetadata, err error)
+	// Auth implements auth.
+	Auth(context.Context, *AuthPayload) (res *Auth2, err error)
+	// Bank implements bank.
+	Bank(context.Context, *BankPayload) (res []*Balance, err error)
+	// Delegation implements delegation.
+	Delegation(context.Context, *DelegationPayload) (res *Delegation2, err error)
+	// IbcChannel implements ibc_channel.
+	IbcChannel(context.Context, *IbcChannelPayload) (res *IBCChannel, err error)
+	// IbcClientState implements ibc_client_state.
+	IbcClientState(context.Context, *IbcClientStatePayload) (res *IBCClientState, err error)
+	// IbcConnection implements ibc_connection.
+	IbcConnection(context.Context, *IbcConnectionPayload) (res *IBCConnection, err error)
+	// IbcDenomTrace implements ibc_denom_trace.
+	IbcDenomTrace(context.Context, *IbcDenomTracePayload) (res *IBCDenomTrace, err error)
 }
 
 // ServiceName is the name of the service as defined in the design. This is the
@@ -31,7 +45,7 @@ const ServiceName = "sdk-utilities"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [4]string{"supply", "queryTx", "broadcastTx", "txMetadata"}
+var MethodNames = [11]string{"supply", "queryTx", "broadcastTx", "txMetadata", "auth", "bank", "delegation", "ibc_channel", "ibc_client_state", "ibc_connection", "ibc_denom_trace"}
 
 // SupplyPayload is the payload type of the sdk-utilities service supply method.
 type SupplyPayload struct {
@@ -87,6 +101,98 @@ type TxMessagesMetadata struct {
 	MessagesMetadata []*MsgMetadata
 }
 
+// AuthPayload is the payload type of the sdk-utilities service auth method.
+type AuthPayload struct {
+	Payload *TracePayload
+}
+
+// Auth2 is the result type of the sdk-utilities service auth method.
+type Auth2 struct {
+	Address        *string
+	SequenceNumber *uint64
+	AccountNumber  *uint64
+}
+
+// BankPayload is the payload type of the sdk-utilities service bank method.
+type BankPayload struct {
+	Payload *TracePayload
+}
+
+// DelegationPayload is the payload type of the sdk-utilities service
+// delegation method.
+type DelegationPayload struct {
+	Payload *TracePayload
+}
+
+// Delegation2 is the result type of the sdk-utilities service delegation
+// method.
+type Delegation2 struct {
+	Delegator *string
+	Validator *string
+	Amount    *string
+}
+
+// IbcChannelPayload is the payload type of the sdk-utilities service
+// ibc_channel method.
+type IbcChannelPayload struct {
+	Payload *TracePayload
+}
+
+// IBCChannel is the result type of the sdk-utilities service ibc_channel
+// method.
+type IBCChannel struct {
+	ChannelID        *string
+	CounterChannelID *string
+	Hops             []string
+	Port             *string
+	State            *int32
+}
+
+// IbcClientStatePayload is the payload type of the sdk-utilities service
+// ibc_client_state method.
+type IbcClientStatePayload struct {
+	Payload *TracePayload
+}
+
+// IBCClientState is the result type of the sdk-utilities service
+// ibc_client_state method.
+type IBCClientState struct {
+	ChainID        *string
+	ClientID       *string
+	LatestHeight   *uint64
+	TrustingPeriod *int64
+}
+
+// IbcConnectionPayload is the payload type of the sdk-utilities service
+// ibc_connection method.
+type IbcConnectionPayload struct {
+	Payload *TracePayload
+}
+
+// IBCConnection is the result type of the sdk-utilities service ibc_connection
+// method.
+type IBCConnection struct {
+	ConnectionID        *string
+	ClientID            *string
+	State               *string
+	CounterConnectionID *string
+	CounterClientID     *string
+}
+
+// IbcDenomTracePayload is the payload type of the sdk-utilities service
+// ibc_denom_trace method.
+type IbcDenomTracePayload struct {
+	Payload *TracePayload
+}
+
+// IBCDenomTrace is the result type of the sdk-utilities service
+// ibc_denom_trace method.
+type IBCDenomTrace struct {
+	Path      *string
+	BaseDenom *string
+	Hash      *string
+}
+
 // SDK service representation of a Cosmos SDK types.Coin
 type Coin struct {
 	Denom  string
@@ -114,4 +220,17 @@ type IBCTransferMetadata struct {
 type IBCHeight struct {
 	RevisionNumber *uint64
 	RevisionHeight *uint64
+}
+
+// Data read off Cosmos SDK tracing facility
+type TracePayload struct {
+	Key   []byte
+	Value []byte
+}
+
+// Balance of a given address as unmarshaled from trace bytes
+type Balance struct {
+	Address string
+	Amount  string
+	Denom   string
 }
