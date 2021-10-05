@@ -172,8 +172,9 @@ type IBCHeight struct {
 
 // Data read off Cosmos SDK tracing facility
 type TracePayload struct {
-	Key   []byte
-	Value []byte
+	Key           []byte
+	Value         []byte
+	OperationType *string
 }
 
 // Account as unmarshaled from trace bytes

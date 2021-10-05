@@ -24,7 +24,7 @@ func BuildSupplyPayload(sdkUtilitiesSupplyMessage string) (*sdkutilities.SupplyP
 		if sdkUtilitiesSupplyMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesSupplyMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Atque dolores esse dicta velit velit dicta.\",\n      \"port\": 8651610214817669303\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Sed enim atque dolores esse dicta.\",\n      \"port\": 7124529205354848620\n   }'")
 			}
 		}
 	}
@@ -48,7 +48,7 @@ func BuildQueryTxPayload(sdkUtilitiesQueryTxMessage string) (*sdkutilities.Query
 		if sdkUtilitiesQueryTxMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesQueryTxMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Ea est sed laborum laborum quam.\",\n      \"hash\": \"Natus animi adipisci.\",\n      \"port\": 5821463860621388109\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Explicabo consequatur est ea est.\",\n      \"hash\": \"Laborum quam ducimus consequatur.\",\n      \"port\": 3065905437504226774\n   }'")
 			}
 		}
 	}
@@ -73,7 +73,7 @@ func BuildBroadcastTxPayload(sdkUtilitiesBroadcastTxMessage string) (*sdkutiliti
 		if sdkUtilitiesBroadcastTxMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesBroadcastTxMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Omnis et iure.\",\n      \"port\": 6610216662945158602,\n      \"txBytes\": \"QWNjdXNhbnRpdW0gc3VudCByZW0gdm9sdXB0YXMgc2VkLg==\"\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Officiis alias.\",\n      \"port\": 5526397674056279747,\n      \"txBytes\": \"UmVtIHZvbHVwdGFzIHNlZCBpZCBhbWV0IGRpY3RhLg==\"\n   }'")
 			}
 		}
 	}
@@ -118,7 +118,7 @@ func BuildAuthEndpointPayload(sdkUtilitiesAuthMessage string) (*sdkutilities.Aut
 		if sdkUtilitiesAuthMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesAuthMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
 			}
 		}
 	}
@@ -129,6 +129,9 @@ func BuildAuthEndpointPayload(sdkUtilitiesAuthMessage string) (*sdkutilities.Aut
 			v.Payload[i] = &sdkutilities.TracePayload{
 				Key:   val.Key,
 				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
 			}
 		}
 	}
@@ -145,7 +148,7 @@ func BuildBankPayload(sdkUtilitiesBankMessage string) (*sdkutilities.BankPayload
 		if sdkUtilitiesBankMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesBankMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
 			}
 		}
 	}
@@ -156,6 +159,9 @@ func BuildBankPayload(sdkUtilitiesBankMessage string) (*sdkutilities.BankPayload
 			v.Payload[i] = &sdkutilities.TracePayload{
 				Key:   val.Key,
 				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
 			}
 		}
 	}
@@ -172,7 +178,7 @@ func BuildDelegationEndpointPayload(sdkUtilitiesDelegationMessage string) (*sdku
 		if sdkUtilitiesDelegationMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesDelegationMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
 			}
 		}
 	}
@@ -183,6 +189,9 @@ func BuildDelegationEndpointPayload(sdkUtilitiesDelegationMessage string) (*sdku
 			v.Payload[i] = &sdkutilities.TracePayload{
 				Key:   val.Key,
 				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
 			}
 		}
 	}
@@ -199,7 +208,7 @@ func BuildIbcChannelPayload(sdkUtilitiesIbcChannelMessage string) (*sdkutilities
 		if sdkUtilitiesIbcChannelMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesIbcChannelMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
 			}
 		}
 	}
@@ -210,6 +219,9 @@ func BuildIbcChannelPayload(sdkUtilitiesIbcChannelMessage string) (*sdkutilities
 			v.Payload[i] = &sdkutilities.TracePayload{
 				Key:   val.Key,
 				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
 			}
 		}
 	}
@@ -226,7 +238,7 @@ func BuildIbcClientStatePayload(sdkUtilitiesIbcClientStateMessage string) (*sdku
 		if sdkUtilitiesIbcClientStateMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesIbcClientStateMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
 			}
 		}
 	}
@@ -237,6 +249,9 @@ func BuildIbcClientStatePayload(sdkUtilitiesIbcClientStateMessage string) (*sdku
 			v.Payload[i] = &sdkutilities.TracePayload{
 				Key:   val.Key,
 				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
 			}
 		}
 	}
@@ -253,7 +268,7 @@ func BuildIbcConnectionPayload(sdkUtilitiesIbcConnectionMessage string) (*sdkuti
 		if sdkUtilitiesIbcConnectionMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesIbcConnectionMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
 			}
 		}
 	}
@@ -264,6 +279,9 @@ func BuildIbcConnectionPayload(sdkUtilitiesIbcConnectionMessage string) (*sdkuti
 			v.Payload[i] = &sdkutilities.TracePayload{
 				Key:   val.Key,
 				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
 			}
 		}
 	}
@@ -280,7 +298,7 @@ func BuildIbcDenomTracePayload(sdkUtilitiesIbcDenomTraceMessage string) (*sdkuti
 		if sdkUtilitiesIbcDenomTraceMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesIbcDenomTraceMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
 			}
 		}
 	}
@@ -291,6 +309,9 @@ func BuildIbcDenomTracePayload(sdkUtilitiesIbcDenomTraceMessage string) (*sdkuti
 			v.Payload[i] = &sdkutilities.TracePayload{
 				Key:   val.Key,
 				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
 			}
 		}
 	}

@@ -121,6 +121,9 @@ func NewAuthRequest(payload *sdkutilities.AuthPayload) *sdk_utilitiespb.AuthRequ
 				Key:   val.Key,
 				Value: val.Value,
 			}
+			if val.OperationType != nil {
+				message.Payload[i].OperationType = *val.OperationType
+			}
 		}
 	}
 	return message
@@ -156,6 +159,9 @@ func NewBankRequest(payload *sdkutilities.BankPayload) *sdk_utilitiespb.BankRequ
 				Key:   val.Key,
 				Value: val.Value,
 			}
+			if val.OperationType != nil {
+				message.Payload[i].OperationType = *val.OperationType
+			}
 		}
 	}
 	return message
@@ -185,6 +191,9 @@ func NewDelegationRequest(payload *sdkutilities.DelegationPayload) *sdk_utilitie
 			message.Payload[i] = &sdk_utilitiespb.TracePayload{
 				Key:   val.Key,
 				Value: val.Value,
+			}
+			if val.OperationType != nil {
+				message.Payload[i].OperationType = *val.OperationType
 			}
 		}
 	}
@@ -220,6 +229,9 @@ func NewIbcChannelRequest(payload *sdkutilities.IbcChannelPayload) *sdk_utilitie
 			message.Payload[i] = &sdk_utilitiespb.TracePayload{
 				Key:   val.Key,
 				Value: val.Value,
+			}
+			if val.OperationType != nil {
+				message.Payload[i].OperationType = *val.OperationType
 			}
 		}
 	}
@@ -265,6 +277,9 @@ func NewIbcClientStateRequest(payload *sdkutilities.IbcClientStatePayload) *sdk_
 				Key:   val.Key,
 				Value: val.Value,
 			}
+			if val.OperationType != nil {
+				message.Payload[i].OperationType = *val.OperationType
+			}
 		}
 	}
 	return message
@@ -302,6 +317,9 @@ func NewIbcConnectionRequest(payload *sdkutilities.IbcConnectionPayload) *sdk_ut
 			message.Payload[i] = &sdk_utilitiespb.TracePayload{
 				Key:   val.Key,
 				Value: val.Value,
+			}
+			if val.OperationType != nil {
+				message.Payload[i].OperationType = *val.OperationType
 			}
 		}
 	}
@@ -343,6 +361,9 @@ func NewIbcDenomTraceRequest(payload *sdkutilities.IbcDenomTracePayload) *sdk_ut
 			message.Payload[i] = &sdk_utilitiespb.TracePayload{
 				Key:   val.Key,
 				Value: val.Value,
+			}
+			if val.OperationType != nil {
+				message.Payload[i].OperationType = *val.OperationType
 			}
 		}
 	}

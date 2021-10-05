@@ -125,6 +125,9 @@ func NewAuthPayload(message *sdk_utilitiespb.AuthRequest) *sdkutilities.AuthPayl
 				Key:   val.Key,
 				Value: val.Value,
 			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
+			}
 		}
 	}
 	return v
@@ -161,6 +164,9 @@ func NewBankPayload(message *sdk_utilitiespb.BankRequest) *sdkutilities.BankPayl
 				Key:   val.Key,
 				Value: val.Value,
 			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
+			}
 		}
 	}
 	return v
@@ -191,6 +197,9 @@ func NewDelegationPayload(message *sdk_utilitiespb.DelegationRequest) *sdkutilit
 			v.Payload[i] = &sdkutilities.TracePayload{
 				Key:   val.Key,
 				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
 			}
 		}
 	}
@@ -227,6 +236,9 @@ func NewIbcChannelPayload(message *sdk_utilitiespb.IbcChannelRequest) *sdkutilit
 			v.Payload[i] = &sdkutilities.TracePayload{
 				Key:   val.Key,
 				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
 			}
 		}
 	}
@@ -273,6 +285,9 @@ func NewIbcClientStatePayload(message *sdk_utilitiespb.IbcClientStateRequest) *s
 				Key:   val.Key,
 				Value: val.Value,
 			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
+			}
 		}
 	}
 	return v
@@ -311,6 +326,9 @@ func NewIbcConnectionPayload(message *sdk_utilitiespb.IbcConnectionRequest) *sdk
 			v.Payload[i] = &sdkutilities.TracePayload{
 				Key:   val.Key,
 				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
 			}
 		}
 	}
@@ -354,6 +372,9 @@ func NewIbcDenomTracePayload(message *sdk_utilitiespb.IbcDenomTraceRequest) *sdk
 				Key:   val.Key,
 				Value: val.Value,
 			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
+			}
 		}
 	}
 	return v
@@ -392,6 +413,109 @@ func ValidateBroadcastTxRequest(message *sdk_utilitiespb.BroadcastTxRequest) (er
 func ValidateTxMetadataRequest(message *sdk_utilitiespb.TxMetadataRequest) (err error) {
 	if message.TxBytes == nil {
 		err = goa.MergeErrors(err, goa.MissingFieldError("txBytes", "message"))
+	}
+	return
+}
+
+// ValidateAuthRequest runs the validations defined on AuthRequest.
+func ValidateAuthRequest(message *sdk_utilitiespb.AuthRequest) (err error) {
+	for _, e := range message.Payload {
+		if e != nil {
+			if err2 := ValidateTracePayload(e); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
+	}
+	return
+}
+
+// ValidateTracePayload runs the validations defined on TracePayload.
+func ValidateTracePayload(message *sdk_utilitiespb.TracePayload) (err error) {
+	if message.Key == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("key", "message"))
+	}
+	if message.Value == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("value", "message"))
+	}
+	if message.OperationType != "" {
+		if !(message.OperationType == "write" || message.OperationType == "delete" || message.OperationType == "read" || message.OperationType == "iterRange") {
+			err = goa.MergeErrors(err, goa.InvalidEnumValueError("message.operationType", message.OperationType, []interface{}{"write", "delete", "read", "iterRange"}))
+		}
+	}
+	return
+}
+
+// ValidateBankRequest runs the validations defined on BankRequest.
+func ValidateBankRequest(message *sdk_utilitiespb.BankRequest) (err error) {
+	for _, e := range message.Payload {
+		if e != nil {
+			if err2 := ValidateTracePayload(e); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
+	}
+	return
+}
+
+// ValidateDelegationRequest runs the validations defined on DelegationRequest.
+func ValidateDelegationRequest(message *sdk_utilitiespb.DelegationRequest) (err error) {
+	for _, e := range message.Payload {
+		if e != nil {
+			if err2 := ValidateTracePayload(e); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
+	}
+	return
+}
+
+// ValidateIbcChannelRequest runs the validations defined on IbcChannelRequest.
+func ValidateIbcChannelRequest(message *sdk_utilitiespb.IbcChannelRequest) (err error) {
+	for _, e := range message.Payload {
+		if e != nil {
+			if err2 := ValidateTracePayload(e); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
+	}
+	return
+}
+
+// ValidateIbcClientStateRequest runs the validations defined on
+// IbcClientStateRequest.
+func ValidateIbcClientStateRequest(message *sdk_utilitiespb.IbcClientStateRequest) (err error) {
+	for _, e := range message.Payload {
+		if e != nil {
+			if err2 := ValidateTracePayload(e); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
+	}
+	return
+}
+
+// ValidateIbcConnectionRequest runs the validations defined on
+// IbcConnectionRequest.
+func ValidateIbcConnectionRequest(message *sdk_utilitiespb.IbcConnectionRequest) (err error) {
+	for _, e := range message.Payload {
+		if e != nil {
+			if err2 := ValidateTracePayload(e); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
+	}
+	return
+}
+
+// ValidateIbcDenomTraceRequest runs the validations defined on
+// IbcDenomTraceRequest.
+func ValidateIbcDenomTraceRequest(message *sdk_utilitiespb.IbcDenomTraceRequest) (err error) {
+	for _, e := range message.Payload {
+		if e != nil {
+			if err2 := ValidateTracePayload(e); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
 	}
 	return
 }

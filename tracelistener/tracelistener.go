@@ -6,11 +6,31 @@ import (
 
 var serviceDefinitions = []func(){}
 
+// Operation is a kind of operations a TraceWatcher observes.
+type Operation string
+
+var (
+	// WriteOp is a write trace operation
+	WriteOp Operation = "write"
+
+	// DeleteOp is a write trace operation
+	DeleteOp Operation = "delete"
+
+	// ReadOp is a write trace operation
+	ReadOp Operation = "read"
+
+	// IterRangeOp is a write trace operation
+	IterRangeOp Operation = "iterRange"
+)
+
 var TracePayload = Type("TracePayload", func() {
 	Description("Data read off Cosmos SDK tracing facility")
 
 	Field(1, "key", Bytes)
 	Field(2, "value", Bytes)
+	Field(3, "operationType", func() {
+		Enum(WriteOp, DeleteOp, ReadOp, IterRangeOp)
+	})
 
 	Required("key", "value")
 })

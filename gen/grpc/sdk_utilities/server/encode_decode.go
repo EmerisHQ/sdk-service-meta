@@ -164,6 +164,9 @@ func DecodeAuthEndpointRequest(ctx context.Context, v interface{}, md metadata.M
 		if message, ok = v.(*sdk_utilitiespb.AuthRequest); !ok {
 			return nil, goagrpc.ErrInvalidType("sdk-utilities", "auth", "*sdk_utilitiespb.AuthRequest", v)
 		}
+		if err := ValidateAuthRequest(message); err != nil {
+			return nil, err
+		}
 	}
 	var payload *sdkutilities.AuthPayload
 	{
@@ -193,6 +196,9 @@ func DecodeBankRequest(ctx context.Context, v interface{}, md metadata.MD) (inte
 	{
 		if message, ok = v.(*sdk_utilitiespb.BankRequest); !ok {
 			return nil, goagrpc.ErrInvalidType("sdk-utilities", "bank", "*sdk_utilitiespb.BankRequest", v)
+		}
+		if err := ValidateBankRequest(message); err != nil {
+			return nil, err
 		}
 	}
 	var payload *sdkutilities.BankPayload
@@ -224,6 +230,9 @@ func DecodeDelegationEndpointRequest(ctx context.Context, v interface{}, md meta
 		if message, ok = v.(*sdk_utilitiespb.DelegationRequest); !ok {
 			return nil, goagrpc.ErrInvalidType("sdk-utilities", "delegation", "*sdk_utilitiespb.DelegationRequest", v)
 		}
+		if err := ValidateDelegationRequest(message); err != nil {
+			return nil, err
+		}
 	}
 	var payload *sdkutilities.DelegationPayload
 	{
@@ -253,6 +262,9 @@ func DecodeIbcChannelRequest(ctx context.Context, v interface{}, md metadata.MD)
 	{
 		if message, ok = v.(*sdk_utilitiespb.IbcChannelRequest); !ok {
 			return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_channel", "*sdk_utilitiespb.IbcChannelRequest", v)
+		}
+		if err := ValidateIbcChannelRequest(message); err != nil {
+			return nil, err
 		}
 	}
 	var payload *sdkutilities.IbcChannelPayload
@@ -284,6 +296,9 @@ func DecodeIbcClientStateRequest(ctx context.Context, v interface{}, md metadata
 		if message, ok = v.(*sdk_utilitiespb.IbcClientStateRequest); !ok {
 			return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_client_state", "*sdk_utilitiespb.IbcClientStateRequest", v)
 		}
+		if err := ValidateIbcClientStateRequest(message); err != nil {
+			return nil, err
+		}
 	}
 	var payload *sdkutilities.IbcClientStatePayload
 	{
@@ -314,6 +329,9 @@ func DecodeIbcConnectionRequest(ctx context.Context, v interface{}, md metadata.
 		if message, ok = v.(*sdk_utilitiespb.IbcConnectionRequest); !ok {
 			return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_connection", "*sdk_utilitiespb.IbcConnectionRequest", v)
 		}
+		if err := ValidateIbcConnectionRequest(message); err != nil {
+			return nil, err
+		}
 	}
 	var payload *sdkutilities.IbcConnectionPayload
 	{
@@ -343,6 +361,9 @@ func DecodeIbcDenomTraceRequest(ctx context.Context, v interface{}, md metadata.
 	{
 		if message, ok = v.(*sdk_utilitiespb.IbcDenomTraceRequest); !ok {
 			return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_denom_trace", "*sdk_utilitiespb.IbcDenomTraceRequest", v)
+		}
+		if err := ValidateIbcDenomTraceRequest(message); err != nil {
+			return nil, err
 		}
 	}
 	var payload *sdkutilities.IbcDenomTracePayload

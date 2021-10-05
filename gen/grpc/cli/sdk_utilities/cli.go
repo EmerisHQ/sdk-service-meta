@@ -29,8 +29,8 @@ func UsageCommands() string {
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` sdk-utilities supply --message '{
-      "chainName": "Atque dolores esse dicta velit velit dicta.",
-      "port": 8651610214817669303
+      "chainName": "Sed enim atque dolores esse dicta.",
+      "port": 7124529205354848620
    }'` + "\n" +
 		""
 }
@@ -254,8 +254,8 @@ Supply implements supply.
 
 Example:
     %[1]s sdk-utilities supply --message '{
-      "chainName": "Atque dolores esse dicta velit velit dicta.",
-      "port": 8651610214817669303
+      "chainName": "Sed enim atque dolores esse dicta.",
+      "port": 7124529205354848620
    }'
 `, os.Args[0])
 }
@@ -268,9 +268,9 @@ QueryTx implements queryTx.
 
 Example:
     %[1]s sdk-utilities query-tx --message '{
-      "chainName": "Ea est sed laborum laborum quam.",
-      "hash": "Natus animi adipisci.",
-      "port": 5821463860621388109
+      "chainName": "Explicabo consequatur est ea est.",
+      "hash": "Laborum quam ducimus consequatur.",
+      "port": 3065905437504226774
    }'
 `, os.Args[0])
 }
@@ -283,9 +283,9 @@ BroadcastTx implements broadcastTx.
 
 Example:
     %[1]s sdk-utilities broadcast-tx --message '{
-      "chainName": "Omnis et iure.",
-      "port": 6610216662945158602,
-      "txBytes": "QWNjdXNhbnRpdW0gc3VudCByZW0gdm9sdXB0YXMgc2VkLg=="
+      "chainName": "Officiis alias.",
+      "port": 5526397674056279747,
+      "txBytes": "UmVtIHZvbHVwdGFzIHNlZCBpZCBhbWV0IGRpY3RhLg=="
    }'
 `, os.Args[0])
 }
@@ -314,10 +314,12 @@ Example:
       "payload": [
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          }
       ]
@@ -336,10 +338,12 @@ Example:
       "payload": [
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          }
       ]
@@ -358,14 +362,17 @@ Example:
       "payload": [
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          }
       ]
@@ -384,18 +391,22 @@ Example:
       "payload": [
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          }
       ]
@@ -414,14 +425,17 @@ Example:
       "payload": [
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          }
       ]
@@ -440,18 +454,22 @@ Example:
       "payload": [
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          }
       ]
@@ -470,18 +488,22 @@ Example:
       "payload": [
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          }
       ]
