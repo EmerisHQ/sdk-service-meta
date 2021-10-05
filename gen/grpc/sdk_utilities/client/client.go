@@ -94,14 +94,14 @@ func (c *Client) TxMetadata() goa.Endpoint {
 	}
 }
 
-// Auth calls the "Auth" function in sdk_utilitiespb.SdkUtilitiesClient
-// interface.
-func (c *Client) Auth() goa.Endpoint {
+// AuthEndpoint calls the "AuthEndpoint" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) AuthEndpoint() goa.Endpoint {
 	return func(ctx context.Context, v interface{}) (interface{}, error) {
 		inv := goagrpc.NewInvoker(
-			BuildAuthFunc(c.grpccli, c.opts...),
-			EncodeAuthRequest,
-			DecodeAuthResponse)
+			BuildAuthEndpointFunc(c.grpccli, c.opts...),
+			EncodeAuthEndpointRequest,
+			DecodeAuthEndpointResponse)
 		res, err := inv.Invoke(ctx, v)
 		if err != nil {
 			return nil, goa.Fault(err.Error())
@@ -126,14 +126,14 @@ func (c *Client) Bank() goa.Endpoint {
 	}
 }
 
-// Delegation calls the "Delegation" function in
+// DelegationEndpoint calls the "DelegationEndpoint" function in
 // sdk_utilitiespb.SdkUtilitiesClient interface.
-func (c *Client) Delegation() goa.Endpoint {
+func (c *Client) DelegationEndpoint() goa.Endpoint {
 	return func(ctx context.Context, v interface{}) (interface{}, error) {
 		inv := goagrpc.NewInvoker(
-			BuildDelegationFunc(c.grpccli, c.opts...),
-			EncodeDelegationRequest,
-			DecodeDelegationResponse)
+			BuildDelegationEndpointFunc(c.grpccli, c.opts...),
+			EncodeDelegationEndpointRequest,
+			DecodeDelegationEndpointResponse)
 		res, err := inv.Invoke(ctx, v)
 		if err != nil {
 			return nil, goa.Fault(err.Error())

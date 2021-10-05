@@ -22,11 +22,11 @@ service SdkUtilities {
 	// TxMetadata implements txMetadata.
 	rpc TxMetadata (TxMetadataRequest) returns (TxMetadataResponse);
 	// Auth implements auth.
-	rpc Auth (AuthRequest) returns (AuthResponse);
+	rpc AuthEndpoint (AuthRequest) returns (AuthResponse);
 	// Bank implements bank.
 	rpc Bank (BankRequest) returns (BankResponse);
 	// Delegation implements delegation.
-	rpc Delegation (DelegationRequest) returns (DelegationResponse);
+	rpc DelegationEndpoint (DelegationRequest) returns (DelegationResponse);
 	// IbcChannel implements ibc_channel.
 	rpc IbcChannel (IbcChannelRequest) returns (IbcChannelResponse);
 	// IbcClientState implements ibc_client_state.
@@ -109,7 +109,7 @@ message IBCHeight {
 }
 
 message AuthRequest {
-	TracePayload payload = 1;
+	repeated TracePayload payload = 1;
 }
 // Data read off Cosmos SDK tracing facility
 message TracePayload {
@@ -118,13 +118,17 @@ message TracePayload {
 }
 
 message AuthResponse {
+	repeated Auth field = 1;
+}
+// Account as unmarshaled from trace bytes
+message Auth {
 	string address = 1;
 	uint64 sequence_number = 2;
 	uint64 account_number = 3;
 }
 
 message BankRequest {
-	TracePayload payload = 1;
+	repeated TracePayload payload = 1;
 }
 
 message BankResponse {
@@ -138,20 +142,28 @@ message Balance {
 }
 
 message DelegationRequest {
-	TracePayload payload = 1;
+	repeated TracePayload payload = 1;
 }
 
 message DelegationResponse {
+	repeated Delegation field = 1;
+}
+// Staking delegation as unmarshaled from trace bytes
+message Delegation {
 	string delegator = 1;
 	string validator = 2;
 	string amount = 3;
 }
 
 message IbcChannelRequest {
-	TracePayload payload = 1;
+	repeated TracePayload payload = 1;
 }
 
 message IbcChannelResponse {
+	repeated IBCChannel field = 1;
+}
+// IBC channel as unmarshaled from trace bytes
+message IBCChannel {
 	string channel_id = 1;
 	string counter_channel_id = 2;
 	repeated string hops = 3;
@@ -160,10 +172,14 @@ message IbcChannelResponse {
 }
 
 message IbcClientStateRequest {
-	TracePayload payload = 1;
+	repeated TracePayload payload = 1;
 }
 
 message IbcClientStateResponse {
+	repeated IBCClientState field = 1;
+}
+// IBC client state as unmarshaled from trace bytes
+message IBCClientState {
 	string chain_id = 1;
 	string client_id = 2;
 	uint64 latest_height = 3;
@@ -171,10 +187,14 @@ message IbcClientStateResponse {
 }
 
 message IbcConnectionRequest {
-	TracePayload payload = 1;
+	repeated TracePayload payload = 1;
 }
 
 message IbcConnectionResponse {
+	repeated IBCConnection field = 1;
+}
+// IBC connection as unmarshaled from trace bytes
+message IBCConnection {
 	string connection_id = 1;
 	string client_id = 2;
 	string state = 3;
@@ -183,10 +203,14 @@ message IbcConnectionResponse {
 }
 
 message IbcDenomTraceRequest {
-	TracePayload payload = 1;
+	repeated TracePayload payload = 1;
 }
 
 message IbcDenomTraceResponse {
+	repeated IBCDenomTrace field = 1;
+}
+// IBC denomination trace as unmarshaled from trace bytes
+message IBCDenomTrace {
 	string path = 1;
 	string base_denom = 2;
 	string hash = 3;

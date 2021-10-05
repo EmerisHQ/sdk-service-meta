@@ -19,10 +19,10 @@ var AuthDesignType = Type("Auth", func() {
 func authDesign() {
 	Method("auth", func() {
 		Payload(func() {
-			Field(1, "payload", TracePayload)
+			Field(1, "payload", ArrayOf(TracePayload))
 		})
 
-		Result(AuthDesignType)
+		Result(ArrayOf(AuthDesignType))
 
 		GRPC(func() {})
 	})

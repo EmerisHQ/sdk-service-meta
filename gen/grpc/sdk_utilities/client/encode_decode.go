@@ -161,22 +161,23 @@ func DecodeTxMetadataResponse(ctx context.Context, v interface{}, hdr, trlr meta
 	return res, nil
 }
 
-// BuildAuthFunc builds the remote method to invoke for "sdk-utilities" service
-// "auth" endpoint.
-func BuildAuthFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+// BuildAuthEndpointFunc builds the remote method to invoke for "sdk-utilities"
+// service "auth" endpoint.
+func BuildAuthEndpointFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
 	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
 		for _, opt := range cliopts {
 			opts = append(opts, opt)
 		}
 		if reqpb != nil {
-			return grpccli.Auth(ctx, reqpb.(*sdk_utilitiespb.AuthRequest), opts...)
+			return grpccli.AuthEndpoint(ctx, reqpb.(*sdk_utilitiespb.AuthRequest), opts...)
 		}
-		return grpccli.Auth(ctx, &sdk_utilitiespb.AuthRequest{}, opts...)
+		return grpccli.AuthEndpoint(ctx, &sdk_utilitiespb.AuthRequest{}, opts...)
 	}
 }
 
-// EncodeAuthRequest encodes requests sent to sdk-utilities auth endpoint.
-func EncodeAuthRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+// EncodeAuthEndpointRequest encodes requests sent to sdk-utilities auth
+// endpoint.
+func EncodeAuthEndpointRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
 	payload, ok := v.(*sdkutilities.AuthPayload)
 	if !ok {
 		return nil, goagrpc.ErrInvalidType("sdk-utilities", "auth", "*sdkutilities.AuthPayload", v)
@@ -184,8 +185,9 @@ func EncodeAuthRequest(ctx context.Context, v interface{}, md *metadata.MD) (int
 	return NewAuthRequest(payload), nil
 }
 
-// DecodeAuthResponse decodes responses from the sdk-utilities auth endpoint.
-func DecodeAuthResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+// DecodeAuthEndpointResponse decodes responses from the sdk-utilities auth
+// endpoint.
+func DecodeAuthEndpointResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
 	message, ok := v.(*sdk_utilitiespb.AuthResponse)
 	if !ok {
 		return nil, goagrpc.ErrInvalidType("sdk-utilities", "auth", "*sdk_utilitiespb.AuthResponse", v)
@@ -227,23 +229,23 @@ func DecodeBankResponse(ctx context.Context, v interface{}, hdr, trlr metadata.M
 	return res, nil
 }
 
-// BuildDelegationFunc builds the remote method to invoke for "sdk-utilities"
-// service "delegation" endpoint.
-func BuildDelegationFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+// BuildDelegationEndpointFunc builds the remote method to invoke for
+// "sdk-utilities" service "delegation" endpoint.
+func BuildDelegationEndpointFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
 	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
 		for _, opt := range cliopts {
 			opts = append(opts, opt)
 		}
 		if reqpb != nil {
-			return grpccli.Delegation(ctx, reqpb.(*sdk_utilitiespb.DelegationRequest), opts...)
+			return grpccli.DelegationEndpoint(ctx, reqpb.(*sdk_utilitiespb.DelegationRequest), opts...)
 		}
-		return grpccli.Delegation(ctx, &sdk_utilitiespb.DelegationRequest{}, opts...)
+		return grpccli.DelegationEndpoint(ctx, &sdk_utilitiespb.DelegationRequest{}, opts...)
 	}
 }
 
-// EncodeDelegationRequest encodes requests sent to sdk-utilities delegation
-// endpoint.
-func EncodeDelegationRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+// EncodeDelegationEndpointRequest encodes requests sent to sdk-utilities
+// delegation endpoint.
+func EncodeDelegationEndpointRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
 	payload, ok := v.(*sdkutilities.DelegationPayload)
 	if !ok {
 		return nil, goagrpc.ErrInvalidType("sdk-utilities", "delegation", "*sdkutilities.DelegationPayload", v)
@@ -251,9 +253,9 @@ func EncodeDelegationRequest(ctx context.Context, v interface{}, md *metadata.MD
 	return NewDelegationRequest(payload), nil
 }
 
-// DecodeDelegationResponse decodes responses from the sdk-utilities delegation
-// endpoint.
-func DecodeDelegationResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+// DecodeDelegationEndpointResponse decodes responses from the sdk-utilities
+// delegation endpoint.
+func DecodeDelegationEndpointResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
 	message, ok := v.(*sdk_utilitiespb.DelegationResponse)
 	if !ok {
 		return nil, goagrpc.ErrInvalidType("sdk-utilities", "delegation", "*sdk_utilitiespb.DelegationResponse", v)

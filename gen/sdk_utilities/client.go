@@ -15,33 +15,33 @@ import (
 
 // Client is the "sdk-utilities" service client.
 type Client struct {
-	SupplyEndpoint         goa.Endpoint
-	QueryTxEndpoint        goa.Endpoint
-	BroadcastTxEndpoint    goa.Endpoint
-	TxMetadataEndpoint     goa.Endpoint
-	AuthEndpoint           goa.Endpoint
-	BankEndpoint           goa.Endpoint
-	DelegationEndpoint     goa.Endpoint
-	IbcChannelEndpoint     goa.Endpoint
-	IbcClientStateEndpoint goa.Endpoint
-	IbcConnectionEndpoint  goa.Endpoint
-	IbcDenomTraceEndpoint  goa.Endpoint
+	SupplyEndpoint             goa.Endpoint
+	QueryTxEndpoint            goa.Endpoint
+	BroadcastTxEndpoint        goa.Endpoint
+	TxMetadataEndpoint         goa.Endpoint
+	AuthEndpointEndpoint       goa.Endpoint
+	BankEndpoint               goa.Endpoint
+	DelegationEndpointEndpoint goa.Endpoint
+	IbcChannelEndpoint         goa.Endpoint
+	IbcClientStateEndpoint     goa.Endpoint
+	IbcConnectionEndpoint      goa.Endpoint
+	IbcDenomTraceEndpoint      goa.Endpoint
 }
 
 // NewClient initializes a "sdk-utilities" service client given the endpoints.
-func NewClient(supply, queryTx, broadcastTx, txMetadata, auth, bank, delegation, ibcChannel, ibcClientState, ibcConnection, ibcDenomTrace goa.Endpoint) *Client {
+func NewClient(supply, queryTx, broadcastTx, txMetadata, authEndpoint, bank, delegationEndpoint, ibcChannel, ibcClientState, ibcConnection, ibcDenomTrace goa.Endpoint) *Client {
 	return &Client{
-		SupplyEndpoint:         supply,
-		QueryTxEndpoint:        queryTx,
-		BroadcastTxEndpoint:    broadcastTx,
-		TxMetadataEndpoint:     txMetadata,
-		AuthEndpoint:           auth,
-		BankEndpoint:           bank,
-		DelegationEndpoint:     delegation,
-		IbcChannelEndpoint:     ibcChannel,
-		IbcClientStateEndpoint: ibcClientState,
-		IbcConnectionEndpoint:  ibcConnection,
-		IbcDenomTraceEndpoint:  ibcDenomTrace,
+		SupplyEndpoint:             supply,
+		QueryTxEndpoint:            queryTx,
+		BroadcastTxEndpoint:        broadcastTx,
+		TxMetadataEndpoint:         txMetadata,
+		AuthEndpointEndpoint:       authEndpoint,
+		BankEndpoint:               bank,
+		DelegationEndpointEndpoint: delegationEndpoint,
+		IbcChannelEndpoint:         ibcChannel,
+		IbcClientStateEndpoint:     ibcClientState,
+		IbcConnectionEndpoint:      ibcConnection,
+		IbcDenomTraceEndpoint:      ibcDenomTrace,
 	}
 }
 
@@ -85,14 +85,14 @@ func (c *Client) TxMetadata(ctx context.Context, p *TxMetadataPayload) (res *TxM
 	return ires.(*TxMessagesMetadata), nil
 }
 
-// Auth calls the "auth" endpoint of the "sdk-utilities" service.
-func (c *Client) Auth(ctx context.Context, p *AuthPayload) (res *Auth2, err error) {
+// AuthEndpoint calls the "auth" endpoint of the "sdk-utilities" service.
+func (c *Client) AuthEndpoint(ctx context.Context, p *AuthPayload) (res []*Auth, err error) {
 	var ires interface{}
-	ires, err = c.AuthEndpoint(ctx, p)
+	ires, err = c.AuthEndpointEndpoint(ctx, p)
 	if err != nil {
 		return
 	}
-	return ires.(*Auth2), nil
+	return ires.([]*Auth), nil
 }
 
 // Bank calls the "bank" endpoint of the "sdk-utilities" service.
@@ -105,55 +105,56 @@ func (c *Client) Bank(ctx context.Context, p *BankPayload) (res []*Balance, err 
 	return ires.([]*Balance), nil
 }
 
-// Delegation calls the "delegation" endpoint of the "sdk-utilities" service.
-func (c *Client) Delegation(ctx context.Context, p *DelegationPayload) (res *Delegation2, err error) {
+// DelegationEndpoint calls the "delegation" endpoint of the "sdk-utilities"
+// service.
+func (c *Client) DelegationEndpoint(ctx context.Context, p *DelegationPayload) (res []*Delegation, err error) {
 	var ires interface{}
-	ires, err = c.DelegationEndpoint(ctx, p)
+	ires, err = c.DelegationEndpointEndpoint(ctx, p)
 	if err != nil {
 		return
 	}
-	return ires.(*Delegation2), nil
+	return ires.([]*Delegation), nil
 }
 
 // IbcChannel calls the "ibc_channel" endpoint of the "sdk-utilities" service.
-func (c *Client) IbcChannel(ctx context.Context, p *IbcChannelPayload) (res *IBCChannel, err error) {
+func (c *Client) IbcChannel(ctx context.Context, p *IbcChannelPayload) (res []*IBCChannel, err error) {
 	var ires interface{}
 	ires, err = c.IbcChannelEndpoint(ctx, p)
 	if err != nil {
 		return
 	}
-	return ires.(*IBCChannel), nil
+	return ires.([]*IBCChannel), nil
 }
 
 // IbcClientState calls the "ibc_client_state" endpoint of the "sdk-utilities"
 // service.
-func (c *Client) IbcClientState(ctx context.Context, p *IbcClientStatePayload) (res *IBCClientState, err error) {
+func (c *Client) IbcClientState(ctx context.Context, p *IbcClientStatePayload) (res []*IBCClientState, err error) {
 	var ires interface{}
 	ires, err = c.IbcClientStateEndpoint(ctx, p)
 	if err != nil {
 		return
 	}
-	return ires.(*IBCClientState), nil
+	return ires.([]*IBCClientState), nil
 }
 
 // IbcConnection calls the "ibc_connection" endpoint of the "sdk-utilities"
 // service.
-func (c *Client) IbcConnection(ctx context.Context, p *IbcConnectionPayload) (res *IBCConnection, err error) {
+func (c *Client) IbcConnection(ctx context.Context, p *IbcConnectionPayload) (res []*IBCConnection, err error) {
 	var ires interface{}
 	ires, err = c.IbcConnectionEndpoint(ctx, p)
 	if err != nil {
 		return
 	}
-	return ires.(*IBCConnection), nil
+	return ires.([]*IBCConnection), nil
 }
 
 // IbcDenomTrace calls the "ibc_denom_trace" endpoint of the "sdk-utilities"
 // service.
-func (c *Client) IbcDenomTrace(ctx context.Context, p *IbcDenomTracePayload) (res *IBCDenomTrace, err error) {
+func (c *Client) IbcDenomTrace(ctx context.Context, p *IbcDenomTracePayload) (res []*IBCDenomTrace, err error) {
 	var ires interface{}
 	ires, err = c.IbcDenomTraceEndpoint(ctx, p)
 	if err != nil {
 		return
 	}
-	return ires.(*IBCDenomTrace), nil
+	return ires.([]*IBCDenomTrace), nil
 }

@@ -29,8 +29,8 @@ func UsageCommands() string {
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` sdk-utilities supply --message '{
-      "chainName": "Perferendis quisquam sint quia et magnam.",
-      "port": 6846816609772976668
+      "chainName": "Atque dolores esse dicta velit velit dicta.",
+      "port": 8651610214817669303
    }'` + "\n" +
 		""
 }
@@ -192,14 +192,14 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 				endpoint = c.TxMetadata()
 				data, err = sdkutilitiesc.BuildTxMetadataPayload(*sdkUtilitiesTxMetadataMessageFlag)
 			case "auth":
-				endpoint = c.Auth()
-				data, err = sdkutilitiesc.BuildAuthPayload(*sdkUtilitiesAuthMessageFlag)
+				endpoint = c.AuthEndpoint()
+				data, err = sdkutilitiesc.BuildAuthEndpointPayload(*sdkUtilitiesAuthMessageFlag)
 			case "bank":
 				endpoint = c.Bank()
 				data, err = sdkutilitiesc.BuildBankPayload(*sdkUtilitiesBankMessageFlag)
 			case "delegation":
-				endpoint = c.Delegation()
-				data, err = sdkutilitiesc.BuildDelegationPayload(*sdkUtilitiesDelegationMessageFlag)
+				endpoint = c.DelegationEndpoint()
+				data, err = sdkutilitiesc.BuildDelegationEndpointPayload(*sdkUtilitiesDelegationMessageFlag)
 			case "ibc-channel":
 				endpoint = c.IbcChannel()
 				data, err = sdkutilitiesc.BuildIbcChannelPayload(*sdkUtilitiesIbcChannelMessageFlag)
@@ -254,8 +254,8 @@ Supply implements supply.
 
 Example:
     %[1]s sdk-utilities supply --message '{
-      "chainName": "Perferendis quisquam sint quia et magnam.",
-      "port": 6846816609772976668
+      "chainName": "Atque dolores esse dicta velit velit dicta.",
+      "port": 8651610214817669303
    }'
 `, os.Args[0])
 }
@@ -268,9 +268,9 @@ QueryTx implements queryTx.
 
 Example:
     %[1]s sdk-utilities query-tx --message '{
-      "chainName": "Dolorem quisquam rerum fugiat.",
-      "hash": "Molestias ut non aut temporibus.",
-      "port": 8925443299217281982
+      "chainName": "Ea est sed laborum laborum quam.",
+      "hash": "Natus animi adipisci.",
+      "port": 5821463860621388109
    }'
 `, os.Args[0])
 }
@@ -283,9 +283,9 @@ BroadcastTx implements broadcastTx.
 
 Example:
     %[1]s sdk-utilities broadcast-tx --message '{
-      "chainName": "Velit dicta.",
-      "port": 8651610214817669303,
-      "txBytes": "RXN0IGVhIGVzdC4="
+      "chainName": "Omnis et iure.",
+      "port": 6610216662945158602,
+      "txBytes": "QWNjdXNhbnRpdW0gc3VudCByZW0gdm9sdXB0YXMgc2VkLg=="
    }'
 `, os.Args[0])
 }
@@ -298,7 +298,7 @@ TxMetadata implements txMetadata.
 
 Example:
     %[1]s sdk-utilities tx-metadata --message '{
-      "txBytes": "TmF0dXMgYW5pbWkgYWRpcGlzY2ku"
+      "txBytes": "UXVpcyBjdWxwYSBldCBibGFuZGl0aWlzIHZlcml0YXRpcyBoYXJ1bSBwb3NzaW11cy4="
    }'
 `, os.Args[0])
 }
@@ -311,10 +311,16 @@ Auth implements auth.
 
 Example:
     %[1]s sdk-utilities auth --message '{
-      "payload": {
-         "key": "TW9sZXN0aWFzIGF1dCBzaXQgbm9iaXMgZXQgc2l0IHRlbXBvcmlidXMu",
-         "value": "UmVwcmVoZW5kZXJpdCBxdWlhIHN1c2NpcGl0IHJlcnVtIGNvcnJ1cHRpIHZlcm8u"
-      }
+      "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         }
+      ]
    }'
 `, os.Args[0])
 }
@@ -327,10 +333,16 @@ Bank implements bank.
 
 Example:
     %[1]s sdk-utilities bank --message '{
-      "payload": {
-         "key": "TW9sZXN0aWFzIGF1dCBzaXQgbm9iaXMgZXQgc2l0IHRlbXBvcmlidXMu",
-         "value": "UmVwcmVoZW5kZXJpdCBxdWlhIHN1c2NpcGl0IHJlcnVtIGNvcnJ1cHRpIHZlcm8u"
-      }
+      "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         }
+      ]
    }'
 `, os.Args[0])
 }
@@ -343,10 +355,20 @@ Delegation implements delegation.
 
 Example:
     %[1]s sdk-utilities delegation --message '{
-      "payload": {
-         "key": "TW9sZXN0aWFzIGF1dCBzaXQgbm9iaXMgZXQgc2l0IHRlbXBvcmlidXMu",
-         "value": "UmVwcmVoZW5kZXJpdCBxdWlhIHN1c2NpcGl0IHJlcnVtIGNvcnJ1cHRpIHZlcm8u"
-      }
+      "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         }
+      ]
    }'
 `, os.Args[0])
 }
@@ -359,10 +381,24 @@ IbcChannel implements ibc_channel.
 
 Example:
     %[1]s sdk-utilities ibc-channel --message '{
-      "payload": {
-         "key": "TW9sZXN0aWFzIGF1dCBzaXQgbm9iaXMgZXQgc2l0IHRlbXBvcmlidXMu",
-         "value": "UmVwcmVoZW5kZXJpdCBxdWlhIHN1c2NpcGl0IHJlcnVtIGNvcnJ1cHRpIHZlcm8u"
-      }
+      "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         }
+      ]
    }'
 `, os.Args[0])
 }
@@ -375,10 +411,20 @@ IbcClientState implements ibc_client_state.
 
 Example:
     %[1]s sdk-utilities ibc-client-state --message '{
-      "payload": {
-         "key": "TW9sZXN0aWFzIGF1dCBzaXQgbm9iaXMgZXQgc2l0IHRlbXBvcmlidXMu",
-         "value": "UmVwcmVoZW5kZXJpdCBxdWlhIHN1c2NpcGl0IHJlcnVtIGNvcnJ1cHRpIHZlcm8u"
-      }
+      "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         }
+      ]
    }'
 `, os.Args[0])
 }
@@ -391,10 +437,24 @@ IbcConnection implements ibc_connection.
 
 Example:
     %[1]s sdk-utilities ibc-connection --message '{
-      "payload": {
-         "key": "TW9sZXN0aWFzIGF1dCBzaXQgbm9iaXMgZXQgc2l0IHRlbXBvcmlidXMu",
-         "value": "UmVwcmVoZW5kZXJpdCBxdWlhIHN1c2NpcGl0IHJlcnVtIGNvcnJ1cHRpIHZlcm8u"
-      }
+      "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         }
+      ]
    }'
 `, os.Args[0])
 }
@@ -407,10 +467,24 @@ IbcDenomTrace implements ibc_denom_trace.
 
 Example:
     %[1]s sdk-utilities ibc-denom-trace --message '{
-      "payload": {
-         "key": "TW9sZXN0aWFzIGF1dCBzaXQgbm9iaXMgZXQgc2l0IHRlbXBvcmlidXMu",
-         "value": "UmVwcmVoZW5kZXJpdCBxdWlhIHN1c2NpcGl0IHJlcnVtIGNvcnJ1cHRpIHZlcm8u"
-      }
+      "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         }
+      ]
    }'
 `, os.Args[0])
 }

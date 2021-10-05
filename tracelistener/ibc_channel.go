@@ -21,10 +21,10 @@ var IBCChannelDesignType = Type("IBCChannel", func() {
 func ibcChannelsDesign() {
 	Method("ibc_channel", func() {
 		Payload(func() {
-			Field(1, "payload", TracePayload)
+			Field(1, "payload", ArrayOf(TracePayload))
 		})
 
-		Result(IBCChannelDesignType)
+		Result(ArrayOf(IBCChannelDesignType))
 
 		GRPC(func() {})
 	})

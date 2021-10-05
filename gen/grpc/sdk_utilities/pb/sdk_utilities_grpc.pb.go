@@ -27,11 +27,11 @@ type SdkUtilitiesClient interface {
 	// TxMetadata implements txMetadata.
 	TxMetadata(ctx context.Context, in *TxMetadataRequest, opts ...grpc.CallOption) (*TxMetadataResponse, error)
 	// Auth implements auth.
-	Auth(ctx context.Context, in *AuthRequest, opts ...grpc.CallOption) (*AuthResponse, error)
+	AuthEndpoint(ctx context.Context, in *AuthRequest, opts ...grpc.CallOption) (*AuthResponse, error)
 	// Bank implements bank.
 	Bank(ctx context.Context, in *BankRequest, opts ...grpc.CallOption) (*BankResponse, error)
 	// Delegation implements delegation.
-	Delegation(ctx context.Context, in *DelegationRequest, opts ...grpc.CallOption) (*DelegationResponse, error)
+	DelegationEndpoint(ctx context.Context, in *DelegationRequest, opts ...grpc.CallOption) (*DelegationResponse, error)
 	// IbcChannel implements ibc_channel.
 	IbcChannel(ctx context.Context, in *IbcChannelRequest, opts ...grpc.CallOption) (*IbcChannelResponse, error)
 	// IbcClientState implements ibc_client_state.
@@ -86,9 +86,9 @@ func (c *sdkUtilitiesClient) TxMetadata(ctx context.Context, in *TxMetadataReque
 	return out, nil
 }
 
-func (c *sdkUtilitiesClient) Auth(ctx context.Context, in *AuthRequest, opts ...grpc.CallOption) (*AuthResponse, error) {
+func (c *sdkUtilitiesClient) AuthEndpoint(ctx context.Context, in *AuthRequest, opts ...grpc.CallOption) (*AuthResponse, error) {
 	out := new(AuthResponse)
-	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/Auth", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/AuthEndpoint", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -104,9 +104,9 @@ func (c *sdkUtilitiesClient) Bank(ctx context.Context, in *BankRequest, opts ...
 	return out, nil
 }
 
-func (c *sdkUtilitiesClient) Delegation(ctx context.Context, in *DelegationRequest, opts ...grpc.CallOption) (*DelegationResponse, error) {
+func (c *sdkUtilitiesClient) DelegationEndpoint(ctx context.Context, in *DelegationRequest, opts ...grpc.CallOption) (*DelegationResponse, error) {
 	out := new(DelegationResponse)
-	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/Delegation", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/DelegationEndpoint", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -162,11 +162,11 @@ type SdkUtilitiesServer interface {
 	// TxMetadata implements txMetadata.
 	TxMetadata(context.Context, *TxMetadataRequest) (*TxMetadataResponse, error)
 	// Auth implements auth.
-	Auth(context.Context, *AuthRequest) (*AuthResponse, error)
+	AuthEndpoint(context.Context, *AuthRequest) (*AuthResponse, error)
 	// Bank implements bank.
 	Bank(context.Context, *BankRequest) (*BankResponse, error)
 	// Delegation implements delegation.
-	Delegation(context.Context, *DelegationRequest) (*DelegationResponse, error)
+	DelegationEndpoint(context.Context, *DelegationRequest) (*DelegationResponse, error)
 	// IbcChannel implements ibc_channel.
 	IbcChannel(context.Context, *IbcChannelRequest) (*IbcChannelResponse, error)
 	// IbcClientState implements ibc_client_state.
@@ -194,14 +194,14 @@ func (UnimplementedSdkUtilitiesServer) BroadcastTx(context.Context, *BroadcastTx
 func (UnimplementedSdkUtilitiesServer) TxMetadata(context.Context, *TxMetadataRequest) (*TxMetadataResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TxMetadata not implemented")
 }
-func (UnimplementedSdkUtilitiesServer) Auth(context.Context, *AuthRequest) (*AuthResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Auth not implemented")
+func (UnimplementedSdkUtilitiesServer) AuthEndpoint(context.Context, *AuthRequest) (*AuthResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AuthEndpoint not implemented")
 }
 func (UnimplementedSdkUtilitiesServer) Bank(context.Context, *BankRequest) (*BankResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Bank not implemented")
 }
-func (UnimplementedSdkUtilitiesServer) Delegation(context.Context, *DelegationRequest) (*DelegationResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Delegation not implemented")
+func (UnimplementedSdkUtilitiesServer) DelegationEndpoint(context.Context, *DelegationRequest) (*DelegationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelegationEndpoint not implemented")
 }
 func (UnimplementedSdkUtilitiesServer) IbcChannel(context.Context, *IbcChannelRequest) (*IbcChannelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IbcChannel not implemented")
@@ -300,20 +300,20 @@ func _SdkUtilities_TxMetadata_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SdkUtilities_Auth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SdkUtilities_AuthEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AuthRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SdkUtilitiesServer).Auth(ctx, in)
+		return srv.(SdkUtilitiesServer).AuthEndpoint(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sdk_utilities.SdkUtilities/Auth",
+		FullMethod: "/sdk_utilities.SdkUtilities/AuthEndpoint",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SdkUtilitiesServer).Auth(ctx, req.(*AuthRequest))
+		return srv.(SdkUtilitiesServer).AuthEndpoint(ctx, req.(*AuthRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -336,20 +336,20 @@ func _SdkUtilities_Bank_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SdkUtilities_Delegation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SdkUtilities_DelegationEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DelegationRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SdkUtilitiesServer).Delegation(ctx, in)
+		return srv.(SdkUtilitiesServer).DelegationEndpoint(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sdk_utilities.SdkUtilities/Delegation",
+		FullMethod: "/sdk_utilities.SdkUtilities/DelegationEndpoint",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SdkUtilitiesServer).Delegation(ctx, req.(*DelegationRequest))
+		return srv.(SdkUtilitiesServer).DelegationEndpoint(ctx, req.(*DelegationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -450,16 +450,16 @@ var SdkUtilities_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SdkUtilities_TxMetadata_Handler,
 		},
 		{
-			MethodName: "Auth",
-			Handler:    _SdkUtilities_Auth_Handler,
+			MethodName: "AuthEndpoint",
+			Handler:    _SdkUtilities_AuthEndpoint_Handler,
 		},
 		{
 			MethodName: "Bank",
 			Handler:    _SdkUtilities_Bank_Handler,
 		},
 		{
-			MethodName: "Delegation",
-			Handler:    _SdkUtilities_Delegation_Handler,
+			MethodName: "DelegationEndpoint",
+			Handler:    _SdkUtilities_DelegationEndpoint_Handler,
 		},
 		{
 			MethodName: "IbcChannel",

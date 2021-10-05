@@ -18,17 +18,17 @@ import (
 
 // Server implements the sdk_utilitiespb.SdkUtilitiesServer interface.
 type Server struct {
-	SupplyH         goagrpc.UnaryHandler
-	QueryTxH        goagrpc.UnaryHandler
-	BroadcastTxH    goagrpc.UnaryHandler
-	TxMetadataH     goagrpc.UnaryHandler
-	AuthH           goagrpc.UnaryHandler
-	BankH           goagrpc.UnaryHandler
-	DelegationH     goagrpc.UnaryHandler
-	IbcChannelH     goagrpc.UnaryHandler
-	IbcClientStateH goagrpc.UnaryHandler
-	IbcConnectionH  goagrpc.UnaryHandler
-	IbcDenomTraceH  goagrpc.UnaryHandler
+	SupplyH             goagrpc.UnaryHandler
+	QueryTxH            goagrpc.UnaryHandler
+	BroadcastTxH        goagrpc.UnaryHandler
+	TxMetadataH         goagrpc.UnaryHandler
+	AuthEndpointH       goagrpc.UnaryHandler
+	BankH               goagrpc.UnaryHandler
+	DelegationEndpointH goagrpc.UnaryHandler
+	IbcChannelH         goagrpc.UnaryHandler
+	IbcClientStateH     goagrpc.UnaryHandler
+	IbcConnectionH      goagrpc.UnaryHandler
+	IbcDenomTraceH      goagrpc.UnaryHandler
 	sdk_utilitiespb.UnimplementedSdkUtilitiesServer
 }
 
@@ -41,17 +41,17 @@ type ErrorNamer interface {
 // New instantiates the server struct with the sdk-utilities service endpoints.
 func New(e *sdkutilities.Endpoints, uh goagrpc.UnaryHandler) *Server {
 	return &Server{
-		SupplyH:         NewSupplyHandler(e.Supply, uh),
-		QueryTxH:        NewQueryTxHandler(e.QueryTx, uh),
-		BroadcastTxH:    NewBroadcastTxHandler(e.BroadcastTx, uh),
-		TxMetadataH:     NewTxMetadataHandler(e.TxMetadata, uh),
-		AuthH:           NewAuthHandler(e.Auth, uh),
-		BankH:           NewBankHandler(e.Bank, uh),
-		DelegationH:     NewDelegationHandler(e.Delegation, uh),
-		IbcChannelH:     NewIbcChannelHandler(e.IbcChannel, uh),
-		IbcClientStateH: NewIbcClientStateHandler(e.IbcClientState, uh),
-		IbcConnectionH:  NewIbcConnectionHandler(e.IbcConnection, uh),
-		IbcDenomTraceH:  NewIbcDenomTraceHandler(e.IbcDenomTrace, uh),
+		SupplyH:             NewSupplyHandler(e.Supply, uh),
+		QueryTxH:            NewQueryTxHandler(e.QueryTx, uh),
+		BroadcastTxH:        NewBroadcastTxHandler(e.BroadcastTx, uh),
+		TxMetadataH:         NewTxMetadataHandler(e.TxMetadata, uh),
+		AuthEndpointH:       NewAuthEndpointHandler(e.AuthEndpoint, uh),
+		BankH:               NewBankHandler(e.Bank, uh),
+		DelegationEndpointH: NewDelegationEndpointHandler(e.DelegationEndpoint, uh),
+		IbcChannelH:         NewIbcChannelHandler(e.IbcChannel, uh),
+		IbcClientStateH:     NewIbcClientStateHandler(e.IbcClientState, uh),
+		IbcConnectionH:      NewIbcConnectionHandler(e.IbcConnection, uh),
+		IbcDenomTraceH:      NewIbcDenomTraceHandler(e.IbcDenomTrace, uh),
 	}
 }
 
@@ -139,21 +139,21 @@ func (s *Server) TxMetadata(ctx context.Context, message *sdk_utilitiespb.TxMeta
 	return resp.(*sdk_utilitiespb.TxMetadataResponse), nil
 }
 
-// NewAuthHandler creates a gRPC handler which serves the "sdk-utilities"
-// service "auth" endpoint.
-func NewAuthHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+// NewAuthEndpointHandler creates a gRPC handler which serves the
+// "sdk-utilities" service "auth" endpoint.
+func NewAuthEndpointHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
 	if h == nil {
-		h = goagrpc.NewUnaryHandler(endpoint, DecodeAuthRequest, EncodeAuthResponse)
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeAuthEndpointRequest, EncodeAuthEndpointResponse)
 	}
 	return h
 }
 
-// Auth implements the "Auth" method in sdk_utilitiespb.SdkUtilitiesServer
-// interface.
-func (s *Server) Auth(ctx context.Context, message *sdk_utilitiespb.AuthRequest) (*sdk_utilitiespb.AuthResponse, error) {
+// AuthEndpoint implements the "AuthEndpoint" method in
+// sdk_utilitiespb.SdkUtilitiesServer interface.
+func (s *Server) AuthEndpoint(ctx context.Context, message *sdk_utilitiespb.AuthRequest) (*sdk_utilitiespb.AuthResponse, error) {
 	ctx = context.WithValue(ctx, goa.MethodKey, "auth")
 	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
-	resp, err := s.AuthH.Handle(ctx, message)
+	resp, err := s.AuthEndpointH.Handle(ctx, message)
 	if err != nil {
 		return nil, goagrpc.EncodeError(err)
 	}
@@ -181,21 +181,21 @@ func (s *Server) Bank(ctx context.Context, message *sdk_utilitiespb.BankRequest)
 	return resp.(*sdk_utilitiespb.BankResponse), nil
 }
 
-// NewDelegationHandler creates a gRPC handler which serves the "sdk-utilities"
-// service "delegation" endpoint.
-func NewDelegationHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+// NewDelegationEndpointHandler creates a gRPC handler which serves the
+// "sdk-utilities" service "delegation" endpoint.
+func NewDelegationEndpointHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
 	if h == nil {
-		h = goagrpc.NewUnaryHandler(endpoint, DecodeDelegationRequest, EncodeDelegationResponse)
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeDelegationEndpointRequest, EncodeDelegationEndpointResponse)
 	}
 	return h
 }
 
-// Delegation implements the "Delegation" method in
+// DelegationEndpoint implements the "DelegationEndpoint" method in
 // sdk_utilitiespb.SdkUtilitiesServer interface.
-func (s *Server) Delegation(ctx context.Context, message *sdk_utilitiespb.DelegationRequest) (*sdk_utilitiespb.DelegationResponse, error) {
+func (s *Server) DelegationEndpoint(ctx context.Context, message *sdk_utilitiespb.DelegationRequest) (*sdk_utilitiespb.DelegationResponse, error) {
 	ctx = context.WithValue(ctx, goa.MethodKey, "delegation")
 	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
-	resp, err := s.DelegationH.Handle(ctx, message)
+	resp, err := s.DelegationEndpointH.Handle(ctx, message)
 	if err != nil {
 		return nil, goagrpc.EncodeError(err)
 	}

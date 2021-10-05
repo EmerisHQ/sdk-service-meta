@@ -142,20 +142,20 @@ func DecodeTxMetadataRequest(ctx context.Context, v interface{}, md metadata.MD)
 	return payload, nil
 }
 
-// EncodeAuthResponse encodes responses from the "sdk-utilities" service "auth"
-// endpoint.
-func EncodeAuthResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
-	result, ok := v.(*sdkutilities.Auth2)
+// EncodeAuthEndpointResponse encodes responses from the "sdk-utilities"
+// service "auth" endpoint.
+func EncodeAuthEndpointResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.([]*sdkutilities.Auth)
 	if !ok {
-		return nil, goagrpc.ErrInvalidType("sdk-utilities", "auth", "*sdkutilities.Auth2", v)
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "auth", "[]*sdkutilities.Auth", v)
 	}
 	resp := NewAuthResponse(result)
 	return resp, nil
 }
 
-// DecodeAuthRequest decodes requests sent to "sdk-utilities" service "auth"
-// endpoint.
-func DecodeAuthRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+// DecodeAuthEndpointRequest decodes requests sent to "sdk-utilities" service
+// "auth" endpoint.
+func DecodeAuthEndpointRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
 	var (
 		message *sdk_utilitiespb.AuthRequest
 		ok      bool
@@ -202,20 +202,20 @@ func DecodeBankRequest(ctx context.Context, v interface{}, md metadata.MD) (inte
 	return payload, nil
 }
 
-// EncodeDelegationResponse encodes responses from the "sdk-utilities" service
-// "delegation" endpoint.
-func EncodeDelegationResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
-	result, ok := v.(*sdkutilities.Delegation2)
+// EncodeDelegationEndpointResponse encodes responses from the "sdk-utilities"
+// service "delegation" endpoint.
+func EncodeDelegationEndpointResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.([]*sdkutilities.Delegation)
 	if !ok {
-		return nil, goagrpc.ErrInvalidType("sdk-utilities", "delegation", "*sdkutilities.Delegation2", v)
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "delegation", "[]*sdkutilities.Delegation", v)
 	}
 	resp := NewDelegationResponse(result)
 	return resp, nil
 }
 
-// DecodeDelegationRequest decodes requests sent to "sdk-utilities" service
-// "delegation" endpoint.
-func DecodeDelegationRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+// DecodeDelegationEndpointRequest decodes requests sent to "sdk-utilities"
+// service "delegation" endpoint.
+func DecodeDelegationEndpointRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
 	var (
 		message *sdk_utilitiespb.DelegationRequest
 		ok      bool
@@ -235,9 +235,9 @@ func DecodeDelegationRequest(ctx context.Context, v interface{}, md metadata.MD)
 // EncodeIbcChannelResponse encodes responses from the "sdk-utilities" service
 // "ibc_channel" endpoint.
 func EncodeIbcChannelResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
-	result, ok := v.(*sdkutilities.IBCChannel)
+	result, ok := v.([]*sdkutilities.IBCChannel)
 	if !ok {
-		return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_channel", "*sdkutilities.IBCChannel", v)
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_channel", "[]*sdkutilities.IBCChannel", v)
 	}
 	resp := NewIbcChannelResponse(result)
 	return resp, nil
@@ -265,9 +265,9 @@ func DecodeIbcChannelRequest(ctx context.Context, v interface{}, md metadata.MD)
 // EncodeIbcClientStateResponse encodes responses from the "sdk-utilities"
 // service "ibc_client_state" endpoint.
 func EncodeIbcClientStateResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
-	result, ok := v.(*sdkutilities.IBCClientState)
+	result, ok := v.([]*sdkutilities.IBCClientState)
 	if !ok {
-		return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_client_state", "*sdkutilities.IBCClientState", v)
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_client_state", "[]*sdkutilities.IBCClientState", v)
 	}
 	resp := NewIbcClientStateResponse(result)
 	return resp, nil
@@ -295,9 +295,9 @@ func DecodeIbcClientStateRequest(ctx context.Context, v interface{}, md metadata
 // EncodeIbcConnectionResponse encodes responses from the "sdk-utilities"
 // service "ibc_connection" endpoint.
 func EncodeIbcConnectionResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
-	result, ok := v.(*sdkutilities.IBCConnection)
+	result, ok := v.([]*sdkutilities.IBCConnection)
 	if !ok {
-		return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_connection", "*sdkutilities.IBCConnection", v)
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_connection", "[]*sdkutilities.IBCConnection", v)
 	}
 	resp := NewIbcConnectionResponse(result)
 	return resp, nil
@@ -325,9 +325,9 @@ func DecodeIbcConnectionRequest(ctx context.Context, v interface{}, md metadata.
 // EncodeIbcDenomTraceResponse encodes responses from the "sdk-utilities"
 // service "ibc_denom_trace" endpoint.
 func EncodeIbcDenomTraceResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
-	result, ok := v.(*sdkutilities.IBCDenomTrace)
+	result, ok := v.([]*sdkutilities.IBCDenomTrace)
 	if !ok {
-		return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_denom_trace", "*sdkutilities.IBCDenomTrace", v)
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibc_denom_trace", "[]*sdkutilities.IBCDenomTrace", v)
 	}
 	resp := NewIbcDenomTraceResponse(result)
 	return resp, nil

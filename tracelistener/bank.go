@@ -21,7 +21,7 @@ var BalanceDesignType = Type("Balance", func() {
 func bankDesign() {
 	Method("bank", func() {
 		Payload(func() {
-			Field(1, "payload", TracePayload)
+			Field(1, "payload", ArrayOf(TracePayload))
 		})
 
 		Result(ArrayOf(BalanceDesignType))

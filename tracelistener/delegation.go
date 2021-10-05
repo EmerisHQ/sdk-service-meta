@@ -19,10 +19,10 @@ var DelegationDesignType = Type("Delegation", func() {
 func delegationsDesign() {
 	Method("delegation", func() {
 		Payload(func() {
-			Field(1, "payload", TracePayload)
+			Field(1, "payload", ArrayOf(TracePayload))
 		})
 
-		Result(DelegationDesignType)
+		Result(ArrayOf(DelegationDesignType))
 
 		GRPC(func() {})
 	})

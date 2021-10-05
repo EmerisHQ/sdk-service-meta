@@ -21,10 +21,10 @@ var IBCConnectionDesignType = Type("IBCConnection", func() {
 func ibcConnectionsDesign() {
 	Method("ibc_connection", func() {
 		Payload(func() {
-			Field(1, "payload", TracePayload)
+			Field(1, "payload", ArrayOf(TracePayload))
 		})
 
-		Result(IBCConnectionDesignType)
+		Result(ArrayOf(IBCConnectionDesignType))
 
 		GRPC(func() {})
 	})

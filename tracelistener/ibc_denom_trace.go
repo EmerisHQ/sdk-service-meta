@@ -19,10 +19,10 @@ var IBCDenomTraceDesignType = Type("IBCDenomTrace", func() {
 func ibcDenomTracesDesign() {
 	Method("ibc_denom_trace", func() {
 		Payload(func() {
-			Field(1, "payload", TracePayload)
+			Field(1, "payload", ArrayOf(TracePayload))
 		})
 
-		Result(IBCDenomTraceDesignType)
+		Result(ArrayOf(IBCDenomTraceDesignType))
 
 		GRPC(func() {})
 	})

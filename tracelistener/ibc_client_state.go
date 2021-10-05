@@ -20,10 +20,10 @@ var IBCClientStateDesignType = Type("IBCClientState", func() {
 func ibcClientStateDesign() {
 	Method("ibc_client_state", func() {
 		Payload(func() {
-			Field(1, "payload", TracePayload)
+			Field(1, "payload", ArrayOf(TracePayload))
 		})
 
-		Result(IBCClientStateDesignType)
+		Result(ArrayOf(IBCClientStateDesignType))
 
 		GRPC(func() {})
 	})
