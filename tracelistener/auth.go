@@ -34,6 +34,8 @@ func authDesign() {
 
 		defineProcessingError()
 
-		GRPC(func() {})
+		GRPC(func() {
+			Response("ProcessingError", CodeInvalidArgument)
+		})
 	})
 }

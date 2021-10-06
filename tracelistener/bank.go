@@ -36,6 +36,8 @@ func bankDesign() {
 
 		defineProcessingError()
 
-		GRPC(func() {})
+		GRPC(func() {
+			Response("ProcessingError", CodeInvalidArgument)
+		})
 	})
 }

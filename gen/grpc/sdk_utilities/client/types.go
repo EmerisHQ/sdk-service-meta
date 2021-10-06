@@ -152,6 +152,35 @@ func NewAuthResult(message *sdk_utilitiespb.AuthResponse) []*sdkutilities.Auth {
 	return result
 }
 
+// NewAuthProcessingErrorError builds the error type of the "auth" endpoint of
+// the "sdk-utilities" service from the gRPC error response type.
+func NewAuthProcessingErrorError(message *sdk_utilitiespb.AuthProcessingErrorError) *sdkutilities.ProcessingError {
+	er := &sdkutilities.ProcessingError{}
+	if message.Name != "" {
+		er.Name = &message.Name
+	}
+	if message.Code != 0 {
+		codeptr := int(message.Code)
+		er.Code = &codeptr
+	}
+	if message.Errors != nil {
+		er.Errors = make([]*sdkutilities.ErrorObject, len(message.Errors))
+		for i, val := range message.Errors {
+			er.Errors[i] = &sdkutilities.ErrorObject{
+				Value:        val.Value,
+				PayloadIndex: int(val.PayloadIndex),
+			}
+			if val.Value == "" {
+				er.Errors[i].Value = ""
+			}
+			if val.PayloadIndex == 0 {
+				er.Errors[i].PayloadIndex = 0
+			}
+		}
+	}
+	return er
+}
+
 // NewBankRequest builds the gRPC request type from the payload of the "bank"
 // endpoint of the "sdk-utilities" service.
 func NewBankRequest(payload *sdkutilities.BankPayload) *sdk_utilitiespb.BankRequest {
@@ -183,6 +212,35 @@ func NewBankResult(message *sdk_utilitiespb.BankResponse) []*sdkutilities.Balanc
 		}
 	}
 	return result
+}
+
+// NewBankProcessingErrorError builds the error type of the "bank" endpoint of
+// the "sdk-utilities" service from the gRPC error response type.
+func NewBankProcessingErrorError(message *sdk_utilitiespb.BankProcessingErrorError) *sdkutilities.ProcessingError {
+	er := &sdkutilities.ProcessingError{}
+	if message.Name != "" {
+		er.Name = &message.Name
+	}
+	if message.Code != 0 {
+		codeptr := int(message.Code)
+		er.Code = &codeptr
+	}
+	if message.Errors != nil {
+		er.Errors = make([]*sdkutilities.ErrorObject, len(message.Errors))
+		for i, val := range message.Errors {
+			er.Errors[i] = &sdkutilities.ErrorObject{
+				Value:        val.Value,
+				PayloadIndex: int(val.PayloadIndex),
+			}
+			if val.Value == "" {
+				er.Errors[i].Value = ""
+			}
+			if val.PayloadIndex == 0 {
+				er.Errors[i].PayloadIndex = 0
+			}
+		}
+	}
+	return er
 }
 
 // NewDelegationRequest builds the gRPC request type from the payload of the
@@ -229,6 +287,35 @@ func NewDelegationResult(message *sdk_utilitiespb.DelegationResponse) []*sdkutil
 		}
 	}
 	return result
+}
+
+// NewDelegationProcessingErrorError builds the error type of the "delegation"
+// endpoint of the "sdk-utilities" service from the gRPC error response type.
+func NewDelegationProcessingErrorError(message *sdk_utilitiespb.DelegationProcessingErrorError) *sdkutilities.ProcessingError {
+	er := &sdkutilities.ProcessingError{}
+	if message.Name != "" {
+		er.Name = &message.Name
+	}
+	if message.Code != 0 {
+		codeptr := int(message.Code)
+		er.Code = &codeptr
+	}
+	if message.Errors != nil {
+		er.Errors = make([]*sdkutilities.ErrorObject, len(message.Errors))
+		for i, val := range message.Errors {
+			er.Errors[i] = &sdkutilities.ErrorObject{
+				Value:        val.Value,
+				PayloadIndex: int(val.PayloadIndex),
+			}
+			if val.Value == "" {
+				er.Errors[i].Value = ""
+			}
+			if val.PayloadIndex == 0 {
+				er.Errors[i].PayloadIndex = 0
+			}
+		}
+	}
+	return er
 }
 
 // NewIbcChannelRequest builds the gRPC request type from the payload of the
@@ -283,6 +370,35 @@ func NewIbcChannelResult(message *sdk_utilitiespb.IbcChannelResponse) []*sdkutil
 	return result
 }
 
+// NewIbcChannelProcessingErrorError builds the error type of the "ibc_channel"
+// endpoint of the "sdk-utilities" service from the gRPC error response type.
+func NewIbcChannelProcessingErrorError(message *sdk_utilitiespb.IbcChannelProcessingErrorError) *sdkutilities.ProcessingError {
+	er := &sdkutilities.ProcessingError{}
+	if message.Name != "" {
+		er.Name = &message.Name
+	}
+	if message.Code != 0 {
+		codeptr := int(message.Code)
+		er.Code = &codeptr
+	}
+	if message.Errors != nil {
+		er.Errors = make([]*sdkutilities.ErrorObject, len(message.Errors))
+		for i, val := range message.Errors {
+			er.Errors[i] = &sdkutilities.ErrorObject{
+				Value:        val.Value,
+				PayloadIndex: int(val.PayloadIndex),
+			}
+			if val.Value == "" {
+				er.Errors[i].Value = ""
+			}
+			if val.PayloadIndex == 0 {
+				er.Errors[i].PayloadIndex = 0
+			}
+		}
+	}
+	return er
+}
+
 // NewIbcClientStateRequest builds the gRPC request type from the payload of
 // the "ibc_client_state" endpoint of the "sdk-utilities" service.
 func NewIbcClientStateRequest(payload *sdkutilities.IbcClientStatePayload) *sdk_utilitiespb.IbcClientStateRequest {
@@ -327,6 +443,36 @@ func NewIbcClientStateResult(message *sdk_utilitiespb.IbcClientStateResponse) []
 		}
 	}
 	return result
+}
+
+// NewIbcClientStateProcessingErrorError builds the error type of the
+// "ibc_client_state" endpoint of the "sdk-utilities" service from the gRPC
+// error response type.
+func NewIbcClientStateProcessingErrorError(message *sdk_utilitiespb.IbcClientStateProcessingErrorError) *sdkutilities.ProcessingError {
+	er := &sdkutilities.ProcessingError{}
+	if message.Name != "" {
+		er.Name = &message.Name
+	}
+	if message.Code != 0 {
+		codeptr := int(message.Code)
+		er.Code = &codeptr
+	}
+	if message.Errors != nil {
+		er.Errors = make([]*sdkutilities.ErrorObject, len(message.Errors))
+		for i, val := range message.Errors {
+			er.Errors[i] = &sdkutilities.ErrorObject{
+				Value:        val.Value,
+				PayloadIndex: int(val.PayloadIndex),
+			}
+			if val.Value == "" {
+				er.Errors[i].Value = ""
+			}
+			if val.PayloadIndex == 0 {
+				er.Errors[i].PayloadIndex = 0
+			}
+		}
+	}
+	return er
 }
 
 // NewIbcConnectionRequest builds the gRPC request type from the payload of the
@@ -379,6 +525,36 @@ func NewIbcConnectionResult(message *sdk_utilitiespb.IbcConnectionResponse) []*s
 	return result
 }
 
+// NewIbcConnectionProcessingErrorError builds the error type of the
+// "ibc_connection" endpoint of the "sdk-utilities" service from the gRPC error
+// response type.
+func NewIbcConnectionProcessingErrorError(message *sdk_utilitiespb.IbcConnectionProcessingErrorError) *sdkutilities.ProcessingError {
+	er := &sdkutilities.ProcessingError{}
+	if message.Name != "" {
+		er.Name = &message.Name
+	}
+	if message.Code != 0 {
+		codeptr := int(message.Code)
+		er.Code = &codeptr
+	}
+	if message.Errors != nil {
+		er.Errors = make([]*sdkutilities.ErrorObject, len(message.Errors))
+		for i, val := range message.Errors {
+			er.Errors[i] = &sdkutilities.ErrorObject{
+				Value:        val.Value,
+				PayloadIndex: int(val.PayloadIndex),
+			}
+			if val.Value == "" {
+				er.Errors[i].Value = ""
+			}
+			if val.PayloadIndex == 0 {
+				er.Errors[i].PayloadIndex = 0
+			}
+		}
+	}
+	return er
+}
+
 // NewIbcDenomTraceRequest builds the gRPC request type from the payload of the
 // "ibc_denom_trace" endpoint of the "sdk-utilities" service.
 func NewIbcDenomTraceRequest(payload *sdkutilities.IbcDenomTracePayload) *sdk_utilitiespb.IbcDenomTraceRequest {
@@ -419,6 +595,36 @@ func NewIbcDenomTraceResult(message *sdk_utilitiespb.IbcDenomTraceResponse) []*s
 		}
 	}
 	return result
+}
+
+// NewIbcDenomTraceProcessingErrorError builds the error type of the
+// "ibc_denom_trace" endpoint of the "sdk-utilities" service from the gRPC
+// error response type.
+func NewIbcDenomTraceProcessingErrorError(message *sdk_utilitiespb.IbcDenomTraceProcessingErrorError) *sdkutilities.ProcessingError {
+	er := &sdkutilities.ProcessingError{}
+	if message.Name != "" {
+		er.Name = &message.Name
+	}
+	if message.Code != 0 {
+		codeptr := int(message.Code)
+		er.Code = &codeptr
+	}
+	if message.Errors != nil {
+		er.Errors = make([]*sdkutilities.ErrorObject, len(message.Errors))
+		for i, val := range message.Errors {
+			er.Errors[i] = &sdkutilities.ErrorObject{
+				Value:        val.Value,
+				PayloadIndex: int(val.PayloadIndex),
+			}
+			if val.Value == "" {
+				er.Errors[i].Value = ""
+			}
+			if val.PayloadIndex == 0 {
+				er.Errors[i].PayloadIndex = 0
+			}
+		}
+	}
+	return er
 }
 
 // ValidateSupplyResponse runs the validations defined on SupplyResponse.

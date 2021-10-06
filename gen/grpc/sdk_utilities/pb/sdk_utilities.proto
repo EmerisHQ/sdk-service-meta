@@ -108,6 +108,19 @@ message IBCHeight {
 	uint64 revision_height = 2;
 }
 
+message AuthProcessingErrorError {
+	// Name of error
+	string name = 1;
+	// Code of error
+	sint32 code = 2;
+	repeated ErrorObject errors = 3;
+}
+
+message ErrorObject {
+	string value = 1;
+	sint32 payload_index = 2;
+}
+
 message AuthRequest {
 	repeated TracePayload payload = 1;
 }
@@ -128,6 +141,14 @@ message Auth {
 	uint64 account_number = 3;
 }
 
+message BankProcessingErrorError {
+	// Name of error
+	string name = 1;
+	// Code of error
+	sint32 code = 2;
+	repeated ErrorObject errors = 3;
+}
+
 message BankRequest {
 	repeated TracePayload payload = 1;
 }
@@ -140,6 +161,14 @@ message Balance {
 	string address = 1;
 	string amount = 2;
 	string denom = 3;
+}
+
+message DelegationProcessingErrorError {
+	// Name of error
+	string name = 1;
+	// Code of error
+	sint32 code = 2;
+	repeated ErrorObject errors = 3;
 }
 
 message DelegationRequest {
@@ -155,6 +184,14 @@ message Delegation {
 	string validator = 2;
 	string amount = 3;
 	string type = 4;
+}
+
+message IbcChannelProcessingErrorError {
+	// Name of error
+	string name = 1;
+	// Code of error
+	sint32 code = 2;
+	repeated ErrorObject errors = 3;
 }
 
 message IbcChannelRequest {
@@ -173,6 +210,14 @@ message IBCChannel {
 	sint32 state = 5;
 }
 
+message IbcClientStateProcessingErrorError {
+	// Name of error
+	string name = 1;
+	// Code of error
+	sint32 code = 2;
+	repeated ErrorObject errors = 3;
+}
+
 message IbcClientStateRequest {
 	repeated TracePayload payload = 1;
 }
@@ -186,6 +231,14 @@ message IBCClientState {
 	string client_id = 2;
 	uint64 latest_height = 3;
 	sint64 trusting_period = 4;
+}
+
+message IbcConnectionProcessingErrorError {
+	// Name of error
+	string name = 1;
+	// Code of error
+	sint32 code = 2;
+	repeated ErrorObject errors = 3;
 }
 
 message IbcConnectionRequest {
@@ -202,6 +255,14 @@ message IBCConnection {
 	string state = 3;
 	string counter_connection_id = 4;
 	string counter_client_id = 5;
+}
+
+message IbcDenomTraceProcessingErrorError {
+	// Name of error
+	string name = 1;
+	// Code of error
+	sint32 code = 2;
+	repeated ErrorObject errors = 3;
 }
 
 message IbcDenomTraceRequest {

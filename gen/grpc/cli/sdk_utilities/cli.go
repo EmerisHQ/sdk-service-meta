@@ -345,6 +345,16 @@ Example:
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
             "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          }
       ]
    }'
@@ -360,11 +370,6 @@ Delegation implements delegation.
 Example:
     %[1]s sdk-utilities delegation --message '{
       "payload": [
-         {
-            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
-            "operationType": "delete",
-            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
-         },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
             "operationType": "delete",
@@ -432,11 +437,6 @@ Example:
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
             "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
-         },
-         {
-            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
-            "operationType": "delete",
-            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          }
       ]
    }'
@@ -466,11 +466,6 @@ Example:
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
             "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
-         },
-         {
-            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
-            "operationType": "delete",
-            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          }
       ]
    }'
@@ -486,11 +481,6 @@ IbcDenomTrace implements ibc_denom_trace.
 Example:
     %[1]s sdk-utilities ibc-denom-trace --message '{
       "payload": [
-         {
-            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
-            "operationType": "delete",
-            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
-         },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
             "operationType": "delete",

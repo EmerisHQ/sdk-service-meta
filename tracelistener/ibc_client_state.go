@@ -38,6 +38,8 @@ func ibcClientStateDesign() {
 
 		defineProcessingError()
 
-		GRPC(func() {})
+		GRPC(func() {
+			Response("ProcessingError", CodeInvalidArgument)
+		})
 	})
 }

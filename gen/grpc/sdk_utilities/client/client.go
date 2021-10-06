@@ -12,6 +12,7 @@ import (
 
 	sdk_utilitiespb "github.com/allinbits/sdk-service-meta/gen/grpc/sdk_utilities/pb"
 	goagrpc "goa.design/goa/v3/grpc"
+	goapb "goa.design/goa/v3/grpc/pb"
 	goa "goa.design/goa/v3/pkg"
 	"google.golang.org/grpc"
 )
@@ -104,7 +105,15 @@ func (c *Client) AuthEndpoint() goa.Endpoint {
 			DecodeAuthEndpointResponse)
 		res, err := inv.Invoke(ctx, v)
 		if err != nil {
-			return nil, goa.Fault(err.Error())
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.AuthProcessingErrorError:
+				return nil, NewAuthProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
 		}
 		return res, nil
 	}
@@ -120,7 +129,15 @@ func (c *Client) Bank() goa.Endpoint {
 			DecodeBankResponse)
 		res, err := inv.Invoke(ctx, v)
 		if err != nil {
-			return nil, goa.Fault(err.Error())
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.BankProcessingErrorError:
+				return nil, NewBankProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
 		}
 		return res, nil
 	}
@@ -136,7 +153,15 @@ func (c *Client) DelegationEndpoint() goa.Endpoint {
 			DecodeDelegationEndpointResponse)
 		res, err := inv.Invoke(ctx, v)
 		if err != nil {
-			return nil, goa.Fault(err.Error())
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.DelegationProcessingErrorError:
+				return nil, NewDelegationProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
 		}
 		return res, nil
 	}
@@ -152,7 +177,15 @@ func (c *Client) IbcChannel() goa.Endpoint {
 			DecodeIbcChannelResponse)
 		res, err := inv.Invoke(ctx, v)
 		if err != nil {
-			return nil, goa.Fault(err.Error())
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.IbcChannelProcessingErrorError:
+				return nil, NewIbcChannelProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
 		}
 		return res, nil
 	}
@@ -168,7 +201,15 @@ func (c *Client) IbcClientState() goa.Endpoint {
 			DecodeIbcClientStateResponse)
 		res, err := inv.Invoke(ctx, v)
 		if err != nil {
-			return nil, goa.Fault(err.Error())
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.IbcClientStateProcessingErrorError:
+				return nil, NewIbcClientStateProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
 		}
 		return res, nil
 	}
@@ -184,7 +225,15 @@ func (c *Client) IbcConnection() goa.Endpoint {
 			DecodeIbcConnectionResponse)
 		res, err := inv.Invoke(ctx, v)
 		if err != nil {
-			return nil, goa.Fault(err.Error())
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.IbcConnectionProcessingErrorError:
+				return nil, NewIbcConnectionProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
 		}
 		return res, nil
 	}
@@ -200,7 +249,15 @@ func (c *Client) IbcDenomTrace() goa.Endpoint {
 			DecodeIbcDenomTraceResponse)
 		res, err := inv.Invoke(ctx, v)
 		if err != nil {
-			return nil, goa.Fault(err.Error())
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.IbcDenomTraceProcessingErrorError:
+				return nil, NewIbcDenomTraceProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
 		}
 		return res, nil
 	}

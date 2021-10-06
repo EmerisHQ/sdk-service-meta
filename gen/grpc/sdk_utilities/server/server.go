@@ -14,6 +14,7 @@ import (
 	sdkutilities "github.com/allinbits/sdk-service-meta/gen/sdk_utilities"
 	goagrpc "goa.design/goa/v3/grpc"
 	goa "goa.design/goa/v3/pkg"
+	"google.golang.org/grpc/codes"
 )
 
 // Server implements the sdk_utilitiespb.SdkUtilitiesServer interface.
@@ -155,6 +156,13 @@ func (s *Server) AuthEndpoint(ctx context.Context, message *sdk_utilitiespb.Auth
 	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
 	resp, err := s.AuthEndpointH.Handle(ctx, message)
 	if err != nil {
+		if en, ok := err.(ErrorNamer); ok {
+			switch en.ErrorName() {
+			case "ProcessingError":
+				er := err.(*sdkutilities.ProcessingError)
+				return nil, goagrpc.NewStatusError(codes.InvalidArgument, err, NewAuthProcessingErrorError(er))
+			}
+		}
 		return nil, goagrpc.EncodeError(err)
 	}
 	return resp.(*sdk_utilitiespb.AuthResponse), nil
@@ -176,6 +184,13 @@ func (s *Server) Bank(ctx context.Context, message *sdk_utilitiespb.BankRequest)
 	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
 	resp, err := s.BankH.Handle(ctx, message)
 	if err != nil {
+		if en, ok := err.(ErrorNamer); ok {
+			switch en.ErrorName() {
+			case "ProcessingError":
+				er := err.(*sdkutilities.ProcessingError)
+				return nil, goagrpc.NewStatusError(codes.InvalidArgument, err, NewBankProcessingErrorError(er))
+			}
+		}
 		return nil, goagrpc.EncodeError(err)
 	}
 	return resp.(*sdk_utilitiespb.BankResponse), nil
@@ -197,6 +212,13 @@ func (s *Server) DelegationEndpoint(ctx context.Context, message *sdk_utilitiesp
 	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
 	resp, err := s.DelegationEndpointH.Handle(ctx, message)
 	if err != nil {
+		if en, ok := err.(ErrorNamer); ok {
+			switch en.ErrorName() {
+			case "ProcessingError":
+				er := err.(*sdkutilities.ProcessingError)
+				return nil, goagrpc.NewStatusError(codes.InvalidArgument, err, NewDelegationProcessingErrorError(er))
+			}
+		}
 		return nil, goagrpc.EncodeError(err)
 	}
 	return resp.(*sdk_utilitiespb.DelegationResponse), nil
@@ -218,6 +240,13 @@ func (s *Server) IbcChannel(ctx context.Context, message *sdk_utilitiespb.IbcCha
 	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
 	resp, err := s.IbcChannelH.Handle(ctx, message)
 	if err != nil {
+		if en, ok := err.(ErrorNamer); ok {
+			switch en.ErrorName() {
+			case "ProcessingError":
+				er := err.(*sdkutilities.ProcessingError)
+				return nil, goagrpc.NewStatusError(codes.InvalidArgument, err, NewIbcChannelProcessingErrorError(er))
+			}
+		}
 		return nil, goagrpc.EncodeError(err)
 	}
 	return resp.(*sdk_utilitiespb.IbcChannelResponse), nil
@@ -239,6 +268,13 @@ func (s *Server) IbcClientState(ctx context.Context, message *sdk_utilitiespb.Ib
 	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
 	resp, err := s.IbcClientStateH.Handle(ctx, message)
 	if err != nil {
+		if en, ok := err.(ErrorNamer); ok {
+			switch en.ErrorName() {
+			case "ProcessingError":
+				er := err.(*sdkutilities.ProcessingError)
+				return nil, goagrpc.NewStatusError(codes.InvalidArgument, err, NewIbcClientStateProcessingErrorError(er))
+			}
+		}
 		return nil, goagrpc.EncodeError(err)
 	}
 	return resp.(*sdk_utilitiespb.IbcClientStateResponse), nil
@@ -260,6 +296,13 @@ func (s *Server) IbcConnection(ctx context.Context, message *sdk_utilitiespb.Ibc
 	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
 	resp, err := s.IbcConnectionH.Handle(ctx, message)
 	if err != nil {
+		if en, ok := err.(ErrorNamer); ok {
+			switch en.ErrorName() {
+			case "ProcessingError":
+				er := err.(*sdkutilities.ProcessingError)
+				return nil, goagrpc.NewStatusError(codes.InvalidArgument, err, NewIbcConnectionProcessingErrorError(er))
+			}
+		}
 		return nil, goagrpc.EncodeError(err)
 	}
 	return resp.(*sdk_utilitiespb.IbcConnectionResponse), nil
@@ -281,6 +324,13 @@ func (s *Server) IbcDenomTrace(ctx context.Context, message *sdk_utilitiespb.Ibc
 	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
 	resp, err := s.IbcDenomTraceH.Handle(ctx, message)
 	if err != nil {
+		if en, ok := err.(ErrorNamer); ok {
+			switch en.ErrorName() {
+			case "ProcessingError":
+				er := err.(*sdkutilities.ProcessingError)
+				return nil, goagrpc.NewStatusError(codes.InvalidArgument, err, NewIbcDenomTraceProcessingErrorError(er))
+			}
+		}
 		return nil, goagrpc.EncodeError(err)
 	}
 	return resp.(*sdk_utilitiespb.IbcDenomTraceResponse), nil

@@ -42,6 +42,9 @@ func ibcConnectionsDesign() {
 
 		defineProcessingError()
 
-		GRPC(func() {})
+		GRPC(func() {
+			Response("ProcessingError", CodeInvalidArgument)
+		})
+
 	})
 }

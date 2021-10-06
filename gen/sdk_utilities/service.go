@@ -235,6 +235,10 @@ type IBCDenomTrace struct {
 // ProcessingError is a set of indexed error strings, where the index matches a
 // given payload index
 type ProcessingError struct {
+	// Name of error
+	Name *string
+	// Code of error
+	Code   *int
 	Errors []*ErrorObject
 }
 

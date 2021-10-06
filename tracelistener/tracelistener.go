@@ -49,9 +49,10 @@ func defineProcessingError() {
 	Error("ProcessingError", func() {
 		Description("ProcessingError is a set of indexed error strings, where the index matches a given payload index")
 
-		Field(1, "errors", ArrayOf(ErrorObjectDesignType))
+		Field(1, "Name", String, "Name of error")
+		Field(2, "Code", Int, "Code of error")
+		Field(3, "errors", ArrayOf(ErrorObjectDesignType))
 	})
-
 }
 
 func registerServiceDefinition(sd func()) {
