@@ -240,7 +240,7 @@ type ProcessingError struct {
 
 type ErrorObject struct {
 	Error        *string
-	PayloadIndex *uint64
+	PayloadIndex *int
 }
 
 // Error returns an error description.
