@@ -25,6 +25,8 @@ func ibcClientStateDesign() {
 
 		Result(ArrayOf(IBCClientStateDesignType))
 
+		defineProcessingError()
+
 		GRPC(func() {})
 	})
 }

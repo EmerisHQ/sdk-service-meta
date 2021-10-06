@@ -24,6 +24,8 @@ func authDesign() {
 
 		Result(ArrayOf(AuthDesignType))
 
+		defineProcessingError()
+
 		GRPC(func() {})
 	})
 }

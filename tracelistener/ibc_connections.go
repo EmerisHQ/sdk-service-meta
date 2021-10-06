@@ -26,6 +26,8 @@ func ibcConnectionsDesign() {
 
 		Result(ArrayOf(IBCConnectionDesignType))
 
+		defineProcessingError()
+
 		GRPC(func() {})
 	})
 }

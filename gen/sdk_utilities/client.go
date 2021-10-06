@@ -86,6 +86,9 @@ func (c *Client) TxMetadata(ctx context.Context, p *TxMetadataPayload) (res *TxM
 }
 
 // AuthEndpoint calls the "auth" endpoint of the "sdk-utilities" service.
+// AuthEndpoint may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
 func (c *Client) AuthEndpoint(ctx context.Context, p *AuthPayload) (res []*Auth, err error) {
 	var ires interface{}
 	ires, err = c.AuthEndpointEndpoint(ctx, p)
@@ -96,6 +99,9 @@ func (c *Client) AuthEndpoint(ctx context.Context, p *AuthPayload) (res []*Auth,
 }
 
 // Bank calls the "bank" endpoint of the "sdk-utilities" service.
+// Bank may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
 func (c *Client) Bank(ctx context.Context, p *BankPayload) (res []*Balance, err error) {
 	var ires interface{}
 	ires, err = c.BankEndpoint(ctx, p)
@@ -107,6 +113,9 @@ func (c *Client) Bank(ctx context.Context, p *BankPayload) (res []*Balance, err 
 
 // DelegationEndpoint calls the "delegation" endpoint of the "sdk-utilities"
 // service.
+// DelegationEndpoint may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
 func (c *Client) DelegationEndpoint(ctx context.Context, p *DelegationPayload) (res []*Delegation, err error) {
 	var ires interface{}
 	ires, err = c.DelegationEndpointEndpoint(ctx, p)
@@ -117,6 +126,9 @@ func (c *Client) DelegationEndpoint(ctx context.Context, p *DelegationPayload) (
 }
 
 // IbcChannel calls the "ibc_channel" endpoint of the "sdk-utilities" service.
+// IbcChannel may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
 func (c *Client) IbcChannel(ctx context.Context, p *IbcChannelPayload) (res []*IBCChannel, err error) {
 	var ires interface{}
 	ires, err = c.IbcChannelEndpoint(ctx, p)
@@ -128,6 +140,9 @@ func (c *Client) IbcChannel(ctx context.Context, p *IbcChannelPayload) (res []*I
 
 // IbcClientState calls the "ibc_client_state" endpoint of the "sdk-utilities"
 // service.
+// IbcClientState may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
 func (c *Client) IbcClientState(ctx context.Context, p *IbcClientStatePayload) (res []*IBCClientState, err error) {
 	var ires interface{}
 	ires, err = c.IbcClientStateEndpoint(ctx, p)
@@ -139,6 +154,9 @@ func (c *Client) IbcClientState(ctx context.Context, p *IbcClientStatePayload) (
 
 // IbcConnection calls the "ibc_connection" endpoint of the "sdk-utilities"
 // service.
+// IbcConnection may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
 func (c *Client) IbcConnection(ctx context.Context, p *IbcConnectionPayload) (res []*IBCConnection, err error) {
 	var ires interface{}
 	ires, err = c.IbcConnectionEndpoint(ctx, p)
@@ -150,6 +168,9 @@ func (c *Client) IbcConnection(ctx context.Context, p *IbcConnectionPayload) (re
 
 // IbcDenomTrace calls the "ibc_denom_trace" endpoint of the "sdk-utilities"
 // service.
+// IbcDenomTrace may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
 func (c *Client) IbcDenomTrace(ctx context.Context, p *IbcDenomTracePayload) (res []*IBCDenomTrace, err error) {
 	var ires interface{}
 	ires, err = c.IbcDenomTraceEndpoint(ctx, p)

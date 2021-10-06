@@ -32,6 +32,8 @@ func delegationsDesign() {
 
 		Result(ArrayOf(DelegationDesignType))
 
+		defineProcessingError()
+
 		GRPC(func() {})
 	})
 }

@@ -26,6 +26,8 @@ func bankDesign() {
 
 		Result(ArrayOf(BalanceDesignType))
 
+		defineProcessingError()
+
 		GRPC(func() {})
 	})
 }

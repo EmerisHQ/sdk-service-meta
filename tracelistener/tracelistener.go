@@ -35,6 +35,15 @@ var TracePayload = Type("TracePayload", func() {
 	Required("key", "value")
 })
 
+func defineProcessingError() {
+	Error("ProcessingError", func() {
+		Description("ProcessingError is a set of indexed error strings, where the index matches a given payload index")
+
+		Field(1, "errors", ArrayOf(String))
+	})
+
+}
+
 func registerServiceDefinition(sd func()) {
 	serviceDefinitions = append(serviceDefinitions, sd)
 }

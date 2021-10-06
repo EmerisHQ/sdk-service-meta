@@ -231,3 +231,19 @@ type IBCDenomTrace struct {
 	BaseDenom *string
 	Hash      *string
 }
+
+// ProcessingError is a set of indexed error strings, where the index matches a
+// given payload index
+type ProcessingError struct {
+	Errors []string
+}
+
+// Error returns an error description.
+func (e *ProcessingError) Error() string {
+	return "ProcessingError is a set of indexed error strings, where the index matches a given payload index"
+}
+
+// ErrorName returns "ProcessingError".
+func (e *ProcessingError) ErrorName() string {
+	return "ProcessingError"
+}

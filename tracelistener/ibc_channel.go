@@ -26,6 +26,8 @@ func ibcChannelsDesign() {
 
 		Result(ArrayOf(IBCChannelDesignType))
 
+		defineProcessingError()
+
 		GRPC(func() {})
 	})
 }

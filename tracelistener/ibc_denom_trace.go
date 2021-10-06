@@ -24,6 +24,8 @@ func ibcDenomTracesDesign() {
 
 		Result(ArrayOf(IBCDenomTraceDesignType))
 
+		defineProcessingError()
+
 		GRPC(func() {})
 	})
 }
