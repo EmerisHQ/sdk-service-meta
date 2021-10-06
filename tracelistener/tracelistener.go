@@ -35,11 +35,16 @@ var TracePayload = Type("TracePayload", func() {
 	Required("key", "value")
 })
 
+var ErrorObjectDesignType = Type("ErrorObject", func() {
+	Field(1, "error", String)
+	Field(2, "payloadIndex", UInt64)
+})
+
 func defineProcessingError() {
 	Error("ProcessingError", func() {
 		Description("ProcessingError is a set of indexed error strings, where the index matches a given payload index")
 
-		Field(1, "errors", ArrayOf(String))
+		Field(1, "errors", ArrayOf(ErrorObjectDesignType))
 	})
 
 }

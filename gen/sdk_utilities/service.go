@@ -235,7 +235,12 @@ type IBCDenomTrace struct {
 // ProcessingError is a set of indexed error strings, where the index matches a
 // given payload index
 type ProcessingError struct {
-	Errors []string
+	Errors []*ErrorObject
+}
+
+type ErrorObject struct {
+	Error        *string
+	PayloadIndex *uint64
 }
 
 // Error returns an error description.
@@ -246,4 +251,14 @@ func (e *ProcessingError) Error() string {
 // ErrorName returns "ProcessingError".
 func (e *ProcessingError) ErrorName() string {
 	return "ProcessingError"
+}
+
+// Error returns an error description.
+func (e *ErrorObject) Error() string {
+	return ""
+}
+
+// ErrorName returns "ErrorObject".
+func (e *ErrorObject) ErrorName() string {
+	return "ErrorObject"
 }
