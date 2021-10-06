@@ -139,15 +139,10 @@ func NewAuthResponse(result []*sdkutilities.Auth) *sdk_utilitiespb.AuthResponse 
 	message := &sdk_utilitiespb.AuthResponse{}
 	message.Field = make([]*sdk_utilitiespb.Auth, len(result))
 	for i, val := range result {
-		message.Field[i] = &sdk_utilitiespb.Auth{}
-		if val.Address != nil {
-			message.Field[i].Address = *val.Address
-		}
-		if val.SequenceNumber != nil {
-			message.Field[i].SequenceNumber = *val.SequenceNumber
-		}
-		if val.AccountNumber != nil {
-			message.Field[i].AccountNumber = *val.AccountNumber
+		message.Field[i] = &sdk_utilitiespb.Auth{
+			Address:        val.Address,
+			SequenceNumber: val.SequenceNumber,
+			AccountNumber:  val.AccountNumber,
 		}
 	}
 	return message
@@ -212,18 +207,11 @@ func NewDelegationResponse(result []*sdkutilities.Delegation) *sdk_utilitiespb.D
 	message := &sdk_utilitiespb.DelegationResponse{}
 	message.Field = make([]*sdk_utilitiespb.Delegation, len(result))
 	for i, val := range result {
-		message.Field[i] = &sdk_utilitiespb.Delegation{}
-		if val.Delegator != nil {
-			message.Field[i].Delegator = *val.Delegator
-		}
-		if val.Validator != nil {
-			message.Field[i].Validator = *val.Validator
-		}
-		if val.Amount != nil {
-			message.Field[i].Amount = *val.Amount
-		}
-		if val.Type != nil {
-			message.Field[i].Type = *val.Type
+		message.Field[i] = &sdk_utilitiespb.Delegation{
+			Delegator: val.Delegator,
+			Validator: val.Validator,
+			Amount:    val.Amount,
+			Type:      val.Type,
 		}
 	}
 	return message
@@ -254,18 +242,11 @@ func NewIbcChannelResponse(result []*sdkutilities.IBCChannel) *sdk_utilitiespb.I
 	message := &sdk_utilitiespb.IbcChannelResponse{}
 	message.Field = make([]*sdk_utilitiespb.IBCChannel, len(result))
 	for i, val := range result {
-		message.Field[i] = &sdk_utilitiespb.IBCChannel{}
-		if val.ChannelID != nil {
-			message.Field[i].ChannelId = *val.ChannelID
-		}
-		if val.CounterChannelID != nil {
-			message.Field[i].CounterChannelId = *val.CounterChannelID
-		}
-		if val.Port != nil {
-			message.Field[i].Port = *val.Port
-		}
-		if val.State != nil {
-			message.Field[i].State = *val.State
+		message.Field[i] = &sdk_utilitiespb.IBCChannel{
+			ChannelId:        val.ChannelID,
+			CounterChannelId: val.CounterChannelID,
+			Port:             val.Port,
+			State:            val.State,
 		}
 		if val.Hops != nil {
 			message.Field[i].Hops = make([]string, len(val.Hops))
@@ -302,18 +283,11 @@ func NewIbcClientStateResponse(result []*sdkutilities.IBCClientState) *sdk_utili
 	message := &sdk_utilitiespb.IbcClientStateResponse{}
 	message.Field = make([]*sdk_utilitiespb.IBCClientState, len(result))
 	for i, val := range result {
-		message.Field[i] = &sdk_utilitiespb.IBCClientState{}
-		if val.ChainID != nil {
-			message.Field[i].ChainId = *val.ChainID
-		}
-		if val.ClientID != nil {
-			message.Field[i].ClientId = *val.ClientID
-		}
-		if val.LatestHeight != nil {
-			message.Field[i].LatestHeight = *val.LatestHeight
-		}
-		if val.TrustingPeriod != nil {
-			message.Field[i].TrustingPeriod = *val.TrustingPeriod
+		message.Field[i] = &sdk_utilitiespb.IBCClientState{
+			ChainId:        val.ChainID,
+			ClientId:       val.ClientID,
+			LatestHeight:   val.LatestHeight,
+			TrustingPeriod: val.TrustingPeriod,
 		}
 	}
 	return message
@@ -344,21 +318,12 @@ func NewIbcConnectionResponse(result []*sdkutilities.IBCConnection) *sdk_utiliti
 	message := &sdk_utilitiespb.IbcConnectionResponse{}
 	message.Field = make([]*sdk_utilitiespb.IBCConnection, len(result))
 	for i, val := range result {
-		message.Field[i] = &sdk_utilitiespb.IBCConnection{}
-		if val.ConnectionID != nil {
-			message.Field[i].ConnectionId = *val.ConnectionID
-		}
-		if val.ClientID != nil {
-			message.Field[i].ClientId = *val.ClientID
-		}
-		if val.State != nil {
-			message.Field[i].State = *val.State
-		}
-		if val.CounterConnectionID != nil {
-			message.Field[i].CounterConnectionId = *val.CounterConnectionID
-		}
-		if val.CounterClientID != nil {
-			message.Field[i].CounterClientId = *val.CounterClientID
+		message.Field[i] = &sdk_utilitiespb.IBCConnection{
+			ConnectionId:        val.ConnectionID,
+			ClientId:            val.ClientID,
+			State:               val.State,
+			CounterConnectionId: val.CounterConnectionID,
+			CounterClientId:     val.CounterClientID,
 		}
 	}
 	return message
@@ -389,15 +354,10 @@ func NewIbcDenomTraceResponse(result []*sdkutilities.IBCDenomTrace) *sdk_utiliti
 	message := &sdk_utilitiespb.IbcDenomTraceResponse{}
 	message.Field = make([]*sdk_utilitiespb.IBCDenomTrace, len(result))
 	for i, val := range result {
-		message.Field[i] = &sdk_utilitiespb.IBCDenomTrace{}
-		if val.Path != nil {
-			message.Field[i].Path = *val.Path
-		}
-		if val.BaseDenom != nil {
-			message.Field[i].BaseDenom = *val.BaseDenom
-		}
-		if val.Hash != nil {
-			message.Field[i].Hash = *val.Hash
+		message.Field[i] = &sdk_utilitiespb.IBCDenomTrace{
+			Path:      val.Path,
+			BaseDenom: val.BaseDenom,
+			Hash:      val.Hash,
 		}
 	}
 	return message

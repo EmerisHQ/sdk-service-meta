@@ -11,10 +11,21 @@ func init() {
 var IBCClientStateDesignType = Type("IBCClientState", func() {
 	Description("IBC client state as unmarshaled from trace bytes")
 
-	Field(1, "chainID", String)
-	Field(2, "clientID", String)
-	Field(3, "latestHeight", UInt64)
-	Field(4, "trustingPeriod", Int64)
+	Field(1, "chainID", String, func() {
+		Default("")
+	})
+
+	Field(2, "clientID", String, func() {
+		Default("")
+	})
+
+	Field(3, "latestHeight", UInt64, func() {
+		Default(0)
+	})
+
+	Field(4, "trustingPeriod", Int64, func() {
+		Default(0)
+	})
 })
 
 func ibcClientStateDesign() {

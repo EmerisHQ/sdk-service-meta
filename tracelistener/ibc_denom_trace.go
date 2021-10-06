@@ -11,9 +11,17 @@ func init() {
 var IBCDenomTraceDesignType = Type("IBCDenomTrace", func() {
 	Description("IBC denomination trace as unmarshaled from trace bytes")
 
-	Field(1, "path", String)
-	Field(2, "baseDenom", String)
-	Field(3, "hash", String)
+	Field(1, "path", String, func() {
+		Default("")
+	})
+
+	Field(2, "baseDenom", String, func() {
+		Default("")
+	})
+
+	Field(3, "hash", String, func() {
+		Default("")
+	})
 })
 
 func ibcDenomTracesDesign() {

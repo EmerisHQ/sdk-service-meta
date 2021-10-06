@@ -179,9 +179,9 @@ type TracePayload struct {
 
 // Account as unmarshaled from trace bytes
 type Auth struct {
-	Address        *string
-	SequenceNumber *uint64
-	AccountNumber  *uint64
+	Address        string
+	SequenceNumber uint64
+	AccountNumber  uint64
 }
 
 // Balance of a given address as unmarshaled from trace bytes
@@ -193,43 +193,43 @@ type Balance struct {
 
 // Staking delegation as unmarshaled from trace bytes
 type Delegation struct {
-	Delegator *string
-	Validator *string
-	Amount    *string
-	Type      *string
+	Delegator string
+	Validator string
+	Amount    string
+	Type      string
 }
 
 // IBC channel as unmarshaled from trace bytes
 type IBCChannel struct {
-	ChannelID        *string
-	CounterChannelID *string
+	ChannelID        string
+	CounterChannelID string
 	Hops             []string
-	Port             *string
-	State            *int32
+	Port             string
+	State            int32
 }
 
 // IBC client state as unmarshaled from trace bytes
 type IBCClientState struct {
-	ChainID        *string
-	ClientID       *string
-	LatestHeight   *uint64
-	TrustingPeriod *int64
+	ChainID        string
+	ClientID       string
+	LatestHeight   uint64
+	TrustingPeriod int64
 }
 
 // IBC connection as unmarshaled from trace bytes
 type IBCConnection struct {
-	ConnectionID        *string
-	ClientID            *string
-	State               *string
-	CounterConnectionID *string
-	CounterClientID     *string
+	ConnectionID        string
+	ClientID            string
+	State               string
+	CounterConnectionID string
+	CounterClientID     string
 }
 
 // IBC denomination trace as unmarshaled from trace bytes
 type IBCDenomTrace struct {
-	Path      *string
-	BaseDenom *string
-	Hash      *string
+	Path      string
+	BaseDenom string
+	Hash      string
 }
 
 // ProcessingError is a set of indexed error strings, where the index matches a

@@ -134,15 +134,19 @@ func NewAuthRequest(payload *sdkutilities.AuthPayload) *sdk_utilitiespb.AuthRequ
 func NewAuthResult(message *sdk_utilitiespb.AuthResponse) []*sdkutilities.Auth {
 	result := make([]*sdkutilities.Auth, len(message.Field))
 	for i, val := range message.Field {
-		result[i] = &sdkutilities.Auth{}
-		if val.Address != "" {
-			result[i].Address = &val.Address
+		result[i] = &sdkutilities.Auth{
+			Address:        val.Address,
+			SequenceNumber: val.SequenceNumber,
+			AccountNumber:  val.AccountNumber,
 		}
-		if val.SequenceNumber != 0 {
-			result[i].SequenceNumber = &val.SequenceNumber
+		if val.Address == "" {
+			result[i].Address = ""
 		}
-		if val.AccountNumber != 0 {
-			result[i].AccountNumber = &val.AccountNumber
+		if val.SequenceNumber == 0 {
+			result[i].SequenceNumber = 0
+		}
+		if val.AccountNumber == 0 {
+			result[i].AccountNumber = 0
 		}
 	}
 	return result
@@ -205,18 +209,23 @@ func NewDelegationRequest(payload *sdkutilities.DelegationPayload) *sdk_utilitie
 func NewDelegationResult(message *sdk_utilitiespb.DelegationResponse) []*sdkutilities.Delegation {
 	result := make([]*sdkutilities.Delegation, len(message.Field))
 	for i, val := range message.Field {
-		result[i] = &sdkutilities.Delegation{}
-		if val.Delegator != "" {
-			result[i].Delegator = &val.Delegator
+		result[i] = &sdkutilities.Delegation{
+			Delegator: val.Delegator,
+			Validator: val.Validator,
+			Amount:    val.Amount,
+			Type:      val.Type,
 		}
-		if val.Validator != "" {
-			result[i].Validator = &val.Validator
+		if val.Delegator == "" {
+			result[i].Delegator = ""
 		}
-		if val.Amount != "" {
-			result[i].Amount = &val.Amount
+		if val.Validator == "" {
+			result[i].Validator = ""
 		}
-		if val.Type != "" {
-			result[i].Type = &val.Type
+		if val.Amount == "" {
+			result[i].Amount = ""
+		}
+		if val.Type == "" {
+			result[i].Type = "create"
 		}
 	}
 	return result
@@ -246,24 +255,29 @@ func NewIbcChannelRequest(payload *sdkutilities.IbcChannelPayload) *sdk_utilitie
 func NewIbcChannelResult(message *sdk_utilitiespb.IbcChannelResponse) []*sdkutilities.IBCChannel {
 	result := make([]*sdkutilities.IBCChannel, len(message.Field))
 	for i, val := range message.Field {
-		result[i] = &sdkutilities.IBCChannel{}
-		if val.ChannelId != "" {
-			result[i].ChannelID = &val.ChannelId
+		result[i] = &sdkutilities.IBCChannel{
+			ChannelID:        val.ChannelId,
+			CounterChannelID: val.CounterChannelId,
+			Port:             val.Port,
+			State:            val.State,
 		}
-		if val.CounterChannelId != "" {
-			result[i].CounterChannelID = &val.CounterChannelId
+		if val.ChannelId == "" {
+			result[i].ChannelID = ""
 		}
-		if val.Port != "" {
-			result[i].Port = &val.Port
-		}
-		if val.State != 0 {
-			result[i].State = &val.State
+		if val.CounterChannelId == "" {
+			result[i].CounterChannelID = ""
 		}
 		if val.Hops != nil {
 			result[i].Hops = make([]string, len(val.Hops))
 			for j, val := range val.Hops {
 				result[i].Hops[j] = val
 			}
+		}
+		if val.Port == "" {
+			result[i].Port = ""
+		}
+		if val.State == 0 {
+			result[i].State = 0
 		}
 	}
 	return result
@@ -293,18 +307,23 @@ func NewIbcClientStateRequest(payload *sdkutilities.IbcClientStatePayload) *sdk_
 func NewIbcClientStateResult(message *sdk_utilitiespb.IbcClientStateResponse) []*sdkutilities.IBCClientState {
 	result := make([]*sdkutilities.IBCClientState, len(message.Field))
 	for i, val := range message.Field {
-		result[i] = &sdkutilities.IBCClientState{}
-		if val.ChainId != "" {
-			result[i].ChainID = &val.ChainId
+		result[i] = &sdkutilities.IBCClientState{
+			ChainID:        val.ChainId,
+			ClientID:       val.ClientId,
+			LatestHeight:   val.LatestHeight,
+			TrustingPeriod: val.TrustingPeriod,
 		}
-		if val.ClientId != "" {
-			result[i].ClientID = &val.ClientId
+		if val.ChainId == "" {
+			result[i].ChainID = ""
 		}
-		if val.LatestHeight != 0 {
-			result[i].LatestHeight = &val.LatestHeight
+		if val.ClientId == "" {
+			result[i].ClientID = ""
 		}
-		if val.TrustingPeriod != 0 {
-			result[i].TrustingPeriod = &val.TrustingPeriod
+		if val.LatestHeight == 0 {
+			result[i].LatestHeight = 0
+		}
+		if val.TrustingPeriod == 0 {
+			result[i].TrustingPeriod = 0
 		}
 	}
 	return result
@@ -334,21 +353,27 @@ func NewIbcConnectionRequest(payload *sdkutilities.IbcConnectionPayload) *sdk_ut
 func NewIbcConnectionResult(message *sdk_utilitiespb.IbcConnectionResponse) []*sdkutilities.IBCConnection {
 	result := make([]*sdkutilities.IBCConnection, len(message.Field))
 	for i, val := range message.Field {
-		result[i] = &sdkutilities.IBCConnection{}
-		if val.ConnectionId != "" {
-			result[i].ConnectionID = &val.ConnectionId
+		result[i] = &sdkutilities.IBCConnection{
+			ConnectionID:        val.ConnectionId,
+			ClientID:            val.ClientId,
+			State:               val.State,
+			CounterConnectionID: val.CounterConnectionId,
+			CounterClientID:     val.CounterClientId,
 		}
-		if val.ClientId != "" {
-			result[i].ClientID = &val.ClientId
+		if val.ConnectionId == "" {
+			result[i].ConnectionID = ""
 		}
-		if val.State != "" {
-			result[i].State = &val.State
+		if val.ClientId == "" {
+			result[i].ClientID = ""
 		}
-		if val.CounterConnectionId != "" {
-			result[i].CounterConnectionID = &val.CounterConnectionId
+		if val.State == "" {
+			result[i].State = ""
 		}
-		if val.CounterClientId != "" {
-			result[i].CounterClientID = &val.CounterClientId
+		if val.CounterConnectionId == "" {
+			result[i].CounterConnectionID = ""
+		}
+		if val.CounterClientId == "" {
+			result[i].CounterClientID = ""
 		}
 	}
 	return result
@@ -378,15 +403,19 @@ func NewIbcDenomTraceRequest(payload *sdkutilities.IbcDenomTracePayload) *sdk_ut
 func NewIbcDenomTraceResult(message *sdk_utilitiespb.IbcDenomTraceResponse) []*sdkutilities.IBCDenomTrace {
 	result := make([]*sdkutilities.IBCDenomTrace, len(message.Field))
 	for i, val := range message.Field {
-		result[i] = &sdkutilities.IBCDenomTrace{}
-		if val.Path != "" {
-			result[i].Path = &val.Path
+		result[i] = &sdkutilities.IBCDenomTrace{
+			Path:      val.Path,
+			BaseDenom: val.BaseDenom,
+			Hash:      val.Hash,
 		}
-		if val.BaseDenom != "" {
-			result[i].BaseDenom = &val.BaseDenom
+		if val.Path == "" {
+			result[i].Path = ""
 		}
-		if val.Hash != "" {
-			result[i].Hash = &val.Hash
+		if val.BaseDenom == "" {
+			result[i].BaseDenom = ""
+		}
+		if val.Hash == "" {
+			result[i].Hash = ""
 		}
 	}
 	return result

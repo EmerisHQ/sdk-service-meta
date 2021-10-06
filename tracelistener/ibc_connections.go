@@ -11,11 +11,25 @@ func init() {
 var IBCConnectionDesignType = Type("IBCConnection", func() {
 	Description("IBC connection as unmarshaled from trace bytes")
 
-	Field(1, "connectionID", String)
-	Field(2, "clientID", String)
-	Field(3, "state", String)
-	Field(4, "counterConnectionID", String)
-	Field(5, "counterClientID", String)
+	Field(1, "connectionID", String, func() {
+		Default("")
+	})
+
+	Field(2, "clientID", String, func() {
+		Default("")
+	})
+
+	Field(3, "state", String, func() {
+		Default("")
+	})
+
+	Field(4, "counterConnectionID", String, func() {
+		Default("")
+	})
+
+	Field(5, "counterClientID", String, func() {
+		Default("")
+	})
 })
 
 func ibcConnectionsDesign() {

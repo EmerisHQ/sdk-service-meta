@@ -11,9 +11,17 @@ func init() {
 var BalanceDesignType = Type("Balance", func() {
 	Description("Balance of a given address as unmarshaled from trace bytes")
 
-	Field(1, "address", String)
-	Field(2, "amount", String)
-	Field(3, "denom", String)
+	Field(1, "address", String, func() {
+		Default("")
+	})
+
+	Field(2, "amount", String, func() {
+		Default("")
+	})
+
+	Field(3, "denom", String, func() {
+		Default("")
+	})
 
 	Required("address", "amount", "denom")
 })

@@ -16,10 +16,20 @@ const (
 var DelegationDesignType = Type("Delegation", func() {
 	Description("Staking delegation as unmarshaled from trace bytes")
 
-	Field(1, "delegator", String)
-	Field(2, "validator", String)
-	Field(3, "amount", String)
+	Field(1, "delegator", String, func() {
+		Default("")
+	})
+
+	Field(2, "validator", String, func() {
+		Default("")
+	})
+
+	Field(3, "amount", String, func() {
+		Default("")
+	})
+
 	Field(4, "type", String, func() {
+		Default(TypeCreateDelegation)
 		Enum(TypeDeleteDelegation, TypeCreateDelegation)
 	})
 })
