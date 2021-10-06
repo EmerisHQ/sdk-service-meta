@@ -36,8 +36,13 @@ var TracePayload = Type("TracePayload", func() {
 })
 
 var ErrorObjectDesignType = Type("ErrorObject", func() {
-	Field(1, "error", String)
-	Field(2, "payloadIndex", Int)
+	Field(1, "value", String, func() {
+		Default("")
+	})
+
+	Field(2, "payloadIndex", Int, func() {
+		Default(0)
+	})
 })
 
 func defineProcessingError() {

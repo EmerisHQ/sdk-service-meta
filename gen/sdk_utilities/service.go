@@ -239,8 +239,8 @@ type ProcessingError struct {
 }
 
 type ErrorObject struct {
-	Error        *string
-	PayloadIndex *int
+	Value        string
+	PayloadIndex int
 }
 
 // Error returns an error description.
