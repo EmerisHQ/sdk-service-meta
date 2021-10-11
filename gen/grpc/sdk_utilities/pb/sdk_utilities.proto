@@ -35,6 +35,8 @@ service SdkUtilities {
 	rpc IbcConnection (IbcConnectionRequest) returns (IbcConnectionResponse);
 	// IbcDenomTrace implements ibc_denom_trace.
 	rpc IbcDenomTrace (IbcDenomTraceRequest) returns (IbcDenomTraceResponse);
+	// UnbondingDelegation implements unbondingDelegation.
+	rpc UnbondingDelegationEndpoint (UnbondingDelegationRequest) returns (UnbondingDelegationResponse);
 }
 
 message SupplyRequest {
@@ -277,4 +279,34 @@ message IBCDenomTrace {
 	string path = 1;
 	string base_denom = 2;
 	string hash = 3;
+}
+
+message UnbondingDelegationProcessingErrorError {
+	// Name of error
+	string name = 1;
+	// Code of error
+	sint32 code = 2;
+	repeated ErrorObject errors = 3;
+}
+
+message UnbondingDelegationRequest {
+	repeated TracePayload payload = 1;
+}
+
+message UnbondingDelegationResponse {
+	repeated UnbondingDelegation field = 1;
+}
+// Staking unbondingDelegation as unmarshaled from trace bytes
+message UnbondingDelegation {
+	string delegator = 1;
+	string validator = 2;
+	string type = 3;
+	repeated UnbondingDelegationEntry entries = 4;
+}
+// A bonded user unbonding delegation entry
+message UnbondingDelegationEntry {
+	string balance = 1;
+	string initial_balance = 2;
+	sint64 creation_height = 3;
+	sint64 completion_time = 4;
 }

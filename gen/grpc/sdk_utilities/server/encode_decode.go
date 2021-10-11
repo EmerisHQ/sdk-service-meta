@@ -372,3 +372,36 @@ func DecodeIbcDenomTraceRequest(ctx context.Context, v interface{}, md metadata.
 	}
 	return payload, nil
 }
+
+// EncodeUnbondingDelegationEndpointResponse encodes responses from the
+// "sdk-utilities" service "unbondingDelegation" endpoint.
+func EncodeUnbondingDelegationEndpointResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.([]*sdkutilities.UnbondingDelegation)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "unbondingDelegation", "[]*sdkutilities.UnbondingDelegation", v)
+	}
+	resp := NewUnbondingDelegationResponse(result)
+	return resp, nil
+}
+
+// DecodeUnbondingDelegationEndpointRequest decodes requests sent to
+// "sdk-utilities" service "unbondingDelegation" endpoint.
+func DecodeUnbondingDelegationEndpointRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.UnbondingDelegationRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.UnbondingDelegationRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "unbondingDelegation", "*sdk_utilitiespb.UnbondingDelegationRequest", v)
+		}
+		if err := ValidateUnbondingDelegationRequest(message); err != nil {
+			return nil, err
+		}
+	}
+	var payload *sdkutilities.UnbondingDelegationPayload
+	{
+		payload = NewUnbondingDelegationPayload(message)
+	}
+	return payload, nil
+}

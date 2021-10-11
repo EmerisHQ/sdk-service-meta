@@ -15,33 +15,35 @@ import (
 
 // Client is the "sdk-utilities" service client.
 type Client struct {
-	SupplyEndpoint             goa.Endpoint
-	QueryTxEndpoint            goa.Endpoint
-	BroadcastTxEndpoint        goa.Endpoint
-	TxMetadataEndpoint         goa.Endpoint
-	AuthEndpointEndpoint       goa.Endpoint
-	BankEndpoint               goa.Endpoint
-	DelegationEndpointEndpoint goa.Endpoint
-	IbcChannelEndpoint         goa.Endpoint
-	IbcClientStateEndpoint     goa.Endpoint
-	IbcConnectionEndpoint      goa.Endpoint
-	IbcDenomTraceEndpoint      goa.Endpoint
+	SupplyEndpoint                      goa.Endpoint
+	QueryTxEndpoint                     goa.Endpoint
+	BroadcastTxEndpoint                 goa.Endpoint
+	TxMetadataEndpoint                  goa.Endpoint
+	AuthEndpointEndpoint                goa.Endpoint
+	BankEndpoint                        goa.Endpoint
+	DelegationEndpointEndpoint          goa.Endpoint
+	IbcChannelEndpoint                  goa.Endpoint
+	IbcClientStateEndpoint              goa.Endpoint
+	IbcConnectionEndpoint               goa.Endpoint
+	IbcDenomTraceEndpoint               goa.Endpoint
+	UnbondingDelegationEndpointEndpoint goa.Endpoint
 }
 
 // NewClient initializes a "sdk-utilities" service client given the endpoints.
-func NewClient(supply, queryTx, broadcastTx, txMetadata, authEndpoint, bank, delegationEndpoint, ibcChannel, ibcClientState, ibcConnection, ibcDenomTrace goa.Endpoint) *Client {
+func NewClient(supply, queryTx, broadcastTx, txMetadata, authEndpoint, bank, delegationEndpoint, ibcChannel, ibcClientState, ibcConnection, ibcDenomTrace, unbondingDelegationEndpoint goa.Endpoint) *Client {
 	return &Client{
-		SupplyEndpoint:             supply,
-		QueryTxEndpoint:            queryTx,
-		BroadcastTxEndpoint:        broadcastTx,
-		TxMetadataEndpoint:         txMetadata,
-		AuthEndpointEndpoint:       authEndpoint,
-		BankEndpoint:               bank,
-		DelegationEndpointEndpoint: delegationEndpoint,
-		IbcChannelEndpoint:         ibcChannel,
-		IbcClientStateEndpoint:     ibcClientState,
-		IbcConnectionEndpoint:      ibcConnection,
-		IbcDenomTraceEndpoint:      ibcDenomTrace,
+		SupplyEndpoint:                      supply,
+		QueryTxEndpoint:                     queryTx,
+		BroadcastTxEndpoint:                 broadcastTx,
+		TxMetadataEndpoint:                  txMetadata,
+		AuthEndpointEndpoint:                authEndpoint,
+		BankEndpoint:                        bank,
+		DelegationEndpointEndpoint:          delegationEndpoint,
+		IbcChannelEndpoint:                  ibcChannel,
+		IbcClientStateEndpoint:              ibcClientState,
+		IbcConnectionEndpoint:               ibcConnection,
+		IbcDenomTraceEndpoint:               ibcDenomTrace,
+		UnbondingDelegationEndpointEndpoint: unbondingDelegationEndpoint,
 	}
 }
 
@@ -178,4 +180,18 @@ func (c *Client) IbcDenomTrace(ctx context.Context, p *IbcDenomTracePayload) (re
 		return
 	}
 	return ires.([]*IBCDenomTrace), nil
+}
+
+// UnbondingDelegationEndpoint calls the "unbondingDelegation" endpoint of the
+// "sdk-utilities" service.
+// UnbondingDelegationEndpoint may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
+func (c *Client) UnbondingDelegationEndpoint(ctx context.Context, p *UnbondingDelegationPayload) (res []*UnbondingDelegation, err error) {
+	var ires interface{}
+	ires, err = c.UnbondingDelegationEndpointEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*UnbondingDelegation), nil
 }

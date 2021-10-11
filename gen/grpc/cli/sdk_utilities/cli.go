@@ -22,15 +22,15 @@ import (
 //    command (subcommand1|subcommand2|...)
 //
 func UsageCommands() string {
-	return `sdk-utilities (supply|query-tx|broadcast-tx|tx-metadata|auth|bank|delegation|ibc-channel|ibc-client-state|ibc-connection|ibc-denom-trace)
+	return `sdk-utilities (supply|query-tx|broadcast-tx|tx-metadata|auth|bank|delegation|ibc-channel|ibc-client-state|ibc-connection|ibc-denom-trace|unbonding-delegation)
 `
 }
 
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` sdk-utilities supply --message '{
-      "chainName": "Sed enim atque dolores esse dicta.",
-      "port": 7124529205354848620
+      "chainName": "Omnis et iure.",
+      "port": 6610216662945158602
    }'` + "\n" +
 		""
 }
@@ -73,6 +73,9 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 
 		sdkUtilitiesIbcDenomTraceFlags       = flag.NewFlagSet("ibc-denom-trace", flag.ExitOnError)
 		sdkUtilitiesIbcDenomTraceMessageFlag = sdkUtilitiesIbcDenomTraceFlags.String("message", "", "")
+
+		sdkUtilitiesUnbondingDelegationFlags       = flag.NewFlagSet("unbonding-delegation", flag.ExitOnError)
+		sdkUtilitiesUnbondingDelegationMessageFlag = sdkUtilitiesUnbondingDelegationFlags.String("message", "", "")
 	)
 	sdkUtilitiesFlags.Usage = sdkUtilitiesUsage
 	sdkUtilitiesSupplyFlags.Usage = sdkUtilitiesSupplyUsage
@@ -86,6 +89,7 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 	sdkUtilitiesIbcClientStateFlags.Usage = sdkUtilitiesIbcClientStateUsage
 	sdkUtilitiesIbcConnectionFlags.Usage = sdkUtilitiesIbcConnectionUsage
 	sdkUtilitiesIbcDenomTraceFlags.Usage = sdkUtilitiesIbcDenomTraceUsage
+	sdkUtilitiesUnbondingDelegationFlags.Usage = sdkUtilitiesUnbondingDelegationUsage
 
 	if err := flag.CommandLine.Parse(os.Args[1:]); err != nil {
 		return nil, nil, err
@@ -154,6 +158,9 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "ibc-denom-trace":
 				epf = sdkUtilitiesIbcDenomTraceFlags
 
+			case "unbonding-delegation":
+				epf = sdkUtilitiesUnbondingDelegationFlags
+
 			}
 
 		}
@@ -212,6 +219,9 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "ibc-denom-trace":
 				endpoint = c.IbcDenomTrace()
 				data, err = sdkutilitiesc.BuildIbcDenomTracePayload(*sdkUtilitiesIbcDenomTraceMessageFlag)
+			case "unbonding-delegation":
+				endpoint = c.UnbondingDelegationEndpoint()
+				data, err = sdkutilitiesc.BuildUnbondingDelegationEndpointPayload(*sdkUtilitiesUnbondingDelegationMessageFlag)
 			}
 		}
 	}
@@ -241,6 +251,7 @@ COMMAND:
     ibc-client-state: IbcClientState implements ibc_client_state.
     ibc-connection: IbcConnection implements ibc_connection.
     ibc-denom-trace: IbcDenomTrace implements ibc_denom_trace.
+    unbonding-delegation: UnbondingDelegation implements unbondingDelegation.
 
 Additional help:
     %[1]s sdk-utilities COMMAND --help
@@ -254,8 +265,8 @@ Supply implements supply.
 
 Example:
     %[1]s sdk-utilities supply --message '{
-      "chainName": "Sed enim atque dolores esse dicta.",
-      "port": 7124529205354848620
+      "chainName": "Omnis et iure.",
+      "port": 6610216662945158602
    }'
 `, os.Args[0])
 }
@@ -268,9 +279,9 @@ QueryTx implements queryTx.
 
 Example:
     %[1]s sdk-utilities query-tx --message '{
-      "chainName": "Explicabo consequatur est ea est.",
-      "hash": "Laborum quam ducimus consequatur.",
-      "port": 3065905437504226774
+      "chainName": "Sunt rem voluptas sed id.",
+      "hash": "Quia velit.",
+      "port": 6807197347816741012
    }'
 `, os.Args[0])
 }
@@ -283,9 +294,9 @@ BroadcastTx implements broadcastTx.
 
 Example:
     %[1]s sdk-utilities broadcast-tx --message '{
-      "chainName": "Officiis alias.",
-      "port": 5526397674056279747,
-      "txBytes": "UmVtIHZvbHVwdGFzIHNlZCBpZCBhbWV0IGRpY3RhLg=="
+      "chainName": "Neque porro consectetur deleniti maxime.",
+      "port": 1966021362583621803,
+      "txBytes": "U2VkIGFiLg=="
    }'
 `, os.Args[0])
 }
@@ -298,7 +309,7 @@ TxMetadata implements txMetadata.
 
 Example:
     %[1]s sdk-utilities tx-metadata --message '{
-      "txBytes": "UXVpcyBjdWxwYSBldCBibGFuZGl0aWlzIHZlcml0YXRpcyBoYXJ1bSBwb3NzaW11cy4="
+      "txBytes": "U3VzY2lwaXQgdm9sdXB0YXMgYWxpYXMgZW5pbSBzaXQgYXQu"
    }'
 `, os.Args[0])
 }
@@ -312,6 +323,11 @@ Auth implements auth.
 Example:
     %[1]s sdk-utilities auth --message '{
       "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
             "operationType": "delete",
@@ -403,16 +419,6 @@ Example:
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
             "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
-         },
-         {
-            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
-            "operationType": "delete",
-            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
-         },
-         {
-            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
-            "operationType": "delete",
-            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          }
       ]
    }'
@@ -461,11 +467,6 @@ Example:
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
             "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
-         },
-         {
-            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
-            "operationType": "delete",
-            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          }
       ]
    }'
@@ -480,6 +481,40 @@ IbcDenomTrace implements ibc_denom_trace.
 
 Example:
     %[1]s sdk-utilities ibc-denom-trace --message '{
+      "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         }
+      ]
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesUnbondingDelegationUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities unbonding-delegation -message JSON
+
+UnbondingDelegation implements unbondingDelegation.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities unbonding-delegation --message '{
       "payload": [
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",

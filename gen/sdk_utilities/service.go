@@ -35,6 +35,8 @@ type Service interface {
 	IbcConnection(context.Context, *IbcConnectionPayload) (res []*IBCConnection, err error)
 	// IbcDenomTrace implements ibc_denom_trace.
 	IbcDenomTrace(context.Context, *IbcDenomTracePayload) (res []*IBCDenomTrace, err error)
+	// UnbondingDelegation implements unbondingDelegation.
+	UnbondingDelegationEndpoint(context.Context, *UnbondingDelegationPayload) (res []*UnbondingDelegation, err error)
 }
 
 // ServiceName is the name of the service as defined in the design. This is the
@@ -45,7 +47,7 @@ const ServiceName = "sdk-utilities"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [11]string{"supply", "queryTx", "broadcastTx", "txMetadata", "auth", "bank", "delegation", "ibc_channel", "ibc_client_state", "ibc_connection", "ibc_denom_trace"}
+var MethodNames = [12]string{"supply", "queryTx", "broadcastTx", "txMetadata", "auth", "bank", "delegation", "ibc_channel", "ibc_client_state", "ibc_connection", "ibc_denom_trace", "unbondingDelegation"}
 
 // SupplyPayload is the payload type of the sdk-utilities service supply method.
 type SupplyPayload struct {
@@ -141,6 +143,12 @@ type IbcDenomTracePayload struct {
 	Payload []*TracePayload
 }
 
+// UnbondingDelegationPayload is the payload type of the sdk-utilities service
+// unbondingDelegation method.
+type UnbondingDelegationPayload struct {
+	Payload []*TracePayload
+}
+
 // SDK service representation of a Cosmos SDK types.Coin
 type Coin struct {
 	Denom  string
@@ -230,6 +238,22 @@ type IBCDenomTrace struct {
 	Path      string
 	BaseDenom string
 	Hash      string
+}
+
+// Staking unbondingDelegation as unmarshaled from trace bytes
+type UnbondingDelegation struct {
+	Delegator string
+	Validator string
+	Type      string
+	Entries   []*UnbondingDelegationEntry
+}
+
+// A bonded user unbonding delegation entry
+type UnbondingDelegationEntry struct {
+	Balance        string
+	InitialBalance string
+	CreationHeight int64
+	CompletionTime int64
 }
 
 // ProcessingError is a set of indexed error strings, where the index matches a

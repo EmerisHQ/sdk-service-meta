@@ -15,33 +15,35 @@ import (
 
 // Endpoints wraps the "sdk-utilities" service endpoints.
 type Endpoints struct {
-	Supply             goa.Endpoint
-	QueryTx            goa.Endpoint
-	BroadcastTx        goa.Endpoint
-	TxMetadata         goa.Endpoint
-	AuthEndpoint       goa.Endpoint
-	Bank               goa.Endpoint
-	DelegationEndpoint goa.Endpoint
-	IbcChannel         goa.Endpoint
-	IbcClientState     goa.Endpoint
-	IbcConnection      goa.Endpoint
-	IbcDenomTrace      goa.Endpoint
+	Supply                      goa.Endpoint
+	QueryTx                     goa.Endpoint
+	BroadcastTx                 goa.Endpoint
+	TxMetadata                  goa.Endpoint
+	AuthEndpoint                goa.Endpoint
+	Bank                        goa.Endpoint
+	DelegationEndpoint          goa.Endpoint
+	IbcChannel                  goa.Endpoint
+	IbcClientState              goa.Endpoint
+	IbcConnection               goa.Endpoint
+	IbcDenomTrace               goa.Endpoint
+	UnbondingDelegationEndpoint goa.Endpoint
 }
 
 // NewEndpoints wraps the methods of the "sdk-utilities" service with endpoints.
 func NewEndpoints(s Service) *Endpoints {
 	return &Endpoints{
-		Supply:             NewSupplyEndpoint(s),
-		QueryTx:            NewQueryTxEndpoint(s),
-		BroadcastTx:        NewBroadcastTxEndpoint(s),
-		TxMetadata:         NewTxMetadataEndpoint(s),
-		AuthEndpoint:       NewAuthEndpointEndpoint(s),
-		Bank:               NewBankEndpoint(s),
-		DelegationEndpoint: NewDelegationEndpointEndpoint(s),
-		IbcChannel:         NewIbcChannelEndpoint(s),
-		IbcClientState:     NewIbcClientStateEndpoint(s),
-		IbcConnection:      NewIbcConnectionEndpoint(s),
-		IbcDenomTrace:      NewIbcDenomTraceEndpoint(s),
+		Supply:                      NewSupplyEndpoint(s),
+		QueryTx:                     NewQueryTxEndpoint(s),
+		BroadcastTx:                 NewBroadcastTxEndpoint(s),
+		TxMetadata:                  NewTxMetadataEndpoint(s),
+		AuthEndpoint:                NewAuthEndpointEndpoint(s),
+		Bank:                        NewBankEndpoint(s),
+		DelegationEndpoint:          NewDelegationEndpointEndpoint(s),
+		IbcChannel:                  NewIbcChannelEndpoint(s),
+		IbcClientState:              NewIbcClientStateEndpoint(s),
+		IbcConnection:               NewIbcConnectionEndpoint(s),
+		IbcDenomTrace:               NewIbcDenomTraceEndpoint(s),
+		UnbondingDelegationEndpoint: NewUnbondingDelegationEndpointEndpoint(s),
 	}
 }
 
@@ -59,6 +61,7 @@ func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
 	e.IbcClientState = m(e.IbcClientState)
 	e.IbcConnection = m(e.IbcConnection)
 	e.IbcDenomTrace = m(e.IbcDenomTrace)
+	e.UnbondingDelegationEndpoint = m(e.UnbondingDelegationEndpoint)
 }
 
 // NewSupplyEndpoint returns an endpoint function that calls the method
@@ -157,5 +160,14 @@ func NewIbcDenomTraceEndpoint(s Service) goa.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
 		p := req.(*IbcDenomTracePayload)
 		return s.IbcDenomTrace(ctx, p)
+	}
+}
+
+// NewUnbondingDelegationEndpointEndpoint returns an endpoint function that
+// calls the method "unbondingDelegation" of service "sdk-utilities".
+func NewUnbondingDelegationEndpointEndpoint(s Service) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*UnbondingDelegationPayload)
+		return s.UnbondingDelegationEndpoint(ctx, p)
 	}
 }

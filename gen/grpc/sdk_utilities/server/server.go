@@ -19,17 +19,18 @@ import (
 
 // Server implements the sdk_utilitiespb.SdkUtilitiesServer interface.
 type Server struct {
-	SupplyH             goagrpc.UnaryHandler
-	QueryTxH            goagrpc.UnaryHandler
-	BroadcastTxH        goagrpc.UnaryHandler
-	TxMetadataH         goagrpc.UnaryHandler
-	AuthEndpointH       goagrpc.UnaryHandler
-	BankH               goagrpc.UnaryHandler
-	DelegationEndpointH goagrpc.UnaryHandler
-	IbcChannelH         goagrpc.UnaryHandler
-	IbcClientStateH     goagrpc.UnaryHandler
-	IbcConnectionH      goagrpc.UnaryHandler
-	IbcDenomTraceH      goagrpc.UnaryHandler
+	SupplyH                      goagrpc.UnaryHandler
+	QueryTxH                     goagrpc.UnaryHandler
+	BroadcastTxH                 goagrpc.UnaryHandler
+	TxMetadataH                  goagrpc.UnaryHandler
+	AuthEndpointH                goagrpc.UnaryHandler
+	BankH                        goagrpc.UnaryHandler
+	DelegationEndpointH          goagrpc.UnaryHandler
+	IbcChannelH                  goagrpc.UnaryHandler
+	IbcClientStateH              goagrpc.UnaryHandler
+	IbcConnectionH               goagrpc.UnaryHandler
+	IbcDenomTraceH               goagrpc.UnaryHandler
+	UnbondingDelegationEndpointH goagrpc.UnaryHandler
 	sdk_utilitiespb.UnimplementedSdkUtilitiesServer
 }
 
@@ -42,17 +43,18 @@ type ErrorNamer interface {
 // New instantiates the server struct with the sdk-utilities service endpoints.
 func New(e *sdkutilities.Endpoints, uh goagrpc.UnaryHandler) *Server {
 	return &Server{
-		SupplyH:             NewSupplyHandler(e.Supply, uh),
-		QueryTxH:            NewQueryTxHandler(e.QueryTx, uh),
-		BroadcastTxH:        NewBroadcastTxHandler(e.BroadcastTx, uh),
-		TxMetadataH:         NewTxMetadataHandler(e.TxMetadata, uh),
-		AuthEndpointH:       NewAuthEndpointHandler(e.AuthEndpoint, uh),
-		BankH:               NewBankHandler(e.Bank, uh),
-		DelegationEndpointH: NewDelegationEndpointHandler(e.DelegationEndpoint, uh),
-		IbcChannelH:         NewIbcChannelHandler(e.IbcChannel, uh),
-		IbcClientStateH:     NewIbcClientStateHandler(e.IbcClientState, uh),
-		IbcConnectionH:      NewIbcConnectionHandler(e.IbcConnection, uh),
-		IbcDenomTraceH:      NewIbcDenomTraceHandler(e.IbcDenomTrace, uh),
+		SupplyH:                      NewSupplyHandler(e.Supply, uh),
+		QueryTxH:                     NewQueryTxHandler(e.QueryTx, uh),
+		BroadcastTxH:                 NewBroadcastTxHandler(e.BroadcastTx, uh),
+		TxMetadataH:                  NewTxMetadataHandler(e.TxMetadata, uh),
+		AuthEndpointH:                NewAuthEndpointHandler(e.AuthEndpoint, uh),
+		BankH:                        NewBankHandler(e.Bank, uh),
+		DelegationEndpointH:          NewDelegationEndpointHandler(e.DelegationEndpoint, uh),
+		IbcChannelH:                  NewIbcChannelHandler(e.IbcChannel, uh),
+		IbcClientStateH:              NewIbcClientStateHandler(e.IbcClientState, uh),
+		IbcConnectionH:               NewIbcConnectionHandler(e.IbcConnection, uh),
+		IbcDenomTraceH:               NewIbcDenomTraceHandler(e.IbcDenomTrace, uh),
+		UnbondingDelegationEndpointH: NewUnbondingDelegationEndpointHandler(e.UnbondingDelegationEndpoint, uh),
 	}
 }
 
@@ -334,4 +336,32 @@ func (s *Server) IbcDenomTrace(ctx context.Context, message *sdk_utilitiespb.Ibc
 		return nil, goagrpc.EncodeError(err)
 	}
 	return resp.(*sdk_utilitiespb.IbcDenomTraceResponse), nil
+}
+
+// NewUnbondingDelegationEndpointHandler creates a gRPC handler which serves
+// the "sdk-utilities" service "unbondingDelegation" endpoint.
+func NewUnbondingDelegationEndpointHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+	if h == nil {
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeUnbondingDelegationEndpointRequest, EncodeUnbondingDelegationEndpointResponse)
+	}
+	return h
+}
+
+// UnbondingDelegationEndpoint implements the "UnbondingDelegationEndpoint"
+// method in sdk_utilitiespb.SdkUtilitiesServer interface.
+func (s *Server) UnbondingDelegationEndpoint(ctx context.Context, message *sdk_utilitiespb.UnbondingDelegationRequest) (*sdk_utilitiespb.UnbondingDelegationResponse, error) {
+	ctx = context.WithValue(ctx, goa.MethodKey, "unbondingDelegation")
+	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
+	resp, err := s.UnbondingDelegationEndpointH.Handle(ctx, message)
+	if err != nil {
+		if en, ok := err.(ErrorNamer); ok {
+			switch en.ErrorName() {
+			case "ProcessingError":
+				er := err.(*sdkutilities.ProcessingError)
+				return nil, goagrpc.NewStatusError(codes.InvalidArgument, err, NewUnbondingDelegationProcessingErrorError(er))
+			}
+		}
+		return nil, goagrpc.EncodeError(err)
+	}
+	return resp.(*sdk_utilitiespb.UnbondingDelegationResponse), nil
 }

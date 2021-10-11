@@ -40,6 +40,8 @@ type SdkUtilitiesClient interface {
 	IbcConnection(ctx context.Context, in *IbcConnectionRequest, opts ...grpc.CallOption) (*IbcConnectionResponse, error)
 	// IbcDenomTrace implements ibc_denom_trace.
 	IbcDenomTrace(ctx context.Context, in *IbcDenomTraceRequest, opts ...grpc.CallOption) (*IbcDenomTraceResponse, error)
+	// UnbondingDelegation implements unbondingDelegation.
+	UnbondingDelegationEndpoint(ctx context.Context, in *UnbondingDelegationRequest, opts ...grpc.CallOption) (*UnbondingDelegationResponse, error)
 }
 
 type sdkUtilitiesClient struct {
@@ -149,6 +151,15 @@ func (c *sdkUtilitiesClient) IbcDenomTrace(ctx context.Context, in *IbcDenomTrac
 	return out, nil
 }
 
+func (c *sdkUtilitiesClient) UnbondingDelegationEndpoint(ctx context.Context, in *UnbondingDelegationRequest, opts ...grpc.CallOption) (*UnbondingDelegationResponse, error) {
+	out := new(UnbondingDelegationResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/UnbondingDelegationEndpoint", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SdkUtilitiesServer is the server API for SdkUtilities service.
 // All implementations must embed UnimplementedSdkUtilitiesServer
 // for forward compatibility
@@ -175,6 +186,8 @@ type SdkUtilitiesServer interface {
 	IbcConnection(context.Context, *IbcConnectionRequest) (*IbcConnectionResponse, error)
 	// IbcDenomTrace implements ibc_denom_trace.
 	IbcDenomTrace(context.Context, *IbcDenomTraceRequest) (*IbcDenomTraceResponse, error)
+	// UnbondingDelegation implements unbondingDelegation.
+	UnbondingDelegationEndpoint(context.Context, *UnbondingDelegationRequest) (*UnbondingDelegationResponse, error)
 	mustEmbedUnimplementedSdkUtilitiesServer()
 }
 
@@ -214,6 +227,9 @@ func (UnimplementedSdkUtilitiesServer) IbcConnection(context.Context, *IbcConnec
 }
 func (UnimplementedSdkUtilitiesServer) IbcDenomTrace(context.Context, *IbcDenomTraceRequest) (*IbcDenomTraceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IbcDenomTrace not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) UnbondingDelegationEndpoint(context.Context, *UnbondingDelegationRequest) (*UnbondingDelegationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnbondingDelegationEndpoint not implemented")
 }
 func (UnimplementedSdkUtilitiesServer) mustEmbedUnimplementedSdkUtilitiesServer() {}
 
@@ -426,6 +442,24 @@ func _SdkUtilities_IbcDenomTrace_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SdkUtilities_UnbondingDelegationEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnbondingDelegationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).UnbondingDelegationEndpoint(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/UnbondingDelegationEndpoint",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).UnbondingDelegationEndpoint(ctx, req.(*UnbondingDelegationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SdkUtilities_ServiceDesc is the grpc.ServiceDesc for SdkUtilities service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -476,6 +510,10 @@ var SdkUtilities_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IbcDenomTrace",
 			Handler:    _SdkUtilities_IbcDenomTrace_Handler,
+		},
+		{
+			MethodName: "UnbondingDelegationEndpoint",
+			Handler:    _SdkUtilities_UnbondingDelegationEndpoint_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

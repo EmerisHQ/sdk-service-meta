@@ -262,3 +262,27 @@ func (c *Client) IbcDenomTrace() goa.Endpoint {
 		return res, nil
 	}
 }
+
+// UnbondingDelegationEndpoint calls the "UnbondingDelegationEndpoint" function
+// in sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) UnbondingDelegationEndpoint() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildUnbondingDelegationEndpointFunc(c.grpccli, c.opts...),
+			EncodeUnbondingDelegationEndpointRequest,
+			DecodeUnbondingDelegationEndpointResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.UnbondingDelegationProcessingErrorError:
+				return nil, NewUnbondingDelegationProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
+		}
+		return res, nil
+	}
+}

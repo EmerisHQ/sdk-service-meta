@@ -406,3 +406,41 @@ func DecodeIbcDenomTraceResponse(ctx context.Context, v interface{}, hdr, trlr m
 	res := NewIbcDenomTraceResult(message)
 	return res, nil
 }
+
+// BuildUnbondingDelegationEndpointFunc builds the remote method to invoke for
+// "sdk-utilities" service "unbondingDelegation" endpoint.
+func BuildUnbondingDelegationEndpointFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.UnbondingDelegationEndpoint(ctx, reqpb.(*sdk_utilitiespb.UnbondingDelegationRequest), opts...)
+		}
+		return grpccli.UnbondingDelegationEndpoint(ctx, &sdk_utilitiespb.UnbondingDelegationRequest{}, opts...)
+	}
+}
+
+// EncodeUnbondingDelegationEndpointRequest encodes requests sent to
+// sdk-utilities unbondingDelegation endpoint.
+func EncodeUnbondingDelegationEndpointRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.UnbondingDelegationPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "unbondingDelegation", "*sdkutilities.UnbondingDelegationPayload", v)
+	}
+	return NewUnbondingDelegationRequest(payload), nil
+}
+
+// DecodeUnbondingDelegationEndpointResponse decodes responses from the
+// sdk-utilities unbondingDelegation endpoint.
+func DecodeUnbondingDelegationEndpointResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.UnbondingDelegationResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "unbondingDelegation", "*sdk_utilitiespb.UnbondingDelegationResponse", v)
+	}
+	if err := ValidateUnbondingDelegationResponse(message); err != nil {
+		return nil, err
+	}
+	res := NewUnbondingDelegationResult(message)
+	return res, nil
+}

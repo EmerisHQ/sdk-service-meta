@@ -627,6 +627,102 @@ func NewIbcDenomTraceProcessingErrorError(message *sdk_utilitiespb.IbcDenomTrace
 	return er
 }
 
+// NewUnbondingDelegationRequest builds the gRPC request type from the payload
+// of the "unbondingDelegation" endpoint of the "sdk-utilities" service.
+func NewUnbondingDelegationRequest(payload *sdkutilities.UnbondingDelegationPayload) *sdk_utilitiespb.UnbondingDelegationRequest {
+	message := &sdk_utilitiespb.UnbondingDelegationRequest{}
+	if payload.Payload != nil {
+		message.Payload = make([]*sdk_utilitiespb.TracePayload, len(payload.Payload))
+		for i, val := range payload.Payload {
+			message.Payload[i] = &sdk_utilitiespb.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+			if val.OperationType != nil {
+				message.Payload[i].OperationType = *val.OperationType
+			}
+		}
+	}
+	return message
+}
+
+// NewUnbondingDelegationResult builds the result type of the
+// "unbondingDelegation" endpoint of the "sdk-utilities" service from the gRPC
+// response type.
+func NewUnbondingDelegationResult(message *sdk_utilitiespb.UnbondingDelegationResponse) []*sdkutilities.UnbondingDelegation {
+	result := make([]*sdkutilities.UnbondingDelegation, len(message.Field))
+	for i, val := range message.Field {
+		result[i] = &sdkutilities.UnbondingDelegation{
+			Delegator: val.Delegator,
+			Validator: val.Validator,
+			Type:      val.Type,
+		}
+		if val.Delegator == "" {
+			result[i].Delegator = ""
+		}
+		if val.Validator == "" {
+			result[i].Validator = ""
+		}
+		if val.Type == "" {
+			result[i].Type = "create"
+		}
+		if val.Entries != nil {
+			result[i].Entries = make([]*sdkutilities.UnbondingDelegationEntry, len(val.Entries))
+			for j, val := range val.Entries {
+				result[i].Entries[j] = &sdkutilities.UnbondingDelegationEntry{
+					Balance:        val.Balance,
+					InitialBalance: val.InitialBalance,
+					CreationHeight: val.CreationHeight,
+					CompletionTime: val.CompletionTime,
+				}
+				if val.Balance == "" {
+					result[i].Entries[j].Balance = ""
+				}
+				if val.InitialBalance == "" {
+					result[i].Entries[j].InitialBalance = ""
+				}
+				if val.CreationHeight == 0 {
+					result[i].Entries[j].CreationHeight = 0
+				}
+				if val.CompletionTime == 0 {
+					result[i].Entries[j].CompletionTime = 0
+				}
+			}
+		}
+	}
+	return result
+}
+
+// NewUnbondingDelegationProcessingErrorError builds the error type of the
+// "unbondingDelegation" endpoint of the "sdk-utilities" service from the gRPC
+// error response type.
+func NewUnbondingDelegationProcessingErrorError(message *sdk_utilitiespb.UnbondingDelegationProcessingErrorError) *sdkutilities.ProcessingError {
+	er := &sdkutilities.ProcessingError{}
+	if message.Name != "" {
+		er.Name = &message.Name
+	}
+	if message.Code != 0 {
+		codeptr := int(message.Code)
+		er.Code = &codeptr
+	}
+	if message.Errors != nil {
+		er.Errors = make([]*sdkutilities.ErrorObject, len(message.Errors))
+		for i, val := range message.Errors {
+			er.Errors[i] = &sdkutilities.ErrorObject{
+				Value:        val.Value,
+				PayloadIndex: int(val.PayloadIndex),
+			}
+			if val.Value == "" {
+				er.Errors[i].Value = ""
+			}
+			if val.PayloadIndex == 0 {
+				er.Errors[i].PayloadIndex = 0
+			}
+		}
+	}
+	return er
+}
+
 // ValidateSupplyResponse runs the validations defined on SupplyResponse.
 func ValidateSupplyResponse(message *sdk_utilitiespb.SupplyResponse) (err error) {
 	if message.Coins == nil {
@@ -687,6 +783,35 @@ func ValidateDelegation(message *sdk_utilitiespb.Delegation) (err error) {
 	if !(message.Type == "delete" || message.Type == "create") {
 		err = goa.MergeErrors(err, goa.InvalidEnumValueError("message.type", message.Type, []interface{}{"delete", "create"}))
 	}
+	return
+}
+
+// ValidateUnbondingDelegationResponse runs the validations defined on
+// UnbondingDelegationResponse.
+func ValidateUnbondingDelegationResponse(message *sdk_utilitiespb.UnbondingDelegationResponse) (err error) {
+	for _, e := range message.Field {
+		if e != nil {
+			if err2 := ValidateUnbondingDelegation(e); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
+	}
+	return
+}
+
+// ValidateUnbondingDelegation runs the validations defined on
+// UnbondingDelegation.
+func ValidateUnbondingDelegation(message *sdk_utilitiespb.UnbondingDelegation) (err error) {
+	if !(message.Type == "delete" || message.Type == "create") {
+		err = goa.MergeErrors(err, goa.InvalidEnumValueError("message.type", message.Type, []interface{}{"delete", "create"}))
+	}
+	return
+}
+
+// ValidateUnbondingDelegationEntry runs the validations defined on
+// UnbondingDelegationEntry.
+func ValidateUnbondingDelegationEntry(message *sdk_utilitiespb.UnbondingDelegationEntry) (err error) {
+
 	return
 }
 

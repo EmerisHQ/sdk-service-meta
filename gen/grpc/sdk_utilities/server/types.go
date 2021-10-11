@@ -520,6 +520,75 @@ func NewIbcDenomTraceProcessingErrorError(er *sdkutilities.ProcessingError) *sdk
 	return message
 }
 
+// NewUnbondingDelegationPayload builds the payload of the
+// "unbondingDelegation" endpoint of the "sdk-utilities" service from the gRPC
+// request type.
+func NewUnbondingDelegationPayload(message *sdk_utilitiespb.UnbondingDelegationRequest) *sdkutilities.UnbondingDelegationPayload {
+	v := &sdkutilities.UnbondingDelegationPayload{}
+	if message.Payload != nil {
+		v.Payload = make([]*sdkutilities.TracePayload, len(message.Payload))
+		for i, val := range message.Payload {
+			v.Payload[i] = &sdkutilities.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
+			}
+		}
+	}
+	return v
+}
+
+// NewUnbondingDelegationResponse builds the gRPC response type from the result
+// of the "unbondingDelegation" endpoint of the "sdk-utilities" service.
+func NewUnbondingDelegationResponse(result []*sdkutilities.UnbondingDelegation) *sdk_utilitiespb.UnbondingDelegationResponse {
+	message := &sdk_utilitiespb.UnbondingDelegationResponse{}
+	message.Field = make([]*sdk_utilitiespb.UnbondingDelegation, len(result))
+	for i, val := range result {
+		message.Field[i] = &sdk_utilitiespb.UnbondingDelegation{
+			Delegator: val.Delegator,
+			Validator: val.Validator,
+			Type:      val.Type,
+		}
+		if val.Entries != nil {
+			message.Field[i].Entries = make([]*sdk_utilitiespb.UnbondingDelegationEntry, len(val.Entries))
+			for j, val := range val.Entries {
+				message.Field[i].Entries[j] = &sdk_utilitiespb.UnbondingDelegationEntry{
+					Balance:        val.Balance,
+					InitialBalance: val.InitialBalance,
+					CreationHeight: val.CreationHeight,
+					CompletionTime: val.CompletionTime,
+				}
+			}
+		}
+	}
+	return message
+}
+
+// NewUnbondingDelegationProcessingErrorError builds the gRPC error response
+// type from the error of the "unbondingDelegation" endpoint of the
+// "sdk-utilities" service.
+func NewUnbondingDelegationProcessingErrorError(er *sdkutilities.ProcessingError) *sdk_utilitiespb.UnbondingDelegationProcessingErrorError {
+	message := &sdk_utilitiespb.UnbondingDelegationProcessingErrorError{}
+	if er.Name != nil {
+		message.Name = *er.Name
+	}
+	if er.Code != nil {
+		message.Code = int32(*er.Code)
+	}
+	if er.Errors != nil {
+		message.Errors = make([]*sdk_utilitiespb.ErrorObject, len(er.Errors))
+		for i, val := range er.Errors {
+			message.Errors[i] = &sdk_utilitiespb.ErrorObject{
+				Value:        val.Value,
+				PayloadIndex: int32(val.PayloadIndex),
+			}
+		}
+	}
+	return message
+}
+
 // ValidateBroadcastTxRequest runs the validations defined on
 // BroadcastTxRequest.
 func ValidateBroadcastTxRequest(message *sdk_utilitiespb.BroadcastTxRequest) (err error) {
@@ -630,6 +699,19 @@ func ValidateIbcConnectionRequest(message *sdk_utilitiespb.IbcConnectionRequest)
 // ValidateIbcDenomTraceRequest runs the validations defined on
 // IbcDenomTraceRequest.
 func ValidateIbcDenomTraceRequest(message *sdk_utilitiespb.IbcDenomTraceRequest) (err error) {
+	for _, e := range message.Payload {
+		if e != nil {
+			if err2 := ValidateTracePayload(e); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
+	}
+	return
+}
+
+// ValidateUnbondingDelegationRequest runs the validations defined on
+// UnbondingDelegationRequest.
+func ValidateUnbondingDelegationRequest(message *sdk_utilitiespb.UnbondingDelegationRequest) (err error) {
 	for _, e := range message.Payload {
 		if e != nil {
 			if err2 := ValidateTracePayload(e); err2 != nil {
