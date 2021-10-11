@@ -4,7 +4,7 @@ import (
 	. "goa.design/goa/v3/dsl"
 )
 
-var serviceDefinitions = []func(){}
+var serviceDefinitions []func()
 
 // Operation is a kind of operations a TraceWatcher observes.
 type Operation string
