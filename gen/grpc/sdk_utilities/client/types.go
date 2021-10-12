@@ -723,6 +723,142 @@ func NewUnbondingDelegationProcessingErrorError(message *sdk_utilitiespb.Unbondi
 	return er
 }
 
+// NewValidatorRequest builds the gRPC request type from the payload of the
+// "validator" endpoint of the "sdk-utilities" service.
+func NewValidatorRequest(payload *sdkutilities.ValidatorPayload) *sdk_utilitiespb.ValidatorRequest {
+	message := &sdk_utilitiespb.ValidatorRequest{}
+	if payload.Payload != nil {
+		message.Payload = make([]*sdk_utilitiespb.TracePayload, len(payload.Payload))
+		for i, val := range payload.Payload {
+			message.Payload[i] = &sdk_utilitiespb.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+			if val.OperationType != nil {
+				message.Payload[i].OperationType = *val.OperationType
+			}
+		}
+	}
+	return message
+}
+
+// NewValidatorResult builds the result type of the "validator" endpoint of the
+// "sdk-utilities" service from the gRPC response type.
+func NewValidatorResult(message *sdk_utilitiespb.ValidatorResponse) []*sdkutilities.Validator {
+	result := make([]*sdkutilities.Validator, len(message.Field))
+	for i, val := range message.Field {
+		result[i] = &sdkutilities.Validator{
+			OperatorAddress:      val.OperatorAddress,
+			ConsensusPubKeyType:  val.ConsensusPubKeyType,
+			ConsensusPubKeyValue: val.ConsensusPubKeyValue,
+			Jailed:               val.Jailed,
+			Status:               val.Status,
+			Tokens:               val.Tokens,
+			DelegatorShares:      val.DelegatorShares,
+			Moniker:              val.Moniker,
+			Identity:             val.Identity,
+			Website:              val.Website,
+			SecurityContact:      val.SecurityContact,
+			Details:              val.Details,
+			UnbondingHeight:      val.UnbondingHeight,
+			UnbondingTime:        val.UnbondingTime,
+			CommissionRate:       val.CommissionRate,
+			MaxRate:              val.MaxRate,
+			MaxChangeRate:        val.MaxChangeRate,
+			UpdateTime:           val.UpdateTime,
+			MinSelfDelegation:    val.MinSelfDelegation,
+			Type:                 val.Type,
+		}
+		if val.OperatorAddress == "" {
+			result[i].OperatorAddress = ""
+		}
+		if val.ConsensusPubKeyType == "" {
+			result[i].ConsensusPubKeyType = ""
+		}
+		if len(val.ConsensusPubKeyValue) == 0 {
+			result[i].ConsensusPubKeyValue = []byte{}
+		}
+		if val.Status == 0 {
+			result[i].Status = 0
+		}
+		if val.Tokens == "" {
+			result[i].Tokens = ""
+		}
+		if val.DelegatorShares == "" {
+			result[i].DelegatorShares = ""
+		}
+		if val.Moniker == "" {
+			result[i].Moniker = ""
+		}
+		if val.Identity == "" {
+			result[i].Identity = ""
+		}
+		if val.Website == "" {
+			result[i].Website = ""
+		}
+		if val.SecurityContact == "" {
+			result[i].SecurityContact = ""
+		}
+		if val.Details == "" {
+			result[i].Details = ""
+		}
+		if val.UnbondingHeight == 0 {
+			result[i].UnbondingHeight = 0
+		}
+		if val.UnbondingTime == 0 {
+			result[i].UnbondingTime = 0
+		}
+		if val.CommissionRate == "" {
+			result[i].CommissionRate = ""
+		}
+		if val.MaxRate == "" {
+			result[i].MaxRate = ""
+		}
+		if val.MaxChangeRate == "" {
+			result[i].MaxChangeRate = ""
+		}
+		if val.UpdateTime == "" {
+			result[i].UpdateTime = ""
+		}
+		if val.MinSelfDelegation == "" {
+			result[i].MinSelfDelegation = ""
+		}
+		if val.Type == "" {
+			result[i].Type = "create"
+		}
+	}
+	return result
+}
+
+// NewValidatorProcessingErrorError builds the error type of the "validator"
+// endpoint of the "sdk-utilities" service from the gRPC error response type.
+func NewValidatorProcessingErrorError(message *sdk_utilitiespb.ValidatorProcessingErrorError) *sdkutilities.ProcessingError {
+	er := &sdkutilities.ProcessingError{}
+	if message.Name != "" {
+		er.Name = &message.Name
+	}
+	if message.Code != 0 {
+		codeptr := int(message.Code)
+		er.Code = &codeptr
+	}
+	if message.Errors != nil {
+		er.Errors = make([]*sdkutilities.ErrorObject, len(message.Errors))
+		for i, val := range message.Errors {
+			er.Errors[i] = &sdkutilities.ErrorObject{
+				Value:        val.Value,
+				PayloadIndex: int(val.PayloadIndex),
+			}
+			if val.Value == "" {
+				er.Errors[i].Value = ""
+			}
+			if val.PayloadIndex == 0 {
+				er.Errors[i].PayloadIndex = 0
+			}
+		}
+	}
+	return er
+}
+
 // ValidateSupplyResponse runs the validations defined on SupplyResponse.
 func ValidateSupplyResponse(message *sdk_utilitiespb.SupplyResponse) (err error) {
 	if message.Coins == nil {
@@ -812,6 +948,26 @@ func ValidateUnbondingDelegation(message *sdk_utilitiespb.UnbondingDelegation) (
 // UnbondingDelegationEntry.
 func ValidateUnbondingDelegationEntry(message *sdk_utilitiespb.UnbondingDelegationEntry) (err error) {
 
+	return
+}
+
+// ValidateValidatorResponse runs the validations defined on ValidatorResponse.
+func ValidateValidatorResponse(message *sdk_utilitiespb.ValidatorResponse) (err error) {
+	for _, e := range message.Field {
+		if e != nil {
+			if err2 := ValidateValidator(e); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
+	}
+	return
+}
+
+// ValidateValidator runs the validations defined on Validator.
+func ValidateValidator(message *sdk_utilitiespb.Validator) (err error) {
+	if !(message.Type == "delete" || message.Type == "create") {
+		err = goa.MergeErrors(err, goa.InvalidEnumValueError("message.type", message.Type, []interface{}{"delete", "create"}))
+	}
 	return
 }
 

@@ -27,10 +27,11 @@ type Client struct {
 	IbcConnectionEndpoint               goa.Endpoint
 	IbcDenomTraceEndpoint               goa.Endpoint
 	UnbondingDelegationEndpointEndpoint goa.Endpoint
+	ValidatorEndpointEndpoint           goa.Endpoint
 }
 
 // NewClient initializes a "sdk-utilities" service client given the endpoints.
-func NewClient(supply, queryTx, broadcastTx, txMetadata, authEndpoint, bank, delegationEndpoint, ibcChannel, ibcClientState, ibcConnection, ibcDenomTrace, unbondingDelegationEndpoint goa.Endpoint) *Client {
+func NewClient(supply, queryTx, broadcastTx, txMetadata, authEndpoint, bank, delegationEndpoint, ibcChannel, ibcClientState, ibcConnection, ibcDenomTrace, unbondingDelegationEndpoint, validatorEndpoint goa.Endpoint) *Client {
 	return &Client{
 		SupplyEndpoint:                      supply,
 		QueryTxEndpoint:                     queryTx,
@@ -44,6 +45,7 @@ func NewClient(supply, queryTx, broadcastTx, txMetadata, authEndpoint, bank, del
 		IbcConnectionEndpoint:               ibcConnection,
 		IbcDenomTraceEndpoint:               ibcDenomTrace,
 		UnbondingDelegationEndpointEndpoint: unbondingDelegationEndpoint,
+		ValidatorEndpointEndpoint:           validatorEndpoint,
 	}
 }
 
@@ -194,4 +196,18 @@ func (c *Client) UnbondingDelegationEndpoint(ctx context.Context, p *UnbondingDe
 		return
 	}
 	return ires.([]*UnbondingDelegation), nil
+}
+
+// ValidatorEndpoint calls the "validator" endpoint of the "sdk-utilities"
+// service.
+// ValidatorEndpoint may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
+func (c *Client) ValidatorEndpoint(ctx context.Context, p *ValidatorPayload) (res []*Validator, err error) {
+	var ires interface{}
+	ires, err = c.ValidatorEndpointEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*Validator), nil
 }

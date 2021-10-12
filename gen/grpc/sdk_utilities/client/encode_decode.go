@@ -444,3 +444,41 @@ func DecodeUnbondingDelegationEndpointResponse(ctx context.Context, v interface{
 	res := NewUnbondingDelegationResult(message)
 	return res, nil
 }
+
+// BuildValidatorEndpointFunc builds the remote method to invoke for
+// "sdk-utilities" service "validator" endpoint.
+func BuildValidatorEndpointFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.ValidatorEndpoint(ctx, reqpb.(*sdk_utilitiespb.ValidatorRequest), opts...)
+		}
+		return grpccli.ValidatorEndpoint(ctx, &sdk_utilitiespb.ValidatorRequest{}, opts...)
+	}
+}
+
+// EncodeValidatorEndpointRequest encodes requests sent to sdk-utilities
+// validator endpoint.
+func EncodeValidatorEndpointRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.ValidatorPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "validator", "*sdkutilities.ValidatorPayload", v)
+	}
+	return NewValidatorRequest(payload), nil
+}
+
+// DecodeValidatorEndpointResponse decodes responses from the sdk-utilities
+// validator endpoint.
+func DecodeValidatorEndpointResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.ValidatorResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "validator", "*sdk_utilitiespb.ValidatorResponse", v)
+	}
+	if err := ValidateValidatorResponse(message); err != nil {
+		return nil, err
+	}
+	res := NewValidatorResult(message)
+	return res, nil
+}

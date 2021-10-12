@@ -286,3 +286,27 @@ func (c *Client) UnbondingDelegationEndpoint() goa.Endpoint {
 		return res, nil
 	}
 }
+
+// ValidatorEndpoint calls the "ValidatorEndpoint" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) ValidatorEndpoint() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildValidatorEndpointFunc(c.grpccli, c.opts...),
+			EncodeValidatorEndpointRequest,
+			DecodeValidatorEndpointResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.ValidatorProcessingErrorError:
+				return nil, NewValidatorProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
+		}
+		return res, nil
+	}
+}

@@ -31,6 +31,7 @@ type Server struct {
 	IbcConnectionH               goagrpc.UnaryHandler
 	IbcDenomTraceH               goagrpc.UnaryHandler
 	UnbondingDelegationEndpointH goagrpc.UnaryHandler
+	ValidatorEndpointH           goagrpc.UnaryHandler
 	sdk_utilitiespb.UnimplementedSdkUtilitiesServer
 }
 
@@ -55,6 +56,7 @@ func New(e *sdkutilities.Endpoints, uh goagrpc.UnaryHandler) *Server {
 		IbcConnectionH:               NewIbcConnectionHandler(e.IbcConnection, uh),
 		IbcDenomTraceH:               NewIbcDenomTraceHandler(e.IbcDenomTrace, uh),
 		UnbondingDelegationEndpointH: NewUnbondingDelegationEndpointHandler(e.UnbondingDelegationEndpoint, uh),
+		ValidatorEndpointH:           NewValidatorEndpointHandler(e.ValidatorEndpoint, uh),
 	}
 }
 
@@ -364,4 +366,32 @@ func (s *Server) UnbondingDelegationEndpoint(ctx context.Context, message *sdk_u
 		return nil, goagrpc.EncodeError(err)
 	}
 	return resp.(*sdk_utilitiespb.UnbondingDelegationResponse), nil
+}
+
+// NewValidatorEndpointHandler creates a gRPC handler which serves the
+// "sdk-utilities" service "validator" endpoint.
+func NewValidatorEndpointHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+	if h == nil {
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeValidatorEndpointRequest, EncodeValidatorEndpointResponse)
+	}
+	return h
+}
+
+// ValidatorEndpoint implements the "ValidatorEndpoint" method in
+// sdk_utilitiespb.SdkUtilitiesServer interface.
+func (s *Server) ValidatorEndpoint(ctx context.Context, message *sdk_utilitiespb.ValidatorRequest) (*sdk_utilitiespb.ValidatorResponse, error) {
+	ctx = context.WithValue(ctx, goa.MethodKey, "validator")
+	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
+	resp, err := s.ValidatorEndpointH.Handle(ctx, message)
+	if err != nil {
+		if en, ok := err.(ErrorNamer); ok {
+			switch en.ErrorName() {
+			case "ProcessingError":
+				er := err.(*sdkutilities.ProcessingError)
+				return nil, goagrpc.NewStatusError(codes.InvalidArgument, err, NewValidatorProcessingErrorError(er))
+			}
+		}
+		return nil, goagrpc.EncodeError(err)
+	}
+	return resp.(*sdk_utilitiespb.ValidatorResponse), nil
 }

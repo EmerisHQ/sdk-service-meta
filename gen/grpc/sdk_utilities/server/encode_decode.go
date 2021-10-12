@@ -405,3 +405,36 @@ func DecodeUnbondingDelegationEndpointRequest(ctx context.Context, v interface{}
 	}
 	return payload, nil
 }
+
+// EncodeValidatorEndpointResponse encodes responses from the "sdk-utilities"
+// service "validator" endpoint.
+func EncodeValidatorEndpointResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.([]*sdkutilities.Validator)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "validator", "[]*sdkutilities.Validator", v)
+	}
+	resp := NewValidatorResponse(result)
+	return resp, nil
+}
+
+// DecodeValidatorEndpointRequest decodes requests sent to "sdk-utilities"
+// service "validator" endpoint.
+func DecodeValidatorEndpointRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.ValidatorRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.ValidatorRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "validator", "*sdk_utilitiespb.ValidatorRequest", v)
+		}
+		if err := ValidateValidatorRequest(message); err != nil {
+			return nil, err
+		}
+	}
+	var payload *sdkutilities.ValidatorPayload
+	{
+		payload = NewValidatorPayload(message)
+	}
+	return payload, nil
+}

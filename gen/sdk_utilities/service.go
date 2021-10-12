@@ -37,6 +37,8 @@ type Service interface {
 	IbcDenomTrace(context.Context, *IbcDenomTracePayload) (res []*IBCDenomTrace, err error)
 	// UnbondingDelegation implements unbondingDelegation.
 	UnbondingDelegationEndpoint(context.Context, *UnbondingDelegationPayload) (res []*UnbondingDelegation, err error)
+	// Validator implements validator.
+	ValidatorEndpoint(context.Context, *ValidatorPayload) (res []*Validator, err error)
 }
 
 // ServiceName is the name of the service as defined in the design. This is the
@@ -47,7 +49,7 @@ const ServiceName = "sdk-utilities"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [12]string{"supply", "queryTx", "broadcastTx", "txMetadata", "auth", "bank", "delegation", "ibc_channel", "ibc_client_state", "ibc_connection", "ibc_denom_trace", "unbondingDelegation"}
+var MethodNames = [13]string{"supply", "queryTx", "broadcastTx", "txMetadata", "auth", "bank", "delegation", "ibc_channel", "ibc_client_state", "ibc_connection", "ibc_denom_trace", "unbondingDelegation", "validator"}
 
 // SupplyPayload is the payload type of the sdk-utilities service supply method.
 type SupplyPayload struct {
@@ -146,6 +148,12 @@ type IbcDenomTracePayload struct {
 // UnbondingDelegationPayload is the payload type of the sdk-utilities service
 // unbondingDelegation method.
 type UnbondingDelegationPayload struct {
+	Payload []*TracePayload
+}
+
+// ValidatorPayload is the payload type of the sdk-utilities service validator
+// method.
+type ValidatorPayload struct {
 	Payload []*TracePayload
 }
 
@@ -254,6 +262,30 @@ type UnbondingDelegationEntry struct {
 	InitialBalance string
 	CreationHeight int64
 	CompletionTime int64
+}
+
+// Validator struct as unmarshaled from trace bytes
+type Validator struct {
+	OperatorAddress      string
+	ConsensusPubKeyType  string
+	ConsensusPubKeyValue []byte
+	Jailed               bool
+	Status               int32
+	Tokens               string
+	DelegatorShares      string
+	Moniker              string
+	Identity             string
+	Website              string
+	SecurityContact      string
+	Details              string
+	UnbondingHeight      int64
+	UnbondingTime        int64
+	CommissionRate       string
+	MaxRate              string
+	MaxChangeRate        string
+	UpdateTime           string
+	MinSelfDelegation    string
+	Type                 string
 }
 
 // ProcessingError is a set of indexed error strings, where the index matches a

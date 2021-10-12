@@ -589,6 +589,79 @@ func NewUnbondingDelegationProcessingErrorError(er *sdkutilities.ProcessingError
 	return message
 }
 
+// NewValidatorPayload builds the payload of the "validator" endpoint of the
+// "sdk-utilities" service from the gRPC request type.
+func NewValidatorPayload(message *sdk_utilitiespb.ValidatorRequest) *sdkutilities.ValidatorPayload {
+	v := &sdkutilities.ValidatorPayload{}
+	if message.Payload != nil {
+		v.Payload = make([]*sdkutilities.TracePayload, len(message.Payload))
+		for i, val := range message.Payload {
+			v.Payload[i] = &sdkutilities.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
+			}
+		}
+	}
+	return v
+}
+
+// NewValidatorResponse builds the gRPC response type from the result of the
+// "validator" endpoint of the "sdk-utilities" service.
+func NewValidatorResponse(result []*sdkutilities.Validator) *sdk_utilitiespb.ValidatorResponse {
+	message := &sdk_utilitiespb.ValidatorResponse{}
+	message.Field = make([]*sdk_utilitiespb.Validator, len(result))
+	for i, val := range result {
+		message.Field[i] = &sdk_utilitiespb.Validator{
+			OperatorAddress:      val.OperatorAddress,
+			ConsensusPubKeyType:  val.ConsensusPubKeyType,
+			ConsensusPubKeyValue: val.ConsensusPubKeyValue,
+			Jailed:               val.Jailed,
+			Status:               val.Status,
+			Tokens:               val.Tokens,
+			DelegatorShares:      val.DelegatorShares,
+			Moniker:              val.Moniker,
+			Identity:             val.Identity,
+			Website:              val.Website,
+			SecurityContact:      val.SecurityContact,
+			Details:              val.Details,
+			UnbondingHeight:      val.UnbondingHeight,
+			UnbondingTime:        val.UnbondingTime,
+			CommissionRate:       val.CommissionRate,
+			MaxRate:              val.MaxRate,
+			MaxChangeRate:        val.MaxChangeRate,
+			UpdateTime:           val.UpdateTime,
+			MinSelfDelegation:    val.MinSelfDelegation,
+			Type:                 val.Type,
+		}
+	}
+	return message
+}
+
+// NewValidatorProcessingErrorError builds the gRPC error response type from
+// the error of the "validator" endpoint of the "sdk-utilities" service.
+func NewValidatorProcessingErrorError(er *sdkutilities.ProcessingError) *sdk_utilitiespb.ValidatorProcessingErrorError {
+	message := &sdk_utilitiespb.ValidatorProcessingErrorError{}
+	if er.Name != nil {
+		message.Name = *er.Name
+	}
+	if er.Code != nil {
+		message.Code = int32(*er.Code)
+	}
+	if er.Errors != nil {
+		message.Errors = make([]*sdk_utilitiespb.ErrorObject, len(er.Errors))
+		for i, val := range er.Errors {
+			message.Errors[i] = &sdk_utilitiespb.ErrorObject{
+				Value:        val.Value,
+				PayloadIndex: int32(val.PayloadIndex),
+			}
+		}
+	}
+	return message
+}
+
 // ValidateBroadcastTxRequest runs the validations defined on
 // BroadcastTxRequest.
 func ValidateBroadcastTxRequest(message *sdk_utilitiespb.BroadcastTxRequest) (err error) {
@@ -712,6 +785,18 @@ func ValidateIbcDenomTraceRequest(message *sdk_utilitiespb.IbcDenomTraceRequest)
 // ValidateUnbondingDelegationRequest runs the validations defined on
 // UnbondingDelegationRequest.
 func ValidateUnbondingDelegationRequest(message *sdk_utilitiespb.UnbondingDelegationRequest) (err error) {
+	for _, e := range message.Payload {
+		if e != nil {
+			if err2 := ValidateTracePayload(e); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
+	}
+	return
+}
+
+// ValidateValidatorRequest runs the validations defined on ValidatorRequest.
+func ValidateValidatorRequest(message *sdk_utilitiespb.ValidatorRequest) (err error) {
 	for _, e := range message.Payload {
 		if e != nil {
 			if err2 := ValidateTracePayload(e); err2 != nil {

@@ -27,6 +27,7 @@ type Endpoints struct {
 	IbcConnection               goa.Endpoint
 	IbcDenomTrace               goa.Endpoint
 	UnbondingDelegationEndpoint goa.Endpoint
+	ValidatorEndpoint           goa.Endpoint
 }
 
 // NewEndpoints wraps the methods of the "sdk-utilities" service with endpoints.
@@ -44,6 +45,7 @@ func NewEndpoints(s Service) *Endpoints {
 		IbcConnection:               NewIbcConnectionEndpoint(s),
 		IbcDenomTrace:               NewIbcDenomTraceEndpoint(s),
 		UnbondingDelegationEndpoint: NewUnbondingDelegationEndpointEndpoint(s),
+		ValidatorEndpoint:           NewValidatorEndpointEndpoint(s),
 	}
 }
 
@@ -62,6 +64,7 @@ func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
 	e.IbcConnection = m(e.IbcConnection)
 	e.IbcDenomTrace = m(e.IbcDenomTrace)
 	e.UnbondingDelegationEndpoint = m(e.UnbondingDelegationEndpoint)
+	e.ValidatorEndpoint = m(e.ValidatorEndpoint)
 }
 
 // NewSupplyEndpoint returns an endpoint function that calls the method
@@ -169,5 +172,14 @@ func NewUnbondingDelegationEndpointEndpoint(s Service) goa.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
 		p := req.(*UnbondingDelegationPayload)
 		return s.UnbondingDelegationEndpoint(ctx, p)
+	}
+}
+
+// NewValidatorEndpointEndpoint returns an endpoint function that calls the
+// method "validator" of service "sdk-utilities".
+func NewValidatorEndpointEndpoint(s Service) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*ValidatorPayload)
+		return s.ValidatorEndpoint(ctx, p)
 	}
 }

@@ -42,6 +42,8 @@ type SdkUtilitiesClient interface {
 	IbcDenomTrace(ctx context.Context, in *IbcDenomTraceRequest, opts ...grpc.CallOption) (*IbcDenomTraceResponse, error)
 	// UnbondingDelegation implements unbondingDelegation.
 	UnbondingDelegationEndpoint(ctx context.Context, in *UnbondingDelegationRequest, opts ...grpc.CallOption) (*UnbondingDelegationResponse, error)
+	// Validator implements validator.
+	ValidatorEndpoint(ctx context.Context, in *ValidatorRequest, opts ...grpc.CallOption) (*ValidatorResponse, error)
 }
 
 type sdkUtilitiesClient struct {
@@ -160,6 +162,15 @@ func (c *sdkUtilitiesClient) UnbondingDelegationEndpoint(ctx context.Context, in
 	return out, nil
 }
 
+func (c *sdkUtilitiesClient) ValidatorEndpoint(ctx context.Context, in *ValidatorRequest, opts ...grpc.CallOption) (*ValidatorResponse, error) {
+	out := new(ValidatorResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/ValidatorEndpoint", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SdkUtilitiesServer is the server API for SdkUtilities service.
 // All implementations must embed UnimplementedSdkUtilitiesServer
 // for forward compatibility
@@ -188,6 +199,8 @@ type SdkUtilitiesServer interface {
 	IbcDenomTrace(context.Context, *IbcDenomTraceRequest) (*IbcDenomTraceResponse, error)
 	// UnbondingDelegation implements unbondingDelegation.
 	UnbondingDelegationEndpoint(context.Context, *UnbondingDelegationRequest) (*UnbondingDelegationResponse, error)
+	// Validator implements validator.
+	ValidatorEndpoint(context.Context, *ValidatorRequest) (*ValidatorResponse, error)
 	mustEmbedUnimplementedSdkUtilitiesServer()
 }
 
@@ -230,6 +243,9 @@ func (UnimplementedSdkUtilitiesServer) IbcDenomTrace(context.Context, *IbcDenomT
 }
 func (UnimplementedSdkUtilitiesServer) UnbondingDelegationEndpoint(context.Context, *UnbondingDelegationRequest) (*UnbondingDelegationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnbondingDelegationEndpoint not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) ValidatorEndpoint(context.Context, *ValidatorRequest) (*ValidatorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ValidatorEndpoint not implemented")
 }
 func (UnimplementedSdkUtilitiesServer) mustEmbedUnimplementedSdkUtilitiesServer() {}
 
@@ -460,6 +476,24 @@ func _SdkUtilities_UnbondingDelegationEndpoint_Handler(srv interface{}, ctx cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SdkUtilities_ValidatorEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ValidatorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).ValidatorEndpoint(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/ValidatorEndpoint",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).ValidatorEndpoint(ctx, req.(*ValidatorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SdkUtilities_ServiceDesc is the grpc.ServiceDesc for SdkUtilities service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -514,6 +548,10 @@ var SdkUtilities_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UnbondingDelegationEndpoint",
 			Handler:    _SdkUtilities_UnbondingDelegationEndpoint_Handler,
+		},
+		{
+			MethodName: "ValidatorEndpoint",
+			Handler:    _SdkUtilities_ValidatorEndpoint_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

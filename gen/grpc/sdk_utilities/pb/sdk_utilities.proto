@@ -37,6 +37,8 @@ service SdkUtilities {
 	rpc IbcDenomTrace (IbcDenomTraceRequest) returns (IbcDenomTraceResponse);
 	// UnbondingDelegation implements unbondingDelegation.
 	rpc UnbondingDelegationEndpoint (UnbondingDelegationRequest) returns (UnbondingDelegationResponse);
+	// Validator implements validator.
+	rpc ValidatorEndpoint (ValidatorRequest) returns (ValidatorResponse);
 }
 
 message SupplyRequest {
@@ -309,4 +311,43 @@ message UnbondingDelegationEntry {
 	string initial_balance = 2;
 	sint64 creation_height = 3;
 	sint64 completion_time = 4;
+}
+
+message ValidatorProcessingErrorError {
+	// Name of error
+	string name = 1;
+	// Code of error
+	sint32 code = 2;
+	repeated ErrorObject errors = 3;
+}
+
+message ValidatorRequest {
+	repeated TracePayload payload = 1;
+}
+
+message ValidatorResponse {
+	repeated Validator field = 1;
+}
+// Validator struct as unmarshaled from trace bytes
+message Validator {
+	string operator_address = 1;
+	string consensus_pub_key_type = 2;
+	bytes consensus_pub_key_value = 3;
+	bool jailed = 4;
+	sint32 status = 5;
+	string tokens = 6;
+	string delegator_shares = 7;
+	string moniker = 8;
+	string identity = 9;
+	string website = 10;
+	string security_contact = 11;
+	string details = 12;
+	sint64 unbonding_height = 13;
+	sint64 unbonding_time = 14;
+	string commission_rate = 15;
+	string max_rate = 16;
+	string max_change_rate = 17;
+	string update_time = 18;
+	string min_self_delegation = 19;
+	string type = 20;
 }

@@ -22,15 +22,15 @@ import (
 //    command (subcommand1|subcommand2|...)
 //
 func UsageCommands() string {
-	return `sdk-utilities (supply|query-tx|broadcast-tx|tx-metadata|auth|bank|delegation|ibc-channel|ibc-client-state|ibc-connection|ibc-denom-trace|unbonding-delegation)
+	return `sdk-utilities (supply|query-tx|broadcast-tx|tx-metadata|auth|bank|delegation|ibc-channel|ibc-client-state|ibc-connection|ibc-denom-trace|unbonding-delegation|validator)
 `
 }
 
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` sdk-utilities supply --message '{
-      "chainName": "Omnis et iure.",
-      "port": 6610216662945158602
+      "chainName": "Similique ea.",
+      "port": 4751393079434121102
    }'` + "\n" +
 		""
 }
@@ -76,6 +76,9 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 
 		sdkUtilitiesUnbondingDelegationFlags       = flag.NewFlagSet("unbonding-delegation", flag.ExitOnError)
 		sdkUtilitiesUnbondingDelegationMessageFlag = sdkUtilitiesUnbondingDelegationFlags.String("message", "", "")
+
+		sdkUtilitiesValidatorFlags       = flag.NewFlagSet("validator", flag.ExitOnError)
+		sdkUtilitiesValidatorMessageFlag = sdkUtilitiesValidatorFlags.String("message", "", "")
 	)
 	sdkUtilitiesFlags.Usage = sdkUtilitiesUsage
 	sdkUtilitiesSupplyFlags.Usage = sdkUtilitiesSupplyUsage
@@ -90,6 +93,7 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 	sdkUtilitiesIbcConnectionFlags.Usage = sdkUtilitiesIbcConnectionUsage
 	sdkUtilitiesIbcDenomTraceFlags.Usage = sdkUtilitiesIbcDenomTraceUsage
 	sdkUtilitiesUnbondingDelegationFlags.Usage = sdkUtilitiesUnbondingDelegationUsage
+	sdkUtilitiesValidatorFlags.Usage = sdkUtilitiesValidatorUsage
 
 	if err := flag.CommandLine.Parse(os.Args[1:]); err != nil {
 		return nil, nil, err
@@ -161,6 +165,9 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "unbonding-delegation":
 				epf = sdkUtilitiesUnbondingDelegationFlags
 
+			case "validator":
+				epf = sdkUtilitiesValidatorFlags
+
 			}
 
 		}
@@ -222,6 +229,9 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "unbonding-delegation":
 				endpoint = c.UnbondingDelegationEndpoint()
 				data, err = sdkutilitiesc.BuildUnbondingDelegationEndpointPayload(*sdkUtilitiesUnbondingDelegationMessageFlag)
+			case "validator":
+				endpoint = c.ValidatorEndpoint()
+				data, err = sdkutilitiesc.BuildValidatorEndpointPayload(*sdkUtilitiesValidatorMessageFlag)
 			}
 		}
 	}
@@ -252,6 +262,7 @@ COMMAND:
     ibc-connection: IbcConnection implements ibc_connection.
     ibc-denom-trace: IbcDenomTrace implements ibc_denom_trace.
     unbonding-delegation: UnbondingDelegation implements unbondingDelegation.
+    validator: Validator implements validator.
 
 Additional help:
     %[1]s sdk-utilities COMMAND --help
@@ -265,8 +276,8 @@ Supply implements supply.
 
 Example:
     %[1]s sdk-utilities supply --message '{
-      "chainName": "Omnis et iure.",
-      "port": 6610216662945158602
+      "chainName": "Similique ea.",
+      "port": 4751393079434121102
    }'
 `, os.Args[0])
 }
@@ -279,9 +290,9 @@ QueryTx implements queryTx.
 
 Example:
     %[1]s sdk-utilities query-tx --message '{
-      "chainName": "Sunt rem voluptas sed id.",
-      "hash": "Quia velit.",
-      "port": 6807197347816741012
+      "chainName": "Et quo dolorum.",
+      "hash": "Fugiat optio velit est voluptatibus non aperiam.",
+      "port": 6526670691226631718
    }'
 `, os.Args[0])
 }
@@ -294,9 +305,9 @@ BroadcastTx implements broadcastTx.
 
 Example:
     %[1]s sdk-utilities broadcast-tx --message '{
-      "chainName": "Neque porro consectetur deleniti maxime.",
-      "port": 1966021362583621803,
-      "txBytes": "U2VkIGFiLg=="
+      "chainName": "Eum eos maxime esse nulla quis.",
+      "port": 2387078593804772203,
+      "txBytes": "UXVpcyBvbW5pcyBoaWMgZXVtIG5vc3RydW0u"
    }'
 `, os.Args[0])
 }
@@ -309,7 +320,7 @@ TxMetadata implements txMetadata.
 
 Example:
     %[1]s sdk-utilities tx-metadata --message '{
-      "txBytes": "U3VzY2lwaXQgdm9sdXB0YXMgYWxpYXMgZW5pbSBzaXQgYXQu"
+      "txBytes": "QWxpYXMgcXVvIGFuaW1pIGVvcyBpZCBldCB2ZWxpdC4="
    }'
 `, os.Args[0])
 }
@@ -323,6 +334,11 @@ Auth implements auth.
 Example:
     %[1]s sdk-utilities auth --message '{
       "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
             "operationType": "delete",
@@ -395,6 +411,16 @@ Example:
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
             "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          }
       ]
    }'
@@ -410,6 +436,11 @@ IbcChannel implements ibc_channel.
 Example:
     %[1]s sdk-utilities ibc-channel --message '{
       "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
             "operationType": "delete",
@@ -443,6 +474,16 @@ Example:
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
             "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          }
       ]
    }'
@@ -458,6 +499,16 @@ IbcConnection implements ibc_connection.
 Example:
     %[1]s sdk-utilities ibc-connection --message '{
       "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
             "operationType": "delete",
@@ -491,6 +542,25 @@ Example:
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
             "operationType": "delete",
             "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         }
+      ]
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesUnbondingDelegationUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities unbonding-delegation -message JSON
+
+UnbondingDelegation implements unbondingDelegation.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities unbonding-delegation --message '{
+      "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
          },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
@@ -507,15 +577,20 @@ Example:
 `, os.Args[0])
 }
 
-func sdkUtilitiesUnbondingDelegationUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities unbonding-delegation -message JSON
+func sdkUtilitiesValidatorUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities validator -message JSON
 
-UnbondingDelegation implements unbondingDelegation.
+Validator implements validator.
     -message JSON: 
 
 Example:
-    %[1]s sdk-utilities unbonding-delegation --message '{
+    %[1]s sdk-utilities validator --message '{
       "payload": [
+         {
+            "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
+            "operationType": "delete",
+            "value": "Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku"
+         },
          {
             "key": "QXV0IHNpdCBub2JpcyBldCBzaXQu",
             "operationType": "delete",
