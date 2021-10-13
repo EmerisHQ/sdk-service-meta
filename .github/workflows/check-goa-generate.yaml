@@ -7,7 +7,7 @@ on:
       - '.github/*'
 jobs:
   goa-generate:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: checkout repo
       uses: actions/checkout@v2
