@@ -1,5 +1,10 @@
 name: Check if Goa can generate a design
-on: [push]
+on:
+  push:
+    paths-ignore:
+      - '.gitignore'
+      - 'README.md'
+      - '.github/*'
 jobs:
   goa-generate:
     runs-on: ubuntu-latest
