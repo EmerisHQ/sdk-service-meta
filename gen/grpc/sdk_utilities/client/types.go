@@ -110,6 +110,131 @@ func NewTxMetadataResult(message *sdk_utilitiespb.TxMetadataResponse) *sdkutilit
 	return result
 }
 
+// NewBlockRequest builds the gRPC request type from the payload of the "block"
+// endpoint of the "sdk-utilities" service.
+func NewBlockRequest(payload *sdkutilities.BlockPayload) *sdk_utilitiespb.BlockRequest {
+	message := &sdk_utilitiespb.BlockRequest{
+		Height: payload.Height,
+	}
+	return message
+}
+
+// NewBlockResult builds the result type of the "block" endpoint of the
+// "sdk-utilities" service from the gRPC response type.
+func NewBlockResult(message *sdk_utilitiespb.BlockResponse) *sdkutilities.BlockData {
+	result := &sdkutilities.BlockData{
+		Height: message.Height,
+		Block:  message.Block,
+	}
+	return result
+}
+
+// NewLiquidityParamsRequest builds the gRPC request type from the payload of
+// the "liquidityParams" endpoint of the "sdk-utilities" service.
+func NewLiquidityParamsRequest(payload *sdkutilities.LiquidityParamsPayload) *sdk_utilitiespb.LiquidityParamsRequest {
+	message := &sdk_utilitiespb.LiquidityParamsRequest{
+		ChainName: payload.ChainName,
+	}
+	if payload.Port != nil {
+		message.Port = int32(*payload.Port)
+	}
+	return message
+}
+
+// NewLiquidityParamsResult builds the result type of the "liquidityParams"
+// endpoint of the "sdk-utilities" service from the gRPC response type.
+func NewLiquidityParamsResult(message *sdk_utilitiespb.LiquidityParamsResponse) *sdkutilities.LiquidityParams2 {
+	result := &sdkutilities.LiquidityParams2{
+		LiquidityParams: message.LiquidityParams,
+	}
+	return result
+}
+
+// NewLiquidityPoolsRequest builds the gRPC request type from the payload of
+// the "liquidityPools" endpoint of the "sdk-utilities" service.
+func NewLiquidityPoolsRequest(payload *sdkutilities.LiquidityPoolsPayload) *sdk_utilitiespb.LiquidityPoolsRequest {
+	message := &sdk_utilitiespb.LiquidityPoolsRequest{
+		ChainName: payload.ChainName,
+	}
+	if payload.Port != nil {
+		message.Port = int32(*payload.Port)
+	}
+	return message
+}
+
+// NewLiquidityPoolsResult builds the result type of the "liquidityPools"
+// endpoint of the "sdk-utilities" service from the gRPC response type.
+func NewLiquidityPoolsResult(message *sdk_utilitiespb.LiquidityPoolsResponse) *sdkutilities.LiquidityPools2 {
+	result := &sdkutilities.LiquidityPools2{
+		LiquidityPools: message.LiquidityPools,
+	}
+	return result
+}
+
+// NewMintInflationRequest builds the gRPC request type from the payload of the
+// "mintInflation" endpoint of the "sdk-utilities" service.
+func NewMintInflationRequest(payload *sdkutilities.MintInflationPayload) *sdk_utilitiespb.MintInflationRequest {
+	message := &sdk_utilitiespb.MintInflationRequest{
+		ChainName: payload.ChainName,
+	}
+	if payload.Port != nil {
+		message.Port = int32(*payload.Port)
+	}
+	return message
+}
+
+// NewMintInflationResult builds the result type of the "mintInflation"
+// endpoint of the "sdk-utilities" service from the gRPC response type.
+func NewMintInflationResult(message *sdk_utilitiespb.MintInflationResponse) *sdkutilities.MintInflation2 {
+	result := &sdkutilities.MintInflation2{
+		MintInflation: message.MintInflation,
+	}
+	return result
+}
+
+// NewMintParamsRequest builds the gRPC request type from the payload of the
+// "mintParams" endpoint of the "sdk-utilities" service.
+func NewMintParamsRequest(payload *sdkutilities.MintParamsPayload) *sdk_utilitiespb.MintParamsRequest {
+	message := &sdk_utilitiespb.MintParamsRequest{
+		ChainName: payload.ChainName,
+	}
+	if payload.Port != nil {
+		message.Port = int32(*payload.Port)
+	}
+	return message
+}
+
+// NewMintParamsResult builds the result type of the "mintParams" endpoint of
+// the "sdk-utilities" service from the gRPC response type.
+func NewMintParamsResult(message *sdk_utilitiespb.MintParamsResponse) *sdkutilities.MintParams2 {
+	result := &sdkutilities.MintParams2{
+		MintParams: message.MintParams,
+	}
+	return result
+}
+
+// NewMintAnnualProvisionRequest builds the gRPC request type from the payload
+// of the "mintAnnualProvision" endpoint of the "sdk-utilities" service.
+func NewMintAnnualProvisionRequest(payload *sdkutilities.MintAnnualProvisionPayload) *sdk_utilitiespb.MintAnnualProvisionRequest {
+	message := &sdk_utilitiespb.MintAnnualProvisionRequest{
+		ChainName: payload.ChainName,
+	}
+	if payload.Port != nil {
+		message.Port = int32(*payload.Port)
+	}
+	return message
+}
+
+// NewMintAnnualProvisionResult builds the result type of the
+// "mintAnnualProvision" endpoint of the "sdk-utilities" service from the gRPC
+// response type.
+func NewMintAnnualProvisionResult(message *sdk_utilitiespb.MintAnnualProvisionResponse) *sdkutilities.MintAnnualProvision2 {
+	result := &sdkutilities.MintAnnualProvision2{
+		MintAnnualProvision: message.MintAnnualProvision,
+	}
+	return result
+}
+
 // NewAuthRequest builds the gRPC request type from the payload of the "auth"
 // endpoint of the "sdk-utilities" service.
 func NewAuthRequest(payload *sdkutilities.AuthPayload) *sdk_utilitiespb.AuthRequest {
@@ -898,6 +1023,59 @@ func ValidateIBCTransferMetadata(message *sdk_utilitiespb.IBCTransferMetadata) (
 // ValidateIBCHeight runs the validations defined on IBCHeight.
 func ValidateIBCHeight(message *sdk_utilitiespb.IBCHeight) (err error) {
 
+	return
+}
+
+// ValidateBlockResponse runs the validations defined on BlockResponse.
+func ValidateBlockResponse(message *sdk_utilitiespb.BlockResponse) (err error) {
+	if message.Block == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("block", "message"))
+	}
+	return
+}
+
+// ValidateLiquidityParamsResponse runs the validations defined on
+// LiquidityParamsResponse.
+func ValidateLiquidityParamsResponse(message *sdk_utilitiespb.LiquidityParamsResponse) (err error) {
+	if message.LiquidityParams == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("liquidityParams", "message"))
+	}
+	return
+}
+
+// ValidateLiquidityPoolsResponse runs the validations defined on
+// LiquidityPoolsResponse.
+func ValidateLiquidityPoolsResponse(message *sdk_utilitiespb.LiquidityPoolsResponse) (err error) {
+	if message.LiquidityPools == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("liquidityPools", "message"))
+	}
+	return
+}
+
+// ValidateMintInflationResponse runs the validations defined on
+// MintInflationResponse.
+func ValidateMintInflationResponse(message *sdk_utilitiespb.MintInflationResponse) (err error) {
+	if message.MintInflation == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("mintInflation", "message"))
+	}
+	return
+}
+
+// ValidateMintParamsResponse runs the validations defined on
+// MintParamsResponse.
+func ValidateMintParamsResponse(message *sdk_utilitiespb.MintParamsResponse) (err error) {
+	if message.MintParams == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("mintParams", "message"))
+	}
+	return
+}
+
+// ValidateMintAnnualProvisionResponse runs the validations defined on
+// MintAnnualProvisionResponse.
+func ValidateMintAnnualProvisionResponse(message *sdk_utilitiespb.MintAnnualProvisionResponse) (err error) {
+	if message.MintAnnualProvision == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("mintAnnualProvision", "message"))
+	}
 	return
 }
 

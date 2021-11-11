@@ -21,6 +21,18 @@ type Service interface {
 	BroadcastTx(context.Context, *BroadcastTxPayload) (res *TransactionResult, err error)
 	// TxMetadata implements txMetadata.
 	TxMetadata(context.Context, *TxMetadataPayload) (res *TxMessagesMetadata, err error)
+	// Block implements block.
+	Block(context.Context, *BlockPayload) (res *BlockData, err error)
+	// LiquidityParams implements liquidityParams.
+	LiquidityParams(context.Context, *LiquidityParamsPayload) (res *LiquidityParams2, err error)
+	// LiquidityPools implements liquidityPools.
+	LiquidityPools(context.Context, *LiquidityPoolsPayload) (res *LiquidityPools2, err error)
+	// MintInflation implements mintInflation.
+	MintInflation(context.Context, *MintInflationPayload) (res *MintInflation2, err error)
+	// MintParams implements mintParams.
+	MintParams(context.Context, *MintParamsPayload) (res *MintParams2, err error)
+	// MintAnnualProvision implements mintAnnualProvision.
+	MintAnnualProvision(context.Context, *MintAnnualProvisionPayload) (res *MintAnnualProvision2, err error)
 	// Auth implements auth.
 	AuthEndpoint(context.Context, *AuthPayload) (res []*Auth, err error)
 	// Bank implements bank.
@@ -49,7 +61,7 @@ const ServiceName = "sdk-utilities"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [13]string{"supply", "queryTx", "broadcastTx", "txMetadata", "auth", "bank", "delegation", "ibc_channel", "ibc_client_state", "ibc_connection", "ibc_denom_trace", "unbondingDelegation", "validator"}
+var MethodNames = [19]string{"supply", "queryTx", "broadcastTx", "txMetadata", "block", "liquidityParams", "liquidityPools", "mintInflation", "mintParams", "mintAnnualProvision", "auth", "bank", "delegation", "ibc_channel", "ibc_client_state", "ibc_connection", "ibc_denom_trace", "unbondingDelegation", "validator"}
 
 // SupplyPayload is the payload type of the sdk-utilities service supply method.
 type SupplyPayload struct {
@@ -103,6 +115,93 @@ type TxMetadataPayload struct {
 // txMetadata method.
 type TxMessagesMetadata struct {
 	MessagesMetadata []*MsgMetadata
+}
+
+// BlockPayload is the payload type of the sdk-utilities service block method.
+type BlockPayload struct {
+	// Height of the block to query
+	Height int64
+}
+
+// BlockData is the result type of the sdk-utilities service block method.
+type BlockData struct {
+	Height int64
+	Block  []byte
+}
+
+// LiquidityParamsPayload is the payload type of the sdk-utilities service
+// liquidityParams method.
+type LiquidityParamsPayload struct {
+	// Chain to get data from
+	ChainName string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
+}
+
+// LiquidityParams2 is the result type of the sdk-utilities service
+// liquidityParams method.
+type LiquidityParams2 struct {
+	LiquidityParams []byte
+}
+
+// LiquidityPoolsPayload is the payload type of the sdk-utilities service
+// liquidityPools method.
+type LiquidityPoolsPayload struct {
+	// Chain to get data from
+	ChainName string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
+}
+
+// LiquidityPools2 is the result type of the sdk-utilities service
+// liquidityPools method.
+type LiquidityPools2 struct {
+	LiquidityPools []byte
+}
+
+// MintInflationPayload is the payload type of the sdk-utilities service
+// mintInflation method.
+type MintInflationPayload struct {
+	// Chain to get data from
+	ChainName string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
+}
+
+// MintInflation2 is the result type of the sdk-utilities service mintInflation
+// method.
+type MintInflation2 struct {
+	MintInflation []byte
+}
+
+// MintParamsPayload is the payload type of the sdk-utilities service
+// mintParams method.
+type MintParamsPayload struct {
+	// Chain to get data from
+	ChainName string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
+}
+
+// MintParams2 is the result type of the sdk-utilities service mintParams
+// method.
+type MintParams2 struct {
+	MintParams []byte
+}
+
+// MintAnnualProvisionPayload is the payload type of the sdk-utilities service
+// mintAnnualProvision method.
+type MintAnnualProvisionPayload struct {
+	// Chain to get data from
+	ChainName string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
+}
+
+// MintAnnualProvision2 is the result type of the sdk-utilities service
+// mintAnnualProvision method.
+type MintAnnualProvision2 struct {
+	MintAnnualProvision []byte
 }
 
 // AuthPayload is the payload type of the sdk-utilities service auth method.

@@ -26,6 +26,18 @@ type SdkUtilitiesClient interface {
 	BroadcastTx(ctx context.Context, in *BroadcastTxRequest, opts ...grpc.CallOption) (*BroadcastTxResponse, error)
 	// TxMetadata implements txMetadata.
 	TxMetadata(ctx context.Context, in *TxMetadataRequest, opts ...grpc.CallOption) (*TxMetadataResponse, error)
+	// Block implements block.
+	Block(ctx context.Context, in *BlockRequest, opts ...grpc.CallOption) (*BlockResponse, error)
+	// LiquidityParams implements liquidityParams.
+	LiquidityParams(ctx context.Context, in *LiquidityParamsRequest, opts ...grpc.CallOption) (*LiquidityParamsResponse, error)
+	// LiquidityPools implements liquidityPools.
+	LiquidityPools(ctx context.Context, in *LiquidityPoolsRequest, opts ...grpc.CallOption) (*LiquidityPoolsResponse, error)
+	// MintInflation implements mintInflation.
+	MintInflation(ctx context.Context, in *MintInflationRequest, opts ...grpc.CallOption) (*MintInflationResponse, error)
+	// MintParams implements mintParams.
+	MintParams(ctx context.Context, in *MintParamsRequest, opts ...grpc.CallOption) (*MintParamsResponse, error)
+	// MintAnnualProvision implements mintAnnualProvision.
+	MintAnnualProvision(ctx context.Context, in *MintAnnualProvisionRequest, opts ...grpc.CallOption) (*MintAnnualProvisionResponse, error)
 	// Auth implements auth.
 	AuthEndpoint(ctx context.Context, in *AuthRequest, opts ...grpc.CallOption) (*AuthResponse, error)
 	// Bank implements bank.
@@ -84,6 +96,60 @@ func (c *sdkUtilitiesClient) BroadcastTx(ctx context.Context, in *BroadcastTxReq
 func (c *sdkUtilitiesClient) TxMetadata(ctx context.Context, in *TxMetadataRequest, opts ...grpc.CallOption) (*TxMetadataResponse, error) {
 	out := new(TxMetadataResponse)
 	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/TxMetadata", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sdkUtilitiesClient) Block(ctx context.Context, in *BlockRequest, opts ...grpc.CallOption) (*BlockResponse, error) {
+	out := new(BlockResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/Block", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sdkUtilitiesClient) LiquidityParams(ctx context.Context, in *LiquidityParamsRequest, opts ...grpc.CallOption) (*LiquidityParamsResponse, error) {
+	out := new(LiquidityParamsResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/LiquidityParams", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sdkUtilitiesClient) LiquidityPools(ctx context.Context, in *LiquidityPoolsRequest, opts ...grpc.CallOption) (*LiquidityPoolsResponse, error) {
+	out := new(LiquidityPoolsResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/LiquidityPools", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sdkUtilitiesClient) MintInflation(ctx context.Context, in *MintInflationRequest, opts ...grpc.CallOption) (*MintInflationResponse, error) {
+	out := new(MintInflationResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/MintInflation", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sdkUtilitiesClient) MintParams(ctx context.Context, in *MintParamsRequest, opts ...grpc.CallOption) (*MintParamsResponse, error) {
+	out := new(MintParamsResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/MintParams", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sdkUtilitiesClient) MintAnnualProvision(ctx context.Context, in *MintAnnualProvisionRequest, opts ...grpc.CallOption) (*MintAnnualProvisionResponse, error) {
+	out := new(MintAnnualProvisionResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/MintAnnualProvision", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -183,6 +249,18 @@ type SdkUtilitiesServer interface {
 	BroadcastTx(context.Context, *BroadcastTxRequest) (*BroadcastTxResponse, error)
 	// TxMetadata implements txMetadata.
 	TxMetadata(context.Context, *TxMetadataRequest) (*TxMetadataResponse, error)
+	// Block implements block.
+	Block(context.Context, *BlockRequest) (*BlockResponse, error)
+	// LiquidityParams implements liquidityParams.
+	LiquidityParams(context.Context, *LiquidityParamsRequest) (*LiquidityParamsResponse, error)
+	// LiquidityPools implements liquidityPools.
+	LiquidityPools(context.Context, *LiquidityPoolsRequest) (*LiquidityPoolsResponse, error)
+	// MintInflation implements mintInflation.
+	MintInflation(context.Context, *MintInflationRequest) (*MintInflationResponse, error)
+	// MintParams implements mintParams.
+	MintParams(context.Context, *MintParamsRequest) (*MintParamsResponse, error)
+	// MintAnnualProvision implements mintAnnualProvision.
+	MintAnnualProvision(context.Context, *MintAnnualProvisionRequest) (*MintAnnualProvisionResponse, error)
 	// Auth implements auth.
 	AuthEndpoint(context.Context, *AuthRequest) (*AuthResponse, error)
 	// Bank implements bank.
@@ -219,6 +297,24 @@ func (UnimplementedSdkUtilitiesServer) BroadcastTx(context.Context, *BroadcastTx
 }
 func (UnimplementedSdkUtilitiesServer) TxMetadata(context.Context, *TxMetadataRequest) (*TxMetadataResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TxMetadata not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) Block(context.Context, *BlockRequest) (*BlockResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Block not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) LiquidityParams(context.Context, *LiquidityParamsRequest) (*LiquidityParamsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LiquidityParams not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) LiquidityPools(context.Context, *LiquidityPoolsRequest) (*LiquidityPoolsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LiquidityPools not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) MintInflation(context.Context, *MintInflationRequest) (*MintInflationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MintInflation not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) MintParams(context.Context, *MintParamsRequest) (*MintParamsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MintParams not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) MintAnnualProvision(context.Context, *MintAnnualProvisionRequest) (*MintAnnualProvisionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MintAnnualProvision not implemented")
 }
 func (UnimplementedSdkUtilitiesServer) AuthEndpoint(context.Context, *AuthRequest) (*AuthResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AuthEndpoint not implemented")
@@ -328,6 +424,114 @@ func _SdkUtilities_TxMetadata_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SdkUtilitiesServer).TxMetadata(ctx, req.(*TxMetadataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SdkUtilities_Block_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BlockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).Block(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/Block",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).Block(ctx, req.(*BlockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SdkUtilities_LiquidityParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LiquidityParamsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).LiquidityParams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/LiquidityParams",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).LiquidityParams(ctx, req.(*LiquidityParamsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SdkUtilities_LiquidityPools_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LiquidityPoolsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).LiquidityPools(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/LiquidityPools",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).LiquidityPools(ctx, req.(*LiquidityPoolsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SdkUtilities_MintInflation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MintInflationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).MintInflation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/MintInflation",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).MintInflation(ctx, req.(*MintInflationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SdkUtilities_MintParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MintParamsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).MintParams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/MintParams",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).MintParams(ctx, req.(*MintParamsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SdkUtilities_MintAnnualProvision_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MintAnnualProvisionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).MintAnnualProvision(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/MintAnnualProvision",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).MintAnnualProvision(ctx, req.(*MintAnnualProvisionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -516,6 +720,30 @@ var SdkUtilities_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TxMetadata",
 			Handler:    _SdkUtilities_TxMetadata_Handler,
+		},
+		{
+			MethodName: "Block",
+			Handler:    _SdkUtilities_Block_Handler,
+		},
+		{
+			MethodName: "LiquidityParams",
+			Handler:    _SdkUtilities_LiquidityParams_Handler,
+		},
+		{
+			MethodName: "LiquidityPools",
+			Handler:    _SdkUtilities_LiquidityPools_Handler,
+		},
+		{
+			MethodName: "MintInflation",
+			Handler:    _SdkUtilities_MintInflation_Handler,
+		},
+		{
+			MethodName: "MintParams",
+			Handler:    _SdkUtilities_MintParams_Handler,
+		},
+		{
+			MethodName: "MintAnnualProvision",
+			Handler:    _SdkUtilities_MintAnnualProvision_Handler,
 		},
 		{
 			MethodName: "AuthEndpoint",

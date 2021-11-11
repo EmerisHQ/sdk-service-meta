@@ -19,6 +19,12 @@ type Endpoints struct {
 	QueryTx                     goa.Endpoint
 	BroadcastTx                 goa.Endpoint
 	TxMetadata                  goa.Endpoint
+	Block                       goa.Endpoint
+	LiquidityParams             goa.Endpoint
+	LiquidityPools              goa.Endpoint
+	MintInflation               goa.Endpoint
+	MintParams                  goa.Endpoint
+	MintAnnualProvision         goa.Endpoint
 	AuthEndpoint                goa.Endpoint
 	Bank                        goa.Endpoint
 	DelegationEndpoint          goa.Endpoint
@@ -37,6 +43,12 @@ func NewEndpoints(s Service) *Endpoints {
 		QueryTx:                     NewQueryTxEndpoint(s),
 		BroadcastTx:                 NewBroadcastTxEndpoint(s),
 		TxMetadata:                  NewTxMetadataEndpoint(s),
+		Block:                       NewBlockEndpoint(s),
+		LiquidityParams:             NewLiquidityParamsEndpoint(s),
+		LiquidityPools:              NewLiquidityPoolsEndpoint(s),
+		MintInflation:               NewMintInflationEndpoint(s),
+		MintParams:                  NewMintParamsEndpoint(s),
+		MintAnnualProvision:         NewMintAnnualProvisionEndpoint(s),
 		AuthEndpoint:                NewAuthEndpointEndpoint(s),
 		Bank:                        NewBankEndpoint(s),
 		DelegationEndpoint:          NewDelegationEndpointEndpoint(s),
@@ -56,6 +68,12 @@ func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
 	e.QueryTx = m(e.QueryTx)
 	e.BroadcastTx = m(e.BroadcastTx)
 	e.TxMetadata = m(e.TxMetadata)
+	e.Block = m(e.Block)
+	e.LiquidityParams = m(e.LiquidityParams)
+	e.LiquidityPools = m(e.LiquidityPools)
+	e.MintInflation = m(e.MintInflation)
+	e.MintParams = m(e.MintParams)
+	e.MintAnnualProvision = m(e.MintAnnualProvision)
 	e.AuthEndpoint = m(e.AuthEndpoint)
 	e.Bank = m(e.Bank)
 	e.DelegationEndpoint = m(e.DelegationEndpoint)
@@ -100,6 +118,60 @@ func NewTxMetadataEndpoint(s Service) goa.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
 		p := req.(*TxMetadataPayload)
 		return s.TxMetadata(ctx, p)
+	}
+}
+
+// NewBlockEndpoint returns an endpoint function that calls the method "block"
+// of service "sdk-utilities".
+func NewBlockEndpoint(s Service) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*BlockPayload)
+		return s.Block(ctx, p)
+	}
+}
+
+// NewLiquidityParamsEndpoint returns an endpoint function that calls the
+// method "liquidityParams" of service "sdk-utilities".
+func NewLiquidityParamsEndpoint(s Service) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*LiquidityParamsPayload)
+		return s.LiquidityParams(ctx, p)
+	}
+}
+
+// NewLiquidityPoolsEndpoint returns an endpoint function that calls the method
+// "liquidityPools" of service "sdk-utilities".
+func NewLiquidityPoolsEndpoint(s Service) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*LiquidityPoolsPayload)
+		return s.LiquidityPools(ctx, p)
+	}
+}
+
+// NewMintInflationEndpoint returns an endpoint function that calls the method
+// "mintInflation" of service "sdk-utilities".
+func NewMintInflationEndpoint(s Service) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*MintInflationPayload)
+		return s.MintInflation(ctx, p)
+	}
+}
+
+// NewMintParamsEndpoint returns an endpoint function that calls the method
+// "mintParams" of service "sdk-utilities".
+func NewMintParamsEndpoint(s Service) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*MintParamsPayload)
+		return s.MintParams(ctx, p)
+	}
+}
+
+// NewMintAnnualProvisionEndpoint returns an endpoint function that calls the
+// method "mintAnnualProvision" of service "sdk-utilities".
+func NewMintAnnualProvisionEndpoint(s Service) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*MintAnnualProvisionPayload)
+		return s.MintAnnualProvision(ctx, p)
 	}
 }
 

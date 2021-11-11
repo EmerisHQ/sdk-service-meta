@@ -24,7 +24,7 @@ func BuildSupplyPayload(sdkUtilitiesSupplyMessage string) (*sdkutilities.SupplyP
 		if sdkUtilitiesSupplyMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesSupplyMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Similique ea.\",\n      \"port\": 4751393079434121102\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Quis omnis hic eum nostrum.\",\n      \"port\": 6801062929093128435\n   }'")
 			}
 		}
 	}
@@ -48,7 +48,7 @@ func BuildQueryTxPayload(sdkUtilitiesQueryTxMessage string) (*sdkutilities.Query
 		if sdkUtilitiesQueryTxMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesQueryTxMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Et quo dolorum.\",\n      \"hash\": \"Fugiat optio velit est voluptatibus non aperiam.\",\n      \"port\": 6526670691226631718\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Ratione voluptatum.\",\n      \"hash\": \"Alias quo animi eos id et velit.\",\n      \"port\": 2918849230649357130\n   }'")
 			}
 		}
 	}
@@ -73,7 +73,7 @@ func BuildBroadcastTxPayload(sdkUtilitiesBroadcastTxMessage string) (*sdkutiliti
 		if sdkUtilitiesBroadcastTxMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesBroadcastTxMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Eum eos maxime esse nulla quis.\",\n      \"port\": 2387078593804772203,\n      \"txBytes\": \"UXVpcyBvbW5pcyBoaWMgZXVtIG5vc3RydW0u\"\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Ratione itaque temporibus ut voluptates quia officiis.\",\n      \"port\": 2477448663619511809,\n      \"txBytes\": \"RGVsZW5pdGkgZXQu\"\n   }'")
 			}
 		}
 	}
@@ -98,12 +98,152 @@ func BuildTxMetadataPayload(sdkUtilitiesTxMetadataMessage string) (*sdkutilities
 		if sdkUtilitiesTxMetadataMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesTxMetadataMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"txBytes\": \"QWxpYXMgcXVvIGFuaW1pIGVvcyBpZCBldCB2ZWxpdC4=\"\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"txBytes\": \"QmxhbmRpdGlpcyBwbGFjZWF0IGl1cmUgZXhlcmNpdGF0aW9uZW0gaXVzdG8gcXVpcyBtb2xlc3RpYXMu\"\n   }'")
 			}
 		}
 	}
 	v := &sdkutilities.TxMetadataPayload{
 		TxBytes: message.TxBytes,
+	}
+
+	return v, nil
+}
+
+// BuildBlockPayload builds the payload for the sdk-utilities block endpoint
+// from CLI flags.
+func BuildBlockPayload(sdkUtilitiesBlockMessage string) (*sdkutilities.BlockPayload, error) {
+	var err error
+	var message sdk_utilitiespb.BlockRequest
+	{
+		if sdkUtilitiesBlockMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesBlockMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"height\": 4116790840276727849\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.BlockPayload{
+		Height: message.Height,
+	}
+
+	return v, nil
+}
+
+// BuildLiquidityParamsPayload builds the payload for the sdk-utilities
+// liquidityParams endpoint from CLI flags.
+func BuildLiquidityParamsPayload(sdkUtilitiesLiquidityParamsMessage string) (*sdkutilities.LiquidityParamsPayload, error) {
+	var err error
+	var message sdk_utilitiespb.LiquidityParamsRequest
+	{
+		if sdkUtilitiesLiquidityParamsMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesLiquidityParamsMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Hic non sit sunt.\",\n      \"port\": 4297245491416268488\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.LiquidityParamsPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+
+	return v, nil
+}
+
+// BuildLiquidityPoolsPayload builds the payload for the sdk-utilities
+// liquidityPools endpoint from CLI flags.
+func BuildLiquidityPoolsPayload(sdkUtilitiesLiquidityPoolsMessage string) (*sdkutilities.LiquidityPoolsPayload, error) {
+	var err error
+	var message sdk_utilitiespb.LiquidityPoolsRequest
+	{
+		if sdkUtilitiesLiquidityPoolsMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesLiquidityPoolsMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Eos odio est vero velit quibusdam illum.\",\n      \"port\": 3434698023359210906\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.LiquidityPoolsPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+
+	return v, nil
+}
+
+// BuildMintInflationPayload builds the payload for the sdk-utilities
+// mintInflation endpoint from CLI flags.
+func BuildMintInflationPayload(sdkUtilitiesMintInflationMessage string) (*sdkutilities.MintInflationPayload, error) {
+	var err error
+	var message sdk_utilitiespb.MintInflationRequest
+	{
+		if sdkUtilitiesMintInflationMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesMintInflationMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Nihil unde dolorem voluptatem dignissimos nam.\",\n      \"port\": 4837104213295428999\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.MintInflationPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+
+	return v, nil
+}
+
+// BuildMintParamsPayload builds the payload for the sdk-utilities mintParams
+// endpoint from CLI flags.
+func BuildMintParamsPayload(sdkUtilitiesMintParamsMessage string) (*sdkutilities.MintParamsPayload, error) {
+	var err error
+	var message sdk_utilitiespb.MintParamsRequest
+	{
+		if sdkUtilitiesMintParamsMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesMintParamsMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Laudantium est cumque.\",\n      \"port\": 419520256451477429\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.MintParamsPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+
+	return v, nil
+}
+
+// BuildMintAnnualProvisionPayload builds the payload for the sdk-utilities
+// mintAnnualProvision endpoint from CLI flags.
+func BuildMintAnnualProvisionPayload(sdkUtilitiesMintAnnualProvisionMessage string) (*sdkutilities.MintAnnualProvisionPayload, error) {
+	var err error
+	var message sdk_utilitiespb.MintAnnualProvisionRequest
+	{
+		if sdkUtilitiesMintAnnualProvisionMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesMintAnnualProvisionMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Laborum aperiam et assumenda fugiat.\",\n      \"port\": 3777367582328580731\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.MintAnnualProvisionPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
 	}
 
 	return v, nil
@@ -118,7 +258,7 @@ func BuildAuthEndpointPayload(sdkUtilitiesAuthMessage string) (*sdkutilities.Aut
 		if sdkUtilitiesAuthMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesAuthMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
 			}
 		}
 	}
@@ -148,7 +288,7 @@ func BuildBankPayload(sdkUtilitiesBankMessage string) (*sdkutilities.BankPayload
 		if sdkUtilitiesBankMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesBankMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
 			}
 		}
 	}
@@ -178,7 +318,7 @@ func BuildDelegationEndpointPayload(sdkUtilitiesDelegationMessage string) (*sdku
 		if sdkUtilitiesDelegationMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesDelegationMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
 			}
 		}
 	}
@@ -208,7 +348,7 @@ func BuildIbcChannelPayload(sdkUtilitiesIbcChannelMessage string) (*sdkutilities
 		if sdkUtilitiesIbcChannelMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesIbcChannelMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
 			}
 		}
 	}
@@ -238,7 +378,7 @@ func BuildIbcClientStatePayload(sdkUtilitiesIbcClientStateMessage string) (*sdku
 		if sdkUtilitiesIbcClientStateMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesIbcClientStateMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
 			}
 		}
 	}
@@ -268,7 +408,7 @@ func BuildIbcConnectionPayload(sdkUtilitiesIbcConnectionMessage string) (*sdkuti
 		if sdkUtilitiesIbcConnectionMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesIbcConnectionMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
 			}
 		}
 	}
@@ -298,7 +438,7 @@ func BuildIbcDenomTracePayload(sdkUtilitiesIbcDenomTraceMessage string) (*sdkuti
 		if sdkUtilitiesIbcDenomTraceMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesIbcDenomTraceMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
 			}
 		}
 	}
@@ -328,7 +468,7 @@ func BuildUnbondingDelegationEndpointPayload(sdkUtilitiesUnbondingDelegationMess
 		if sdkUtilitiesUnbondingDelegationMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesUnbondingDelegationMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
 			}
 		}
 	}
@@ -358,7 +498,7 @@ func BuildValidatorEndpointPayload(sdkUtilitiesValidatorMessage string) (*sdkuti
 		if sdkUtilitiesValidatorMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesValidatorMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         },\n         {\n            \"key\": \"QXV0IHNpdCBub2JpcyBldCBzaXQu\",\n            \"operationType\": \"delete\",\n            \"value\": \"Q3VwaWRpdGF0ZSByZXByZWhlbmRlcml0IHF1aWEgc3VzY2lwaXQgcmVydW0gY29ycnVwdGku\"\n         }\n      ]\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
 			}
 		}
 	}

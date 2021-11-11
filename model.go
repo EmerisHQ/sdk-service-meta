@@ -65,3 +65,53 @@ var TxMessagesMetadata = Type("TxMessagesMetadata", func() {
 
 	Required("messagesMetadata")
 })
+
+var BlockData = Type("BlockData", func() {
+	Description("Data for block at a given height")
+
+	Field(1, "height", Int64)
+	Field(2, "block", Bytes)
+
+	Required("height")
+	Required("block")
+})
+
+var LiquidityParams = Type("LiquidityParams", func() {
+	Description("Liquidity params response")
+
+	Field(1, "liquidityParams", Bytes)
+
+	Required("liquidityParams")
+})
+
+var LiquidityPools = Type("LiquidityPools", func() {
+	Description("Liquidity pools response")
+
+	Field(1, "liquidityPools", Bytes)
+
+	Required("liquidityPools")
+})
+
+var MintParams = Type("MintParams", func() {
+	Description("Mint params response")
+
+	Field(1, "mintParams", Bytes)
+
+	Required("mintParams")
+})
+
+var MintInflation = Type("MintInflation", func() {
+	Description("Mint inflation response")
+
+	Field(1, "mintInflation", Bytes)
+
+	Required("mintInflation")
+})
+
+var MintAnnualProvision = Type("MintAnnualProvision", func() {
+	Description("Mint annual provision response")
+
+	Field(1, "mintAnnualProvision", Bytes)
+
+	Required("mintAnnualProvision")
+})

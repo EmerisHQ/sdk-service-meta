@@ -161,6 +161,232 @@ func DecodeTxMetadataResponse(ctx context.Context, v interface{}, hdr, trlr meta
 	return res, nil
 }
 
+// BuildBlockFunc builds the remote method to invoke for "sdk-utilities"
+// service "block" endpoint.
+func BuildBlockFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.Block(ctx, reqpb.(*sdk_utilitiespb.BlockRequest), opts...)
+		}
+		return grpccli.Block(ctx, &sdk_utilitiespb.BlockRequest{}, opts...)
+	}
+}
+
+// EncodeBlockRequest encodes requests sent to sdk-utilities block endpoint.
+func EncodeBlockRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.BlockPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "block", "*sdkutilities.BlockPayload", v)
+	}
+	return NewBlockRequest(payload), nil
+}
+
+// DecodeBlockResponse decodes responses from the sdk-utilities block endpoint.
+func DecodeBlockResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.BlockResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "block", "*sdk_utilitiespb.BlockResponse", v)
+	}
+	if err := ValidateBlockResponse(message); err != nil {
+		return nil, err
+	}
+	res := NewBlockResult(message)
+	return res, nil
+}
+
+// BuildLiquidityParamsFunc builds the remote method to invoke for
+// "sdk-utilities" service "liquidityParams" endpoint.
+func BuildLiquidityParamsFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.LiquidityParams(ctx, reqpb.(*sdk_utilitiespb.LiquidityParamsRequest), opts...)
+		}
+		return grpccli.LiquidityParams(ctx, &sdk_utilitiespb.LiquidityParamsRequest{}, opts...)
+	}
+}
+
+// EncodeLiquidityParamsRequest encodes requests sent to sdk-utilities
+// liquidityParams endpoint.
+func EncodeLiquidityParamsRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.LiquidityParamsPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "liquidityParams", "*sdkutilities.LiquidityParamsPayload", v)
+	}
+	return NewLiquidityParamsRequest(payload), nil
+}
+
+// DecodeLiquidityParamsResponse decodes responses from the sdk-utilities
+// liquidityParams endpoint.
+func DecodeLiquidityParamsResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.LiquidityParamsResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "liquidityParams", "*sdk_utilitiespb.LiquidityParamsResponse", v)
+	}
+	if err := ValidateLiquidityParamsResponse(message); err != nil {
+		return nil, err
+	}
+	res := NewLiquidityParamsResult(message)
+	return res, nil
+}
+
+// BuildLiquidityPoolsFunc builds the remote method to invoke for
+// "sdk-utilities" service "liquidityPools" endpoint.
+func BuildLiquidityPoolsFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.LiquidityPools(ctx, reqpb.(*sdk_utilitiespb.LiquidityPoolsRequest), opts...)
+		}
+		return grpccli.LiquidityPools(ctx, &sdk_utilitiespb.LiquidityPoolsRequest{}, opts...)
+	}
+}
+
+// EncodeLiquidityPoolsRequest encodes requests sent to sdk-utilities
+// liquidityPools endpoint.
+func EncodeLiquidityPoolsRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.LiquidityPoolsPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "liquidityPools", "*sdkutilities.LiquidityPoolsPayload", v)
+	}
+	return NewLiquidityPoolsRequest(payload), nil
+}
+
+// DecodeLiquidityPoolsResponse decodes responses from the sdk-utilities
+// liquidityPools endpoint.
+func DecodeLiquidityPoolsResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.LiquidityPoolsResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "liquidityPools", "*sdk_utilitiespb.LiquidityPoolsResponse", v)
+	}
+	if err := ValidateLiquidityPoolsResponse(message); err != nil {
+		return nil, err
+	}
+	res := NewLiquidityPoolsResult(message)
+	return res, nil
+}
+
+// BuildMintInflationFunc builds the remote method to invoke for
+// "sdk-utilities" service "mintInflation" endpoint.
+func BuildMintInflationFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.MintInflation(ctx, reqpb.(*sdk_utilitiespb.MintInflationRequest), opts...)
+		}
+		return grpccli.MintInflation(ctx, &sdk_utilitiespb.MintInflationRequest{}, opts...)
+	}
+}
+
+// EncodeMintInflationRequest encodes requests sent to sdk-utilities
+// mintInflation endpoint.
+func EncodeMintInflationRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.MintInflationPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "mintInflation", "*sdkutilities.MintInflationPayload", v)
+	}
+	return NewMintInflationRequest(payload), nil
+}
+
+// DecodeMintInflationResponse decodes responses from the sdk-utilities
+// mintInflation endpoint.
+func DecodeMintInflationResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.MintInflationResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "mintInflation", "*sdk_utilitiespb.MintInflationResponse", v)
+	}
+	if err := ValidateMintInflationResponse(message); err != nil {
+		return nil, err
+	}
+	res := NewMintInflationResult(message)
+	return res, nil
+}
+
+// BuildMintParamsFunc builds the remote method to invoke for "sdk-utilities"
+// service "mintParams" endpoint.
+func BuildMintParamsFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.MintParams(ctx, reqpb.(*sdk_utilitiespb.MintParamsRequest), opts...)
+		}
+		return grpccli.MintParams(ctx, &sdk_utilitiespb.MintParamsRequest{}, opts...)
+	}
+}
+
+// EncodeMintParamsRequest encodes requests sent to sdk-utilities mintParams
+// endpoint.
+func EncodeMintParamsRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.MintParamsPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "mintParams", "*sdkutilities.MintParamsPayload", v)
+	}
+	return NewMintParamsRequest(payload), nil
+}
+
+// DecodeMintParamsResponse decodes responses from the sdk-utilities mintParams
+// endpoint.
+func DecodeMintParamsResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.MintParamsResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "mintParams", "*sdk_utilitiespb.MintParamsResponse", v)
+	}
+	if err := ValidateMintParamsResponse(message); err != nil {
+		return nil, err
+	}
+	res := NewMintParamsResult(message)
+	return res, nil
+}
+
+// BuildMintAnnualProvisionFunc builds the remote method to invoke for
+// "sdk-utilities" service "mintAnnualProvision" endpoint.
+func BuildMintAnnualProvisionFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.MintAnnualProvision(ctx, reqpb.(*sdk_utilitiespb.MintAnnualProvisionRequest), opts...)
+		}
+		return grpccli.MintAnnualProvision(ctx, &sdk_utilitiespb.MintAnnualProvisionRequest{}, opts...)
+	}
+}
+
+// EncodeMintAnnualProvisionRequest encodes requests sent to sdk-utilities
+// mintAnnualProvision endpoint.
+func EncodeMintAnnualProvisionRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.MintAnnualProvisionPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "mintAnnualProvision", "*sdkutilities.MintAnnualProvisionPayload", v)
+	}
+	return NewMintAnnualProvisionRequest(payload), nil
+}
+
+// DecodeMintAnnualProvisionResponse decodes responses from the sdk-utilities
+// mintAnnualProvision endpoint.
+func DecodeMintAnnualProvisionResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.MintAnnualProvisionResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "mintAnnualProvision", "*sdk_utilitiespb.MintAnnualProvisionResponse", v)
+	}
+	if err := ValidateMintAnnualProvisionResponse(message); err != nil {
+		return nil, err
+	}
+	res := NewMintAnnualProvisionResult(message)
+	return res, nil
+}
+
 // BuildAuthEndpointFunc builds the remote method to invoke for "sdk-utilities"
 // service "auth" endpoint.
 func BuildAuthEndpointFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {

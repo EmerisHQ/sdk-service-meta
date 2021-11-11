@@ -95,6 +95,102 @@ func (c *Client) TxMetadata() goa.Endpoint {
 	}
 }
 
+// Block calls the "Block" function in sdk_utilitiespb.SdkUtilitiesClient
+// interface.
+func (c *Client) Block() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildBlockFunc(c.grpccli, c.opts...),
+			EncodeBlockRequest,
+			DecodeBlockResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// LiquidityParams calls the "LiquidityParams" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) LiquidityParams() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildLiquidityParamsFunc(c.grpccli, c.opts...),
+			EncodeLiquidityParamsRequest,
+			DecodeLiquidityParamsResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// LiquidityPools calls the "LiquidityPools" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) LiquidityPools() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildLiquidityPoolsFunc(c.grpccli, c.opts...),
+			EncodeLiquidityPoolsRequest,
+			DecodeLiquidityPoolsResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// MintInflation calls the "MintInflation" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) MintInflation() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildMintInflationFunc(c.grpccli, c.opts...),
+			EncodeMintInflationRequest,
+			DecodeMintInflationResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// MintParams calls the "MintParams" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) MintParams() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildMintParamsFunc(c.grpccli, c.opts...),
+			EncodeMintParamsRequest,
+			DecodeMintParamsResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// MintAnnualProvision calls the "MintAnnualProvision" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) MintAnnualProvision() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildMintAnnualProvisionFunc(c.grpccli, c.opts...),
+			EncodeMintAnnualProvisionRequest,
+			DecodeMintAnnualProvisionResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
 // AuthEndpoint calls the "AuthEndpoint" function in
 // sdk_utilitiespb.SdkUtilitiesClient interface.
 func (c *Client) AuthEndpoint() goa.Endpoint {

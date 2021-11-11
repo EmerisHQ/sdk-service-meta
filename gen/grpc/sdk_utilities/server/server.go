@@ -23,6 +23,12 @@ type Server struct {
 	QueryTxH                     goagrpc.UnaryHandler
 	BroadcastTxH                 goagrpc.UnaryHandler
 	TxMetadataH                  goagrpc.UnaryHandler
+	BlockH                       goagrpc.UnaryHandler
+	LiquidityParamsH             goagrpc.UnaryHandler
+	LiquidityPoolsH              goagrpc.UnaryHandler
+	MintInflationH               goagrpc.UnaryHandler
+	MintParamsH                  goagrpc.UnaryHandler
+	MintAnnualProvisionH         goagrpc.UnaryHandler
 	AuthEndpointH                goagrpc.UnaryHandler
 	BankH                        goagrpc.UnaryHandler
 	DelegationEndpointH          goagrpc.UnaryHandler
@@ -48,6 +54,12 @@ func New(e *sdkutilities.Endpoints, uh goagrpc.UnaryHandler) *Server {
 		QueryTxH:                     NewQueryTxHandler(e.QueryTx, uh),
 		BroadcastTxH:                 NewBroadcastTxHandler(e.BroadcastTx, uh),
 		TxMetadataH:                  NewTxMetadataHandler(e.TxMetadata, uh),
+		BlockH:                       NewBlockHandler(e.Block, uh),
+		LiquidityParamsH:             NewLiquidityParamsHandler(e.LiquidityParams, uh),
+		LiquidityPoolsH:              NewLiquidityPoolsHandler(e.LiquidityPools, uh),
+		MintInflationH:               NewMintInflationHandler(e.MintInflation, uh),
+		MintParamsH:                  NewMintParamsHandler(e.MintParams, uh),
+		MintAnnualProvisionH:         NewMintAnnualProvisionHandler(e.MintAnnualProvision, uh),
 		AuthEndpointH:                NewAuthEndpointHandler(e.AuthEndpoint, uh),
 		BankH:                        NewBankHandler(e.Bank, uh),
 		DelegationEndpointH:          NewDelegationEndpointHandler(e.DelegationEndpoint, uh),
@@ -142,6 +154,132 @@ func (s *Server) TxMetadata(ctx context.Context, message *sdk_utilitiespb.TxMeta
 		return nil, goagrpc.EncodeError(err)
 	}
 	return resp.(*sdk_utilitiespb.TxMetadataResponse), nil
+}
+
+// NewBlockHandler creates a gRPC handler which serves the "sdk-utilities"
+// service "block" endpoint.
+func NewBlockHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+	if h == nil {
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeBlockRequest, EncodeBlockResponse)
+	}
+	return h
+}
+
+// Block implements the "Block" method in sdk_utilitiespb.SdkUtilitiesServer
+// interface.
+func (s *Server) Block(ctx context.Context, message *sdk_utilitiespb.BlockRequest) (*sdk_utilitiespb.BlockResponse, error) {
+	ctx = context.WithValue(ctx, goa.MethodKey, "block")
+	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
+	resp, err := s.BlockH.Handle(ctx, message)
+	if err != nil {
+		return nil, goagrpc.EncodeError(err)
+	}
+	return resp.(*sdk_utilitiespb.BlockResponse), nil
+}
+
+// NewLiquidityParamsHandler creates a gRPC handler which serves the
+// "sdk-utilities" service "liquidityParams" endpoint.
+func NewLiquidityParamsHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+	if h == nil {
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeLiquidityParamsRequest, EncodeLiquidityParamsResponse)
+	}
+	return h
+}
+
+// LiquidityParams implements the "LiquidityParams" method in
+// sdk_utilitiespb.SdkUtilitiesServer interface.
+func (s *Server) LiquidityParams(ctx context.Context, message *sdk_utilitiespb.LiquidityParamsRequest) (*sdk_utilitiespb.LiquidityParamsResponse, error) {
+	ctx = context.WithValue(ctx, goa.MethodKey, "liquidityParams")
+	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
+	resp, err := s.LiquidityParamsH.Handle(ctx, message)
+	if err != nil {
+		return nil, goagrpc.EncodeError(err)
+	}
+	return resp.(*sdk_utilitiespb.LiquidityParamsResponse), nil
+}
+
+// NewLiquidityPoolsHandler creates a gRPC handler which serves the
+// "sdk-utilities" service "liquidityPools" endpoint.
+func NewLiquidityPoolsHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+	if h == nil {
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeLiquidityPoolsRequest, EncodeLiquidityPoolsResponse)
+	}
+	return h
+}
+
+// LiquidityPools implements the "LiquidityPools" method in
+// sdk_utilitiespb.SdkUtilitiesServer interface.
+func (s *Server) LiquidityPools(ctx context.Context, message *sdk_utilitiespb.LiquidityPoolsRequest) (*sdk_utilitiespb.LiquidityPoolsResponse, error) {
+	ctx = context.WithValue(ctx, goa.MethodKey, "liquidityPools")
+	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
+	resp, err := s.LiquidityPoolsH.Handle(ctx, message)
+	if err != nil {
+		return nil, goagrpc.EncodeError(err)
+	}
+	return resp.(*sdk_utilitiespb.LiquidityPoolsResponse), nil
+}
+
+// NewMintInflationHandler creates a gRPC handler which serves the
+// "sdk-utilities" service "mintInflation" endpoint.
+func NewMintInflationHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+	if h == nil {
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeMintInflationRequest, EncodeMintInflationResponse)
+	}
+	return h
+}
+
+// MintInflation implements the "MintInflation" method in
+// sdk_utilitiespb.SdkUtilitiesServer interface.
+func (s *Server) MintInflation(ctx context.Context, message *sdk_utilitiespb.MintInflationRequest) (*sdk_utilitiespb.MintInflationResponse, error) {
+	ctx = context.WithValue(ctx, goa.MethodKey, "mintInflation")
+	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
+	resp, err := s.MintInflationH.Handle(ctx, message)
+	if err != nil {
+		return nil, goagrpc.EncodeError(err)
+	}
+	return resp.(*sdk_utilitiespb.MintInflationResponse), nil
+}
+
+// NewMintParamsHandler creates a gRPC handler which serves the "sdk-utilities"
+// service "mintParams" endpoint.
+func NewMintParamsHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+	if h == nil {
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeMintParamsRequest, EncodeMintParamsResponse)
+	}
+	return h
+}
+
+// MintParams implements the "MintParams" method in
+// sdk_utilitiespb.SdkUtilitiesServer interface.
+func (s *Server) MintParams(ctx context.Context, message *sdk_utilitiespb.MintParamsRequest) (*sdk_utilitiespb.MintParamsResponse, error) {
+	ctx = context.WithValue(ctx, goa.MethodKey, "mintParams")
+	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
+	resp, err := s.MintParamsH.Handle(ctx, message)
+	if err != nil {
+		return nil, goagrpc.EncodeError(err)
+	}
+	return resp.(*sdk_utilitiespb.MintParamsResponse), nil
+}
+
+// NewMintAnnualProvisionHandler creates a gRPC handler which serves the
+// "sdk-utilities" service "mintAnnualProvision" endpoint.
+func NewMintAnnualProvisionHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+	if h == nil {
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeMintAnnualProvisionRequest, EncodeMintAnnualProvisionResponse)
+	}
+	return h
+}
+
+// MintAnnualProvision implements the "MintAnnualProvision" method in
+// sdk_utilitiespb.SdkUtilitiesServer interface.
+func (s *Server) MintAnnualProvision(ctx context.Context, message *sdk_utilitiespb.MintAnnualProvisionRequest) (*sdk_utilitiespb.MintAnnualProvisionResponse, error) {
+	ctx = context.WithValue(ctx, goa.MethodKey, "mintAnnualProvision")
+	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
+	resp, err := s.MintAnnualProvisionH.Handle(ctx, message)
+	if err != nil {
+		return nil, goagrpc.EncodeError(err)
+	}
+	return resp.(*sdk_utilitiespb.MintAnnualProvisionResponse), nil
 }
 
 // NewAuthEndpointHandler creates a gRPC handler which serves the

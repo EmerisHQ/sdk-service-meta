@@ -19,6 +19,12 @@ type Client struct {
 	QueryTxEndpoint                     goa.Endpoint
 	BroadcastTxEndpoint                 goa.Endpoint
 	TxMetadataEndpoint                  goa.Endpoint
+	BlockEndpoint                       goa.Endpoint
+	LiquidityParamsEndpoint             goa.Endpoint
+	LiquidityPoolsEndpoint              goa.Endpoint
+	MintInflationEndpoint               goa.Endpoint
+	MintParamsEndpoint                  goa.Endpoint
+	MintAnnualProvisionEndpoint         goa.Endpoint
 	AuthEndpointEndpoint                goa.Endpoint
 	BankEndpoint                        goa.Endpoint
 	DelegationEndpointEndpoint          goa.Endpoint
@@ -31,12 +37,18 @@ type Client struct {
 }
 
 // NewClient initializes a "sdk-utilities" service client given the endpoints.
-func NewClient(supply, queryTx, broadcastTx, txMetadata, authEndpoint, bank, delegationEndpoint, ibcChannel, ibcClientState, ibcConnection, ibcDenomTrace, unbondingDelegationEndpoint, validatorEndpoint goa.Endpoint) *Client {
+func NewClient(supply, queryTx, broadcastTx, txMetadata, block, liquidityParams, liquidityPools, mintInflation, mintParams, mintAnnualProvision, authEndpoint, bank, delegationEndpoint, ibcChannel, ibcClientState, ibcConnection, ibcDenomTrace, unbondingDelegationEndpoint, validatorEndpoint goa.Endpoint) *Client {
 	return &Client{
 		SupplyEndpoint:                      supply,
 		QueryTxEndpoint:                     queryTx,
 		BroadcastTxEndpoint:                 broadcastTx,
 		TxMetadataEndpoint:                  txMetadata,
+		BlockEndpoint:                       block,
+		LiquidityParamsEndpoint:             liquidityParams,
+		LiquidityPoolsEndpoint:              liquidityPools,
+		MintInflationEndpoint:               mintInflation,
+		MintParamsEndpoint:                  mintParams,
+		MintAnnualProvisionEndpoint:         mintAnnualProvision,
 		AuthEndpointEndpoint:                authEndpoint,
 		BankEndpoint:                        bank,
 		DelegationEndpointEndpoint:          delegationEndpoint,
@@ -87,6 +99,70 @@ func (c *Client) TxMetadata(ctx context.Context, p *TxMetadataPayload) (res *TxM
 		return
 	}
 	return ires.(*TxMessagesMetadata), nil
+}
+
+// Block calls the "block" endpoint of the "sdk-utilities" service.
+func (c *Client) Block(ctx context.Context, p *BlockPayload) (res *BlockData, err error) {
+	var ires interface{}
+	ires, err = c.BlockEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*BlockData), nil
+}
+
+// LiquidityParams calls the "liquidityParams" endpoint of the "sdk-utilities"
+// service.
+func (c *Client) LiquidityParams(ctx context.Context, p *LiquidityParamsPayload) (res *LiquidityParams2, err error) {
+	var ires interface{}
+	ires, err = c.LiquidityParamsEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*LiquidityParams2), nil
+}
+
+// LiquidityPools calls the "liquidityPools" endpoint of the "sdk-utilities"
+// service.
+func (c *Client) LiquidityPools(ctx context.Context, p *LiquidityPoolsPayload) (res *LiquidityPools2, err error) {
+	var ires interface{}
+	ires, err = c.LiquidityPoolsEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*LiquidityPools2), nil
+}
+
+// MintInflation calls the "mintInflation" endpoint of the "sdk-utilities"
+// service.
+func (c *Client) MintInflation(ctx context.Context, p *MintInflationPayload) (res *MintInflation2, err error) {
+	var ires interface{}
+	ires, err = c.MintInflationEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*MintInflation2), nil
+}
+
+// MintParams calls the "mintParams" endpoint of the "sdk-utilities" service.
+func (c *Client) MintParams(ctx context.Context, p *MintParamsPayload) (res *MintParams2, err error) {
+	var ires interface{}
+	ires, err = c.MintParamsEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*MintParams2), nil
+}
+
+// MintAnnualProvision calls the "mintAnnualProvision" endpoint of the
+// "sdk-utilities" service.
+func (c *Client) MintAnnualProvision(ctx context.Context, p *MintAnnualProvisionPayload) (res *MintAnnualProvision2, err error) {
+	var ires interface{}
+	ires, err = c.MintAnnualProvisionEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*MintAnnualProvision2), nil
 }
 
 // AuthEndpoint calls the "auth" endpoint of the "sdk-utilities" service.

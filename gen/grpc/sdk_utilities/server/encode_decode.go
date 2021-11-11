@@ -142,6 +142,186 @@ func DecodeTxMetadataRequest(ctx context.Context, v interface{}, md metadata.MD)
 	return payload, nil
 }
 
+// EncodeBlockResponse encodes responses from the "sdk-utilities" service
+// "block" endpoint.
+func EncodeBlockResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.(*sdkutilities.BlockData)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "block", "*sdkutilities.BlockData", v)
+	}
+	resp := NewBlockResponse(result)
+	return resp, nil
+}
+
+// DecodeBlockRequest decodes requests sent to "sdk-utilities" service "block"
+// endpoint.
+func DecodeBlockRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.BlockRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.BlockRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "block", "*sdk_utilitiespb.BlockRequest", v)
+		}
+	}
+	var payload *sdkutilities.BlockPayload
+	{
+		payload = NewBlockPayload(message)
+	}
+	return payload, nil
+}
+
+// EncodeLiquidityParamsResponse encodes responses from the "sdk-utilities"
+// service "liquidityParams" endpoint.
+func EncodeLiquidityParamsResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.(*sdkutilities.LiquidityParams2)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "liquidityParams", "*sdkutilities.LiquidityParams2", v)
+	}
+	resp := NewLiquidityParamsResponse(result)
+	return resp, nil
+}
+
+// DecodeLiquidityParamsRequest decodes requests sent to "sdk-utilities"
+// service "liquidityParams" endpoint.
+func DecodeLiquidityParamsRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.LiquidityParamsRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.LiquidityParamsRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "liquidityParams", "*sdk_utilitiespb.LiquidityParamsRequest", v)
+		}
+	}
+	var payload *sdkutilities.LiquidityParamsPayload
+	{
+		payload = NewLiquidityParamsPayload(message)
+	}
+	return payload, nil
+}
+
+// EncodeLiquidityPoolsResponse encodes responses from the "sdk-utilities"
+// service "liquidityPools" endpoint.
+func EncodeLiquidityPoolsResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.(*sdkutilities.LiquidityPools2)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "liquidityPools", "*sdkutilities.LiquidityPools2", v)
+	}
+	resp := NewLiquidityPoolsResponse(result)
+	return resp, nil
+}
+
+// DecodeLiquidityPoolsRequest decodes requests sent to "sdk-utilities" service
+// "liquidityPools" endpoint.
+func DecodeLiquidityPoolsRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.LiquidityPoolsRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.LiquidityPoolsRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "liquidityPools", "*sdk_utilitiespb.LiquidityPoolsRequest", v)
+		}
+	}
+	var payload *sdkutilities.LiquidityPoolsPayload
+	{
+		payload = NewLiquidityPoolsPayload(message)
+	}
+	return payload, nil
+}
+
+// EncodeMintInflationResponse encodes responses from the "sdk-utilities"
+// service "mintInflation" endpoint.
+func EncodeMintInflationResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.(*sdkutilities.MintInflation2)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "mintInflation", "*sdkutilities.MintInflation2", v)
+	}
+	resp := NewMintInflationResponse(result)
+	return resp, nil
+}
+
+// DecodeMintInflationRequest decodes requests sent to "sdk-utilities" service
+// "mintInflation" endpoint.
+func DecodeMintInflationRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.MintInflationRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.MintInflationRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "mintInflation", "*sdk_utilitiespb.MintInflationRequest", v)
+		}
+	}
+	var payload *sdkutilities.MintInflationPayload
+	{
+		payload = NewMintInflationPayload(message)
+	}
+	return payload, nil
+}
+
+// EncodeMintParamsResponse encodes responses from the "sdk-utilities" service
+// "mintParams" endpoint.
+func EncodeMintParamsResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.(*sdkutilities.MintParams2)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "mintParams", "*sdkutilities.MintParams2", v)
+	}
+	resp := NewMintParamsResponse(result)
+	return resp, nil
+}
+
+// DecodeMintParamsRequest decodes requests sent to "sdk-utilities" service
+// "mintParams" endpoint.
+func DecodeMintParamsRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.MintParamsRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.MintParamsRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "mintParams", "*sdk_utilitiespb.MintParamsRequest", v)
+		}
+	}
+	var payload *sdkutilities.MintParamsPayload
+	{
+		payload = NewMintParamsPayload(message)
+	}
+	return payload, nil
+}
+
+// EncodeMintAnnualProvisionResponse encodes responses from the "sdk-utilities"
+// service "mintAnnualProvision" endpoint.
+func EncodeMintAnnualProvisionResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.(*sdkutilities.MintAnnualProvision2)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "mintAnnualProvision", "*sdkutilities.MintAnnualProvision2", v)
+	}
+	resp := NewMintAnnualProvisionResponse(result)
+	return resp, nil
+}
+
+// DecodeMintAnnualProvisionRequest decodes requests sent to "sdk-utilities"
+// service "mintAnnualProvision" endpoint.
+func DecodeMintAnnualProvisionRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.MintAnnualProvisionRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.MintAnnualProvisionRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "mintAnnualProvision", "*sdk_utilitiespb.MintAnnualProvisionRequest", v)
+		}
+	}
+	var payload *sdkutilities.MintAnnualProvisionPayload
+	{
+		payload = NewMintAnnualProvisionPayload(message)
+	}
+	return payload, nil
+}
+
 // EncodeAuthEndpointResponse encodes responses from the "sdk-utilities"
 // service "auth" endpoint.
 func EncodeAuthEndpointResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {

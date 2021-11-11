@@ -92,6 +92,80 @@ var _ = Service(sdkUtilities, func() {
 		})
 	})
 
+	Method("block", func() {
+		Payload(func() {
+			Field(1, "height", Int64, "Height of the block to query")
+
+			Required("height")
+		})
+
+		Result(BlockData)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
+	Method("liquidityParams", func() {
+		Payload(func() {
+			_ = standardArguments()
+		})
+
+		Result(LiquidityParams)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
+	Method("liquidityPools", func() {
+		Payload(func() {
+			_ = standardArguments()
+		})
+
+		Result(LiquidityPools)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
+	Method("mintInflation", func() {
+		Payload(func() {
+			_ = standardArguments()
+		})
+
+		Result(MintInflation)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
+	Method("mintParams", func() {
+		Payload(func() {
+			_ = standardArguments()
+		})
+
+		Result(MintParams)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
+	Method("mintAnnualProvision", func() {
+		Payload(func() {
+			_ = standardArguments()
+		})
+
+		Result(MintAnnualProvision)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
 	tracelistener.ServiceDefinitions()
 
 	Files("/openapi.json", "./gen/http/openapi.json")
