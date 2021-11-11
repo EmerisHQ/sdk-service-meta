@@ -94,7 +94,8 @@ var _ = Service(sdkUtilities, func() {
 
 	Method("block", func() {
 		Payload(func() {
-			Field(1, "height", Int64, "Height of the block to query")
+			nextFieldIdx := standardArguments()
+			Field(nextFieldIdx, "height", Int64, "Height of the block to query")
 
 			Required("height")
 		})
