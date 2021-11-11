@@ -7,3 +7,13 @@ ADR discussing this can be found [here](https://www.notion.so/allinbits/1d64e8e0
  1. add this repository as a Go dependency
  2. `goa example github.com/allinbits/sdk-service-meta`\
  3. execute `find . -type f -name '*.go' -exec sed -i "s|github.com/allinbits/sdk-service-v{your version}/gen|github.com/allinbits/sdk-service-meta/gen|g" {} +`
+
+
+## Dependencies & Licenses
+
+The list of non-{Cosmos, AiB, Tendermint} dependencies and their licenses are:
+
+|Module   	                  |License          |
+|---	                      |---  	        |
+|goadesign/goa   	          |MIT   	        |
+|go.uber.org/zap   	          |MIT           	|
