@@ -33,24 +33,6 @@ type Service interface {
 	MintParams(context.Context, *MintParamsPayload) (res *MintParams2, err error)
 	// MintAnnualProvision implements mintAnnualProvision.
 	MintAnnualProvision(context.Context, *MintAnnualProvisionPayload) (res *MintAnnualProvision2, err error)
-	// Auth implements auth.
-	AuthEndpoint(context.Context, *AuthPayload) (res []*Auth, err error)
-	// Bank implements bank.
-	Bank(context.Context, *BankPayload) (res []*Balance, err error)
-	// Delegation implements delegation.
-	DelegationEndpoint(context.Context, *DelegationPayload) (res []*Delegation, err error)
-	// IbcChannel implements ibc_channel.
-	IbcChannel(context.Context, *IbcChannelPayload) (res []*IBCChannel, err error)
-	// IbcClientState implements ibc_client_state.
-	IbcClientState(context.Context, *IbcClientStatePayload) (res []*IBCClientState, err error)
-	// IbcConnection implements ibc_connection.
-	IbcConnection(context.Context, *IbcConnectionPayload) (res []*IBCConnection, err error)
-	// IbcDenomTrace implements ibc_denom_trace.
-	IbcDenomTrace(context.Context, *IbcDenomTracePayload) (res []*IBCDenomTrace, err error)
-	// UnbondingDelegation implements unbondingDelegation.
-	UnbondingDelegationEndpoint(context.Context, *UnbondingDelegationPayload) (res []*UnbondingDelegation, err error)
-	// Validator implements validator.
-	ValidatorEndpoint(context.Context, *ValidatorPayload) (res []*Validator, err error)
 }
 
 // ServiceName is the name of the service as defined in the design. This is the
@@ -61,7 +43,7 @@ const ServiceName = "sdk-utilities"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [19]string{"supply", "queryTx", "broadcastTx", "txMetadata", "block", "liquidityParams", "liquidityPools", "mintInflation", "mintParams", "mintAnnualProvision", "auth", "bank", "delegation", "ibc_channel", "ibc_client_state", "ibc_connection", "ibc_denom_trace", "unbondingDelegation", "validator"}
+var MethodNames = [10]string{"supply", "queryTx", "broadcastTx", "txMetadata", "block", "liquidityParams", "liquidityPools", "mintInflation", "mintParams", "mintAnnualProvision"}
 
 // SupplyPayload is the payload type of the sdk-utilities service supply method.
 type SupplyPayload struct {
@@ -119,6 +101,10 @@ type TxMessagesMetadata struct {
 
 // BlockPayload is the payload type of the sdk-utilities service block method.
 type BlockPayload struct {
+	// Chain to get data from
+	ChainName string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
 	// Height of the block to query
 	Height int64
 }
@@ -202,58 +188,6 @@ type MintAnnualProvisionPayload struct {
 // mintAnnualProvision method.
 type MintAnnualProvision2 struct {
 	MintAnnualProvision []byte
-}
-
-// AuthPayload is the payload type of the sdk-utilities service auth method.
-type AuthPayload struct {
-	Payload []*TracePayload
-}
-
-// BankPayload is the payload type of the sdk-utilities service bank method.
-type BankPayload struct {
-	Payload []*TracePayload
-}
-
-// DelegationPayload is the payload type of the sdk-utilities service
-// delegation method.
-type DelegationPayload struct {
-	Payload []*TracePayload
-}
-
-// IbcChannelPayload is the payload type of the sdk-utilities service
-// ibc_channel method.
-type IbcChannelPayload struct {
-	Payload []*TracePayload
-}
-
-// IbcClientStatePayload is the payload type of the sdk-utilities service
-// ibc_client_state method.
-type IbcClientStatePayload struct {
-	Payload []*TracePayload
-}
-
-// IbcConnectionPayload is the payload type of the sdk-utilities service
-// ibc_connection method.
-type IbcConnectionPayload struct {
-	Payload []*TracePayload
-}
-
-// IbcDenomTracePayload is the payload type of the sdk-utilities service
-// ibc_denom_trace method.
-type IbcDenomTracePayload struct {
-	Payload []*TracePayload
-}
-
-// UnbondingDelegationPayload is the payload type of the sdk-utilities service
-// unbondingDelegation method.
-type UnbondingDelegationPayload struct {
-	Payload []*TracePayload
-}
-
-// ValidatorPayload is the payload type of the sdk-utilities service validator
-// method.
-type ValidatorPayload struct {
-	Payload []*TracePayload
 }
 
 // SDK service representation of a Cosmos SDK types.Coin
