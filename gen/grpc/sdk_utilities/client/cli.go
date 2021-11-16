@@ -24,7 +24,7 @@ func BuildSupplyPayload(sdkUtilitiesSupplyMessage string) (*sdkutilities.SupplyP
 		if sdkUtilitiesSupplyMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesSupplyMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Molestias aut sit nobis et sit temporibus.\",\n      \"port\": 4276607318535473132\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Quis omnis hic eum nostrum.\",\n      \"port\": 6801062929093128435\n   }'")
 			}
 		}
 	}
@@ -48,7 +48,7 @@ func BuildQueryTxPayload(sdkUtilitiesQueryTxMessage string) (*sdkutilities.Query
 		if sdkUtilitiesQueryTxMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesQueryTxMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Suscipit rerum corrupti.\",\n      \"hash\": \"Vitae porro architecto dolorem.\",\n      \"port\": 8026972786014809817\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Ratione voluptatum.\",\n      \"hash\": \"Alias quo animi eos id et velit.\",\n      \"port\": 2918849230649357130\n   }'")
 			}
 		}
 	}
@@ -73,7 +73,7 @@ func BuildBroadcastTxPayload(sdkUtilitiesBroadcastTxMessage string) (*sdkutiliti
 		if sdkUtilitiesBroadcastTxMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesBroadcastTxMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Voluptas magnam voluptatem dolore quae quasi quia.\",\n      \"port\": 5026848979338219803,\n      \"txBytes\": \"QmVhdGFlIHNlZCBjb25zZXF1dW50dXIgYmVhdGFlLg==\"\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Ratione itaque temporibus ut voluptates quia officiis.\",\n      \"port\": 2477448663619511809,\n      \"txBytes\": \"RGVsZW5pdGkgZXQu\"\n   }'")
 			}
 		}
 	}
@@ -98,12 +98,422 @@ func BuildTxMetadataPayload(sdkUtilitiesTxMetadataMessage string) (*sdkutilities
 		if sdkUtilitiesTxMetadataMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesTxMetadataMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"txBytes\": \"SXBzdW0gZXZlbmlldCBlbmltIHF1aWEgZG9sb3J1bSBhbWV0IGVvcy4=\"\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"txBytes\": \"QmxhbmRpdGlpcyBwbGFjZWF0IGl1cmUgZXhlcmNpdGF0aW9uZW0gaXVzdG8gcXVpcyBtb2xlc3RpYXMu\"\n   }'")
 			}
 		}
 	}
 	v := &sdkutilities.TxMetadataPayload{
 		TxBytes: message.TxBytes,
+	}
+
+	return v, nil
+}
+
+// BuildBlockPayload builds the payload for the sdk-utilities block endpoint
+// from CLI flags.
+func BuildBlockPayload(sdkUtilitiesBlockMessage string) (*sdkutilities.BlockPayload, error) {
+	var err error
+	var message sdk_utilitiespb.BlockRequest
+	{
+		if sdkUtilitiesBlockMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesBlockMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"height\": 4116790840276727849\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.BlockPayload{
+		Height: message.Height,
+	}
+
+	return v, nil
+}
+
+// BuildLiquidityParamsPayload builds the payload for the sdk-utilities
+// liquidityParams endpoint from CLI flags.
+func BuildLiquidityParamsPayload(sdkUtilitiesLiquidityParamsMessage string) (*sdkutilities.LiquidityParamsPayload, error) {
+	var err error
+	var message sdk_utilitiespb.LiquidityParamsRequest
+	{
+		if sdkUtilitiesLiquidityParamsMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesLiquidityParamsMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Hic non sit sunt.\",\n      \"port\": 4297245491416268488\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.LiquidityParamsPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+
+	return v, nil
+}
+
+// BuildLiquidityPoolsPayload builds the payload for the sdk-utilities
+// liquidityPools endpoint from CLI flags.
+func BuildLiquidityPoolsPayload(sdkUtilitiesLiquidityPoolsMessage string) (*sdkutilities.LiquidityPoolsPayload, error) {
+	var err error
+	var message sdk_utilitiespb.LiquidityPoolsRequest
+	{
+		if sdkUtilitiesLiquidityPoolsMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesLiquidityPoolsMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Eos odio est vero velit quibusdam illum.\",\n      \"port\": 3434698023359210906\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.LiquidityPoolsPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+
+	return v, nil
+}
+
+// BuildMintInflationPayload builds the payload for the sdk-utilities
+// mintInflation endpoint from CLI flags.
+func BuildMintInflationPayload(sdkUtilitiesMintInflationMessage string) (*sdkutilities.MintInflationPayload, error) {
+	var err error
+	var message sdk_utilitiespb.MintInflationRequest
+	{
+		if sdkUtilitiesMintInflationMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesMintInflationMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Nihil unde dolorem voluptatem dignissimos nam.\",\n      \"port\": 4837104213295428999\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.MintInflationPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+
+	return v, nil
+}
+
+// BuildMintParamsPayload builds the payload for the sdk-utilities mintParams
+// endpoint from CLI flags.
+func BuildMintParamsPayload(sdkUtilitiesMintParamsMessage string) (*sdkutilities.MintParamsPayload, error) {
+	var err error
+	var message sdk_utilitiespb.MintParamsRequest
+	{
+		if sdkUtilitiesMintParamsMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesMintParamsMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Laudantium est cumque.\",\n      \"port\": 419520256451477429\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.MintParamsPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+
+	return v, nil
+}
+
+// BuildMintAnnualProvisionPayload builds the payload for the sdk-utilities
+// mintAnnualProvision endpoint from CLI flags.
+func BuildMintAnnualProvisionPayload(sdkUtilitiesMintAnnualProvisionMessage string) (*sdkutilities.MintAnnualProvisionPayload, error) {
+	var err error
+	var message sdk_utilitiespb.MintAnnualProvisionRequest
+	{
+		if sdkUtilitiesMintAnnualProvisionMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesMintAnnualProvisionMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Laborum aperiam et assumenda fugiat.\",\n      \"port\": 3777367582328580731\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.MintAnnualProvisionPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+
+	return v, nil
+}
+
+// BuildAuthEndpointPayload builds the payload for the sdk-utilities auth
+// endpoint from CLI flags.
+func BuildAuthEndpointPayload(sdkUtilitiesAuthMessage string) (*sdkutilities.AuthPayload, error) {
+	var err error
+	var message sdk_utilitiespb.AuthRequest
+	{
+		if sdkUtilitiesAuthMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesAuthMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.AuthPayload{}
+	if message.Payload != nil {
+		v.Payload = make([]*sdkutilities.TracePayload, len(message.Payload))
+		for i, val := range message.Payload {
+			v.Payload[i] = &sdkutilities.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
+			}
+		}
+	}
+
+	return v, nil
+}
+
+// BuildBankPayload builds the payload for the sdk-utilities bank endpoint from
+// CLI flags.
+func BuildBankPayload(sdkUtilitiesBankMessage string) (*sdkutilities.BankPayload, error) {
+	var err error
+	var message sdk_utilitiespb.BankRequest
+	{
+		if sdkUtilitiesBankMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesBankMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.BankPayload{}
+	if message.Payload != nil {
+		v.Payload = make([]*sdkutilities.TracePayload, len(message.Payload))
+		for i, val := range message.Payload {
+			v.Payload[i] = &sdkutilities.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
+			}
+		}
+	}
+
+	return v, nil
+}
+
+// BuildDelegationEndpointPayload builds the payload for the sdk-utilities
+// delegation endpoint from CLI flags.
+func BuildDelegationEndpointPayload(sdkUtilitiesDelegationMessage string) (*sdkutilities.DelegationPayload, error) {
+	var err error
+	var message sdk_utilitiespb.DelegationRequest
+	{
+		if sdkUtilitiesDelegationMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesDelegationMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.DelegationPayload{}
+	if message.Payload != nil {
+		v.Payload = make([]*sdkutilities.TracePayload, len(message.Payload))
+		for i, val := range message.Payload {
+			v.Payload[i] = &sdkutilities.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
+			}
+		}
+	}
+
+	return v, nil
+}
+
+// BuildIbcChannelPayload builds the payload for the sdk-utilities ibc_channel
+// endpoint from CLI flags.
+func BuildIbcChannelPayload(sdkUtilitiesIbcChannelMessage string) (*sdkutilities.IbcChannelPayload, error) {
+	var err error
+	var message sdk_utilitiespb.IbcChannelRequest
+	{
+		if sdkUtilitiesIbcChannelMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesIbcChannelMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.IbcChannelPayload{}
+	if message.Payload != nil {
+		v.Payload = make([]*sdkutilities.TracePayload, len(message.Payload))
+		for i, val := range message.Payload {
+			v.Payload[i] = &sdkutilities.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
+			}
+		}
+	}
+
+	return v, nil
+}
+
+// BuildIbcClientStatePayload builds the payload for the sdk-utilities
+// ibc_client_state endpoint from CLI flags.
+func BuildIbcClientStatePayload(sdkUtilitiesIbcClientStateMessage string) (*sdkutilities.IbcClientStatePayload, error) {
+	var err error
+	var message sdk_utilitiespb.IbcClientStateRequest
+	{
+		if sdkUtilitiesIbcClientStateMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesIbcClientStateMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.IbcClientStatePayload{}
+	if message.Payload != nil {
+		v.Payload = make([]*sdkutilities.TracePayload, len(message.Payload))
+		for i, val := range message.Payload {
+			v.Payload[i] = &sdkutilities.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
+			}
+		}
+	}
+
+	return v, nil
+}
+
+// BuildIbcConnectionPayload builds the payload for the sdk-utilities
+// ibc_connection endpoint from CLI flags.
+func BuildIbcConnectionPayload(sdkUtilitiesIbcConnectionMessage string) (*sdkutilities.IbcConnectionPayload, error) {
+	var err error
+	var message sdk_utilitiespb.IbcConnectionRequest
+	{
+		if sdkUtilitiesIbcConnectionMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesIbcConnectionMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.IbcConnectionPayload{}
+	if message.Payload != nil {
+		v.Payload = make([]*sdkutilities.TracePayload, len(message.Payload))
+		for i, val := range message.Payload {
+			v.Payload[i] = &sdkutilities.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
+			}
+		}
+	}
+
+	return v, nil
+}
+
+// BuildIbcDenomTracePayload builds the payload for the sdk-utilities
+// ibc_denom_trace endpoint from CLI flags.
+func BuildIbcDenomTracePayload(sdkUtilitiesIbcDenomTraceMessage string) (*sdkutilities.IbcDenomTracePayload, error) {
+	var err error
+	var message sdk_utilitiespb.IbcDenomTraceRequest
+	{
+		if sdkUtilitiesIbcDenomTraceMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesIbcDenomTraceMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.IbcDenomTracePayload{}
+	if message.Payload != nil {
+		v.Payload = make([]*sdkutilities.TracePayload, len(message.Payload))
+		for i, val := range message.Payload {
+			v.Payload[i] = &sdkutilities.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
+			}
+		}
+	}
+
+	return v, nil
+}
+
+// BuildUnbondingDelegationEndpointPayload builds the payload for the
+// sdk-utilities unbondingDelegation endpoint from CLI flags.
+func BuildUnbondingDelegationEndpointPayload(sdkUtilitiesUnbondingDelegationMessage string) (*sdkutilities.UnbondingDelegationPayload, error) {
+	var err error
+	var message sdk_utilitiespb.UnbondingDelegationRequest
+	{
+		if sdkUtilitiesUnbondingDelegationMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesUnbondingDelegationMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.UnbondingDelegationPayload{}
+	if message.Payload != nil {
+		v.Payload = make([]*sdkutilities.TracePayload, len(message.Payload))
+		for i, val := range message.Payload {
+			v.Payload[i] = &sdkutilities.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
+			}
+		}
+	}
+
+	return v, nil
+}
+
+// BuildValidatorEndpointPayload builds the payload for the sdk-utilities
+// validator endpoint from CLI flags.
+func BuildValidatorEndpointPayload(sdkUtilitiesValidatorMessage string) (*sdkutilities.ValidatorPayload, error) {
+	var err error
+	var message sdk_utilitiespb.ValidatorRequest
+	{
+		if sdkUtilitiesValidatorMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesValidatorMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"payload\": [\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         },\n         {\n            \"key\": \"VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=\",\n            \"operationType\": \"delete\",\n            \"value\": \"SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4=\"\n         }\n      ]\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.ValidatorPayload{}
+	if message.Payload != nil {
+		v.Payload = make([]*sdkutilities.TracePayload, len(message.Payload))
+		for i, val := range message.Payload {
+			v.Payload[i] = &sdkutilities.TracePayload{
+				Key:   val.Key,
+				Value: val.Value,
+			}
+			if val.OperationType != "" {
+				v.Payload[i].OperationType = &val.OperationType
+			}
+		}
 	}
 
 	return v, nil

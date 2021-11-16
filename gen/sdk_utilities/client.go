@@ -15,19 +15,49 @@ import (
 
 // Client is the "sdk-utilities" service client.
 type Client struct {
-	SupplyEndpoint      goa.Endpoint
-	QueryTxEndpoint     goa.Endpoint
-	BroadcastTxEndpoint goa.Endpoint
-	TxMetadataEndpoint  goa.Endpoint
+	SupplyEndpoint                      goa.Endpoint
+	QueryTxEndpoint                     goa.Endpoint
+	BroadcastTxEndpoint                 goa.Endpoint
+	TxMetadataEndpoint                  goa.Endpoint
+	BlockEndpoint                       goa.Endpoint
+	LiquidityParamsEndpoint             goa.Endpoint
+	LiquidityPoolsEndpoint              goa.Endpoint
+	MintInflationEndpoint               goa.Endpoint
+	MintParamsEndpoint                  goa.Endpoint
+	MintAnnualProvisionEndpoint         goa.Endpoint
+	AuthEndpointEndpoint                goa.Endpoint
+	BankEndpoint                        goa.Endpoint
+	DelegationEndpointEndpoint          goa.Endpoint
+	IbcChannelEndpoint                  goa.Endpoint
+	IbcClientStateEndpoint              goa.Endpoint
+	IbcConnectionEndpoint               goa.Endpoint
+	IbcDenomTraceEndpoint               goa.Endpoint
+	UnbondingDelegationEndpointEndpoint goa.Endpoint
+	ValidatorEndpointEndpoint           goa.Endpoint
 }
 
 // NewClient initializes a "sdk-utilities" service client given the endpoints.
-func NewClient(supply, queryTx, broadcastTx, txMetadata goa.Endpoint) *Client {
+func NewClient(supply, queryTx, broadcastTx, txMetadata, block, liquidityParams, liquidityPools, mintInflation, mintParams, mintAnnualProvision, authEndpoint, bank, delegationEndpoint, ibcChannel, ibcClientState, ibcConnection, ibcDenomTrace, unbondingDelegationEndpoint, validatorEndpoint goa.Endpoint) *Client {
 	return &Client{
-		SupplyEndpoint:      supply,
-		QueryTxEndpoint:     queryTx,
-		BroadcastTxEndpoint: broadcastTx,
-		TxMetadataEndpoint:  txMetadata,
+		SupplyEndpoint:                      supply,
+		QueryTxEndpoint:                     queryTx,
+		BroadcastTxEndpoint:                 broadcastTx,
+		TxMetadataEndpoint:                  txMetadata,
+		BlockEndpoint:                       block,
+		LiquidityParamsEndpoint:             liquidityParams,
+		LiquidityPoolsEndpoint:              liquidityPools,
+		MintInflationEndpoint:               mintInflation,
+		MintParamsEndpoint:                  mintParams,
+		MintAnnualProvisionEndpoint:         mintAnnualProvision,
+		AuthEndpointEndpoint:                authEndpoint,
+		BankEndpoint:                        bank,
+		DelegationEndpointEndpoint:          delegationEndpoint,
+		IbcChannelEndpoint:                  ibcChannel,
+		IbcClientStateEndpoint:              ibcClientState,
+		IbcConnectionEndpoint:               ibcConnection,
+		IbcDenomTraceEndpoint:               ibcDenomTrace,
+		UnbondingDelegationEndpointEndpoint: unbondingDelegationEndpoint,
+		ValidatorEndpointEndpoint:           validatorEndpoint,
 	}
 }
 
@@ -69,4 +99,191 @@ func (c *Client) TxMetadata(ctx context.Context, p *TxMetadataPayload) (res *TxM
 		return
 	}
 	return ires.(*TxMessagesMetadata), nil
+}
+
+// Block calls the "block" endpoint of the "sdk-utilities" service.
+func (c *Client) Block(ctx context.Context, p *BlockPayload) (res *BlockData, err error) {
+	var ires interface{}
+	ires, err = c.BlockEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*BlockData), nil
+}
+
+// LiquidityParams calls the "liquidityParams" endpoint of the "sdk-utilities"
+// service.
+func (c *Client) LiquidityParams(ctx context.Context, p *LiquidityParamsPayload) (res *LiquidityParams2, err error) {
+	var ires interface{}
+	ires, err = c.LiquidityParamsEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*LiquidityParams2), nil
+}
+
+// LiquidityPools calls the "liquidityPools" endpoint of the "sdk-utilities"
+// service.
+func (c *Client) LiquidityPools(ctx context.Context, p *LiquidityPoolsPayload) (res *LiquidityPools2, err error) {
+	var ires interface{}
+	ires, err = c.LiquidityPoolsEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*LiquidityPools2), nil
+}
+
+// MintInflation calls the "mintInflation" endpoint of the "sdk-utilities"
+// service.
+func (c *Client) MintInflation(ctx context.Context, p *MintInflationPayload) (res *MintInflation2, err error) {
+	var ires interface{}
+	ires, err = c.MintInflationEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*MintInflation2), nil
+}
+
+// MintParams calls the "mintParams" endpoint of the "sdk-utilities" service.
+func (c *Client) MintParams(ctx context.Context, p *MintParamsPayload) (res *MintParams2, err error) {
+	var ires interface{}
+	ires, err = c.MintParamsEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*MintParams2), nil
+}
+
+// MintAnnualProvision calls the "mintAnnualProvision" endpoint of the
+// "sdk-utilities" service.
+func (c *Client) MintAnnualProvision(ctx context.Context, p *MintAnnualProvisionPayload) (res *MintAnnualProvision2, err error) {
+	var ires interface{}
+	ires, err = c.MintAnnualProvisionEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*MintAnnualProvision2), nil
+}
+
+// AuthEndpoint calls the "auth" endpoint of the "sdk-utilities" service.
+// AuthEndpoint may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
+func (c *Client) AuthEndpoint(ctx context.Context, p *AuthPayload) (res []*Auth, err error) {
+	var ires interface{}
+	ires, err = c.AuthEndpointEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*Auth), nil
+}
+
+// Bank calls the "bank" endpoint of the "sdk-utilities" service.
+// Bank may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
+func (c *Client) Bank(ctx context.Context, p *BankPayload) (res []*Balance, err error) {
+	var ires interface{}
+	ires, err = c.BankEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*Balance), nil
+}
+
+// DelegationEndpoint calls the "delegation" endpoint of the "sdk-utilities"
+// service.
+// DelegationEndpoint may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
+func (c *Client) DelegationEndpoint(ctx context.Context, p *DelegationPayload) (res []*Delegation, err error) {
+	var ires interface{}
+	ires, err = c.DelegationEndpointEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*Delegation), nil
+}
+
+// IbcChannel calls the "ibc_channel" endpoint of the "sdk-utilities" service.
+// IbcChannel may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
+func (c *Client) IbcChannel(ctx context.Context, p *IbcChannelPayload) (res []*IBCChannel, err error) {
+	var ires interface{}
+	ires, err = c.IbcChannelEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*IBCChannel), nil
+}
+
+// IbcClientState calls the "ibc_client_state" endpoint of the "sdk-utilities"
+// service.
+// IbcClientState may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
+func (c *Client) IbcClientState(ctx context.Context, p *IbcClientStatePayload) (res []*IBCClientState, err error) {
+	var ires interface{}
+	ires, err = c.IbcClientStateEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*IBCClientState), nil
+}
+
+// IbcConnection calls the "ibc_connection" endpoint of the "sdk-utilities"
+// service.
+// IbcConnection may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
+func (c *Client) IbcConnection(ctx context.Context, p *IbcConnectionPayload) (res []*IBCConnection, err error) {
+	var ires interface{}
+	ires, err = c.IbcConnectionEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*IBCConnection), nil
+}
+
+// IbcDenomTrace calls the "ibc_denom_trace" endpoint of the "sdk-utilities"
+// service.
+// IbcDenomTrace may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
+func (c *Client) IbcDenomTrace(ctx context.Context, p *IbcDenomTracePayload) (res []*IBCDenomTrace, err error) {
+	var ires interface{}
+	ires, err = c.IbcDenomTraceEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*IBCDenomTrace), nil
+}
+
+// UnbondingDelegationEndpoint calls the "unbondingDelegation" endpoint of the
+// "sdk-utilities" service.
+// UnbondingDelegationEndpoint may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
+func (c *Client) UnbondingDelegationEndpoint(ctx context.Context, p *UnbondingDelegationPayload) (res []*UnbondingDelegation, err error) {
+	var ires interface{}
+	ires, err = c.UnbondingDelegationEndpointEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*UnbondingDelegation), nil
+}
+
+// ValidatorEndpoint calls the "validator" endpoint of the "sdk-utilities"
+// service.
+// ValidatorEndpoint may return the following errors:
+//	- "ProcessingError" (type *ProcessingError)
+//	- error: internal error
+func (c *Client) ValidatorEndpoint(ctx context.Context, p *ValidatorPayload) (res []*Validator, err error) {
+	var ires interface{}
+	ires, err = c.ValidatorEndpointEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.([]*Validator), nil
 }

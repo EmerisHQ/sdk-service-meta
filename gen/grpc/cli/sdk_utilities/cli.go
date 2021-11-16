@@ -22,15 +22,15 @@ import (
 //    command (subcommand1|subcommand2|...)
 //
 func UsageCommands() string {
-	return `sdk-utilities (supply|query-tx|broadcast-tx|tx-metadata)
+	return `sdk-utilities (supply|query-tx|broadcast-tx|tx-metadata|block|liquidity-params|liquidity-pools|mint-inflation|mint-params|mint-annual-provision|auth|bank|delegation|ibc-channel|ibc-client-state|ibc-connection|ibc-denom-trace|unbonding-delegation|validator)
 `
 }
 
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` sdk-utilities supply --message '{
-      "chainName": "Molestias aut sit nobis et sit temporibus.",
-      "port": 4276607318535473132
+      "chainName": "Quis omnis hic eum nostrum.",
+      "port": 6801062929093128435
    }'` + "\n" +
 		""
 }
@@ -52,12 +52,72 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 
 		sdkUtilitiesTxMetadataFlags       = flag.NewFlagSet("tx-metadata", flag.ExitOnError)
 		sdkUtilitiesTxMetadataMessageFlag = sdkUtilitiesTxMetadataFlags.String("message", "", "")
+
+		sdkUtilitiesBlockFlags       = flag.NewFlagSet("block", flag.ExitOnError)
+		sdkUtilitiesBlockMessageFlag = sdkUtilitiesBlockFlags.String("message", "", "")
+
+		sdkUtilitiesLiquidityParamsFlags       = flag.NewFlagSet("liquidity-params", flag.ExitOnError)
+		sdkUtilitiesLiquidityParamsMessageFlag = sdkUtilitiesLiquidityParamsFlags.String("message", "", "")
+
+		sdkUtilitiesLiquidityPoolsFlags       = flag.NewFlagSet("liquidity-pools", flag.ExitOnError)
+		sdkUtilitiesLiquidityPoolsMessageFlag = sdkUtilitiesLiquidityPoolsFlags.String("message", "", "")
+
+		sdkUtilitiesMintInflationFlags       = flag.NewFlagSet("mint-inflation", flag.ExitOnError)
+		sdkUtilitiesMintInflationMessageFlag = sdkUtilitiesMintInflationFlags.String("message", "", "")
+
+		sdkUtilitiesMintParamsFlags       = flag.NewFlagSet("mint-params", flag.ExitOnError)
+		sdkUtilitiesMintParamsMessageFlag = sdkUtilitiesMintParamsFlags.String("message", "", "")
+
+		sdkUtilitiesMintAnnualProvisionFlags       = flag.NewFlagSet("mint-annual-provision", flag.ExitOnError)
+		sdkUtilitiesMintAnnualProvisionMessageFlag = sdkUtilitiesMintAnnualProvisionFlags.String("message", "", "")
+
+		sdkUtilitiesAuthFlags       = flag.NewFlagSet("auth", flag.ExitOnError)
+		sdkUtilitiesAuthMessageFlag = sdkUtilitiesAuthFlags.String("message", "", "")
+
+		sdkUtilitiesBankFlags       = flag.NewFlagSet("bank", flag.ExitOnError)
+		sdkUtilitiesBankMessageFlag = sdkUtilitiesBankFlags.String("message", "", "")
+
+		sdkUtilitiesDelegationFlags       = flag.NewFlagSet("delegation", flag.ExitOnError)
+		sdkUtilitiesDelegationMessageFlag = sdkUtilitiesDelegationFlags.String("message", "", "")
+
+		sdkUtilitiesIbcChannelFlags       = flag.NewFlagSet("ibc-channel", flag.ExitOnError)
+		sdkUtilitiesIbcChannelMessageFlag = sdkUtilitiesIbcChannelFlags.String("message", "", "")
+
+		sdkUtilitiesIbcClientStateFlags       = flag.NewFlagSet("ibc-client-state", flag.ExitOnError)
+		sdkUtilitiesIbcClientStateMessageFlag = sdkUtilitiesIbcClientStateFlags.String("message", "", "")
+
+		sdkUtilitiesIbcConnectionFlags       = flag.NewFlagSet("ibc-connection", flag.ExitOnError)
+		sdkUtilitiesIbcConnectionMessageFlag = sdkUtilitiesIbcConnectionFlags.String("message", "", "")
+
+		sdkUtilitiesIbcDenomTraceFlags       = flag.NewFlagSet("ibc-denom-trace", flag.ExitOnError)
+		sdkUtilitiesIbcDenomTraceMessageFlag = sdkUtilitiesIbcDenomTraceFlags.String("message", "", "")
+
+		sdkUtilitiesUnbondingDelegationFlags       = flag.NewFlagSet("unbonding-delegation", flag.ExitOnError)
+		sdkUtilitiesUnbondingDelegationMessageFlag = sdkUtilitiesUnbondingDelegationFlags.String("message", "", "")
+
+		sdkUtilitiesValidatorFlags       = flag.NewFlagSet("validator", flag.ExitOnError)
+		sdkUtilitiesValidatorMessageFlag = sdkUtilitiesValidatorFlags.String("message", "", "")
 	)
 	sdkUtilitiesFlags.Usage = sdkUtilitiesUsage
 	sdkUtilitiesSupplyFlags.Usage = sdkUtilitiesSupplyUsage
 	sdkUtilitiesQueryTxFlags.Usage = sdkUtilitiesQueryTxUsage
 	sdkUtilitiesBroadcastTxFlags.Usage = sdkUtilitiesBroadcastTxUsage
 	sdkUtilitiesTxMetadataFlags.Usage = sdkUtilitiesTxMetadataUsage
+	sdkUtilitiesBlockFlags.Usage = sdkUtilitiesBlockUsage
+	sdkUtilitiesLiquidityParamsFlags.Usage = sdkUtilitiesLiquidityParamsUsage
+	sdkUtilitiesLiquidityPoolsFlags.Usage = sdkUtilitiesLiquidityPoolsUsage
+	sdkUtilitiesMintInflationFlags.Usage = sdkUtilitiesMintInflationUsage
+	sdkUtilitiesMintParamsFlags.Usage = sdkUtilitiesMintParamsUsage
+	sdkUtilitiesMintAnnualProvisionFlags.Usage = sdkUtilitiesMintAnnualProvisionUsage
+	sdkUtilitiesAuthFlags.Usage = sdkUtilitiesAuthUsage
+	sdkUtilitiesBankFlags.Usage = sdkUtilitiesBankUsage
+	sdkUtilitiesDelegationFlags.Usage = sdkUtilitiesDelegationUsage
+	sdkUtilitiesIbcChannelFlags.Usage = sdkUtilitiesIbcChannelUsage
+	sdkUtilitiesIbcClientStateFlags.Usage = sdkUtilitiesIbcClientStateUsage
+	sdkUtilitiesIbcConnectionFlags.Usage = sdkUtilitiesIbcConnectionUsage
+	sdkUtilitiesIbcDenomTraceFlags.Usage = sdkUtilitiesIbcDenomTraceUsage
+	sdkUtilitiesUnbondingDelegationFlags.Usage = sdkUtilitiesUnbondingDelegationUsage
+	sdkUtilitiesValidatorFlags.Usage = sdkUtilitiesValidatorUsage
 
 	if err := flag.CommandLine.Parse(os.Args[1:]); err != nil {
 		return nil, nil, err
@@ -105,6 +165,51 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "tx-metadata":
 				epf = sdkUtilitiesTxMetadataFlags
 
+			case "block":
+				epf = sdkUtilitiesBlockFlags
+
+			case "liquidity-params":
+				epf = sdkUtilitiesLiquidityParamsFlags
+
+			case "liquidity-pools":
+				epf = sdkUtilitiesLiquidityPoolsFlags
+
+			case "mint-inflation":
+				epf = sdkUtilitiesMintInflationFlags
+
+			case "mint-params":
+				epf = sdkUtilitiesMintParamsFlags
+
+			case "mint-annual-provision":
+				epf = sdkUtilitiesMintAnnualProvisionFlags
+
+			case "auth":
+				epf = sdkUtilitiesAuthFlags
+
+			case "bank":
+				epf = sdkUtilitiesBankFlags
+
+			case "delegation":
+				epf = sdkUtilitiesDelegationFlags
+
+			case "ibc-channel":
+				epf = sdkUtilitiesIbcChannelFlags
+
+			case "ibc-client-state":
+				epf = sdkUtilitiesIbcClientStateFlags
+
+			case "ibc-connection":
+				epf = sdkUtilitiesIbcConnectionFlags
+
+			case "ibc-denom-trace":
+				epf = sdkUtilitiesIbcDenomTraceFlags
+
+			case "unbonding-delegation":
+				epf = sdkUtilitiesUnbondingDelegationFlags
+
+			case "validator":
+				epf = sdkUtilitiesValidatorFlags
+
 			}
 
 		}
@@ -142,6 +247,51 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "tx-metadata":
 				endpoint = c.TxMetadata()
 				data, err = sdkutilitiesc.BuildTxMetadataPayload(*sdkUtilitiesTxMetadataMessageFlag)
+			case "block":
+				endpoint = c.Block()
+				data, err = sdkutilitiesc.BuildBlockPayload(*sdkUtilitiesBlockMessageFlag)
+			case "liquidity-params":
+				endpoint = c.LiquidityParams()
+				data, err = sdkutilitiesc.BuildLiquidityParamsPayload(*sdkUtilitiesLiquidityParamsMessageFlag)
+			case "liquidity-pools":
+				endpoint = c.LiquidityPools()
+				data, err = sdkutilitiesc.BuildLiquidityPoolsPayload(*sdkUtilitiesLiquidityPoolsMessageFlag)
+			case "mint-inflation":
+				endpoint = c.MintInflation()
+				data, err = sdkutilitiesc.BuildMintInflationPayload(*sdkUtilitiesMintInflationMessageFlag)
+			case "mint-params":
+				endpoint = c.MintParams()
+				data, err = sdkutilitiesc.BuildMintParamsPayload(*sdkUtilitiesMintParamsMessageFlag)
+			case "mint-annual-provision":
+				endpoint = c.MintAnnualProvision()
+				data, err = sdkutilitiesc.BuildMintAnnualProvisionPayload(*sdkUtilitiesMintAnnualProvisionMessageFlag)
+			case "auth":
+				endpoint = c.AuthEndpoint()
+				data, err = sdkutilitiesc.BuildAuthEndpointPayload(*sdkUtilitiesAuthMessageFlag)
+			case "bank":
+				endpoint = c.Bank()
+				data, err = sdkutilitiesc.BuildBankPayload(*sdkUtilitiesBankMessageFlag)
+			case "delegation":
+				endpoint = c.DelegationEndpoint()
+				data, err = sdkutilitiesc.BuildDelegationEndpointPayload(*sdkUtilitiesDelegationMessageFlag)
+			case "ibc-channel":
+				endpoint = c.IbcChannel()
+				data, err = sdkutilitiesc.BuildIbcChannelPayload(*sdkUtilitiesIbcChannelMessageFlag)
+			case "ibc-client-state":
+				endpoint = c.IbcClientState()
+				data, err = sdkutilitiesc.BuildIbcClientStatePayload(*sdkUtilitiesIbcClientStateMessageFlag)
+			case "ibc-connection":
+				endpoint = c.IbcConnection()
+				data, err = sdkutilitiesc.BuildIbcConnectionPayload(*sdkUtilitiesIbcConnectionMessageFlag)
+			case "ibc-denom-trace":
+				endpoint = c.IbcDenomTrace()
+				data, err = sdkutilitiesc.BuildIbcDenomTracePayload(*sdkUtilitiesIbcDenomTraceMessageFlag)
+			case "unbonding-delegation":
+				endpoint = c.UnbondingDelegationEndpoint()
+				data, err = sdkutilitiesc.BuildUnbondingDelegationEndpointPayload(*sdkUtilitiesUnbondingDelegationMessageFlag)
+			case "validator":
+				endpoint = c.ValidatorEndpoint()
+				data, err = sdkutilitiesc.BuildValidatorEndpointPayload(*sdkUtilitiesValidatorMessageFlag)
 			}
 		}
 	}
@@ -164,6 +314,21 @@ COMMAND:
     query-tx: QueryTx implements queryTx.
     broadcast-tx: BroadcastTx implements broadcastTx.
     tx-metadata: TxMetadata implements txMetadata.
+    block: Block implements block.
+    liquidity-params: LiquidityParams implements liquidityParams.
+    liquidity-pools: LiquidityPools implements liquidityPools.
+    mint-inflation: MintInflation implements mintInflation.
+    mint-params: MintParams implements mintParams.
+    mint-annual-provision: MintAnnualProvision implements mintAnnualProvision.
+    auth: Auth implements auth.
+    bank: Bank implements bank.
+    delegation: Delegation implements delegation.
+    ibc-channel: IbcChannel implements ibc_channel.
+    ibc-client-state: IbcClientState implements ibc_client_state.
+    ibc-connection: IbcConnection implements ibc_connection.
+    ibc-denom-trace: IbcDenomTrace implements ibc_denom_trace.
+    unbonding-delegation: UnbondingDelegation implements unbondingDelegation.
+    validator: Validator implements validator.
 
 Additional help:
     %[1]s sdk-utilities COMMAND --help
@@ -177,8 +342,8 @@ Supply implements supply.
 
 Example:
     %[1]s sdk-utilities supply --message '{
-      "chainName": "Molestias aut sit nobis et sit temporibus.",
-      "port": 4276607318535473132
+      "chainName": "Quis omnis hic eum nostrum.",
+      "port": 6801062929093128435
    }'
 `, os.Args[0])
 }
@@ -191,9 +356,9 @@ QueryTx implements queryTx.
 
 Example:
     %[1]s sdk-utilities query-tx --message '{
-      "chainName": "Suscipit rerum corrupti.",
-      "hash": "Vitae porro architecto dolorem.",
-      "port": 8026972786014809817
+      "chainName": "Ratione voluptatum.",
+      "hash": "Alias quo animi eos id et velit.",
+      "port": 2918849230649357130
    }'
 `, os.Args[0])
 }
@@ -206,9 +371,9 @@ BroadcastTx implements broadcastTx.
 
 Example:
     %[1]s sdk-utilities broadcast-tx --message '{
-      "chainName": "Voluptas magnam voluptatem dolore quae quasi quia.",
-      "port": 5026848979338219803,
-      "txBytes": "QmVhdGFlIHNlZCBjb25zZXF1dW50dXIgYmVhdGFlLg=="
+      "chainName": "Ratione itaque temporibus ut voluptates quia officiis.",
+      "port": 2477448663619511809,
+      "txBytes": "RGVsZW5pdGkgZXQu"
    }'
 `, os.Args[0])
 }
@@ -221,7 +386,371 @@ TxMetadata implements txMetadata.
 
 Example:
     %[1]s sdk-utilities tx-metadata --message '{
-      "txBytes": "SXBzdW0gZXZlbmlldCBlbmltIHF1aWEgZG9sb3J1bSBhbWV0IGVvcy4="
+      "txBytes": "QmxhbmRpdGlpcyBwbGFjZWF0IGl1cmUgZXhlcmNpdGF0aW9uZW0gaXVzdG8gcXVpcyBtb2xlc3RpYXMu"
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesBlockUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities block -message JSON
+
+Block implements block.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities block --message '{
+      "height": 4116790840276727849
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesLiquidityParamsUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities liquidity-params -message JSON
+
+LiquidityParams implements liquidityParams.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities liquidity-params --message '{
+      "chainName": "Hic non sit sunt.",
+      "port": 4297245491416268488
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesLiquidityPoolsUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities liquidity-pools -message JSON
+
+LiquidityPools implements liquidityPools.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities liquidity-pools --message '{
+      "chainName": "Eos odio est vero velit quibusdam illum.",
+      "port": 3434698023359210906
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesMintInflationUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities mint-inflation -message JSON
+
+MintInflation implements mintInflation.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities mint-inflation --message '{
+      "chainName": "Nihil unde dolorem voluptatem dignissimos nam.",
+      "port": 4837104213295428999
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesMintParamsUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities mint-params -message JSON
+
+MintParams implements mintParams.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities mint-params --message '{
+      "chainName": "Laudantium est cumque.",
+      "port": 419520256451477429
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesMintAnnualProvisionUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities mint-annual-provision -message JSON
+
+MintAnnualProvision implements mintAnnualProvision.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities mint-annual-provision --message '{
+      "chainName": "Laborum aperiam et assumenda fugiat.",
+      "port": 3777367582328580731
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesAuthUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities auth -message JSON
+
+Auth implements auth.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities auth --message '{
+      "payload": [
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         }
+      ]
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesBankUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities bank -message JSON
+
+Bank implements bank.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities bank --message '{
+      "payload": [
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         }
+      ]
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesDelegationUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities delegation -message JSON
+
+Delegation implements delegation.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities delegation --message '{
+      "payload": [
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         }
+      ]
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesIbcChannelUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities ibc-channel -message JSON
+
+IbcChannel implements ibc_channel.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities ibc-channel --message '{
+      "payload": [
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         }
+      ]
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesIbcClientStateUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities ibc-client-state -message JSON
+
+IbcClientState implements ibc_client_state.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities ibc-client-state --message '{
+      "payload": [
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         }
+      ]
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesIbcConnectionUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities ibc-connection -message JSON
+
+IbcConnection implements ibc_connection.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities ibc-connection --message '{
+      "payload": [
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         }
+      ]
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesIbcDenomTraceUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities ibc-denom-trace -message JSON
+
+IbcDenomTrace implements ibc_denom_trace.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities ibc-denom-trace --message '{
+      "payload": [
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         }
+      ]
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesUnbondingDelegationUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities unbonding-delegation -message JSON
+
+UnbondingDelegation implements unbondingDelegation.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities unbonding-delegation --message '{
+      "payload": [
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         }
+      ]
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesValidatorUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities validator -message JSON
+
+Validator implements validator.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities validator --message '{
+      "payload": [
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         },
+         {
+            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
+            "operationType": "delete",
+            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
+         }
+      ]
    }'
 `, os.Args[0])
 }

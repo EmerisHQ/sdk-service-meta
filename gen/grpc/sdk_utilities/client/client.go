@@ -93,3 +93,315 @@ func (c *Client) TxMetadata() goa.Endpoint {
 		return res, nil
 	}
 }
+
+// Block calls the "Block" function in sdk_utilitiespb.SdkUtilitiesClient
+// interface.
+func (c *Client) Block() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildBlockFunc(c.grpccli, c.opts...),
+			EncodeBlockRequest,
+			DecodeBlockResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// LiquidityParams calls the "LiquidityParams" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) LiquidityParams() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildLiquidityParamsFunc(c.grpccli, c.opts...),
+			EncodeLiquidityParamsRequest,
+			DecodeLiquidityParamsResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// LiquidityPools calls the "LiquidityPools" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) LiquidityPools() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildLiquidityPoolsFunc(c.grpccli, c.opts...),
+			EncodeLiquidityPoolsRequest,
+			DecodeLiquidityPoolsResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// MintInflation calls the "MintInflation" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) MintInflation() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildMintInflationFunc(c.grpccli, c.opts...),
+			EncodeMintInflationRequest,
+			DecodeMintInflationResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// MintParams calls the "MintParams" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) MintParams() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildMintParamsFunc(c.grpccli, c.opts...),
+			EncodeMintParamsRequest,
+			DecodeMintParamsResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// MintAnnualProvision calls the "MintAnnualProvision" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) MintAnnualProvision() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildMintAnnualProvisionFunc(c.grpccli, c.opts...),
+			EncodeMintAnnualProvisionRequest,
+			DecodeMintAnnualProvisionResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
+// AuthEndpoint calls the "AuthEndpoint" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) AuthEndpoint() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildAuthEndpointFunc(c.grpccli, c.opts...),
+			EncodeAuthEndpointRequest,
+			DecodeAuthEndpointResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.AuthProcessingErrorError:
+				return nil, NewAuthProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
+		}
+		return res, nil
+	}
+}
+
+// Bank calls the "Bank" function in sdk_utilitiespb.SdkUtilitiesClient
+// interface.
+func (c *Client) Bank() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildBankFunc(c.grpccli, c.opts...),
+			EncodeBankRequest,
+			DecodeBankResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.BankProcessingErrorError:
+				return nil, NewBankProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
+		}
+		return res, nil
+	}
+}
+
+// DelegationEndpoint calls the "DelegationEndpoint" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) DelegationEndpoint() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildDelegationEndpointFunc(c.grpccli, c.opts...),
+			EncodeDelegationEndpointRequest,
+			DecodeDelegationEndpointResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.DelegationProcessingErrorError:
+				return nil, NewDelegationProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
+		}
+		return res, nil
+	}
+}
+
+// IbcChannel calls the "IbcChannel" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) IbcChannel() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildIbcChannelFunc(c.grpccli, c.opts...),
+			EncodeIbcChannelRequest,
+			DecodeIbcChannelResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.IbcChannelProcessingErrorError:
+				return nil, NewIbcChannelProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
+		}
+		return res, nil
+	}
+}
+
+// IbcClientState calls the "IbcClientState" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) IbcClientState() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildIbcClientStateFunc(c.grpccli, c.opts...),
+			EncodeIbcClientStateRequest,
+			DecodeIbcClientStateResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.IbcClientStateProcessingErrorError:
+				return nil, NewIbcClientStateProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
+		}
+		return res, nil
+	}
+}
+
+// IbcConnection calls the "IbcConnection" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) IbcConnection() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildIbcConnectionFunc(c.grpccli, c.opts...),
+			EncodeIbcConnectionRequest,
+			DecodeIbcConnectionResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.IbcConnectionProcessingErrorError:
+				return nil, NewIbcConnectionProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
+		}
+		return res, nil
+	}
+}
+
+// IbcDenomTrace calls the "IbcDenomTrace" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) IbcDenomTrace() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildIbcDenomTraceFunc(c.grpccli, c.opts...),
+			EncodeIbcDenomTraceRequest,
+			DecodeIbcDenomTraceResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.IbcDenomTraceProcessingErrorError:
+				return nil, NewIbcDenomTraceProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
+		}
+		return res, nil
+	}
+}
+
+// UnbondingDelegationEndpoint calls the "UnbondingDelegationEndpoint" function
+// in sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) UnbondingDelegationEndpoint() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildUnbondingDelegationEndpointFunc(c.grpccli, c.opts...),
+			EncodeUnbondingDelegationEndpointRequest,
+			DecodeUnbondingDelegationEndpointResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.UnbondingDelegationProcessingErrorError:
+				return nil, NewUnbondingDelegationProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
+		}
+		return res, nil
+	}
+}
+
+// ValidatorEndpoint calls the "ValidatorEndpoint" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) ValidatorEndpoint() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildValidatorEndpointFunc(c.grpccli, c.opts...),
+			EncodeValidatorEndpointRequest,
+			DecodeValidatorEndpointResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			resp := goagrpc.DecodeError(err)
+			switch message := resp.(type) {
+			case *sdk_utilitiespb.ValidatorProcessingErrorError:
+				return nil, NewValidatorProcessingErrorError(message)
+			case *goapb.ErrorResponse:
+				return nil, goagrpc.NewServiceError(message)
+			default:
+				return nil, goa.Fault(err.Error())
+			}
+		}
+		return res, nil
+	}
+}

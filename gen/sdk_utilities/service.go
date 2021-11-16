@@ -21,6 +21,36 @@ type Service interface {
 	BroadcastTx(context.Context, *BroadcastTxPayload) (res *TransactionResult, err error)
 	// TxMetadata implements txMetadata.
 	TxMetadata(context.Context, *TxMetadataPayload) (res *TxMessagesMetadata, err error)
+	// Block implements block.
+	Block(context.Context, *BlockPayload) (res *BlockData, err error)
+	// LiquidityParams implements liquidityParams.
+	LiquidityParams(context.Context, *LiquidityParamsPayload) (res *LiquidityParams2, err error)
+	// LiquidityPools implements liquidityPools.
+	LiquidityPools(context.Context, *LiquidityPoolsPayload) (res *LiquidityPools2, err error)
+	// MintInflation implements mintInflation.
+	MintInflation(context.Context, *MintInflationPayload) (res *MintInflation2, err error)
+	// MintParams implements mintParams.
+	MintParams(context.Context, *MintParamsPayload) (res *MintParams2, err error)
+	// MintAnnualProvision implements mintAnnualProvision.
+	MintAnnualProvision(context.Context, *MintAnnualProvisionPayload) (res *MintAnnualProvision2, err error)
+	// Auth implements auth.
+	AuthEndpoint(context.Context, *AuthPayload) (res []*Auth, err error)
+	// Bank implements bank.
+	Bank(context.Context, *BankPayload) (res []*Balance, err error)
+	// Delegation implements delegation.
+	DelegationEndpoint(context.Context, *DelegationPayload) (res []*Delegation, err error)
+	// IbcChannel implements ibc_channel.
+	IbcChannel(context.Context, *IbcChannelPayload) (res []*IBCChannel, err error)
+	// IbcClientState implements ibc_client_state.
+	IbcClientState(context.Context, *IbcClientStatePayload) (res []*IBCClientState, err error)
+	// IbcConnection implements ibc_connection.
+	IbcConnection(context.Context, *IbcConnectionPayload) (res []*IBCConnection, err error)
+	// IbcDenomTrace implements ibc_denom_trace.
+	IbcDenomTrace(context.Context, *IbcDenomTracePayload) (res []*IBCDenomTrace, err error)
+	// UnbondingDelegation implements unbondingDelegation.
+	UnbondingDelegationEndpoint(context.Context, *UnbondingDelegationPayload) (res []*UnbondingDelegation, err error)
+	// Validator implements validator.
+	ValidatorEndpoint(context.Context, *ValidatorPayload) (res []*Validator, err error)
 }
 
 // ServiceName is the name of the service as defined in the design. This is the
@@ -31,7 +61,7 @@ const ServiceName = "sdk-utilities"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [4]string{"supply", "queryTx", "broadcastTx", "txMetadata"}
+var MethodNames = [19]string{"supply", "queryTx", "broadcastTx", "txMetadata", "block", "liquidityParams", "liquidityPools", "mintInflation", "mintParams", "mintAnnualProvision", "auth", "bank", "delegation", "ibc_channel", "ibc_client_state", "ibc_connection", "ibc_denom_trace", "unbondingDelegation", "validator"}
 
 // SupplyPayload is the payload type of the sdk-utilities service supply method.
 type SupplyPayload struct {
@@ -85,6 +115,145 @@ type TxMetadataPayload struct {
 // txMetadata method.
 type TxMessagesMetadata struct {
 	MessagesMetadata []*MsgMetadata
+}
+
+// BlockPayload is the payload type of the sdk-utilities service block method.
+type BlockPayload struct {
+	// Height of the block to query
+	Height int64
+}
+
+// BlockData is the result type of the sdk-utilities service block method.
+type BlockData struct {
+	Height int64
+	Block  []byte
+}
+
+// LiquidityParamsPayload is the payload type of the sdk-utilities service
+// liquidityParams method.
+type LiquidityParamsPayload struct {
+	// Chain to get data from
+	ChainName string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
+}
+
+// LiquidityParams2 is the result type of the sdk-utilities service
+// liquidityParams method.
+type LiquidityParams2 struct {
+	LiquidityParams []byte
+}
+
+// LiquidityPoolsPayload is the payload type of the sdk-utilities service
+// liquidityPools method.
+type LiquidityPoolsPayload struct {
+	// Chain to get data from
+	ChainName string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
+}
+
+// LiquidityPools2 is the result type of the sdk-utilities service
+// liquidityPools method.
+type LiquidityPools2 struct {
+	LiquidityPools []byte
+}
+
+// MintInflationPayload is the payload type of the sdk-utilities service
+// mintInflation method.
+type MintInflationPayload struct {
+	// Chain to get data from
+	ChainName string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
+}
+
+// MintInflation2 is the result type of the sdk-utilities service mintInflation
+// method.
+type MintInflation2 struct {
+	MintInflation []byte
+}
+
+// MintParamsPayload is the payload type of the sdk-utilities service
+// mintParams method.
+type MintParamsPayload struct {
+	// Chain to get data from
+	ChainName string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
+}
+
+// MintParams2 is the result type of the sdk-utilities service mintParams
+// method.
+type MintParams2 struct {
+	MintParams []byte
+}
+
+// MintAnnualProvisionPayload is the payload type of the sdk-utilities service
+// mintAnnualProvision method.
+type MintAnnualProvisionPayload struct {
+	// Chain to get data from
+	ChainName string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
+}
+
+// MintAnnualProvision2 is the result type of the sdk-utilities service
+// mintAnnualProvision method.
+type MintAnnualProvision2 struct {
+	MintAnnualProvision []byte
+}
+
+// AuthPayload is the payload type of the sdk-utilities service auth method.
+type AuthPayload struct {
+	Payload []*TracePayload
+}
+
+// BankPayload is the payload type of the sdk-utilities service bank method.
+type BankPayload struct {
+	Payload []*TracePayload
+}
+
+// DelegationPayload is the payload type of the sdk-utilities service
+// delegation method.
+type DelegationPayload struct {
+	Payload []*TracePayload
+}
+
+// IbcChannelPayload is the payload type of the sdk-utilities service
+// ibc_channel method.
+type IbcChannelPayload struct {
+	Payload []*TracePayload
+}
+
+// IbcClientStatePayload is the payload type of the sdk-utilities service
+// ibc_client_state method.
+type IbcClientStatePayload struct {
+	Payload []*TracePayload
+}
+
+// IbcConnectionPayload is the payload type of the sdk-utilities service
+// ibc_connection method.
+type IbcConnectionPayload struct {
+	Payload []*TracePayload
+}
+
+// IbcDenomTracePayload is the payload type of the sdk-utilities service
+// ibc_denom_trace method.
+type IbcDenomTracePayload struct {
+	Payload []*TracePayload
+}
+
+// UnbondingDelegationPayload is the payload type of the sdk-utilities service
+// unbondingDelegation method.
+type UnbondingDelegationPayload struct {
+	Payload []*TracePayload
+}
+
+// ValidatorPayload is the payload type of the sdk-utilities service validator
+// method.
+type ValidatorPayload struct {
+	Payload []*TracePayload
 }
 
 // SDK service representation of a Cosmos SDK types.Coin
