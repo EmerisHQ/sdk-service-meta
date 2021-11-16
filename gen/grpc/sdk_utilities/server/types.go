@@ -114,6 +114,136 @@ func NewTxMetadataResponse(result *sdkutilities.TxMessagesMetadata) *sdk_utiliti
 	return message
 }
 
+// NewBlockPayload builds the payload of the "block" endpoint of the
+// "sdk-utilities" service from the gRPC request type.
+func NewBlockPayload(message *sdk_utilitiespb.BlockRequest) *sdkutilities.BlockPayload {
+	v := &sdkutilities.BlockPayload{
+		Height: message.Height,
+	}
+	return v
+}
+
+// NewBlockResponse builds the gRPC response type from the result of the
+// "block" endpoint of the "sdk-utilities" service.
+func NewBlockResponse(result *sdkutilities.BlockData) *sdk_utilitiespb.BlockResponse {
+	message := &sdk_utilitiespb.BlockResponse{
+		Height: result.Height,
+		Block:  result.Block,
+	}
+	return message
+}
+
+// NewLiquidityParamsPayload builds the payload of the "liquidityParams"
+// endpoint of the "sdk-utilities" service from the gRPC request type.
+func NewLiquidityParamsPayload(message *sdk_utilitiespb.LiquidityParamsRequest) *sdkutilities.LiquidityParamsPayload {
+	v := &sdkutilities.LiquidityParamsPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+	return v
+}
+
+// NewLiquidityParamsResponse builds the gRPC response type from the result of
+// the "liquidityParams" endpoint of the "sdk-utilities" service.
+func NewLiquidityParamsResponse(result *sdkutilities.LiquidityParams2) *sdk_utilitiespb.LiquidityParamsResponse {
+	message := &sdk_utilitiespb.LiquidityParamsResponse{
+		LiquidityParams: result.LiquidityParams,
+	}
+	return message
+}
+
+// NewLiquidityPoolsPayload builds the payload of the "liquidityPools" endpoint
+// of the "sdk-utilities" service from the gRPC request type.
+func NewLiquidityPoolsPayload(message *sdk_utilitiespb.LiquidityPoolsRequest) *sdkutilities.LiquidityPoolsPayload {
+	v := &sdkutilities.LiquidityPoolsPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+	return v
+}
+
+// NewLiquidityPoolsResponse builds the gRPC response type from the result of
+// the "liquidityPools" endpoint of the "sdk-utilities" service.
+func NewLiquidityPoolsResponse(result *sdkutilities.LiquidityPools2) *sdk_utilitiespb.LiquidityPoolsResponse {
+	message := &sdk_utilitiespb.LiquidityPoolsResponse{
+		LiquidityPools: result.LiquidityPools,
+	}
+	return message
+}
+
+// NewMintInflationPayload builds the payload of the "mintInflation" endpoint
+// of the "sdk-utilities" service from the gRPC request type.
+func NewMintInflationPayload(message *sdk_utilitiespb.MintInflationRequest) *sdkutilities.MintInflationPayload {
+	v := &sdkutilities.MintInflationPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+	return v
+}
+
+// NewMintInflationResponse builds the gRPC response type from the result of
+// the "mintInflation" endpoint of the "sdk-utilities" service.
+func NewMintInflationResponse(result *sdkutilities.MintInflation2) *sdk_utilitiespb.MintInflationResponse {
+	message := &sdk_utilitiespb.MintInflationResponse{
+		MintInflation: result.MintInflation,
+	}
+	return message
+}
+
+// NewMintParamsPayload builds the payload of the "mintParams" endpoint of the
+// "sdk-utilities" service from the gRPC request type.
+func NewMintParamsPayload(message *sdk_utilitiespb.MintParamsRequest) *sdkutilities.MintParamsPayload {
+	v := &sdkutilities.MintParamsPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+	return v
+}
+
+// NewMintParamsResponse builds the gRPC response type from the result of the
+// "mintParams" endpoint of the "sdk-utilities" service.
+func NewMintParamsResponse(result *sdkutilities.MintParams2) *sdk_utilitiespb.MintParamsResponse {
+	message := &sdk_utilitiespb.MintParamsResponse{
+		MintParams: result.MintParams,
+	}
+	return message
+}
+
+// NewMintAnnualProvisionPayload builds the payload of the
+// "mintAnnualProvision" endpoint of the "sdk-utilities" service from the gRPC
+// request type.
+func NewMintAnnualProvisionPayload(message *sdk_utilitiespb.MintAnnualProvisionRequest) *sdkutilities.MintAnnualProvisionPayload {
+	v := &sdkutilities.MintAnnualProvisionPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+	return v
+}
+
+// NewMintAnnualProvisionResponse builds the gRPC response type from the result
+// of the "mintAnnualProvision" endpoint of the "sdk-utilities" service.
+func NewMintAnnualProvisionResponse(result *sdkutilities.MintAnnualProvision2) *sdk_utilitiespb.MintAnnualProvisionResponse {
+	message := &sdk_utilitiespb.MintAnnualProvisionResponse{
+		MintAnnualProvision: result.MintAnnualProvision,
+	}
+	return message
+}
+
 // NewAuthPayload builds the payload of the "auth" endpoint of the
 // "sdk-utilities" service from the gRPC request type.
 func NewAuthPayload(message *sdk_utilitiespb.AuthRequest) *sdkutilities.AuthPayload {
