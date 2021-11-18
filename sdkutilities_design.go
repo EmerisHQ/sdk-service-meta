@@ -3,7 +3,6 @@ package sdkservicemeta
 import (
 	"fmt"
 
-	"github.com/allinbits/sdk-service-meta/tracelistener"
 	. "goa.design/goa/v3/dsl"
 	_ "goa.design/plugins/v3/zaplogger"
 )
@@ -166,8 +165,6 @@ var _ = Service(sdkUtilities, func() {
 			Response(CodeOK)
 		})
 	})
-
-	tracelistener.ServiceDefinitions()
 
 	Files("/openapi.json", "./gen/http/openapi.json")
 })

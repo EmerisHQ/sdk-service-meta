@@ -22,15 +22,15 @@ import (
 //    command (subcommand1|subcommand2|...)
 //
 func UsageCommands() string {
-	return `sdk-utilities (supply|query-tx|broadcast-tx|tx-metadata|block|liquidity-params|liquidity-pools|mint-inflation|mint-params|mint-annual-provision|auth|bank|delegation|ibc-channel|ibc-client-state|ibc-connection|ibc-denom-trace|unbonding-delegation|validator)
+	return `sdk-utilities (supply|query-tx|broadcast-tx|tx-metadata|block|liquidity-params|liquidity-pools|mint-inflation|mint-params|mint-annual-provision)
 `
 }
 
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` sdk-utilities supply --message '{
-      "chainName": "Quis omnis hic eum nostrum.",
-      "port": 6801062929093128435
+      "chainName": "Et at quis natus.",
+      "port": 5314508489980970787
    }'` + "\n" +
 		""
 }
@@ -70,33 +70,6 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 
 		sdkUtilitiesMintAnnualProvisionFlags       = flag.NewFlagSet("mint-annual-provision", flag.ExitOnError)
 		sdkUtilitiesMintAnnualProvisionMessageFlag = sdkUtilitiesMintAnnualProvisionFlags.String("message", "", "")
-
-		sdkUtilitiesAuthFlags       = flag.NewFlagSet("auth", flag.ExitOnError)
-		sdkUtilitiesAuthMessageFlag = sdkUtilitiesAuthFlags.String("message", "", "")
-
-		sdkUtilitiesBankFlags       = flag.NewFlagSet("bank", flag.ExitOnError)
-		sdkUtilitiesBankMessageFlag = sdkUtilitiesBankFlags.String("message", "", "")
-
-		sdkUtilitiesDelegationFlags       = flag.NewFlagSet("delegation", flag.ExitOnError)
-		sdkUtilitiesDelegationMessageFlag = sdkUtilitiesDelegationFlags.String("message", "", "")
-
-		sdkUtilitiesIbcChannelFlags       = flag.NewFlagSet("ibc-channel", flag.ExitOnError)
-		sdkUtilitiesIbcChannelMessageFlag = sdkUtilitiesIbcChannelFlags.String("message", "", "")
-
-		sdkUtilitiesIbcClientStateFlags       = flag.NewFlagSet("ibc-client-state", flag.ExitOnError)
-		sdkUtilitiesIbcClientStateMessageFlag = sdkUtilitiesIbcClientStateFlags.String("message", "", "")
-
-		sdkUtilitiesIbcConnectionFlags       = flag.NewFlagSet("ibc-connection", flag.ExitOnError)
-		sdkUtilitiesIbcConnectionMessageFlag = sdkUtilitiesIbcConnectionFlags.String("message", "", "")
-
-		sdkUtilitiesIbcDenomTraceFlags       = flag.NewFlagSet("ibc-denom-trace", flag.ExitOnError)
-		sdkUtilitiesIbcDenomTraceMessageFlag = sdkUtilitiesIbcDenomTraceFlags.String("message", "", "")
-
-		sdkUtilitiesUnbondingDelegationFlags       = flag.NewFlagSet("unbonding-delegation", flag.ExitOnError)
-		sdkUtilitiesUnbondingDelegationMessageFlag = sdkUtilitiesUnbondingDelegationFlags.String("message", "", "")
-
-		sdkUtilitiesValidatorFlags       = flag.NewFlagSet("validator", flag.ExitOnError)
-		sdkUtilitiesValidatorMessageFlag = sdkUtilitiesValidatorFlags.String("message", "", "")
 	)
 	sdkUtilitiesFlags.Usage = sdkUtilitiesUsage
 	sdkUtilitiesSupplyFlags.Usage = sdkUtilitiesSupplyUsage
@@ -109,15 +82,6 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 	sdkUtilitiesMintInflationFlags.Usage = sdkUtilitiesMintInflationUsage
 	sdkUtilitiesMintParamsFlags.Usage = sdkUtilitiesMintParamsUsage
 	sdkUtilitiesMintAnnualProvisionFlags.Usage = sdkUtilitiesMintAnnualProvisionUsage
-	sdkUtilitiesAuthFlags.Usage = sdkUtilitiesAuthUsage
-	sdkUtilitiesBankFlags.Usage = sdkUtilitiesBankUsage
-	sdkUtilitiesDelegationFlags.Usage = sdkUtilitiesDelegationUsage
-	sdkUtilitiesIbcChannelFlags.Usage = sdkUtilitiesIbcChannelUsage
-	sdkUtilitiesIbcClientStateFlags.Usage = sdkUtilitiesIbcClientStateUsage
-	sdkUtilitiesIbcConnectionFlags.Usage = sdkUtilitiesIbcConnectionUsage
-	sdkUtilitiesIbcDenomTraceFlags.Usage = sdkUtilitiesIbcDenomTraceUsage
-	sdkUtilitiesUnbondingDelegationFlags.Usage = sdkUtilitiesUnbondingDelegationUsage
-	sdkUtilitiesValidatorFlags.Usage = sdkUtilitiesValidatorUsage
 
 	if err := flag.CommandLine.Parse(os.Args[1:]); err != nil {
 		return nil, nil, err
@@ -183,33 +147,6 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "mint-annual-provision":
 				epf = sdkUtilitiesMintAnnualProvisionFlags
 
-			case "auth":
-				epf = sdkUtilitiesAuthFlags
-
-			case "bank":
-				epf = sdkUtilitiesBankFlags
-
-			case "delegation":
-				epf = sdkUtilitiesDelegationFlags
-
-			case "ibc-channel":
-				epf = sdkUtilitiesIbcChannelFlags
-
-			case "ibc-client-state":
-				epf = sdkUtilitiesIbcClientStateFlags
-
-			case "ibc-connection":
-				epf = sdkUtilitiesIbcConnectionFlags
-
-			case "ibc-denom-trace":
-				epf = sdkUtilitiesIbcDenomTraceFlags
-
-			case "unbonding-delegation":
-				epf = sdkUtilitiesUnbondingDelegationFlags
-
-			case "validator":
-				epf = sdkUtilitiesValidatorFlags
-
 			}
 
 		}
@@ -265,33 +202,6 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "mint-annual-provision":
 				endpoint = c.MintAnnualProvision()
 				data, err = sdkutilitiesc.BuildMintAnnualProvisionPayload(*sdkUtilitiesMintAnnualProvisionMessageFlag)
-			case "auth":
-				endpoint = c.AuthEndpoint()
-				data, err = sdkutilitiesc.BuildAuthEndpointPayload(*sdkUtilitiesAuthMessageFlag)
-			case "bank":
-				endpoint = c.Bank()
-				data, err = sdkutilitiesc.BuildBankPayload(*sdkUtilitiesBankMessageFlag)
-			case "delegation":
-				endpoint = c.DelegationEndpoint()
-				data, err = sdkutilitiesc.BuildDelegationEndpointPayload(*sdkUtilitiesDelegationMessageFlag)
-			case "ibc-channel":
-				endpoint = c.IbcChannel()
-				data, err = sdkutilitiesc.BuildIbcChannelPayload(*sdkUtilitiesIbcChannelMessageFlag)
-			case "ibc-client-state":
-				endpoint = c.IbcClientState()
-				data, err = sdkutilitiesc.BuildIbcClientStatePayload(*sdkUtilitiesIbcClientStateMessageFlag)
-			case "ibc-connection":
-				endpoint = c.IbcConnection()
-				data, err = sdkutilitiesc.BuildIbcConnectionPayload(*sdkUtilitiesIbcConnectionMessageFlag)
-			case "ibc-denom-trace":
-				endpoint = c.IbcDenomTrace()
-				data, err = sdkutilitiesc.BuildIbcDenomTracePayload(*sdkUtilitiesIbcDenomTraceMessageFlag)
-			case "unbonding-delegation":
-				endpoint = c.UnbondingDelegationEndpoint()
-				data, err = sdkutilitiesc.BuildUnbondingDelegationEndpointPayload(*sdkUtilitiesUnbondingDelegationMessageFlag)
-			case "validator":
-				endpoint = c.ValidatorEndpoint()
-				data, err = sdkutilitiesc.BuildValidatorEndpointPayload(*sdkUtilitiesValidatorMessageFlag)
 			}
 		}
 	}
@@ -320,15 +230,6 @@ COMMAND:
     mint-inflation: MintInflation implements mintInflation.
     mint-params: MintParams implements mintParams.
     mint-annual-provision: MintAnnualProvision implements mintAnnualProvision.
-    auth: Auth implements auth.
-    bank: Bank implements bank.
-    delegation: Delegation implements delegation.
-    ibc-channel: IbcChannel implements ibc_channel.
-    ibc-client-state: IbcClientState implements ibc_client_state.
-    ibc-connection: IbcConnection implements ibc_connection.
-    ibc-denom-trace: IbcDenomTrace implements ibc_denom_trace.
-    unbonding-delegation: UnbondingDelegation implements unbondingDelegation.
-    validator: Validator implements validator.
 
 Additional help:
     %[1]s sdk-utilities COMMAND --help
@@ -342,8 +243,8 @@ Supply implements supply.
 
 Example:
     %[1]s sdk-utilities supply --message '{
-      "chainName": "Quis omnis hic eum nostrum.",
-      "port": 6801062929093128435
+      "chainName": "Et at quis natus.",
+      "port": 5314508489980970787
    }'
 `, os.Args[0])
 }
@@ -356,9 +257,9 @@ QueryTx implements queryTx.
 
 Example:
     %[1]s sdk-utilities query-tx --message '{
-      "chainName": "Ratione voluptatum.",
-      "hash": "Alias quo animi eos id et velit.",
-      "port": 2918849230649357130
+      "chainName": "Animi recusandae et aut officia.",
+      "hash": "Laboriosam doloremque voluptatibus molestias.",
+      "port": 8394252484425201534
    }'
 `, os.Args[0])
 }
@@ -371,9 +272,9 @@ BroadcastTx implements broadcastTx.
 
 Example:
     %[1]s sdk-utilities broadcast-tx --message '{
-      "chainName": "Ratione itaque temporibus ut voluptates quia officiis.",
-      "port": 2477448663619511809,
-      "txBytes": "RGVsZW5pdGkgZXQu"
+      "chainName": "Nihil blanditiis ut consequatur aliquid dolorum ut.",
+      "port": 7924779954703681118,
+      "txBytes": "RWFydW0gZXQgZWl1cyBxdWlhLg=="
    }'
 `, os.Args[0])
 }
@@ -386,7 +287,7 @@ TxMetadata implements txMetadata.
 
 Example:
     %[1]s sdk-utilities tx-metadata --message '{
-      "txBytes": "QmxhbmRpdGlpcyBwbGFjZWF0IGl1cmUgZXhlcmNpdGF0aW9uZW0gaXVzdG8gcXVpcyBtb2xlc3RpYXMu"
+      "txBytes": "SGljIHVuZGUgZGlzdGluY3RpbyBjb25zZWN0ZXR1ci4="
    }'
 `, os.Args[0])
 }
@@ -399,7 +300,9 @@ Block implements block.
 
 Example:
     %[1]s sdk-utilities block --message '{
-      "height": 4116790840276727849
+      "chainName": "Alias aut id aliquid quis veritatis.",
+      "height": 9155666357462436048,
+      "port": 4673621208024210799
    }'
 `, os.Args[0])
 }
@@ -412,8 +315,8 @@ LiquidityParams implements liquidityParams.
 
 Example:
     %[1]s sdk-utilities liquidity-params --message '{
-      "chainName": "Hic non sit sunt.",
-      "port": 4297245491416268488
+      "chainName": "Est veritatis quia dolorem.",
+      "port": 444710994943341646
    }'
 `, os.Args[0])
 }
@@ -426,8 +329,8 @@ LiquidityPools implements liquidityPools.
 
 Example:
     %[1]s sdk-utilities liquidity-pools --message '{
-      "chainName": "Eos odio est vero velit quibusdam illum.",
-      "port": 3434698023359210906
+      "chainName": "Temporibus libero enim rerum dolor qui sed.",
+      "port": 3525784811766824029
    }'
 `, os.Args[0])
 }
@@ -440,8 +343,8 @@ MintInflation implements mintInflation.
 
 Example:
     %[1]s sdk-utilities mint-inflation --message '{
-      "chainName": "Nihil unde dolorem voluptatem dignissimos nam.",
-      "port": 4837104213295428999
+      "chainName": "Explicabo consequatur est ea est.",
+      "port": 3065905437504226774
    }'
 `, os.Args[0])
 }
@@ -454,8 +357,8 @@ MintParams implements mintParams.
 
 Example:
     %[1]s sdk-utilities mint-params --message '{
-      "chainName": "Laudantium est cumque.",
-      "port": 419520256451477429
+      "chainName": "Animi adipisci repellendus eaque ut et.",
+      "port": 3492650001689792879
    }'
 `, os.Args[0])
 }
@@ -468,289 +371,8 @@ MintAnnualProvision implements mintAnnualProvision.
 
 Example:
     %[1]s sdk-utilities mint-annual-provision --message '{
-      "chainName": "Laborum aperiam et assumenda fugiat.",
-      "port": 3777367582328580731
-   }'
-`, os.Args[0])
-}
-
-func sdkUtilitiesAuthUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities auth -message JSON
-
-Auth implements auth.
-    -message JSON: 
-
-Example:
-    %[1]s sdk-utilities auth --message '{
-      "payload": [
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         }
-      ]
-   }'
-`, os.Args[0])
-}
-
-func sdkUtilitiesBankUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities bank -message JSON
-
-Bank implements bank.
-    -message JSON: 
-
-Example:
-    %[1]s sdk-utilities bank --message '{
-      "payload": [
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         }
-      ]
-   }'
-`, os.Args[0])
-}
-
-func sdkUtilitiesDelegationUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities delegation -message JSON
-
-Delegation implements delegation.
-    -message JSON: 
-
-Example:
-    %[1]s sdk-utilities delegation --message '{
-      "payload": [
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         }
-      ]
-   }'
-`, os.Args[0])
-}
-
-func sdkUtilitiesIbcChannelUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities ibc-channel -message JSON
-
-IbcChannel implements ibc_channel.
-    -message JSON: 
-
-Example:
-    %[1]s sdk-utilities ibc-channel --message '{
-      "payload": [
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         }
-      ]
-   }'
-`, os.Args[0])
-}
-
-func sdkUtilitiesIbcClientStateUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities ibc-client-state -message JSON
-
-IbcClientState implements ibc_client_state.
-    -message JSON: 
-
-Example:
-    %[1]s sdk-utilities ibc-client-state --message '{
-      "payload": [
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         }
-      ]
-   }'
-`, os.Args[0])
-}
-
-func sdkUtilitiesIbcConnectionUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities ibc-connection -message JSON
-
-IbcConnection implements ibc_connection.
-    -message JSON: 
-
-Example:
-    %[1]s sdk-utilities ibc-connection --message '{
-      "payload": [
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         }
-      ]
-   }'
-`, os.Args[0])
-}
-
-func sdkUtilitiesIbcDenomTraceUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities ibc-denom-trace -message JSON
-
-IbcDenomTrace implements ibc_denom_trace.
-    -message JSON: 
-
-Example:
-    %[1]s sdk-utilities ibc-denom-trace --message '{
-      "payload": [
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         }
-      ]
-   }'
-`, os.Args[0])
-}
-
-func sdkUtilitiesUnbondingDelegationUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities unbonding-delegation -message JSON
-
-UnbondingDelegation implements unbondingDelegation.
-    -message JSON: 
-
-Example:
-    %[1]s sdk-utilities unbonding-delegation --message '{
-      "payload": [
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         }
-      ]
-   }'
-`, os.Args[0])
-}
-
-func sdkUtilitiesValidatorUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities validator -message JSON
-
-Validator implements validator.
-    -message JSON: 
-
-Example:
-    %[1]s sdk-utilities validator --message '{
-      "payload": [
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         },
-         {
-            "key": "VXQgcmVydW0gZXQgY29ycnVwdGkgcmVwcmVoZW5kZXJpdC4=",
-            "operationType": "delete",
-            "value": "SXVzdG8gYXNwZXJpb3JlcyB1dCBldCBhdC4="
-         }
-      ]
+      "chainName": "Et iure.",
+      "port": 6610216662945158602
    }'
 `, os.Args[0])
 }
