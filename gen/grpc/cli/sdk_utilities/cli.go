@@ -29,10 +29,10 @@ func UsageCommands() string {
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` sdk-utilities account-numbers --message '{
-      "addresHex": "Ipsam nesciunt voluptate nulla numquam dolorum.",
-      "bech32Prefix": "Molestias autem perferendis.",
-      "chainName": "Et aut officia ducimus et laboriosam.",
-      "port": 2233703419273888870
+      "addresHex": "Dolorum ut eos qui earum.",
+      "bech32Prefix": "Blanditiis ut consequatur.",
+      "chainName": "Ipsam nesciunt voluptate nulla numquam dolorum.",
+      "port": 1457976898164366168
    }'` + "\n" +
 		""
 }
@@ -256,10 +256,10 @@ AccountNumbers implements accountNumbers.
 
 Example:
     %[1]s sdk-utilities account-numbers --message '{
-      "addresHex": "Ipsam nesciunt voluptate nulla numquam dolorum.",
-      "bech32Prefix": "Molestias autem perferendis.",
-      "chainName": "Et aut officia ducimus et laboriosam.",
-      "port": 2233703419273888870
+      "addresHex": "Dolorum ut eos qui earum.",
+      "bech32Prefix": "Blanditiis ut consequatur.",
+      "chainName": "Ipsam nesciunt voluptate nulla numquam dolorum.",
+      "port": 1457976898164366168
    }'
 `, os.Args[0])
 }
@@ -272,8 +272,8 @@ Supply implements supply.
 
 Example:
     %[1]s sdk-utilities supply --message '{
-      "chainName": "Ut consequatur aliquid dolorum.",
-      "port": 3655322585803899464
+      "chainName": "Repudiandae hic unde distinctio consectetur.",
+      "port": 6548433300935100839
    }'
 `, os.Args[0])
 }
@@ -286,9 +286,9 @@ QueryTx implements queryTx.
 
 Example:
     %[1]s sdk-utilities query-tx --message '{
-      "chainName": "Earum et eius quia.",
-      "hash": "Ab repudiandae hic.",
-      "port": 184518986587847461
+      "chainName": "Aut id.",
+      "hash": "Veritatis blanditiis quaerat eaque.",
+      "port": 4799841495418416071
    }'
 `, os.Args[0])
 }
@@ -301,9 +301,9 @@ BroadcastTx implements broadcastTx.
 
 Example:
     %[1]s sdk-utilities broadcast-tx --message '{
-      "chainName": "Quaerat eaque quas ea.",
-      "port": 7031085827166329699,
-      "txBytes": "UXVpc3F1YW0gc2ludCBxdWlhIGV0IG1hZ25hbS4="
+      "chainName": "Rerum fugiat ut est molestias ut non.",
+      "port": 8213706707786077595,
+      "txBytes": "TGliZXJvIGVuaW0gcmVydW0gZG9sb3IgcXVpIHNlZC4="
    }'
 `, os.Args[0])
 }
@@ -316,7 +316,7 @@ TxMetadata implements txMetadata.
 
 Example:
     %[1]s sdk-utilities tx-metadata --message '{
-      "txBytes": "UXVpc3F1YW0gcmVydW0gZnVnaWF0Lg=="
+      "txBytes": "Q29uc2VxdWF0dXIgZXN0IGVhIGVzdC4="
    }'
 `, os.Args[0])
 }
@@ -329,9 +329,9 @@ Block implements block.
 
 Example:
     %[1]s sdk-utilities block --message '{
-      "chainName": "Molestias ut non aut temporibus.",
-      "height": 4663228169392717920,
-      "port": 5647896078819808780
+      "chainName": "Laborum quam ducimus consequatur.",
+      "height": 4738969913563760839,
+      "port": 984187946088149780
    }'
 `, os.Args[0])
 }
@@ -344,8 +344,8 @@ LiquidityParams implements liquidityParams.
 
 Example:
     %[1]s sdk-utilities liquidity-params --message '{
-      "chainName": "Velit dicta.",
-      "port": 8651610214817669303
+      "chainName": "Dolor quisquam est et aspernatur.",
+      "port": 894623405773491359
    }'
 `, os.Args[0])
 }
@@ -358,8 +358,8 @@ LiquidityPools implements liquidityPools.
 
 Example:
     %[1]s sdk-utilities liquidity-pools --message '{
-      "chainName": "Laborum laborum quam ducimus.",
-      "port": 555297839850191844
+      "chainName": "Alias accusantium sunt rem voluptas sed.",
+      "port": 4442055250494698477
    }'
 `, os.Args[0])
 }
@@ -372,8 +372,8 @@ MintInflation implements mintInflation.
 
 Example:
     %[1]s sdk-utilities mint-inflation --message '{
-      "chainName": "Quisquam est et aspernatur sunt omnis et.",
-      "port": 2980623663363787275
+      "chainName": "Sequi quis culpa et blanditiis veritatis.",
+      "port": 2428174418171390862
    }'
 `, os.Args[0])
 }
@@ -386,8 +386,8 @@ MintParams implements mintParams.
 
 Example:
     %[1]s sdk-utilities mint-params --message '{
-      "chainName": "Amet dicta quia velit laudantium.",
-      "port": 2966708842863342049
+      "chainName": "Est neque porro consectetur.",
+      "port": 5472785720082760056
    }'
 `, os.Args[0])
 }
@@ -400,8 +400,8 @@ MintAnnualProvision implements mintAnnualProvision.
 
 Example:
     %[1]s sdk-utilities mint-annual-provision --message '{
-      "chainName": "Itaque tenetur explicabo est neque.",
-      "port": 1748383819728833353
+      "chainName": "Ullam quod.",
+      "port": 4459115708693118891
    }'
 `, os.Args[0])
 }

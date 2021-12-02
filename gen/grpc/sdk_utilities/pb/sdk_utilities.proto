@@ -51,6 +51,7 @@ message AccountNumbersRequest {
 message AccountNumbersResponse {
 	sint64 account_number = 1;
 	sint64 sequence_number = 2;
+	string bech32_address = 3;
 }
 
 message SupplyRequest {

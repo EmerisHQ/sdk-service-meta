@@ -121,6 +121,7 @@ var AccountNumbers = Type("AccountNumbers", func() {
 
 	Field(1, "accountNumber", Int64)
 	Field(2, "sequenceNumber", Int64)
+	Field(3, "bech32Address", String)
 
-	Required("accountNumber", "sequenceNumber")
+	Required("accountNumber", "sequenceNumber", "bech32Address")
 })

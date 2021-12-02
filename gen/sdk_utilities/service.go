@@ -65,6 +65,7 @@ type AccountNumbersPayload struct {
 type AccountNumbers2 struct {
 	AccountNumber  int64
 	SequenceNumber int64
+	Bech32Address  string
 }
 
 // SupplyPayload is the payload type of the sdk-utilities service supply method.

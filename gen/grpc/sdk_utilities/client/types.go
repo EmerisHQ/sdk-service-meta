@@ -37,6 +37,7 @@ func NewAccountNumbersResult(message *sdk_utilitiespb.AccountNumbersResponse) *s
 	result := &sdkutilities.AccountNumbers2{
 		AccountNumber:  message.AccountNumber,
 		SequenceNumber: message.SequenceNumber,
+		Bech32Address:  message.Bech32Address,
 	}
 	return result
 }
