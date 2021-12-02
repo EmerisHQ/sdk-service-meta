@@ -13,6 +13,35 @@ import (
 	goa "goa.design/goa/v3/pkg"
 )
 
+// NewAccountNumbersPayload builds the payload of the "accountNumbers" endpoint
+// of the "sdk-utilities" service from the gRPC request type.
+func NewAccountNumbersPayload(message *sdk_utilitiespb.AccountNumbersRequest) *sdkutilities.AccountNumbersPayload {
+	v := &sdkutilities.AccountNumbersPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+	if message.Bech32Prefix != "" {
+		v.Bech32Prefix = &message.Bech32Prefix
+	}
+	if message.AddresHex != "" {
+		v.AddresHex = &message.AddresHex
+	}
+	return v
+}
+
+// NewAccountNumbersResponse builds the gRPC response type from the result of
+// the "accountNumbers" endpoint of the "sdk-utilities" service.
+func NewAccountNumbersResponse(result *sdkutilities.AccountNumbers2) *sdk_utilitiespb.AccountNumbersResponse {
+	message := &sdk_utilitiespb.AccountNumbersResponse{
+		AccountNumber:  result.AccountNumber,
+		SequenceNumber: result.SequenceNumber,
+	}
+	return message
+}
+
 // NewSupplyPayload builds the payload of the "supply" endpoint of the
 // "sdk-utilities" service from the gRPC request type.
 func NewSupplyPayload(message *sdk_utilitiespb.SupplyRequest) *sdkutilities.SupplyPayload {

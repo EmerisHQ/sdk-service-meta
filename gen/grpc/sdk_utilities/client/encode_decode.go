@@ -17,6 +17,41 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
+// BuildAccountNumbersFunc builds the remote method to invoke for
+// "sdk-utilities" service "accountNumbers" endpoint.
+func BuildAccountNumbersFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.AccountNumbers(ctx, reqpb.(*sdk_utilitiespb.AccountNumbersRequest), opts...)
+		}
+		return grpccli.AccountNumbers(ctx, &sdk_utilitiespb.AccountNumbersRequest{}, opts...)
+	}
+}
+
+// EncodeAccountNumbersRequest encodes requests sent to sdk-utilities
+// accountNumbers endpoint.
+func EncodeAccountNumbersRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.AccountNumbersPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "accountNumbers", "*sdkutilities.AccountNumbersPayload", v)
+	}
+	return NewAccountNumbersRequest(payload), nil
+}
+
+// DecodeAccountNumbersResponse decodes responses from the sdk-utilities
+// accountNumbers endpoint.
+func DecodeAccountNumbersResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.AccountNumbersResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "accountNumbers", "*sdk_utilitiespb.AccountNumbersResponse", v)
+	}
+	res := NewAccountNumbersResult(message)
+	return res, nil
+}
+
 // BuildSupplyFunc builds the remote method to invoke for "sdk-utilities"
 // service "supply" endpoint.
 func BuildSupplyFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {

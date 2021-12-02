@@ -18,6 +18,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SdkUtilitiesClient interface {
+	// AccountNumbers implements accountNumbers.
+	AccountNumbers(ctx context.Context, in *AccountNumbersRequest, opts ...grpc.CallOption) (*AccountNumbersResponse, error)
 	// Supply implements supply.
 	Supply(ctx context.Context, in *SupplyRequest, opts ...grpc.CallOption) (*SupplyResponse, error)
 	// QueryTx implements queryTx.
@@ -46,6 +48,15 @@ type sdkUtilitiesClient struct {
 
 func NewSdkUtilitiesClient(cc grpc.ClientConnInterface) SdkUtilitiesClient {
 	return &sdkUtilitiesClient{cc}
+}
+
+func (c *sdkUtilitiesClient) AccountNumbers(ctx context.Context, in *AccountNumbersRequest, opts ...grpc.CallOption) (*AccountNumbersResponse, error) {
+	out := new(AccountNumbersResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/AccountNumbers", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *sdkUtilitiesClient) Supply(ctx context.Context, in *SupplyRequest, opts ...grpc.CallOption) (*SupplyResponse, error) {
@@ -142,6 +153,8 @@ func (c *sdkUtilitiesClient) MintAnnualProvision(ctx context.Context, in *MintAn
 // All implementations must embed UnimplementedSdkUtilitiesServer
 // for forward compatibility
 type SdkUtilitiesServer interface {
+	// AccountNumbers implements accountNumbers.
+	AccountNumbers(context.Context, *AccountNumbersRequest) (*AccountNumbersResponse, error)
 	// Supply implements supply.
 	Supply(context.Context, *SupplyRequest) (*SupplyResponse, error)
 	// QueryTx implements queryTx.
@@ -169,6 +182,9 @@ type SdkUtilitiesServer interface {
 type UnimplementedSdkUtilitiesServer struct {
 }
 
+func (UnimplementedSdkUtilitiesServer) AccountNumbers(context.Context, *AccountNumbersRequest) (*AccountNumbersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AccountNumbers not implemented")
+}
 func (UnimplementedSdkUtilitiesServer) Supply(context.Context, *SupplyRequest) (*SupplyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Supply not implemented")
 }
@@ -210,6 +226,24 @@ type UnsafeSdkUtilitiesServer interface {
 
 func RegisterSdkUtilitiesServer(s grpc.ServiceRegistrar, srv SdkUtilitiesServer) {
 	s.RegisterService(&SdkUtilities_ServiceDesc, srv)
+}
+
+func _SdkUtilities_AccountNumbers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AccountNumbersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).AccountNumbers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/AccountNumbers",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).AccountNumbers(ctx, req.(*AccountNumbersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _SdkUtilities_Supply_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -399,6 +433,10 @@ var SdkUtilities_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "sdk_utilities.SdkUtilities",
 	HandlerType: (*SdkUtilitiesServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "AccountNumbers",
+			Handler:    _SdkUtilities_AccountNumbers_Handler,
+		},
 		{
 			MethodName: "Supply",
 			Handler:    _SdkUtilities_Supply_Handler,

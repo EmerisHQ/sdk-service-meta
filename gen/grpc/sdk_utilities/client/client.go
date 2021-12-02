@@ -30,6 +30,22 @@ func NewClient(cc *grpc.ClientConn, opts ...grpc.CallOption) *Client {
 	}
 }
 
+// AccountNumbers calls the "AccountNumbers" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) AccountNumbers() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildAccountNumbersFunc(c.grpccli, c.opts...),
+			EncodeAccountNumbersRequest,
+			DecodeAccountNumbersResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
 // Supply calls the "Supply" function in sdk_utilitiespb.SdkUtilitiesClient
 // interface.
 func (c *Client) Supply() goa.Endpoint {

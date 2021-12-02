@@ -13,6 +13,8 @@ option go_package = "/sdk_utilitiespb";
 
 // sdk-utilities performs Cosmos SDK-related operations
 service SdkUtilities {
+	// AccountNumbers implements accountNumbers.
+	rpc AccountNumbers (AccountNumbersRequest) returns (AccountNumbersResponse);
 	// Supply implements supply.
 	rpc Supply (SupplyRequest) returns (SupplyResponse);
 	// QueryTx implements queryTx.
@@ -33,6 +35,22 @@ service SdkUtilities {
 	rpc MintParams (MintParamsRequest) returns (MintParamsResponse);
 	// MintAnnualProvision implements mintAnnualProvision.
 	rpc MintAnnualProvision (MintAnnualProvisionRequest) returns (MintAnnualProvisionResponse);
+}
+
+message AccountNumbersRequest {
+	// Chain to get data from
+	string chain_name = 1;
+	// gRPC port for selected chain, defaults to 9090
+	sint32 port = 2;
+	// bech32-encoded prefix of the account
+	string bech32_prefix = 3;
+	// Hex-encoded address, without bech32 hrp
+	string addres_hex = 4;
+}
+
+message AccountNumbersResponse {
+	sint64 account_number = 1;
+	sint64 sequence_number = 2;
 }
 
 message SupplyRequest {

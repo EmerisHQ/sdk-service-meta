@@ -18,6 +18,7 @@ import (
 
 // Server implements the sdk_utilitiespb.SdkUtilitiesServer interface.
 type Server struct {
+	AccountNumbersH      goagrpc.UnaryHandler
 	SupplyH              goagrpc.UnaryHandler
 	QueryTxH             goagrpc.UnaryHandler
 	BroadcastTxH         goagrpc.UnaryHandler
@@ -40,6 +41,7 @@ type ErrorNamer interface {
 // New instantiates the server struct with the sdk-utilities service endpoints.
 func New(e *sdkutilities.Endpoints, uh goagrpc.UnaryHandler) *Server {
 	return &Server{
+		AccountNumbersH:      NewAccountNumbersHandler(e.AccountNumbers, uh),
 		SupplyH:              NewSupplyHandler(e.Supply, uh),
 		QueryTxH:             NewQueryTxHandler(e.QueryTx, uh),
 		BroadcastTxH:         NewBroadcastTxHandler(e.BroadcastTx, uh),
@@ -51,6 +53,27 @@ func New(e *sdkutilities.Endpoints, uh goagrpc.UnaryHandler) *Server {
 		MintParamsH:          NewMintParamsHandler(e.MintParams, uh),
 		MintAnnualProvisionH: NewMintAnnualProvisionHandler(e.MintAnnualProvision, uh),
 	}
+}
+
+// NewAccountNumbersHandler creates a gRPC handler which serves the
+// "sdk-utilities" service "accountNumbers" endpoint.
+func NewAccountNumbersHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+	if h == nil {
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeAccountNumbersRequest, EncodeAccountNumbersResponse)
+	}
+	return h
+}
+
+// AccountNumbers implements the "AccountNumbers" method in
+// sdk_utilitiespb.SdkUtilitiesServer interface.
+func (s *Server) AccountNumbers(ctx context.Context, message *sdk_utilitiespb.AccountNumbersRequest) (*sdk_utilitiespb.AccountNumbersResponse, error) {
+	ctx = context.WithValue(ctx, goa.MethodKey, "accountNumbers")
+	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
+	resp, err := s.AccountNumbersH.Handle(ctx, message)
+	if err != nil {
+		return nil, goagrpc.EncodeError(err)
+	}
+	return resp.(*sdk_utilitiespb.AccountNumbersResponse), nil
 }
 
 // NewSupplyHandler creates a gRPC handler which serves the "sdk-utilities"

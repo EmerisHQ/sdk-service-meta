@@ -16,6 +16,36 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
+// EncodeAccountNumbersResponse encodes responses from the "sdk-utilities"
+// service "accountNumbers" endpoint.
+func EncodeAccountNumbersResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.(*sdkutilities.AccountNumbers2)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "accountNumbers", "*sdkutilities.AccountNumbers2", v)
+	}
+	resp := NewAccountNumbersResponse(result)
+	return resp, nil
+}
+
+// DecodeAccountNumbersRequest decodes requests sent to "sdk-utilities" service
+// "accountNumbers" endpoint.
+func DecodeAccountNumbersRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.AccountNumbersRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.AccountNumbersRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "accountNumbers", "*sdk_utilitiespb.AccountNumbersRequest", v)
+		}
+	}
+	var payload *sdkutilities.AccountNumbersPayload
+	{
+		payload = NewAccountNumbersPayload(message)
+	}
+	return payload, nil
+}
+
 // EncodeSupplyResponse encodes responses from the "sdk-utilities" service
 // "supply" endpoint.
 func EncodeSupplyResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {

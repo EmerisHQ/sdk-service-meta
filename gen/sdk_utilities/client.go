@@ -15,6 +15,7 @@ import (
 
 // Client is the "sdk-utilities" service client.
 type Client struct {
+	AccountNumbersEndpoint      goa.Endpoint
 	SupplyEndpoint              goa.Endpoint
 	QueryTxEndpoint             goa.Endpoint
 	BroadcastTxEndpoint         goa.Endpoint
@@ -28,8 +29,9 @@ type Client struct {
 }
 
 // NewClient initializes a "sdk-utilities" service client given the endpoints.
-func NewClient(supply, queryTx, broadcastTx, txMetadata, block, liquidityParams, liquidityPools, mintInflation, mintParams, mintAnnualProvision goa.Endpoint) *Client {
+func NewClient(accountNumbers, supply, queryTx, broadcastTx, txMetadata, block, liquidityParams, liquidityPools, mintInflation, mintParams, mintAnnualProvision goa.Endpoint) *Client {
 	return &Client{
+		AccountNumbersEndpoint:      accountNumbers,
 		SupplyEndpoint:              supply,
 		QueryTxEndpoint:             queryTx,
 		BroadcastTxEndpoint:         broadcastTx,
@@ -41,6 +43,17 @@ func NewClient(supply, queryTx, broadcastTx, txMetadata, block, liquidityParams,
 		MintParamsEndpoint:          mintParams,
 		MintAnnualProvisionEndpoint: mintAnnualProvision,
 	}
+}
+
+// AccountNumbers calls the "accountNumbers" endpoint of the "sdk-utilities"
+// service.
+func (c *Client) AccountNumbers(ctx context.Context, p *AccountNumbersPayload) (res *AccountNumbers2, err error) {
+	var ires interface{}
+	ires, err = c.AccountNumbersEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*AccountNumbers2), nil
 }
 
 // Supply calls the "supply" endpoint of the "sdk-utilities" service.

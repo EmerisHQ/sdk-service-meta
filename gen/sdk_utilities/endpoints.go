@@ -15,6 +15,7 @@ import (
 
 // Endpoints wraps the "sdk-utilities" service endpoints.
 type Endpoints struct {
+	AccountNumbers      goa.Endpoint
 	Supply              goa.Endpoint
 	QueryTx             goa.Endpoint
 	BroadcastTx         goa.Endpoint
@@ -30,6 +31,7 @@ type Endpoints struct {
 // NewEndpoints wraps the methods of the "sdk-utilities" service with endpoints.
 func NewEndpoints(s Service) *Endpoints {
 	return &Endpoints{
+		AccountNumbers:      NewAccountNumbersEndpoint(s),
 		Supply:              NewSupplyEndpoint(s),
 		QueryTx:             NewQueryTxEndpoint(s),
 		BroadcastTx:         NewBroadcastTxEndpoint(s),
@@ -46,6 +48,7 @@ func NewEndpoints(s Service) *Endpoints {
 // Use applies the given middleware to all the "sdk-utilities" service
 // endpoints.
 func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
+	e.AccountNumbers = m(e.AccountNumbers)
 	e.Supply = m(e.Supply)
 	e.QueryTx = m(e.QueryTx)
 	e.BroadcastTx = m(e.BroadcastTx)
@@ -56,6 +59,15 @@ func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
 	e.MintInflation = m(e.MintInflation)
 	e.MintParams = m(e.MintParams)
 	e.MintAnnualProvision = m(e.MintAnnualProvision)
+}
+
+// NewAccountNumbersEndpoint returns an endpoint function that calls the method
+// "accountNumbers" of service "sdk-utilities".
+func NewAccountNumbersEndpoint(s Service) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*AccountNumbersPayload)
+		return s.AccountNumbers(ctx, p)
+	}
 }
 
 // NewSupplyEndpoint returns an endpoint function that calls the method

@@ -13,6 +13,8 @@ import (
 
 // sdk-utilities performs Cosmos SDK-related operations
 type Service interface {
+	// AccountNumbers implements accountNumbers.
+	AccountNumbers(context.Context, *AccountNumbersPayload) (res *AccountNumbers2, err error)
 	// Supply implements supply.
 	Supply(context.Context, *SupplyPayload) (res *Supply2, err error)
 	// QueryTx implements queryTx.
@@ -43,7 +45,27 @@ const ServiceName = "sdk-utilities"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [10]string{"supply", "queryTx", "broadcastTx", "txMetadata", "block", "liquidityParams", "liquidityPools", "mintInflation", "mintParams", "mintAnnualProvision"}
+var MethodNames = [11]string{"accountNumbers", "supply", "queryTx", "broadcastTx", "txMetadata", "block", "liquidityParams", "liquidityPools", "mintInflation", "mintParams", "mintAnnualProvision"}
+
+// AccountNumbersPayload is the payload type of the sdk-utilities service
+// accountNumbers method.
+type AccountNumbersPayload struct {
+	// Chain to get data from
+	ChainName string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
+	// bech32-encoded prefix of the account
+	Bech32Prefix *string
+	// Hex-encoded address, without bech32 hrp
+	AddresHex *string
+}
+
+// AccountNumbers2 is the result type of the sdk-utilities service
+// accountNumbers method.
+type AccountNumbers2 struct {
+	AccountNumber  int64
+	SequenceNumber int64
+}
 
 // SupplyPayload is the payload type of the sdk-utilities service supply method.
 type SupplyPayload struct {

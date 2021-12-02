@@ -3,7 +3,10 @@ package sdkservicemeta
 import (
 	"fmt"
 
+	//nolint this is a DSL definition, nothing to worry about
 	. "goa.design/goa/v3/dsl"
+
+	// we need the init() side effect of this import
 	_ "goa.design/plugins/v3/zaplogger"
 )
 
@@ -34,6 +37,23 @@ var _ = API(sdkUtilities, func() {
 
 var _ = Service(sdkUtilities, func() {
 	Description(fmt.Sprintf("%s performs Cosmos SDK-related operations", sdkUtilities))
+
+	Method("accountNumbers", func() {
+		Payload(func() {
+			nextFieldIdx := standardArguments()
+			Field(nextFieldIdx, "bech32Prefix", String, "bech32-encoded prefix of the account")
+
+			nextFieldIdx++
+
+			Field(nextFieldIdx, "addresHex", String, "Hex-encoded address, without bech32 hrp")
+		})
+
+		Result(AccountNumbers)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
 
 	Method("supply", func() {
 		Payload(func() {

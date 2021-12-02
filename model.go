@@ -115,3 +115,12 @@ var MintAnnualProvision = Type("MintAnnualProvision", func() {
 
 	Required("mintAnnualProvision")
 })
+
+var AccountNumbers = Type("AccountNumbers", func() {
+	Description("Account and sequence numbers for a given account")
+
+	Field(1, "accountNumber", Int64)
+	Field(2, "sequenceNumber", Int64)
+
+	Required("accountNumber", "sequenceNumber")
+})
