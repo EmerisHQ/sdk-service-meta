@@ -351,3 +351,33 @@ func DecodeMintAnnualProvisionRequest(ctx context.Context, v interface{}, md met
 	}
 	return payload, nil
 }
+
+// EncodeDelegatorRewardsResponse encodes responses from the "sdk-utilities"
+// service "delegatorRewards" endpoint.
+func EncodeDelegatorRewardsResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.(*sdkutilities.DelegatorRewards2)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "delegatorRewards", "*sdkutilities.DelegatorRewards2", v)
+	}
+	resp := NewDelegatorRewardsResponse(result)
+	return resp, nil
+}
+
+// DecodeDelegatorRewardsRequest decodes requests sent to "sdk-utilities"
+// service "delegatorRewards" endpoint.
+func DecodeDelegatorRewardsRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.DelegatorRewardsRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.DelegatorRewardsRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "delegatorRewards", "*sdk_utilitiespb.DelegatorRewardsRequest", v)
+		}
+	}
+	var payload *sdkutilities.DelegatorRewardsPayload
+	{
+		payload = NewDelegatorRewardsPayload(message)
+	}
+	return payload, nil
+}

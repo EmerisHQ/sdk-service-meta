@@ -186,5 +186,24 @@ var _ = Service(sdkUtilities, func() {
 		})
 	})
 
+	Method("delegatorRewards", func() {
+		Payload(func() {
+			nextFieldIdx := standardArguments()
+
+			Field(nextFieldIdx, "bech32Prefix", String, "bech32-encoded prefix of the account")
+
+			nextFieldIdx++
+
+			Field(nextFieldIdx, "addresHex", String, "Hex-encoded address, without bech32 hrp")
+
+		})
+
+		Result(DelegatorRewards)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
 	Files("/openapi.json", "./gen/http/openapi.json")
 })

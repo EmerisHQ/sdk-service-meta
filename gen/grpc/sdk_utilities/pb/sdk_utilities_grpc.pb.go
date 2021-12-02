@@ -40,6 +40,8 @@ type SdkUtilitiesClient interface {
 	MintParams(ctx context.Context, in *MintParamsRequest, opts ...grpc.CallOption) (*MintParamsResponse, error)
 	// MintAnnualProvision implements mintAnnualProvision.
 	MintAnnualProvision(ctx context.Context, in *MintAnnualProvisionRequest, opts ...grpc.CallOption) (*MintAnnualProvisionResponse, error)
+	// DelegatorRewards implements delegatorRewards.
+	DelegatorRewards(ctx context.Context, in *DelegatorRewardsRequest, opts ...grpc.CallOption) (*DelegatorRewardsResponse, error)
 }
 
 type sdkUtilitiesClient struct {
@@ -149,6 +151,15 @@ func (c *sdkUtilitiesClient) MintAnnualProvision(ctx context.Context, in *MintAn
 	return out, nil
 }
 
+func (c *sdkUtilitiesClient) DelegatorRewards(ctx context.Context, in *DelegatorRewardsRequest, opts ...grpc.CallOption) (*DelegatorRewardsResponse, error) {
+	out := new(DelegatorRewardsResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/DelegatorRewards", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SdkUtilitiesServer is the server API for SdkUtilities service.
 // All implementations must embed UnimplementedSdkUtilitiesServer
 // for forward compatibility
@@ -175,6 +186,8 @@ type SdkUtilitiesServer interface {
 	MintParams(context.Context, *MintParamsRequest) (*MintParamsResponse, error)
 	// MintAnnualProvision implements mintAnnualProvision.
 	MintAnnualProvision(context.Context, *MintAnnualProvisionRequest) (*MintAnnualProvisionResponse, error)
+	// DelegatorRewards implements delegatorRewards.
+	DelegatorRewards(context.Context, *DelegatorRewardsRequest) (*DelegatorRewardsResponse, error)
 	mustEmbedUnimplementedSdkUtilitiesServer()
 }
 
@@ -214,6 +227,9 @@ func (UnimplementedSdkUtilitiesServer) MintParams(context.Context, *MintParamsRe
 }
 func (UnimplementedSdkUtilitiesServer) MintAnnualProvision(context.Context, *MintAnnualProvisionRequest) (*MintAnnualProvisionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MintAnnualProvision not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) DelegatorRewards(context.Context, *DelegatorRewardsRequest) (*DelegatorRewardsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelegatorRewards not implemented")
 }
 func (UnimplementedSdkUtilitiesServer) mustEmbedUnimplementedSdkUtilitiesServer() {}
 
@@ -426,6 +442,24 @@ func _SdkUtilities_MintAnnualProvision_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SdkUtilities_DelegatorRewards_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelegatorRewardsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).DelegatorRewards(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/DelegatorRewards",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).DelegatorRewards(ctx, req.(*DelegatorRewardsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SdkUtilities_ServiceDesc is the grpc.ServiceDesc for SdkUtilities service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -476,6 +510,10 @@ var SdkUtilities_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "MintAnnualProvision",
 			Handler:    _SdkUtilities_MintAnnualProvision_Handler,
+		},
+		{
+			MethodName: "DelegatorRewards",
+			Handler:    _SdkUtilities_DelegatorRewards_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

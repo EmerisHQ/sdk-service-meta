@@ -35,6 +35,8 @@ type Service interface {
 	MintParams(context.Context, *MintParamsPayload) (res *MintParams2, err error)
 	// MintAnnualProvision implements mintAnnualProvision.
 	MintAnnualProvision(context.Context, *MintAnnualProvisionPayload) (res *MintAnnualProvision2, err error)
+	// DelegatorRewards implements delegatorRewards.
+	DelegatorRewards(context.Context, *DelegatorRewardsPayload) (res *DelegatorRewards2, err error)
 }
 
 // ServiceName is the name of the service as defined in the design. This is the
@@ -45,7 +47,7 @@ const ServiceName = "sdk-utilities"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [11]string{"accountNumbers", "supply", "queryTx", "broadcastTx", "txMetadata", "block", "liquidityParams", "liquidityPools", "mintInflation", "mintParams", "mintAnnualProvision"}
+var MethodNames = [12]string{"accountNumbers", "supply", "queryTx", "broadcastTx", "txMetadata", "block", "liquidityParams", "liquidityPools", "mintInflation", "mintParams", "mintAnnualProvision", "delegatorRewards"}
 
 // AccountNumbersPayload is the payload type of the sdk-utilities service
 // accountNumbers method.
@@ -213,6 +215,26 @@ type MintAnnualProvision2 struct {
 	MintAnnualProvision []byte
 }
 
+// DelegatorRewardsPayload is the payload type of the sdk-utilities service
+// delegatorRewards method.
+type DelegatorRewardsPayload struct {
+	// Chain to get data from
+	ChainName string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
+	// bech32-encoded prefix of the account
+	Bech32Prefix *string
+	// Hex-encoded address, without bech32 hrp
+	AddresHex *string
+}
+
+// DelegatorRewards2 is the result type of the sdk-utilities service
+// delegatorRewards method.
+type DelegatorRewards2 struct {
+	Rewards []*DelegationDelegatorReward
+	Total   []*Coin
+}
+
 // SDK service representation of a Cosmos SDK types.Coin
 type Coin struct {
 	Denom  string
@@ -240,4 +262,10 @@ type IBCTransferMetadata struct {
 type IBCHeight struct {
 	RevisionNumber *uint64
 	RevisionHeight *uint64
+}
+
+// Delegation reward as defined in the Cosmos SDK
+type DelegationDelegatorReward struct {
+	ValidatorAddress string
+	Rewards          []*Coin
 }

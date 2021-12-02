@@ -268,6 +268,57 @@ func NewMintAnnualProvisionResult(message *sdk_utilitiespb.MintAnnualProvisionRe
 	return result
 }
 
+// NewDelegatorRewardsRequest builds the gRPC request type from the payload of
+// the "delegatorRewards" endpoint of the "sdk-utilities" service.
+func NewDelegatorRewardsRequest(payload *sdkutilities.DelegatorRewardsPayload) *sdk_utilitiespb.DelegatorRewardsRequest {
+	message := &sdk_utilitiespb.DelegatorRewardsRequest{
+		ChainName: payload.ChainName,
+	}
+	if payload.Port != nil {
+		message.Port = int32(*payload.Port)
+	}
+	if payload.Bech32Prefix != nil {
+		message.Bech32Prefix = *payload.Bech32Prefix
+	}
+	if payload.AddresHex != nil {
+		message.AddresHex = *payload.AddresHex
+	}
+	return message
+}
+
+// NewDelegatorRewardsResult builds the result type of the "delegatorRewards"
+// endpoint of the "sdk-utilities" service from the gRPC response type.
+func NewDelegatorRewardsResult(message *sdk_utilitiespb.DelegatorRewardsResponse) *sdkutilities.DelegatorRewards2 {
+	result := &sdkutilities.DelegatorRewards2{}
+	if message.Rewards != nil {
+		result.Rewards = make([]*sdkutilities.DelegationDelegatorReward, len(message.Rewards))
+		for i, val := range message.Rewards {
+			result.Rewards[i] = &sdkutilities.DelegationDelegatorReward{
+				ValidatorAddress: val.ValidatorAddress,
+			}
+			if val.Rewards != nil {
+				result.Rewards[i].Rewards = make([]*sdkutilities.Coin, len(val.Rewards))
+				for j, val := range val.Rewards {
+					result.Rewards[i].Rewards[j] = &sdkutilities.Coin{
+						Denom:  val.Denom,
+						Amount: val.Amount,
+					}
+				}
+			}
+		}
+	}
+	if message.Total != nil {
+		result.Total = make([]*sdkutilities.Coin, len(message.Total))
+		for i, val := range message.Total {
+			result.Total[i] = &sdkutilities.Coin{
+				Denom:  val.Denom,
+				Amount: val.Amount,
+			}
+		}
+	}
+	return result
+}
+
 // ValidateSupplyResponse runs the validations defined on SupplyResponse.
 func ValidateSupplyResponse(message *sdk_utilitiespb.SupplyResponse) (err error) {
 	if message.Coins == nil {
@@ -359,6 +410,27 @@ func ValidateMintParamsResponse(message *sdk_utilitiespb.MintParamsResponse) (er
 func ValidateMintAnnualProvisionResponse(message *sdk_utilitiespb.MintAnnualProvisionResponse) (err error) {
 	if message.MintAnnualProvision == nil {
 		err = goa.MergeErrors(err, goa.MissingFieldError("mintAnnualProvision", "message"))
+	}
+	return
+}
+
+// ValidateDelegatorRewardsResponse runs the validations defined on
+// DelegatorRewardsResponse.
+func ValidateDelegatorRewardsResponse(message *sdk_utilitiespb.DelegatorRewardsResponse) (err error) {
+	if message.Rewards == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("rewards", "message"))
+	}
+	if message.Total == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("total", "message"))
+	}
+	return
+}
+
+// ValidateDelegationDelegatorReward runs the validations defined on
+// DelegationDelegatorReward.
+func ValidateDelegationDelegatorReward(message *sdk_utilitiespb.DelegationDelegatorReward) (err error) {
+	if message.Rewards == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("rewards", "message"))
 	}
 	return
 }

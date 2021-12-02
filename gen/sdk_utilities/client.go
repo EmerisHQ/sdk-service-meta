@@ -26,10 +26,11 @@ type Client struct {
 	MintInflationEndpoint       goa.Endpoint
 	MintParamsEndpoint          goa.Endpoint
 	MintAnnualProvisionEndpoint goa.Endpoint
+	DelegatorRewardsEndpoint    goa.Endpoint
 }
 
 // NewClient initializes a "sdk-utilities" service client given the endpoints.
-func NewClient(accountNumbers, supply, queryTx, broadcastTx, txMetadata, block, liquidityParams, liquidityPools, mintInflation, mintParams, mintAnnualProvision goa.Endpoint) *Client {
+func NewClient(accountNumbers, supply, queryTx, broadcastTx, txMetadata, block, liquidityParams, liquidityPools, mintInflation, mintParams, mintAnnualProvision, delegatorRewards goa.Endpoint) *Client {
 	return &Client{
 		AccountNumbersEndpoint:      accountNumbers,
 		SupplyEndpoint:              supply,
@@ -42,6 +43,7 @@ func NewClient(accountNumbers, supply, queryTx, broadcastTx, txMetadata, block, 
 		MintInflationEndpoint:       mintInflation,
 		MintParamsEndpoint:          mintParams,
 		MintAnnualProvisionEndpoint: mintAnnualProvision,
+		DelegatorRewardsEndpoint:    delegatorRewards,
 	}
 }
 
@@ -158,4 +160,15 @@ func (c *Client) MintAnnualProvision(ctx context.Context, p *MintAnnualProvision
 		return
 	}
 	return ires.(*MintAnnualProvision2), nil
+}
+
+// DelegatorRewards calls the "delegatorRewards" endpoint of the
+// "sdk-utilities" service.
+func (c *Client) DelegatorRewards(ctx context.Context, p *DelegatorRewardsPayload) (res *DelegatorRewards2, err error) {
+	var ires interface{}
+	ires, err = c.DelegatorRewardsEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*DelegatorRewards2), nil
 }

@@ -22,17 +22,17 @@ import (
 //    command (subcommand1|subcommand2|...)
 //
 func UsageCommands() string {
-	return `sdk-utilities (account-numbers|supply|query-tx|broadcast-tx|tx-metadata|block|liquidity-params|liquidity-pools|mint-inflation|mint-params|mint-annual-provision)
+	return `sdk-utilities (account-numbers|supply|query-tx|broadcast-tx|tx-metadata|block|liquidity-params|liquidity-pools|mint-inflation|mint-params|mint-annual-provision|delegator-rewards)
 `
 }
 
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` sdk-utilities account-numbers --message '{
-      "addresHex": "Dolorum ut eos qui earum.",
-      "bech32Prefix": "Blanditiis ut consequatur.",
-      "chainName": "Ipsam nesciunt voluptate nulla numquam dolorum.",
-      "port": 1457976898164366168
+      "addresHex": "Quaerat eaque quas ea.",
+      "bech32Prefix": "Alias aut id aliquid quis veritatis.",
+      "chainName": "Hic unde distinctio consectetur.",
+      "port": 6548433300935100839
    }'` + "\n" +
 		""
 }
@@ -75,6 +75,9 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 
 		sdkUtilitiesMintAnnualProvisionFlags       = flag.NewFlagSet("mint-annual-provision", flag.ExitOnError)
 		sdkUtilitiesMintAnnualProvisionMessageFlag = sdkUtilitiesMintAnnualProvisionFlags.String("message", "", "")
+
+		sdkUtilitiesDelegatorRewardsFlags       = flag.NewFlagSet("delegator-rewards", flag.ExitOnError)
+		sdkUtilitiesDelegatorRewardsMessageFlag = sdkUtilitiesDelegatorRewardsFlags.String("message", "", "")
 	)
 	sdkUtilitiesFlags.Usage = sdkUtilitiesUsage
 	sdkUtilitiesAccountNumbersFlags.Usage = sdkUtilitiesAccountNumbersUsage
@@ -88,6 +91,7 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 	sdkUtilitiesMintInflationFlags.Usage = sdkUtilitiesMintInflationUsage
 	sdkUtilitiesMintParamsFlags.Usage = sdkUtilitiesMintParamsUsage
 	sdkUtilitiesMintAnnualProvisionFlags.Usage = sdkUtilitiesMintAnnualProvisionUsage
+	sdkUtilitiesDelegatorRewardsFlags.Usage = sdkUtilitiesDelegatorRewardsUsage
 
 	if err := flag.CommandLine.Parse(os.Args[1:]); err != nil {
 		return nil, nil, err
@@ -156,6 +160,9 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "mint-annual-provision":
 				epf = sdkUtilitiesMintAnnualProvisionFlags
 
+			case "delegator-rewards":
+				epf = sdkUtilitiesDelegatorRewardsFlags
+
 			}
 
 		}
@@ -214,6 +221,9 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "mint-annual-provision":
 				endpoint = c.MintAnnualProvision()
 				data, err = sdkutilitiesc.BuildMintAnnualProvisionPayload(*sdkUtilitiesMintAnnualProvisionMessageFlag)
+			case "delegator-rewards":
+				endpoint = c.DelegatorRewards()
+				data, err = sdkutilitiesc.BuildDelegatorRewardsPayload(*sdkUtilitiesDelegatorRewardsMessageFlag)
 			}
 		}
 	}
@@ -243,6 +253,7 @@ COMMAND:
     mint-inflation: MintInflation implements mintInflation.
     mint-params: MintParams implements mintParams.
     mint-annual-provision: MintAnnualProvision implements mintAnnualProvision.
+    delegator-rewards: DelegatorRewards implements delegatorRewards.
 
 Additional help:
     %[1]s sdk-utilities COMMAND --help
@@ -256,10 +267,10 @@ AccountNumbers implements accountNumbers.
 
 Example:
     %[1]s sdk-utilities account-numbers --message '{
-      "addresHex": "Dolorum ut eos qui earum.",
-      "bech32Prefix": "Blanditiis ut consequatur.",
-      "chainName": "Ipsam nesciunt voluptate nulla numquam dolorum.",
-      "port": 1457976898164366168
+      "addresHex": "Quaerat eaque quas ea.",
+      "bech32Prefix": "Alias aut id aliquid quis veritatis.",
+      "chainName": "Hic unde distinctio consectetur.",
+      "port": 6548433300935100839
    }'
 `, os.Args[0])
 }
@@ -272,8 +283,8 @@ Supply implements supply.
 
 Example:
     %[1]s sdk-utilities supply --message '{
-      "chainName": "Repudiandae hic unde distinctio consectetur.",
-      "port": 6548433300935100839
+      "chainName": "Veritatis quia.",
+      "port": 3046521310627406606
    }'
 `, os.Args[0])
 }
@@ -286,9 +297,9 @@ QueryTx implements queryTx.
 
 Example:
     %[1]s sdk-utilities query-tx --message '{
-      "chainName": "Aut id.",
-      "hash": "Veritatis blanditiis quaerat eaque.",
-      "port": 4799841495418416071
+      "chainName": "Fugiat ut est molestias ut non.",
+      "hash": "Libero enim rerum dolor qui sed.",
+      "port": 8213706707786077595
    }'
 `, os.Args[0])
 }
@@ -301,9 +312,9 @@ BroadcastTx implements broadcastTx.
 
 Example:
     %[1]s sdk-utilities broadcast-tx --message '{
-      "chainName": "Rerum fugiat ut est molestias ut non.",
-      "port": 8213706707786077595,
-      "txBytes": "TGliZXJvIGVuaW0gcmVydW0gZG9sb3IgcXVpIHNlZC4="
+      "chainName": "Laborum laborum quam ducimus.",
+      "port": 555297839850191844,
+      "txBytes": "QW5pbWkgYWRpcGlzY2kgcmVwZWxsZW5kdXMgZWFxdWUgdXQgZXQu"
    }'
 `, os.Args[0])
 }
@@ -316,7 +327,7 @@ TxMetadata implements txMetadata.
 
 Example:
     %[1]s sdk-utilities tx-metadata --message '{
-      "txBytes": "Q29uc2VxdWF0dXIgZXN0IGVhIGVzdC4="
+      "txBytes": "T2ZmaWNpaXMgYWxpYXMu"
    }'
 `, os.Args[0])
 }
@@ -329,9 +340,9 @@ Block implements block.
 
 Example:
     %[1]s sdk-utilities block --message '{
-      "chainName": "Laborum quam ducimus consequatur.",
-      "height": 4738969913563760839,
-      "port": 984187946088149780
+      "chainName": "Rem voluptas sed id amet dicta.",
+      "height": 7421778751651968232,
+      "port": 1870958904693313397
    }'
 `, os.Args[0])
 }
@@ -344,8 +355,8 @@ LiquidityParams implements liquidityParams.
 
 Example:
     %[1]s sdk-utilities liquidity-params --message '{
-      "chainName": "Dolor quisquam est et aspernatur.",
-      "port": 894623405773491359
+      "chainName": "Cumque itaque tenetur explicabo.",
+      "port": 2970337066418489394
    }'
 `, os.Args[0])
 }
@@ -358,8 +369,8 @@ LiquidityPools implements liquidityPools.
 
 Example:
     %[1]s sdk-utilities liquidity-pools --message '{
-      "chainName": "Alias accusantium sunt rem voluptas sed.",
-      "port": 4442055250494698477
+      "chainName": "Ab ut sit debitis dicta ullam quod.",
+      "port": 4459115708693118891
    }'
 `, os.Args[0])
 }
@@ -372,8 +383,8 @@ MintInflation implements mintInflation.
 
 Example:
     %[1]s sdk-utilities mint-inflation --message '{
-      "chainName": "Sequi quis culpa et blanditiis veritatis.",
-      "port": 2428174418171390862
+      "chainName": "Natus quasi.",
+      "port": 4941727330865473130
    }'
 `, os.Args[0])
 }
@@ -386,8 +397,8 @@ MintParams implements mintParams.
 
 Example:
     %[1]s sdk-utilities mint-params --message '{
-      "chainName": "Est neque porro consectetur.",
-      "port": 5472785720082760056
+      "chainName": "Velit tenetur aut ducimus voluptatibus perferendis.",
+      "port": 4590398434326812352
    }'
 `, os.Args[0])
 }
@@ -400,8 +411,24 @@ MintAnnualProvision implements mintAnnualProvision.
 
 Example:
     %[1]s sdk-utilities mint-annual-provision --message '{
-      "chainName": "Ullam quod.",
-      "port": 4459115708693118891
+      "chainName": "Occaecati dolorem tenetur cum dolores veniam.",
+      "port": 435799008750423843
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesDelegatorRewardsUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities delegator-rewards -message JSON
+
+DelegatorRewards implements delegatorRewards.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities delegator-rewards --message '{
+      "addresHex": "Autem fugiat optio.",
+      "bech32Prefix": "Quo dolorum.",
+      "chainName": "Est doloribus similique similique ea eaque dolorem.",
+      "port": 3447600267286363243
    }'
 `, os.Args[0])
 }

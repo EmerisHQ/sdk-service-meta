@@ -7,6 +7,7 @@ import (
 var Coin = Type("Coin", func() {
 	Description("SDK service representation of a Cosmos SDK types.Coin")
 
+	Attribute("denom")
 	Field(1, "denom", String)
 	Field(2, "amount", String)
 
@@ -124,4 +125,22 @@ var AccountNumbers = Type("AccountNumbers", func() {
 	Field(3, "bech32Address", String)
 
 	Required("accountNumber", "sequenceNumber", "bech32Address")
+})
+
+var DelegatorRewards = Type("DelegatorRewards", func() {
+	Description("Delegator reward for a given address")
+
+	Field(1, "rewards", ArrayOf(DelegationDelegatorReward))
+	Field(2, "total", ArrayOf(Coin))
+
+	Required("rewards", "total")
+})
+
+var DelegationDelegatorReward = Type("DelegationDelegatorReward", func() {
+	Description("Delegation reward as defined in the Cosmos SDK")
+
+	Field(1, "validatorAddress", String)
+	Field(2, "rewards", ArrayOf(Coin))
+
+	Required("validatorAddress", "rewards")
 })

@@ -279,6 +279,58 @@ func NewMintAnnualProvisionResponse(result *sdkutilities.MintAnnualProvision2) *
 	return message
 }
 
+// NewDelegatorRewardsPayload builds the payload of the "delegatorRewards"
+// endpoint of the "sdk-utilities" service from the gRPC request type.
+func NewDelegatorRewardsPayload(message *sdk_utilitiespb.DelegatorRewardsRequest) *sdkutilities.DelegatorRewardsPayload {
+	v := &sdkutilities.DelegatorRewardsPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+	if message.Bech32Prefix != "" {
+		v.Bech32Prefix = &message.Bech32Prefix
+	}
+	if message.AddresHex != "" {
+		v.AddresHex = &message.AddresHex
+	}
+	return v
+}
+
+// NewDelegatorRewardsResponse builds the gRPC response type from the result of
+// the "delegatorRewards" endpoint of the "sdk-utilities" service.
+func NewDelegatorRewardsResponse(result *sdkutilities.DelegatorRewards2) *sdk_utilitiespb.DelegatorRewardsResponse {
+	message := &sdk_utilitiespb.DelegatorRewardsResponse{}
+	if result.Rewards != nil {
+		message.Rewards = make([]*sdk_utilitiespb.DelegationDelegatorReward, len(result.Rewards))
+		for i, val := range result.Rewards {
+			message.Rewards[i] = &sdk_utilitiespb.DelegationDelegatorReward{
+				ValidatorAddress: val.ValidatorAddress,
+			}
+			if val.Rewards != nil {
+				message.Rewards[i].Rewards = make([]*sdk_utilitiespb.Coin, len(val.Rewards))
+				for j, val := range val.Rewards {
+					message.Rewards[i].Rewards[j] = &sdk_utilitiespb.Coin{
+						Denom:  val.Denom,
+						Amount: val.Amount,
+					}
+				}
+			}
+		}
+	}
+	if result.Total != nil {
+		message.Total = make([]*sdk_utilitiespb.Coin, len(result.Total))
+		for i, val := range result.Total {
+			message.Total[i] = &sdk_utilitiespb.Coin{
+				Denom:  val.Denom,
+				Amount: val.Amount,
+			}
+		}
+	}
+	return message
+}
+
 // ValidateBroadcastTxRequest runs the validations defined on
 // BroadcastTxRequest.
 func ValidateBroadcastTxRequest(message *sdk_utilitiespb.BroadcastTxRequest) (err error) {

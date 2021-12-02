@@ -421,3 +421,41 @@ func DecodeMintAnnualProvisionResponse(ctx context.Context, v interface{}, hdr, 
 	res := NewMintAnnualProvisionResult(message)
 	return res, nil
 }
+
+// BuildDelegatorRewardsFunc builds the remote method to invoke for
+// "sdk-utilities" service "delegatorRewards" endpoint.
+func BuildDelegatorRewardsFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.DelegatorRewards(ctx, reqpb.(*sdk_utilitiespb.DelegatorRewardsRequest), opts...)
+		}
+		return grpccli.DelegatorRewards(ctx, &sdk_utilitiespb.DelegatorRewardsRequest{}, opts...)
+	}
+}
+
+// EncodeDelegatorRewardsRequest encodes requests sent to sdk-utilities
+// delegatorRewards endpoint.
+func EncodeDelegatorRewardsRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.DelegatorRewardsPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "delegatorRewards", "*sdkutilities.DelegatorRewardsPayload", v)
+	}
+	return NewDelegatorRewardsRequest(payload), nil
+}
+
+// DecodeDelegatorRewardsResponse decodes responses from the sdk-utilities
+// delegatorRewards endpoint.
+func DecodeDelegatorRewardsResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.DelegatorRewardsResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "delegatorRewards", "*sdk_utilitiespb.DelegatorRewardsResponse", v)
+	}
+	if err := ValidateDelegatorRewardsResponse(message); err != nil {
+		return nil, err
+	}
+	res := NewDelegatorRewardsResult(message)
+	return res, nil
+}

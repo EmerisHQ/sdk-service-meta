@@ -29,6 +29,7 @@ type Server struct {
 	MintInflationH       goagrpc.UnaryHandler
 	MintParamsH          goagrpc.UnaryHandler
 	MintAnnualProvisionH goagrpc.UnaryHandler
+	DelegatorRewardsH    goagrpc.UnaryHandler
 	sdk_utilitiespb.UnimplementedSdkUtilitiesServer
 }
 
@@ -52,6 +53,7 @@ func New(e *sdkutilities.Endpoints, uh goagrpc.UnaryHandler) *Server {
 		MintInflationH:       NewMintInflationHandler(e.MintInflation, uh),
 		MintParamsH:          NewMintParamsHandler(e.MintParams, uh),
 		MintAnnualProvisionH: NewMintAnnualProvisionHandler(e.MintAnnualProvision, uh),
+		DelegatorRewardsH:    NewDelegatorRewardsHandler(e.DelegatorRewards, uh),
 	}
 }
 
@@ -284,4 +286,25 @@ func (s *Server) MintAnnualProvision(ctx context.Context, message *sdk_utilities
 		return nil, goagrpc.EncodeError(err)
 	}
 	return resp.(*sdk_utilitiespb.MintAnnualProvisionResponse), nil
+}
+
+// NewDelegatorRewardsHandler creates a gRPC handler which serves the
+// "sdk-utilities" service "delegatorRewards" endpoint.
+func NewDelegatorRewardsHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+	if h == nil {
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeDelegatorRewardsRequest, EncodeDelegatorRewardsResponse)
+	}
+	return h
+}
+
+// DelegatorRewards implements the "DelegatorRewards" method in
+// sdk_utilitiespb.SdkUtilitiesServer interface.
+func (s *Server) DelegatorRewards(ctx context.Context, message *sdk_utilitiespb.DelegatorRewardsRequest) (*sdk_utilitiespb.DelegatorRewardsResponse, error) {
+	ctx = context.WithValue(ctx, goa.MethodKey, "delegatorRewards")
+	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
+	resp, err := s.DelegatorRewardsH.Handle(ctx, message)
+	if err != nil {
+		return nil, goagrpc.EncodeError(err)
+	}
+	return resp.(*sdk_utilitiespb.DelegatorRewardsResponse), nil
 }
