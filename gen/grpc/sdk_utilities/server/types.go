@@ -331,6 +331,30 @@ func NewDelegatorRewardsResponse(result *sdkutilities.DelegatorRewards2) *sdk_ut
 	return message
 }
 
+// NewEstimateFeesPayload builds the payload of the "estimateFees" endpoint of
+// the "sdk-utilities" service from the gRPC request type.
+func NewEstimateFeesPayload(message *sdk_utilitiespb.EstimateFeesRequest) *sdkutilities.EstimateFeesPayload {
+	v := &sdkutilities.EstimateFeesPayload{
+		ChainName: message.ChainName,
+		TxBytes:   message.TxBytes,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+	return v
+}
+
+// NewEstimateFeesResponse builds the gRPC response type from the result of the
+// "estimateFees" endpoint of the "sdk-utilities" service.
+func NewEstimateFeesResponse(result *sdkutilities.Simulation) *sdk_utilitiespb.EstimateFeesResponse {
+	message := &sdk_utilitiespb.EstimateFeesResponse{
+		GasWanted: result.GasWanted,
+		GasUsed:   result.GasUsed,
+	}
+	return message
+}
+
 // ValidateBroadcastTxRequest runs the validations defined on
 // BroadcastTxRequest.
 func ValidateBroadcastTxRequest(message *sdk_utilitiespb.BroadcastTxRequest) (err error) {
@@ -342,6 +366,15 @@ func ValidateBroadcastTxRequest(message *sdk_utilitiespb.BroadcastTxRequest) (er
 
 // ValidateTxMetadataRequest runs the validations defined on TxMetadataRequest.
 func ValidateTxMetadataRequest(message *sdk_utilitiespb.TxMetadataRequest) (err error) {
+	if message.TxBytes == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("txBytes", "message"))
+	}
+	return
+}
+
+// ValidateEstimateFeesRequest runs the validations defined on
+// EstimateFeesRequest.
+func ValidateEstimateFeesRequest(message *sdk_utilitiespb.EstimateFeesRequest) (err error) {
 	if message.TxBytes == nil {
 		err = goa.MergeErrors(err, goa.MissingFieldError("txBytes", "message"))
 	}

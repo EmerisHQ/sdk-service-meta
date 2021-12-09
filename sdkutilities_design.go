@@ -205,5 +205,20 @@ var _ = Service(sdkUtilities, func() {
 		})
 	})
 
+	Method("estimateFees", func() {
+		Payload(func() {
+			nextFieldIdx := standardArguments()
+			Field(nextFieldIdx, "txBytes", Bytes, "Transaction bytes")
+
+			Required("txBytes")
+		})
+
+		Result(Simulation)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
 	Files("/openapi.json", "./gen/http/openapi.json")
 })

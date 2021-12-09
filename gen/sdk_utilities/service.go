@@ -37,6 +37,8 @@ type Service interface {
 	MintAnnualProvision(context.Context, *MintAnnualProvisionPayload) (res *MintAnnualProvision2, err error)
 	// DelegatorRewards implements delegatorRewards.
 	DelegatorRewards(context.Context, *DelegatorRewardsPayload) (res *DelegatorRewards2, err error)
+	// EstimateFees implements estimateFees.
+	EstimateFees(context.Context, *EstimateFeesPayload) (res *Simulation, err error)
 }
 
 // ServiceName is the name of the service as defined in the design. This is the
@@ -47,7 +49,7 @@ const ServiceName = "sdk-utilities"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [12]string{"accountNumbers", "supply", "queryTx", "broadcastTx", "txMetadata", "block", "liquidityParams", "liquidityPools", "mintInflation", "mintParams", "mintAnnualProvision", "delegatorRewards"}
+var MethodNames = [13]string{"accountNumbers", "supply", "queryTx", "broadcastTx", "txMetadata", "block", "liquidityParams", "liquidityPools", "mintInflation", "mintParams", "mintAnnualProvision", "delegatorRewards", "estimateFees"}
 
 // AccountNumbersPayload is the payload type of the sdk-utilities service
 // accountNumbers method.
@@ -233,6 +235,24 @@ type DelegatorRewardsPayload struct {
 type DelegatorRewards2 struct {
 	Rewards []*DelegationDelegatorReward
 	Total   []*Coin
+}
+
+// EstimateFeesPayload is the payload type of the sdk-utilities service
+// estimateFees method.
+type EstimateFeesPayload struct {
+	// Chain to get data from
+	ChainName string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
+	// Transaction bytes
+	TxBytes []byte
+}
+
+// Simulation is the result type of the sdk-utilities service estimateFees
+// method.
+type Simulation struct {
+	GasWanted string
+	GasUsed   string
 }
 
 // SDK service representation of a Cosmos SDK types.Coin

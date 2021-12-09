@@ -144,3 +144,12 @@ var DelegationDelegatorReward = Type("DelegationDelegatorReward", func() {
 
 	Required("validatorAddress", "rewards")
 })
+
+var Simulation = Type("Simulation", func() {
+	Description("Results from the Cosmos SDK transaction simulation endpoint")
+
+	Field(1, "gasWanted", String)
+	Field(2, "gasUsed", String)
+
+	Required("gasWanted", "gasUsed")
+})

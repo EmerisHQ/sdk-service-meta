@@ -30,6 +30,7 @@ type Server struct {
 	MintParamsH          goagrpc.UnaryHandler
 	MintAnnualProvisionH goagrpc.UnaryHandler
 	DelegatorRewardsH    goagrpc.UnaryHandler
+	EstimateFeesH        goagrpc.UnaryHandler
 	sdk_utilitiespb.UnimplementedSdkUtilitiesServer
 }
 
@@ -54,6 +55,7 @@ func New(e *sdkutilities.Endpoints, uh goagrpc.UnaryHandler) *Server {
 		MintParamsH:          NewMintParamsHandler(e.MintParams, uh),
 		MintAnnualProvisionH: NewMintAnnualProvisionHandler(e.MintAnnualProvision, uh),
 		DelegatorRewardsH:    NewDelegatorRewardsHandler(e.DelegatorRewards, uh),
+		EstimateFeesH:        NewEstimateFeesHandler(e.EstimateFees, uh),
 	}
 }
 
@@ -307,4 +309,25 @@ func (s *Server) DelegatorRewards(ctx context.Context, message *sdk_utilitiespb.
 		return nil, goagrpc.EncodeError(err)
 	}
 	return resp.(*sdk_utilitiespb.DelegatorRewardsResponse), nil
+}
+
+// NewEstimateFeesHandler creates a gRPC handler which serves the
+// "sdk-utilities" service "estimateFees" endpoint.
+func NewEstimateFeesHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+	if h == nil {
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeEstimateFeesRequest, EncodeEstimateFeesResponse)
+	}
+	return h
+}
+
+// EstimateFees implements the "EstimateFees" method in
+// sdk_utilitiespb.SdkUtilitiesServer interface.
+func (s *Server) EstimateFees(ctx context.Context, message *sdk_utilitiespb.EstimateFeesRequest) (*sdk_utilitiespb.EstimateFeesResponse, error) {
+	ctx = context.WithValue(ctx, goa.MethodKey, "estimateFees")
+	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
+	resp, err := s.EstimateFeesH.Handle(ctx, message)
+	if err != nil {
+		return nil, goagrpc.EncodeError(err)
+	}
+	return resp.(*sdk_utilitiespb.EstimateFeesResponse), nil
 }

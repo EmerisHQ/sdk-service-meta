@@ -221,3 +221,19 @@ func (c *Client) DelegatorRewards() goa.Endpoint {
 		return res, nil
 	}
 }
+
+// EstimateFees calls the "EstimateFees" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) EstimateFees() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildEstimateFeesFunc(c.grpccli, c.opts...),
+			EncodeEstimateFeesRequest,
+			DecodeEstimateFeesResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}

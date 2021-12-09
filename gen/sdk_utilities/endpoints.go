@@ -27,6 +27,7 @@ type Endpoints struct {
 	MintParams          goa.Endpoint
 	MintAnnualProvision goa.Endpoint
 	DelegatorRewards    goa.Endpoint
+	EstimateFees        goa.Endpoint
 }
 
 // NewEndpoints wraps the methods of the "sdk-utilities" service with endpoints.
@@ -44,6 +45,7 @@ func NewEndpoints(s Service) *Endpoints {
 		MintParams:          NewMintParamsEndpoint(s),
 		MintAnnualProvision: NewMintAnnualProvisionEndpoint(s),
 		DelegatorRewards:    NewDelegatorRewardsEndpoint(s),
+		EstimateFees:        NewEstimateFeesEndpoint(s),
 	}
 }
 
@@ -62,6 +64,7 @@ func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
 	e.MintParams = m(e.MintParams)
 	e.MintAnnualProvision = m(e.MintAnnualProvision)
 	e.DelegatorRewards = m(e.DelegatorRewards)
+	e.EstimateFees = m(e.EstimateFees)
 }
 
 // NewAccountNumbersEndpoint returns an endpoint function that calls the method
@@ -169,5 +172,14 @@ func NewDelegatorRewardsEndpoint(s Service) goa.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
 		p := req.(*DelegatorRewardsPayload)
 		return s.DelegatorRewards(ctx, p)
+	}
+}
+
+// NewEstimateFeesEndpoint returns an endpoint function that calls the method
+// "estimateFees" of service "sdk-utilities".
+func NewEstimateFeesEndpoint(s Service) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*EstimateFeesPayload)
+		return s.EstimateFees(ctx, p)
 	}
 }

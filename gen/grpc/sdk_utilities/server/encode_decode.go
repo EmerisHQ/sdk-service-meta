@@ -381,3 +381,36 @@ func DecodeDelegatorRewardsRequest(ctx context.Context, v interface{}, md metada
 	}
 	return payload, nil
 }
+
+// EncodeEstimateFeesResponse encodes responses from the "sdk-utilities"
+// service "estimateFees" endpoint.
+func EncodeEstimateFeesResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.(*sdkutilities.Simulation)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "estimateFees", "*sdkutilities.Simulation", v)
+	}
+	resp := NewEstimateFeesResponse(result)
+	return resp, nil
+}
+
+// DecodeEstimateFeesRequest decodes requests sent to "sdk-utilities" service
+// "estimateFees" endpoint.
+func DecodeEstimateFeesRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.EstimateFeesRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.EstimateFeesRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "estimateFees", "*sdk_utilitiespb.EstimateFeesRequest", v)
+		}
+		if err := ValidateEstimateFeesRequest(message); err != nil {
+			return nil, err
+		}
+	}
+	var payload *sdkutilities.EstimateFeesPayload
+	{
+		payload = NewEstimateFeesPayload(message)
+	}
+	return payload, nil
+}

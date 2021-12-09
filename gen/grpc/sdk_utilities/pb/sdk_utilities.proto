@@ -37,6 +37,8 @@ service SdkUtilities {
 	rpc MintAnnualProvision (MintAnnualProvisionRequest) returns (MintAnnualProvisionResponse);
 	// DelegatorRewards implements delegatorRewards.
 	rpc DelegatorRewards (DelegatorRewardsRequest) returns (DelegatorRewardsResponse);
+	// EstimateFees implements estimateFees.
+	rpc EstimateFees (EstimateFeesRequest) returns (EstimateFeesResponse);
 }
 
 message AccountNumbersRequest {
@@ -215,4 +217,18 @@ message DelegatorRewardsResponse {
 message DelegationDelegatorReward {
 	string validator_address = 1;
 	repeated Coin rewards = 2;
+}
+
+message EstimateFeesRequest {
+	// Chain to get data from
+	string chain_name = 1;
+	// gRPC port for selected chain, defaults to 9090
+	sint32 port = 2;
+	// Transaction bytes
+	bytes tx_bytes = 3;
+}
+
+message EstimateFeesResponse {
+	string gas_wanted = 1;
+	string gas_used = 2;
 }

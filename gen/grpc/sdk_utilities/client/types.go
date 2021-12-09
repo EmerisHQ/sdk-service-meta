@@ -319,6 +319,29 @@ func NewDelegatorRewardsResult(message *sdk_utilitiespb.DelegatorRewardsResponse
 	return result
 }
 
+// NewEstimateFeesRequest builds the gRPC request type from the payload of the
+// "estimateFees" endpoint of the "sdk-utilities" service.
+func NewEstimateFeesRequest(payload *sdkutilities.EstimateFeesPayload) *sdk_utilitiespb.EstimateFeesRequest {
+	message := &sdk_utilitiespb.EstimateFeesRequest{
+		ChainName: payload.ChainName,
+		TxBytes:   payload.TxBytes,
+	}
+	if payload.Port != nil {
+		message.Port = int32(*payload.Port)
+	}
+	return message
+}
+
+// NewEstimateFeesResult builds the result type of the "estimateFees" endpoint
+// of the "sdk-utilities" service from the gRPC response type.
+func NewEstimateFeesResult(message *sdk_utilitiespb.EstimateFeesResponse) *sdkutilities.Simulation {
+	result := &sdkutilities.Simulation{
+		GasWanted: message.GasWanted,
+		GasUsed:   message.GasUsed,
+	}
+	return result
+}
+
 // ValidateSupplyResponse runs the validations defined on SupplyResponse.
 func ValidateSupplyResponse(message *sdk_utilitiespb.SupplyResponse) (err error) {
 	if message.Coins == nil {

@@ -459,3 +459,38 @@ func DecodeDelegatorRewardsResponse(ctx context.Context, v interface{}, hdr, trl
 	res := NewDelegatorRewardsResult(message)
 	return res, nil
 }
+
+// BuildEstimateFeesFunc builds the remote method to invoke for "sdk-utilities"
+// service "estimateFees" endpoint.
+func BuildEstimateFeesFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.EstimateFees(ctx, reqpb.(*sdk_utilitiespb.EstimateFeesRequest), opts...)
+		}
+		return grpccli.EstimateFees(ctx, &sdk_utilitiespb.EstimateFeesRequest{}, opts...)
+	}
+}
+
+// EncodeEstimateFeesRequest encodes requests sent to sdk-utilities
+// estimateFees endpoint.
+func EncodeEstimateFeesRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.EstimateFeesPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "estimateFees", "*sdkutilities.EstimateFeesPayload", v)
+	}
+	return NewEstimateFeesRequest(payload), nil
+}
+
+// DecodeEstimateFeesResponse decodes responses from the sdk-utilities
+// estimateFees endpoint.
+func DecodeEstimateFeesResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.EstimateFeesResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "estimateFees", "*sdk_utilitiespb.EstimateFeesResponse", v)
+	}
+	res := NewEstimateFeesResult(message)
+	return res, nil
+}
