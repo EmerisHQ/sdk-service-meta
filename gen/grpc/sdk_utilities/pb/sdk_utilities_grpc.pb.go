@@ -42,6 +42,8 @@ type SdkUtilitiesClient interface {
 	MintAnnualProvision(ctx context.Context, in *MintAnnualProvisionRequest, opts ...grpc.CallOption) (*MintAnnualProvisionResponse, error)
 	// DelegatorRewards implements delegatorRewards.
 	DelegatorRewards(ctx context.Context, in *DelegatorRewardsRequest, opts ...grpc.CallOption) (*DelegatorRewardsResponse, error)
+	// TxFeeEstimate implements txFeeEstimate.
+	TxFeeEstimate(ctx context.Context, in *TxFeeEstimateRequest, opts ...grpc.CallOption) (*TxFeeEstimateResponse, error)
 }
 
 type sdkUtilitiesClient struct {
@@ -160,6 +162,15 @@ func (c *sdkUtilitiesClient) DelegatorRewards(ctx context.Context, in *Delegator
 	return out, nil
 }
 
+func (c *sdkUtilitiesClient) TxFeeEstimate(ctx context.Context, in *TxFeeEstimateRequest, opts ...grpc.CallOption) (*TxFeeEstimateResponse, error) {
+	out := new(TxFeeEstimateResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/TxFeeEstimate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SdkUtilitiesServer is the server API for SdkUtilities service.
 // All implementations must embed UnimplementedSdkUtilitiesServer
 // for forward compatibility
@@ -188,6 +199,8 @@ type SdkUtilitiesServer interface {
 	MintAnnualProvision(context.Context, *MintAnnualProvisionRequest) (*MintAnnualProvisionResponse, error)
 	// DelegatorRewards implements delegatorRewards.
 	DelegatorRewards(context.Context, *DelegatorRewardsRequest) (*DelegatorRewardsResponse, error)
+	// TxFeeEstimate implements txFeeEstimate.
+	TxFeeEstimate(context.Context, *TxFeeEstimateRequest) (*TxFeeEstimateResponse, error)
 	mustEmbedUnimplementedSdkUtilitiesServer()
 }
 
@@ -230,6 +243,9 @@ func (UnimplementedSdkUtilitiesServer) MintAnnualProvision(context.Context, *Min
 }
 func (UnimplementedSdkUtilitiesServer) DelegatorRewards(context.Context, *DelegatorRewardsRequest) (*DelegatorRewardsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DelegatorRewards not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) TxFeeEstimate(context.Context, *TxFeeEstimateRequest) (*TxFeeEstimateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TxFeeEstimate not implemented")
 }
 func (UnimplementedSdkUtilitiesServer) mustEmbedUnimplementedSdkUtilitiesServer() {}
 
@@ -460,6 +476,24 @@ func _SdkUtilities_DelegatorRewards_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SdkUtilities_TxFeeEstimate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TxFeeEstimateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).TxFeeEstimate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/TxFeeEstimate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).TxFeeEstimate(ctx, req.(*TxFeeEstimateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SdkUtilities_ServiceDesc is the grpc.ServiceDesc for SdkUtilities service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -514,6 +548,10 @@ var SdkUtilities_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DelegatorRewards",
 			Handler:    _SdkUtilities_DelegatorRewards_Handler,
+		},
+		{
+			MethodName: "TxFeeEstimate",
+			Handler:    _SdkUtilities_TxFeeEstimate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

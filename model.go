@@ -144,3 +144,12 @@ var DelegationDelegatorReward = Type("DelegationDelegatorReward", func() {
 
 	Required("validatorAddress", "rewards")
 })
+
+var FeeEstimate = Type("FeeEstimate", func() {
+	Description("Fee estimate for the specified tx")
+
+	Field(1, "fees", ArrayOf(Coin))
+	Field(2, "gas", String)
+
+	Required("fees", "gas")
+})

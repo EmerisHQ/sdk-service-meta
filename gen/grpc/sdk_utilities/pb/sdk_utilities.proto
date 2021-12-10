@@ -1,4 +1,4 @@
-// Code generated with goa v3.5.2, DO NOT EDIT.
+// Code generated with goa v3.5.3, DO NOT EDIT.
 //
 // sdk-utilities protocol buffer definition
 //
@@ -37,6 +37,8 @@ service SdkUtilities {
 	rpc MintAnnualProvision (MintAnnualProvisionRequest) returns (MintAnnualProvisionResponse);
 	// DelegatorRewards implements delegatorRewards.
 	rpc DelegatorRewards (DelegatorRewardsRequest) returns (DelegatorRewardsResponse);
+	// TxFeeEstimate implements txFeeEstimate.
+	rpc TxFeeEstimate (TxFeeEstimateRequest) returns (TxFeeEstimateResponse);
 }
 
 message AccountNumbersRequest {
@@ -215,4 +217,14 @@ message DelegatorRewardsResponse {
 message DelegationDelegatorReward {
 	string validator_address = 1;
 	repeated Coin rewards = 2;
+}
+
+message TxFeeEstimateRequest {
+	// Transaction bytes
+	bytes tx_bytes = 1;
+}
+
+message TxFeeEstimateResponse {
+	repeated Coin fees = 1;
+	string gas = 2;
 }
