@@ -150,6 +150,7 @@ var Simulation = Type("Simulation", func() {
 
 	Field(1, "gasWanted", String)
 	Field(2, "gasUsed", String)
+	Field(3, "fees", ArrayOf(Coin))
 
-	Required("gasWanted", "gasUsed")
+	Required("gasWanted", "gasUsed", "fees")
 })

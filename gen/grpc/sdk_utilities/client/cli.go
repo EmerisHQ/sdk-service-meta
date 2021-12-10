@@ -24,7 +24,7 @@ func BuildAccountNumbersPayload(sdkUtilitiesAccountNumbersMessage string) (*sdku
 		if sdkUtilitiesAccountNumbersMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesAccountNumbersMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"addresHex\": \"Temporibus libero enim rerum dolor qui sed.\",\n      \"bech32Prefix\": \"Rerum fugiat ut est molestias ut non.\",\n      \"chainName\": \"Veritatis quia.\",\n      \"port\": 3046521310627406606\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"addresHex\": \"Enim rerum dolor.\",\n      \"bech32Prefix\": \"Molestias ut non aut temporibus.\",\n      \"chainName\": \"Quia dolorem quisquam rerum fugiat.\",\n      \"port\": 8925443299217281982\n   }'")
 			}
 		}
 	}

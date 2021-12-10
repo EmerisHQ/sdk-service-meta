@@ -352,6 +352,15 @@ func NewEstimateFeesResponse(result *sdkutilities.Simulation) *sdk_utilitiespb.E
 		GasWanted: result.GasWanted,
 		GasUsed:   result.GasUsed,
 	}
+	if result.Fees != nil {
+		message.Fees = make([]*sdk_utilitiespb.Coin, len(result.Fees))
+		for i, val := range result.Fees {
+			message.Fees[i] = &sdk_utilitiespb.Coin{
+				Denom:  val.Denom,
+				Amount: val.Amount,
+			}
+		}
+	}
 	return message
 }
 

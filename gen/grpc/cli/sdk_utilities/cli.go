@@ -29,10 +29,10 @@ func UsageCommands() string {
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` sdk-utilities account-numbers --message '{
-      "addresHex": "Temporibus libero enim rerum dolor qui sed.",
-      "bech32Prefix": "Rerum fugiat ut est molestias ut non.",
-      "chainName": "Veritatis quia.",
-      "port": 3046521310627406606
+      "addresHex": "Enim rerum dolor.",
+      "bech32Prefix": "Molestias ut non aut temporibus.",
+      "chainName": "Quia dolorem quisquam rerum fugiat.",
+      "port": 8925443299217281982
    }'` + "\n" +
 		""
 }
@@ -278,10 +278,10 @@ AccountNumbers implements accountNumbers.
 
 Example:
     %[1]s sdk-utilities account-numbers --message '{
-      "addresHex": "Temporibus libero enim rerum dolor qui sed.",
-      "bech32Prefix": "Rerum fugiat ut est molestias ut non.",
-      "chainName": "Veritatis quia.",
-      "port": 3046521310627406606
+      "addresHex": "Enim rerum dolor.",
+      "bech32Prefix": "Molestias ut non aut temporibus.",
+      "chainName": "Quia dolorem quisquam rerum fugiat.",
+      "port": 8925443299217281982
    }'
 `, os.Args[0])
 }

@@ -253,6 +253,7 @@ type EstimateFeesPayload struct {
 type Simulation struct {
 	GasWanted string
 	GasUsed   string
+	Fees      []*Coin
 }
 
 // SDK service representation of a Cosmos SDK types.Coin

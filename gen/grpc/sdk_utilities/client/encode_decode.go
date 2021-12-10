@@ -491,6 +491,9 @@ func DecodeEstimateFeesResponse(ctx context.Context, v interface{}, hdr, trlr me
 	if !ok {
 		return nil, goagrpc.ErrInvalidType("sdk-utilities", "estimateFees", "*sdk_utilitiespb.EstimateFeesResponse", v)
 	}
+	if err := ValidateEstimateFeesResponse(message); err != nil {
+		return nil, err
+	}
 	res := NewEstimateFeesResult(message)
 	return res, nil
 }
