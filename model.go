@@ -145,11 +145,11 @@ var DelegationDelegatorReward = Type("DelegationDelegatorReward", func() {
 	Required("validatorAddress", "rewards")
 })
 
-var FeeEstimate = Type("FeeEstimate", func() {
-	Description("Fee estimate for the specified tx")
+var Simulation = Type("Simulation", func() {
+	Description("Results from the Cosmos SDK transaction simulation endpoint")
 
-	Field(1, "fees", ArrayOf(Coin))
-	Field(2, "gas", String)
+	Field(1, "gasWanted", String)
+	Field(2, "gasUsed", String)
 
-	Required("fees", "gas")
+	Required("gasWanted", "gasUsed")
 })

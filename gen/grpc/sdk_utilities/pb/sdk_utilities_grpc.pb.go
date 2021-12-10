@@ -42,8 +42,8 @@ type SdkUtilitiesClient interface {
 	MintAnnualProvision(ctx context.Context, in *MintAnnualProvisionRequest, opts ...grpc.CallOption) (*MintAnnualProvisionResponse, error)
 	// DelegatorRewards implements delegatorRewards.
 	DelegatorRewards(ctx context.Context, in *DelegatorRewardsRequest, opts ...grpc.CallOption) (*DelegatorRewardsResponse, error)
-	// TxFeeEstimate implements txFeeEstimate.
-	TxFeeEstimate(ctx context.Context, in *TxFeeEstimateRequest, opts ...grpc.CallOption) (*TxFeeEstimateResponse, error)
+	// EstimateFees implements estimateFees.
+	EstimateFees(ctx context.Context, in *EstimateFeesRequest, opts ...grpc.CallOption) (*EstimateFeesResponse, error)
 }
 
 type sdkUtilitiesClient struct {
@@ -162,9 +162,9 @@ func (c *sdkUtilitiesClient) DelegatorRewards(ctx context.Context, in *Delegator
 	return out, nil
 }
 
-func (c *sdkUtilitiesClient) TxFeeEstimate(ctx context.Context, in *TxFeeEstimateRequest, opts ...grpc.CallOption) (*TxFeeEstimateResponse, error) {
-	out := new(TxFeeEstimateResponse)
-	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/TxFeeEstimate", in, out, opts...)
+func (c *sdkUtilitiesClient) EstimateFees(ctx context.Context, in *EstimateFeesRequest, opts ...grpc.CallOption) (*EstimateFeesResponse, error) {
+	out := new(EstimateFeesResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/EstimateFees", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -199,8 +199,8 @@ type SdkUtilitiesServer interface {
 	MintAnnualProvision(context.Context, *MintAnnualProvisionRequest) (*MintAnnualProvisionResponse, error)
 	// DelegatorRewards implements delegatorRewards.
 	DelegatorRewards(context.Context, *DelegatorRewardsRequest) (*DelegatorRewardsResponse, error)
-	// TxFeeEstimate implements txFeeEstimate.
-	TxFeeEstimate(context.Context, *TxFeeEstimateRequest) (*TxFeeEstimateResponse, error)
+	// EstimateFees implements estimateFees.
+	EstimateFees(context.Context, *EstimateFeesRequest) (*EstimateFeesResponse, error)
 	mustEmbedUnimplementedSdkUtilitiesServer()
 }
 
@@ -244,8 +244,8 @@ func (UnimplementedSdkUtilitiesServer) MintAnnualProvision(context.Context, *Min
 func (UnimplementedSdkUtilitiesServer) DelegatorRewards(context.Context, *DelegatorRewardsRequest) (*DelegatorRewardsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DelegatorRewards not implemented")
 }
-func (UnimplementedSdkUtilitiesServer) TxFeeEstimate(context.Context, *TxFeeEstimateRequest) (*TxFeeEstimateResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TxFeeEstimate not implemented")
+func (UnimplementedSdkUtilitiesServer) EstimateFees(context.Context, *EstimateFeesRequest) (*EstimateFeesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EstimateFees not implemented")
 }
 func (UnimplementedSdkUtilitiesServer) mustEmbedUnimplementedSdkUtilitiesServer() {}
 
@@ -476,20 +476,20 @@ func _SdkUtilities_DelegatorRewards_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SdkUtilities_TxFeeEstimate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TxFeeEstimateRequest)
+func _SdkUtilities_EstimateFees_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EstimateFeesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SdkUtilitiesServer).TxFeeEstimate(ctx, in)
+		return srv.(SdkUtilitiesServer).EstimateFees(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sdk_utilities.SdkUtilities/TxFeeEstimate",
+		FullMethod: "/sdk_utilities.SdkUtilities/EstimateFees",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SdkUtilitiesServer).TxFeeEstimate(ctx, req.(*TxFeeEstimateRequest))
+		return srv.(SdkUtilitiesServer).EstimateFees(ctx, req.(*EstimateFeesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -550,8 +550,8 @@ var SdkUtilities_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SdkUtilities_DelegatorRewards_Handler,
 		},
 		{
-			MethodName: "TxFeeEstimate",
-			Handler:    _SdkUtilities_TxFeeEstimate_Handler,
+			MethodName: "EstimateFees",
+			Handler:    _SdkUtilities_EstimateFees_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

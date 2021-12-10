@@ -205,14 +205,15 @@ var _ = Service(sdkUtilities, func() {
 		})
 	})
 
-	Method("txFeeEstimate", func() {
+	Method("estimateFees", func() {
 		Payload(func() {
-			Field(1, "txBytes", Bytes, "Transaction bytes")
+			nextFieldIdx := standardArguments()
+			Field(nextFieldIdx, "txBytes", Bytes, "Transaction bytes")
 
 			Required("txBytes")
 		})
 
-		Result(FeeEstimate)
+		Result(Simulation)
 
 		GRPC(func() {
 			Response(CodeOK)
