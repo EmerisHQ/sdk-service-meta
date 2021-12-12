@@ -229,7 +229,7 @@ message EstimateFeesRequest {
 }
 
 message EstimateFeesResponse {
-	string gas_wanted = 1;
-	string gas_used = 2;
+	uint64 gas_wanted = 1;
+	uint64 gas_used = 2;
 	repeated Coin fees = 3;
 }

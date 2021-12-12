@@ -251,8 +251,8 @@ type EstimateFeesPayload struct {
 // Simulation is the result type of the sdk-utilities service estimateFees
 // method.
 type Simulation struct {
-	GasWanted string
-	GasUsed   string
+	GasWanted uint64
+	GasUsed   uint64
 	Fees      []*Coin
 }
 
