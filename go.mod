@@ -3,7 +3,7 @@ module github.com/allinbits/sdk-service-meta
 go 1.17
 
 require (
-	go.uber.org/zap v1.16.0
+	go.uber.org/zap v1.19.1
 	goa.design/goa/v3 v3.5.3
 	goa.design/plugins/v3 v3.5.3
 	google.golang.org/grpc v1.42.0
