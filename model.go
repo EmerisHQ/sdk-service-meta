@@ -148,8 +148,9 @@ var DelegationDelegatorReward = Type("DelegationDelegatorReward", func() {
 var Simulation = Type("Simulation", func() {
 	Description("Results from the Cosmos SDK transaction simulation endpoint")
 
-	Field(1, "gasWanted", String)
-	Field(2, "gasUsed", String)
+	Field(1, "gasWanted", UInt64)
+	Field(2, "gasUsed", UInt64)
+	Field(3, "fees", ArrayOf(Coin))
 
-	Required("gasWanted", "gasUsed")
+	Required("gasWanted", "gasUsed", "fees")
 })

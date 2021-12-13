@@ -339,6 +339,15 @@ func NewEstimateFeesResult(message *sdk_utilitiespb.EstimateFeesResponse) *sdkut
 		GasWanted: message.GasWanted,
 		GasUsed:   message.GasUsed,
 	}
+	if message.Fees != nil {
+		result.Fees = make([]*sdkutilities.Coin, len(message.Fees))
+		for i, val := range message.Fees {
+			result.Fees[i] = &sdkutilities.Coin{
+				Denom:  val.Denom,
+				Amount: val.Amount,
+			}
+		}
+	}
 	return result
 }
 
@@ -454,6 +463,15 @@ func ValidateDelegatorRewardsResponse(message *sdk_utilitiespb.DelegatorRewardsR
 func ValidateDelegationDelegatorReward(message *sdk_utilitiespb.DelegationDelegatorReward) (err error) {
 	if message.Rewards == nil {
 		err = goa.MergeErrors(err, goa.MissingFieldError("rewards", "message"))
+	}
+	return
+}
+
+// ValidateEstimateFeesResponse runs the validations defined on
+// EstimateFeesResponse.
+func ValidateEstimateFeesResponse(message *sdk_utilitiespb.EstimateFeesResponse) (err error) {
+	if message.Fees == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("fees", "message"))
 	}
 	return
 }
