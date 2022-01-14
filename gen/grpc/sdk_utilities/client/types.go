@@ -467,15 +467,6 @@ func ValidateDelegationDelegatorReward(message *sdk_utilitiespb.DelegationDelega
 	return
 }
 
-// ValidateEstimateFeesResponse runs the validations defined on
-// EstimateFeesResponse.
-func ValidateEstimateFeesResponse(message *sdk_utilitiespb.EstimateFeesResponse) (err error) {
-	if message.Fees == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("fees", "message"))
-	}
-	return
-}
-
 // svcSdkutilitiesIBCTransferMetadataToSdkUtilitiespbIBCTransferMetadata builds
 // a value of type *sdk_utilitiespb.IBCTransferMetadata from a value of type
 // *sdkutilities.IBCTransferMetadata.
