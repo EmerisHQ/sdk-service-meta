@@ -3,9 +3,9 @@ module github.com/allinbits/sdk-service-meta
 go 1.17
 
 require (
-	go.uber.org/zap v1.19.1
+	go.uber.org/zap v1.20.0
 	goa.design/goa/v3 v3.5.5
-	goa.design/plugins/v3 v3.5.3
+	goa.design/plugins/v3 v3.5.5
 	google.golang.org/grpc v1.44.0
 	google.golang.org/protobuf v1.27.1
 )
@@ -19,7 +19,7 @@ require (
 	github.com/manveru/faker v0.0.0-20171103152722-9fbc68a78c4d // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
 	github.com/zach-klippenstein/goregen v0.0.0-20160303162051-795b5e3961ea // indirect
-	go.uber.org/atomic v1.7.0 // indirect
+	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.7.0 // indirect
 	golang.org/x/mod v0.5.1 // indirect
 	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd // indirect
