@@ -57,7 +57,9 @@ var _ = Service(sdkUtilities, func() {
 
 	Method("supply", func() {
 		Payload(func() {
-			_ = standardArguments()
+			nextFieldIdx := standardArguments()
+
+			Field(nextFieldIdx, "pagination_key", String, "pagination key")
 		})
 
 		Result(Supply)

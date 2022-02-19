@@ -14,10 +14,18 @@ var Coin = Type("Coin", func() {
 	Required("denom", "amount")
 })
 
+var Pagination = Type("Pagination", func() {
+	Description("Pagination used in the Cosmos SDK")
+
+	Field(1, "next_key", String)
+	Field(2, "total", String)
+})
+
 var Supply = Type("Supply", func() {
 	Description("Supply of a given Cosmos SDK chain")
 
 	Field(1, "coins", ArrayOf(Coin))
+	Field(2, "pagination", Pagination)
 
 	Required("coins")
 })
