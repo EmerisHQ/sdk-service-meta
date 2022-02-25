@@ -154,3 +154,9 @@ var Simulation = Type("Simulation", func() {
 
 	Required("gasWanted", "gasUsed")
 })
+
+var StakingParams = Type("StakingParams", func() {
+	Description("Staking params response")
+	Field(1, "stakingParams", Bytes)
+	Required("stakingParams")
+})
