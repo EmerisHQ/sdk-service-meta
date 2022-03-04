@@ -494,3 +494,41 @@ func DecodeEstimateFeesResponse(ctx context.Context, v interface{}, hdr, trlr me
 	res := NewEstimateFeesResult(message)
 	return res, nil
 }
+
+// BuildStakingParamsFunc builds the remote method to invoke for
+// "sdk-utilities" service "stakingParams" endpoint.
+func BuildStakingParamsFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.StakingParams(ctx, reqpb.(*sdk_utilitiespb.StakingParamsRequest), opts...)
+		}
+		return grpccli.StakingParams(ctx, &sdk_utilitiespb.StakingParamsRequest{}, opts...)
+	}
+}
+
+// EncodeStakingParamsRequest encodes requests sent to sdk-utilities
+// stakingParams endpoint.
+func EncodeStakingParamsRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.StakingParamsPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "stakingParams", "*sdkutilities.StakingParamsPayload", v)
+	}
+	return NewStakingParamsRequest(payload), nil
+}
+
+// DecodeStakingParamsResponse decodes responses from the sdk-utilities
+// stakingParams endpoint.
+func DecodeStakingParamsResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.StakingParamsResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "stakingParams", "*sdk_utilitiespb.StakingParamsResponse", v)
+	}
+	if err := ValidateStakingParamsResponse(message); err != nil {
+		return nil, err
+	}
+	res := NewStakingParamsResult(message)
+	return res, nil
+}

@@ -414,3 +414,33 @@ func DecodeEstimateFeesRequest(ctx context.Context, v interface{}, md metadata.M
 	}
 	return payload, nil
 }
+
+// EncodeStakingParamsResponse encodes responses from the "sdk-utilities"
+// service "stakingParams" endpoint.
+func EncodeStakingParamsResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.(*sdkutilities.StakingParams2)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "stakingParams", "*sdkutilities.StakingParams2", v)
+	}
+	resp := NewStakingParamsResponse(result)
+	return resp, nil
+}
+
+// DecodeStakingParamsRequest decodes requests sent to "sdk-utilities" service
+// "stakingParams" endpoint.
+func DecodeStakingParamsRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.StakingParamsRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.StakingParamsRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "stakingParams", "*sdk_utilitiespb.StakingParamsRequest", v)
+		}
+	}
+	var payload *sdkutilities.StakingParamsPayload
+	{
+		payload = NewStakingParamsPayload(message)
+	}
+	return payload, nil
+}

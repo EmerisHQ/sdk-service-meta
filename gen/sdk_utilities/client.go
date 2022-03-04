@@ -28,10 +28,11 @@ type Client struct {
 	MintAnnualProvisionEndpoint goa.Endpoint
 	DelegatorRewardsEndpoint    goa.Endpoint
 	EstimateFeesEndpoint        goa.Endpoint
+	StakingParamsEndpoint       goa.Endpoint
 }
 
 // NewClient initializes a "sdk-utilities" service client given the endpoints.
-func NewClient(accountNumbers, supply, queryTx, broadcastTx, txMetadata, block, liquidityParams, liquidityPools, mintInflation, mintParams, mintAnnualProvision, delegatorRewards, estimateFees goa.Endpoint) *Client {
+func NewClient(accountNumbers, supply, queryTx, broadcastTx, txMetadata, block, liquidityParams, liquidityPools, mintInflation, mintParams, mintAnnualProvision, delegatorRewards, estimateFees, stakingParams goa.Endpoint) *Client {
 	return &Client{
 		AccountNumbersEndpoint:      accountNumbers,
 		SupplyEndpoint:              supply,
@@ -46,6 +47,7 @@ func NewClient(accountNumbers, supply, queryTx, broadcastTx, txMetadata, block, 
 		MintAnnualProvisionEndpoint: mintAnnualProvision,
 		DelegatorRewardsEndpoint:    delegatorRewards,
 		EstimateFeesEndpoint:        estimateFees,
+		StakingParamsEndpoint:       stakingParams,
 	}
 }
 
@@ -184,4 +186,15 @@ func (c *Client) EstimateFees(ctx context.Context, p *EstimateFeesPayload) (res 
 		return
 	}
 	return ires.(*Simulation), nil
+}
+
+// StakingParams calls the "stakingParams" endpoint of the "sdk-utilities"
+// service.
+func (c *Client) StakingParams(ctx context.Context, p *StakingParamsPayload) (res *StakingParams2, err error) {
+	var ires interface{}
+	ires, err = c.StakingParamsEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*StakingParams2), nil
 }

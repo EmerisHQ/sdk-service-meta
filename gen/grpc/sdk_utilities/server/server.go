@@ -31,6 +31,7 @@ type Server struct {
 	MintAnnualProvisionH goagrpc.UnaryHandler
 	DelegatorRewardsH    goagrpc.UnaryHandler
 	EstimateFeesH        goagrpc.UnaryHandler
+	StakingParamsH       goagrpc.UnaryHandler
 	sdk_utilitiespb.UnimplementedSdkUtilitiesServer
 }
 
@@ -56,6 +57,7 @@ func New(e *sdkutilities.Endpoints, uh goagrpc.UnaryHandler) *Server {
 		MintAnnualProvisionH: NewMintAnnualProvisionHandler(e.MintAnnualProvision, uh),
 		DelegatorRewardsH:    NewDelegatorRewardsHandler(e.DelegatorRewards, uh),
 		EstimateFeesH:        NewEstimateFeesHandler(e.EstimateFees, uh),
+		StakingParamsH:       NewStakingParamsHandler(e.StakingParams, uh),
 	}
 }
 
@@ -330,4 +332,25 @@ func (s *Server) EstimateFees(ctx context.Context, message *sdk_utilitiespb.Esti
 		return nil, goagrpc.EncodeError(err)
 	}
 	return resp.(*sdk_utilitiespb.EstimateFeesResponse), nil
+}
+
+// NewStakingParamsHandler creates a gRPC handler which serves the
+// "sdk-utilities" service "stakingParams" endpoint.
+func NewStakingParamsHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+	if h == nil {
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeStakingParamsRequest, EncodeStakingParamsResponse)
+	}
+	return h
+}
+
+// StakingParams implements the "StakingParams" method in
+// sdk_utilitiespb.SdkUtilitiesServer interface.
+func (s *Server) StakingParams(ctx context.Context, message *sdk_utilitiespb.StakingParamsRequest) (*sdk_utilitiespb.StakingParamsResponse, error) {
+	ctx = context.WithValue(ctx, goa.MethodKey, "stakingParams")
+	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
+	resp, err := s.StakingParamsH.Handle(ctx, message)
+	if err != nil {
+		return nil, goagrpc.EncodeError(err)
+	}
+	return resp.(*sdk_utilitiespb.StakingParamsResponse), nil
 }

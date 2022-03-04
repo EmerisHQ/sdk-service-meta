@@ -237,3 +237,19 @@ func (c *Client) EstimateFees() goa.Endpoint {
 		return res, nil
 	}
 }
+
+// StakingParams calls the "StakingParams" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) StakingParams() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildStakingParamsFunc(c.grpccli, c.opts...),
+			EncodeStakingParamsRequest,
+			DecodeStakingParamsResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}

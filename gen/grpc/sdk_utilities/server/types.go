@@ -370,6 +370,28 @@ func NewEstimateFeesResponse(result *sdkutilities.Simulation) *sdk_utilitiespb.E
 	return message
 }
 
+// NewStakingParamsPayload builds the payload of the "stakingParams" endpoint
+// of the "sdk-utilities" service from the gRPC request type.
+func NewStakingParamsPayload(message *sdk_utilitiespb.StakingParamsRequest) *sdkutilities.StakingParamsPayload {
+	v := &sdkutilities.StakingParamsPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+	return v
+}
+
+// NewStakingParamsResponse builds the gRPC response type from the result of
+// the "stakingParams" endpoint of the "sdk-utilities" service.
+func NewStakingParamsResponse(result *sdkutilities.StakingParams2) *sdk_utilitiespb.StakingParamsResponse {
+	message := &sdk_utilitiespb.StakingParamsResponse{
+		StakingParams: result.StakingParams,
+	}
+	return message
+}
+
 // ValidateBroadcastTxRequest runs the validations defined on
 // BroadcastTxRequest.
 func ValidateBroadcastTxRequest(message *sdk_utilitiespb.BroadcastTxRequest) (err error) {
