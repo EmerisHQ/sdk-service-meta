@@ -65,15 +65,23 @@ message SupplyRequest {
 	string chain_name = 1;
 	// gRPC port for selected chain, defaults to 9090
 	sint32 port = 2;
+	// pagination key
+	string pagination_key = 3;
 }
 
 message SupplyResponse {
 	repeated Coin coins = 1;
+	Pagination pagination = 2;
 }
 // SDK service representation of a Cosmos SDK types.Coin
 message Coin {
 	string denom = 1;
 	string amount = 2;
+}
+// Pagination used in the Cosmos SDK
+message Pagination {
+	string next_key = 1;
+	string total = 2;
 }
 
 message QueryTxRequest {

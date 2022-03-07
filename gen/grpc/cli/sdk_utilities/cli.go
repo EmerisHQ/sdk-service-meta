@@ -29,10 +29,10 @@ func UsageCommands() string {
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` sdk-utilities account-numbers --message '{
-      "addresHex": "Enim rerum dolor.",
-      "bech32Prefix": "Molestias ut non aut temporibus.",
-      "chainName": "Quisquam rerum fugiat.",
-      "port": 8925443299217281982
+      "addresHex": "Consequatur natus animi adipisci repellendus.",
+      "bech32Prefix": "Ea est sed laborum laborum quam.",
+      "chainName": "Dicta explicabo.",
+      "port": 440216803524535827
    }'` + "\n" +
 		""
 }
@@ -289,10 +289,10 @@ AccountNumbers implements accountNumbers.
 
 Example:
     %[1]s sdk-utilities account-numbers --message '{
-      "addresHex": "Enim rerum dolor.",
-      "bech32Prefix": "Molestias ut non aut temporibus.",
-      "chainName": "Quisquam rerum fugiat.",
-      "port": 8925443299217281982
+      "addresHex": "Consequatur natus animi adipisci repellendus.",
+      "bech32Prefix": "Ea est sed laborum laborum quam.",
+      "chainName": "Dicta explicabo.",
+      "port": 440216803524535827
    }'
 `, os.Args[0])
 }
@@ -305,8 +305,9 @@ Supply implements supply.
 
 Example:
     %[1]s sdk-utilities supply --message '{
-      "chainName": "Consequatur est ea est.",
-      "port": 3065905437504226774
+      "chainName": "Omnis et iure.",
+      "paginationKey": "Accusantium sunt rem voluptas sed.",
+      "port": 6610216662945158602
    }'
 `, os.Args[0])
 }
@@ -319,9 +320,9 @@ QueryTx implements queryTx.
 
 Example:
     %[1]s sdk-utilities query-tx --message '{
-      "chainName": "Quam ducimus consequatur natus animi adipisci repellendus.",
-      "hash": "Et dolor quisquam est et aspernatur sunt.",
-      "port": 5475292029636396073
+      "chainName": "Dicta quia velit.",
+      "hash": "Quis culpa et blanditiis veritatis harum possimus.",
+      "port": 3229902183543090429
    }'
 `, os.Args[0])
 }
@@ -334,9 +335,9 @@ BroadcastTx implements broadcastTx.
 
 Example:
     %[1]s sdk-utilities broadcast-tx --message '{
-      "chainName": "Amet dicta quia velit laudantium.",
-      "port": 2966708842863342049,
-      "txBytes": "Q3VscGEgZXQgYmxhbmRpdGlpcyB2ZXJpdGF0aXMgaGFydW0gcG9zc2ltdXMgdWxsYW0u"
+      "chainName": "Consequatur sed ab ut sit debitis dicta.",
+      "port": 2949028904261297273,
+      "txBytes": "U3VzY2lwaXQgdm9sdXB0YXMgYWxpYXMgZW5pbSBzaXQgYXQu"
    }'
 `, os.Args[0])
 }
@@ -349,7 +350,7 @@ TxMetadata implements txMetadata.
 
 Example:
     %[1]s sdk-utilities tx-metadata --message '{
-      "txBytes": "Q29uc2VjdGV0dXIgZGVsZW5pdGkgbWF4aW1lIHF1b3MgY29uc2VxdWF0dXIgc2VkLg=="
+      "txBytes": "Q3VwaWRpdGF0ZSBudWxsYSBjb25zZXF1YXR1ciBzaW50Lg=="
    }'
 `, os.Args[0])
 }
@@ -362,9 +363,9 @@ Block implements block.
 
 Example:
     %[1]s sdk-utilities block --message '{
-      "chainName": "Sit debitis dicta ullam.",
-      "height": 4459115708693118891,
-      "port": 642764022087074112
+      "chainName": "Praesentium enim.",
+      "height": 8154514054136509861,
+      "port": 3263659220330205886
    }'
 `, os.Args[0])
 }
@@ -377,8 +378,8 @@ LiquidityParams implements liquidityParams.
 
 Example:
     %[1]s sdk-utilities liquidity-params --message '{
-      "chainName": "Itaque excepturi eos reiciendis natus quasi cupiditate.",
-      "port": 2085872511594390408
+      "chainName": "Enim recusandae facilis temporibus amet occaecati.",
+      "port": 7149639189603788787
    }'
 `, os.Args[0])
 }
@@ -391,8 +392,8 @@ LiquidityPools implements liquidityPools.
 
 Example:
     %[1]s sdk-utilities liquidity-pools --message '{
-      "chainName": "Enim velit tenetur aut ducimus.",
-      "port": 4798089343506036831
+      "chainName": "Qui qui aut.",
+      "port": 7298747792563590144
    }'
 `, os.Args[0])
 }
@@ -405,8 +406,8 @@ MintInflation implements mintInflation.
 
 Example:
     %[1]s sdk-utilities mint-inflation --message '{
-      "chainName": "Occaecati dolorem tenetur cum dolores veniam.",
-      "port": 435799008750423843
+      "chainName": "Similique similique ea eaque dolorem.",
+      "port": 3447600267286363243
    }'
 `, os.Args[0])
 }
@@ -419,8 +420,8 @@ MintParams implements mintParams.
 
 Example:
     %[1]s sdk-utilities mint-params --message '{
-      "chainName": "Est doloribus similique similique ea eaque dolorem.",
-      "port": 3447600267286363243
+      "chainName": "Autem fugiat optio.",
+      "port": 1436159326253711496
    }'
 `, os.Args[0])
 }
@@ -433,8 +434,8 @@ MintAnnualProvision implements mintAnnualProvision.
 
 Example:
     %[1]s sdk-utilities mint-annual-provision --message '{
-      "chainName": "Autem fugiat optio.",
-      "port": 1436159326253711496
+      "chainName": "Sequi praesentium veniam ut.",
+      "port": 6079915492823298048
    }'
 `, os.Args[0])
 }
@@ -447,10 +448,10 @@ DelegatorRewards implements delegatorRewards.
 
 Example:
     %[1]s sdk-utilities delegator-rewards --message '{
-      "addresHex": "Eum eos maxime esse nulla quis.",
-      "bech32Prefix": "Nostrum sed est nihil error odit.",
-      "chainName": "Sequi praesentium veniam ut.",
-      "port": 6079915492823298048
+      "addresHex": "Ut reiciendis ratione voluptatum velit.",
+      "bech32Prefix": "Quis omnis hic eum nostrum.",
+      "chainName": "Eum eos maxime esse nulla quis.",
+      "port": 2387078593804772203
    }'
 `, os.Args[0])
 }
@@ -463,9 +464,9 @@ EstimateFees implements estimateFees.
 
 Example:
     %[1]s sdk-utilities estimate-fees --message '{
-      "chainName": "Omnis hic eum nostrum.",
-      "port": 6801062929093128435,
-      "txBytes": "UmVpY2llbmRpcyByYXRpb25lLg=="
+      "chainName": "Animi eos id.",
+      "port": 2856155593357877119,
+      "txBytes": "T2NjYWVjYXRpIHV0IHZlcml0YXRpcyBxdWkgcXVpLg=="
    }'
 `, os.Args[0])
 }
@@ -478,8 +479,8 @@ StakingParams implements stakingParams.
 
 Example:
     %[1]s sdk-utilities staking-params --message '{
-      "chainName": "Quo animi.",
-      "port": 396964622894080647
+      "chainName": "Eaque optio.",
+      "port": 3825090727569516669
    }'
 `, os.Args[0])
 }
