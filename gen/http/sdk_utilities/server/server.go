@@ -3,7 +3,7 @@
 // sdk-utilities HTTP server
 //
 // Command:
-// $ goa gen github.com/allinbits/sdk-service-meta
+// $ goa gen github.com/emerishq/sdk-service-meta
 
 package server
 
@@ -11,7 +11,7 @@ import (
 	"context"
 	"net/http"
 
-	sdkutilities "github.com/allinbits/sdk-service-meta/gen/sdk_utilities"
+	sdkutilities "github.com/emerishq/sdk-service-meta/gen/sdk_utilities"
 	goahttp "goa.design/goa/v3/http"
 )
 

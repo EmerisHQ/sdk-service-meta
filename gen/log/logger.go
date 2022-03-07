@@ -3,7 +3,7 @@
 // Zap logger implementation
 //
 // Command:
-// $ goa gen github.com/allinbits/sdk-service-meta
+// $ goa gen github.com/emerishq/sdk-service-meta
 
 package log
 

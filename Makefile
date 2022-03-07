@@ -1,7 +1,7 @@
 .PHONY = generate
 
 generate:
-	goa gen github.com/allinbits/sdk-service-meta
+	goa gen github.com/emerishq/sdk-service-meta
 
 install-goa:
 	go get -u goa.design/goa/v3
