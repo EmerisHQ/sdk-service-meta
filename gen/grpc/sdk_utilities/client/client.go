@@ -3,14 +3,14 @@
 // sdk-utilities gRPC client
 //
 // Command:
-// $ goa gen github.com/allinbits/sdk-service-meta
+// $ goa gen github.com/emerishq/sdk-service-meta
 
 package client
 
 import (
 	"context"
 
-	sdk_utilitiespb "github.com/allinbits/sdk-service-meta/gen/grpc/sdk_utilities/pb"
+	sdk_utilitiespb "github.com/emerishq/sdk-service-meta/gen/grpc/sdk_utilities/pb"
 	goagrpc "goa.design/goa/v3/grpc"
 	goa "goa.design/goa/v3/pkg"
 	"google.golang.org/grpc"

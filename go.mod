@@ -1,4 +1,4 @@
-module github.com/allinbits/sdk-service-meta
+module github.com/emerishq/sdk-service-meta
 
 go 1.17
 

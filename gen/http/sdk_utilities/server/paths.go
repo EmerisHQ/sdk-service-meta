@@ -3,6 +3,6 @@
 // HTTP request path constructors for the sdk-utilities service.
 //
 // Command:
-// $ goa gen github.com/allinbits/sdk-service-meta
+// $ goa gen github.com/emerishq/sdk-service-meta
 
 package server

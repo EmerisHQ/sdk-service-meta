@@ -3,7 +3,7 @@
 // sdk-utilities gRPC client CLI support package
 //
 // Command:
-// $ goa gen github.com/allinbits/sdk-service-meta
+// $ goa gen github.com/emerishq/sdk-service-meta
 
 package cli
 
@@ -12,7 +12,7 @@ import (
 	"fmt"
 	"os"
 
-	sdkutilitiesc "github.com/allinbits/sdk-service-meta/gen/grpc/sdk_utilities/client"
+	sdkutilitiesc "github.com/emerishq/sdk-service-meta/gen/grpc/sdk_utilities/client"
 	goa "goa.design/goa/v3/pkg"
 	grpc "google.golang.org/grpc"
 )

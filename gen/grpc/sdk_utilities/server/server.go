@@ -3,15 +3,15 @@
 // sdk-utilities gRPC server
 //
 // Command:
-// $ goa gen github.com/allinbits/sdk-service-meta
+// $ goa gen github.com/emerishq/sdk-service-meta
 
 package server
 
 import (
 	"context"
 
-	sdk_utilitiespb "github.com/allinbits/sdk-service-meta/gen/grpc/sdk_utilities/pb"
-	sdkutilities "github.com/allinbits/sdk-service-meta/gen/sdk_utilities"
+	sdk_utilitiespb "github.com/emerishq/sdk-service-meta/gen/grpc/sdk_utilities/pb"
+	sdkutilities "github.com/emerishq/sdk-service-meta/gen/sdk_utilities"
 	goagrpc "goa.design/goa/v3/grpc"
 	goa "goa.design/goa/v3/pkg"
 )
