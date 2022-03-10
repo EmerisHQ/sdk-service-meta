@@ -234,5 +234,17 @@ var _ = Service(sdkUtilities, func() {
 		})
 	})
 
+	Method("stakingPool", func() {
+		Payload(func() {
+			_ = standardArguments()
+		})
+
+		Result(StakingPool)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
 	Files("/openapi.json", "./gen/http/openapi.json")
 })
