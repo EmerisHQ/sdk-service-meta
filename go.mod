@@ -6,7 +6,7 @@ require (
 	go.uber.org/zap v1.21.0
 	goa.design/goa/v3 v3.5.5
 	goa.design/plugins/v3 v3.5.5
-	google.golang.org/grpc v1.44.0
+	google.golang.org/grpc v1.45.0
 	google.golang.org/protobuf v1.27.1
 )
 
