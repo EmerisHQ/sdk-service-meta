@@ -168,3 +168,9 @@ var StakingParams = Type("StakingParams", func() {
 	Field(1, "stakingParams", Bytes)
 	Required("stakingParams")
 })
+
+var StakingPool = Type("StakingPool", func() {
+	Description("List of staking pool")
+	Field(1, "stakingPool", Bytes)
+	Required("stakingPool")
+})
