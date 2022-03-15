@@ -500,27 +500,6 @@ func ValidateMintAnnualProvisionResponse(message *sdk_utilitiespb.MintAnnualProv
 	return
 }
 
-// ValidateDelegatorRewardsResponse runs the validations defined on
-// DelegatorRewardsResponse.
-func ValidateDelegatorRewardsResponse(message *sdk_utilitiespb.DelegatorRewardsResponse) (err error) {
-	if message.Rewards == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("rewards", "message"))
-	}
-	if message.Total == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("total", "message"))
-	}
-	return
-}
-
-// ValidateDelegationDelegatorReward runs the validations defined on
-// DelegationDelegatorReward.
-func ValidateDelegationDelegatorReward(message *sdk_utilitiespb.DelegationDelegatorReward) (err error) {
-	if message.Rewards == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("rewards", "message"))
-	}
-	return
-}
-
 // ValidateStakingParamsResponse runs the validations defined on
 // StakingParamsResponse.
 func ValidateStakingParamsResponse(message *sdk_utilitiespb.StakingParamsResponse) (err error) {
