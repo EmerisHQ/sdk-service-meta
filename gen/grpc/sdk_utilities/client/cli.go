@@ -24,7 +24,7 @@ func BuildAccountNumbersPayload(sdkUtilitiesAccountNumbersMessage string) (*sdku
 		if sdkUtilitiesAccountNumbersMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesAccountNumbersMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"addresHex\": \"Et iure.\",\n      \"bech32Prefix\": \"Et dolor quisquam est et aspernatur sunt.\",\n      \"chainName\": \"Consequatur natus animi adipisci repellendus.\",\n      \"port\": 5475292029636396073\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"addresHex\": \"Amet dicta quia velit laudantium.\",\n      \"bech32Prefix\": \"Accusantium sunt rem voluptas sed.\",\n      \"chainName\": \"Et iure.\",\n      \"port\": 6610216662945158602\n   }'")
 			}
 		}
 	}
@@ -54,7 +54,7 @@ func BuildSupplyPayload(sdkUtilitiesSupplyMessage string) (*sdkutilities.SupplyP
 		if sdkUtilitiesSupplyMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesSupplyMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Dicta quia velit.\",\n      \"paginationKey\": \"Quis culpa et blanditiis veritatis harum possimus.\",\n      \"port\": 3229902183543090429\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Cumque itaque tenetur explicabo.\",\n      \"paginationKey\": \"Porro consectetur deleniti maxime quos consequatur.\",\n      \"port\": 2970337066418489394\n   }'")
 			}
 		}
 	}
@@ -81,7 +81,7 @@ func BuildQueryTxPayload(sdkUtilitiesQueryTxMessage string) (*sdkutilities.Query
 		if sdkUtilitiesQueryTxMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesQueryTxMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Itaque tenetur explicabo est neque.\",\n      \"hash\": \"Deleniti maxime quos consequatur sed ab ut.\",\n      \"port\": 1748383819728833353\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Ut sit debitis dicta ullam.\",\n      \"hash\": \"Voluptas alias enim sit.\",\n      \"port\": 642764022087074112\n   }'")
 			}
 		}
 	}
@@ -106,7 +106,7 @@ func BuildBroadcastTxPayload(sdkUtilitiesBroadcastTxMessage string) (*sdkutiliti
 		if sdkUtilitiesBroadcastTxMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesBroadcastTxMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Excepturi eos reiciendis natus.\",\n      \"port\": 795517746472964620,\n      \"txBytes\": \"TnVsbGEgY29uc2VxdWF0dXIgc2ludC4=\"\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Velit tenetur aut ducimus voluptatibus perferendis.\",\n      \"port\": 4590398434326812352,\n      \"txBytes\": \"UmVjdXNhbmRhZSBmYWNpbGlzIHRlbXBvcmlidXMu\"\n   }'")
 			}
 		}
 	}
@@ -131,7 +131,7 @@ func BuildTxMetadataPayload(sdkUtilitiesTxMetadataMessage string) (*sdkutilities
 		if sdkUtilitiesTxMetadataMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesTxMetadataMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"txBytes\": \"VGVuZXR1ciBhdXQu\"\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"txBytes\": \"UXVpIGF1dCBpZC4=\"\n   }'")
 			}
 		}
 	}
@@ -151,7 +151,7 @@ func BuildBlockPayload(sdkUtilitiesBlockMessage string) (*sdkutilities.BlockPayl
 		if sdkUtilitiesBlockMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesBlockMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Perferendis recusandae enim recusandae facilis temporibus.\",\n      \"height\": 1117726520142239780,\n      \"port\": 6273086711467444602\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Inventore quidem est doloribus similique.\",\n      \"height\": 6932273663290293334,\n      \"port\": 4631953543285988228\n   }'")
 			}
 		}
 	}
@@ -176,7 +176,7 @@ func BuildLiquidityParamsPayload(sdkUtilitiesLiquidityParamsMessage string) (*sd
 		if sdkUtilitiesLiquidityParamsMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesLiquidityParamsMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Qui qui aut.\",\n      \"port\": 7298747792563590144\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Autem fugiat optio.\",\n      \"port\": 1436159326253711496\n   }'")
 			}
 		}
 	}
@@ -200,7 +200,7 @@ func BuildLiquidityPoolsPayload(sdkUtilitiesLiquidityPoolsMessage string) (*sdku
 		if sdkUtilitiesLiquidityPoolsMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesLiquidityPoolsMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Similique similique ea eaque dolorem.\",\n      \"port\": 3447600267286363243\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Sequi praesentium veniam ut.\",\n      \"port\": 6079915492823298048\n   }'")
 			}
 		}
 	}
@@ -224,7 +224,7 @@ func BuildMintInflationPayload(sdkUtilitiesMintInflationMessage string) (*sdkuti
 		if sdkUtilitiesMintInflationMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesMintInflationMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Autem fugiat optio.\",\n      \"port\": 1436159326253711496\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Eum eos maxime esse nulla quis.\",\n      \"port\": 2387078593804772203\n   }'")
 			}
 		}
 	}
@@ -248,7 +248,7 @@ func BuildMintParamsPayload(sdkUtilitiesMintParamsMessage string) (*sdkutilities
 		if sdkUtilitiesMintParamsMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesMintParamsMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Sequi praesentium veniam ut.\",\n      \"port\": 6079915492823298048\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Ut reiciendis ratione voluptatum velit.\",\n      \"port\": 4588507375292094985\n   }'")
 			}
 		}
 	}
@@ -272,11 +272,35 @@ func BuildMintAnnualProvisionPayload(sdkUtilitiesMintAnnualProvisionMessage stri
 		if sdkUtilitiesMintAnnualProvisionMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesMintAnnualProvisionMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Eum eos maxime esse nulla quis.\",\n      \"port\": 2387078593804772203\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Id et velit occaecati ut veritatis.\",\n      \"port\": 2137229365261254041\n   }'")
 			}
 		}
 	}
 	v := &sdkutilities.MintAnnualProvisionPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+
+	return v, nil
+}
+
+// BuildMintEpochProvisionsPayload builds the payload for the sdk-utilities
+// mintEpochProvisions endpoint from CLI flags.
+func BuildMintEpochProvisionsPayload(sdkUtilitiesMintEpochProvisionsMessage string) (*sdkutilities.MintEpochProvisionsPayload, error) {
+	var err error
+	var message sdk_utilitiespb.MintEpochProvisionsRequest
+	{
+		if sdkUtilitiesMintEpochProvisionsMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesMintEpochProvisionsMessage), &message)
+			if err != nil {
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Itaque temporibus.\",\n      \"port\": 4642367785878612762\n   }'")
+			}
+		}
+	}
+	v := &sdkutilities.MintEpochProvisionsPayload{
 		ChainName: message.ChainName,
 	}
 	if message.Port != 0 {
@@ -296,7 +320,7 @@ func BuildDelegatorRewardsPayload(sdkUtilitiesDelegatorRewardsMessage string) (*
 		if sdkUtilitiesDelegatorRewardsMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesDelegatorRewardsMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"addresHex\": \"Id et velit occaecati ut veritatis.\",\n      \"bech32Prefix\": \"Quo animi.\",\n      \"chainName\": \"Ut reiciendis ratione voluptatum velit.\",\n      \"port\": 4588507375292094985\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"addresHex\": \"Blanditiis placeat iure exercitationem iusto quis molestias.\",\n      \"bech32Prefix\": \"Aut excepturi id facere.\",\n      \"chainName\": \"Deleniti et.\",\n      \"port\": 4361169276409546343\n   }'")
 			}
 		}
 	}
@@ -326,7 +350,7 @@ func BuildEstimateFeesPayload(sdkUtilitiesEstimateFeesMessage string) (*sdkutili
 		if sdkUtilitiesEstimateFeesMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesEstimateFeesMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Sequi animi vero.\",\n      \"port\": 6451800745679308343,\n      \"txBytes\": \"UmF0aW9uZSBpdGFxdWUgdGVtcG9yaWJ1cyB1dCB2b2x1cHRhdGVzIHF1aWEgb2ZmaWNpaXMu\"\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Sint quidem molestiae cumque sunt.\",\n      \"port\": 7952075110992992590,\n      \"txBytes\": \"SGljIG5vbiBzaXQgc3VudC4=\"\n   }'")
 			}
 		}
 	}
@@ -351,7 +375,7 @@ func BuildStakingParamsPayload(sdkUtilitiesStakingParamsMessage string) (*sdkuti
 		if sdkUtilitiesStakingParamsMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesStakingParamsMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Ut voluptas aut excepturi.\",\n      \"port\": 5921602754859307309\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Quo repudiandae maiores eos odio est.\",\n      \"port\": 3421539996575594981\n   }'")
 			}
 		}
 	}
@@ -375,7 +399,7 @@ func BuildStakingPoolPayload(sdkUtilitiesStakingPoolMessage string) (*sdkutiliti
 		if sdkUtilitiesStakingPoolMessage != "" {
 			err = json.Unmarshal([]byte(sdkUtilitiesStakingPoolMessage), &message)
 			if err != nil {
-				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Molestias non beatae architecto.\",\n      \"port\": 6434681980998127408\n   }'")
+				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Enim perspiciatis est nihil unde.\",\n      \"port\": 8667526504005080522\n   }'")
 			}
 		}
 	}

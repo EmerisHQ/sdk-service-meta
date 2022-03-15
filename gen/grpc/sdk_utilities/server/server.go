@@ -29,6 +29,7 @@ type Server struct {
 	MintInflationH       goagrpc.UnaryHandler
 	MintParamsH          goagrpc.UnaryHandler
 	MintAnnualProvisionH goagrpc.UnaryHandler
+	MintEpochProvisionsH goagrpc.UnaryHandler
 	DelegatorRewardsH    goagrpc.UnaryHandler
 	EstimateFeesH        goagrpc.UnaryHandler
 	StakingParamsH       goagrpc.UnaryHandler
@@ -56,6 +57,7 @@ func New(e *sdkutilities.Endpoints, uh goagrpc.UnaryHandler) *Server {
 		MintInflationH:       NewMintInflationHandler(e.MintInflation, uh),
 		MintParamsH:          NewMintParamsHandler(e.MintParams, uh),
 		MintAnnualProvisionH: NewMintAnnualProvisionHandler(e.MintAnnualProvision, uh),
+		MintEpochProvisionsH: NewMintEpochProvisionsHandler(e.MintEpochProvisions, uh),
 		DelegatorRewardsH:    NewDelegatorRewardsHandler(e.DelegatorRewards, uh),
 		EstimateFeesH:        NewEstimateFeesHandler(e.EstimateFees, uh),
 		StakingParamsH:       NewStakingParamsHandler(e.StakingParams, uh),
@@ -292,6 +294,27 @@ func (s *Server) MintAnnualProvision(ctx context.Context, message *sdk_utilities
 		return nil, goagrpc.EncodeError(err)
 	}
 	return resp.(*sdk_utilitiespb.MintAnnualProvisionResponse), nil
+}
+
+// NewMintEpochProvisionsHandler creates a gRPC handler which serves the
+// "sdk-utilities" service "mintEpochProvisions" endpoint.
+func NewMintEpochProvisionsHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+	if h == nil {
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeMintEpochProvisionsRequest, EncodeMintEpochProvisionsResponse)
+	}
+	return h
+}
+
+// MintEpochProvisions implements the "MintEpochProvisions" method in
+// sdk_utilitiespb.SdkUtilitiesServer interface.
+func (s *Server) MintEpochProvisions(ctx context.Context, message *sdk_utilitiespb.MintEpochProvisionsRequest) (*sdk_utilitiespb.MintEpochProvisionsResponse, error) {
+	ctx = context.WithValue(ctx, goa.MethodKey, "mintEpochProvisions")
+	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
+	resp, err := s.MintEpochProvisionsH.Handle(ctx, message)
+	if err != nil {
+		return nil, goagrpc.EncodeError(err)
+	}
+	return resp.(*sdk_utilitiespb.MintEpochProvisionsResponse), nil
 }
 
 // NewDelegatorRewardsHandler creates a gRPC handler which serves the
