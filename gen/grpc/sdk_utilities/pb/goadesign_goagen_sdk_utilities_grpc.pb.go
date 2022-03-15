@@ -50,6 +50,8 @@ type SdkUtilitiesClient interface {
 	EstimateFees(ctx context.Context, in *EstimateFeesRequest, opts ...grpc.CallOption) (*EstimateFeesResponse, error)
 	// StakingParams implements stakingParams.
 	StakingParams(ctx context.Context, in *StakingParamsRequest, opts ...grpc.CallOption) (*StakingParamsResponse, error)
+	// StakingPool implements stakingPool.
+	StakingPool(ctx context.Context, in *StakingPoolRequest, opts ...grpc.CallOption) (*StakingPoolResponse, error)
 }
 
 type sdkUtilitiesClient struct {
@@ -186,6 +188,15 @@ func (c *sdkUtilitiesClient) StakingParams(ctx context.Context, in *StakingParam
 	return out, nil
 }
 
+func (c *sdkUtilitiesClient) StakingPool(ctx context.Context, in *StakingPoolRequest, opts ...grpc.CallOption) (*StakingPoolResponse, error) {
+	out := new(StakingPoolResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/StakingPool", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SdkUtilitiesServer is the server API for SdkUtilities service.
 // All implementations must embed UnimplementedSdkUtilitiesServer
 // for forward compatibility
@@ -218,6 +229,8 @@ type SdkUtilitiesServer interface {
 	EstimateFees(context.Context, *EstimateFeesRequest) (*EstimateFeesResponse, error)
 	// StakingParams implements stakingParams.
 	StakingParams(context.Context, *StakingParamsRequest) (*StakingParamsResponse, error)
+	// StakingPool implements stakingPool.
+	StakingPool(context.Context, *StakingPoolRequest) (*StakingPoolResponse, error)
 	mustEmbedUnimplementedSdkUtilitiesServer()
 }
 
@@ -266,6 +279,9 @@ func (UnimplementedSdkUtilitiesServer) EstimateFees(context.Context, *EstimateFe
 }
 func (UnimplementedSdkUtilitiesServer) StakingParams(context.Context, *StakingParamsRequest) (*StakingParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StakingParams not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) StakingPool(context.Context, *StakingPoolRequest) (*StakingPoolResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StakingPool not implemented")
 }
 func (UnimplementedSdkUtilitiesServer) mustEmbedUnimplementedSdkUtilitiesServer() {}
 
@@ -532,6 +548,24 @@ func _SdkUtilities_StakingParams_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SdkUtilities_StakingPool_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StakingPoolRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).StakingPool(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/StakingPool",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).StakingPool(ctx, req.(*StakingPoolRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SdkUtilities_ServiceDesc is the grpc.ServiceDesc for SdkUtilities service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -594,6 +628,10 @@ var SdkUtilities_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StakingParams",
 			Handler:    _SdkUtilities_StakingParams_Handler,
+		},
+		{
+			MethodName: "StakingPool",
+			Handler:    _SdkUtilities_StakingPool_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

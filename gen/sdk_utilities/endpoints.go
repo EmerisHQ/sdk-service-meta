@@ -29,6 +29,7 @@ type Endpoints struct {
 	DelegatorRewards    goa.Endpoint
 	EstimateFees        goa.Endpoint
 	StakingParams       goa.Endpoint
+	StakingPool         goa.Endpoint
 }
 
 // NewEndpoints wraps the methods of the "sdk-utilities" service with endpoints.
@@ -48,6 +49,7 @@ func NewEndpoints(s Service) *Endpoints {
 		DelegatorRewards:    NewDelegatorRewardsEndpoint(s),
 		EstimateFees:        NewEstimateFeesEndpoint(s),
 		StakingParams:       NewStakingParamsEndpoint(s),
+		StakingPool:         NewStakingPoolEndpoint(s),
 	}
 }
 
@@ -68,6 +70,7 @@ func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
 	e.DelegatorRewards = m(e.DelegatorRewards)
 	e.EstimateFees = m(e.EstimateFees)
 	e.StakingParams = m(e.StakingParams)
+	e.StakingPool = m(e.StakingPool)
 }
 
 // NewAccountNumbersEndpoint returns an endpoint function that calls the method
@@ -193,5 +196,14 @@ func NewStakingParamsEndpoint(s Service) goa.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
 		p := req.(*StakingParamsPayload)
 		return s.StakingParams(ctx, p)
+	}
+}
+
+// NewStakingPoolEndpoint returns an endpoint function that calls the method
+// "stakingPool" of service "sdk-utilities".
+func NewStakingPoolEndpoint(s Service) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*StakingPoolPayload)
+		return s.StakingPool(ctx, p)
 	}
 }

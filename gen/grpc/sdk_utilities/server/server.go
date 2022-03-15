@@ -32,6 +32,7 @@ type Server struct {
 	DelegatorRewardsH    goagrpc.UnaryHandler
 	EstimateFeesH        goagrpc.UnaryHandler
 	StakingParamsH       goagrpc.UnaryHandler
+	StakingPoolH         goagrpc.UnaryHandler
 	sdk_utilitiespb.UnimplementedSdkUtilitiesServer
 }
 
@@ -58,6 +59,7 @@ func New(e *sdkutilities.Endpoints, uh goagrpc.UnaryHandler) *Server {
 		DelegatorRewardsH:    NewDelegatorRewardsHandler(e.DelegatorRewards, uh),
 		EstimateFeesH:        NewEstimateFeesHandler(e.EstimateFees, uh),
 		StakingParamsH:       NewStakingParamsHandler(e.StakingParams, uh),
+		StakingPoolH:         NewStakingPoolHandler(e.StakingPool, uh),
 	}
 }
 
@@ -353,4 +355,25 @@ func (s *Server) StakingParams(ctx context.Context, message *sdk_utilitiespb.Sta
 		return nil, goagrpc.EncodeError(err)
 	}
 	return resp.(*sdk_utilitiespb.StakingParamsResponse), nil
+}
+
+// NewStakingPoolHandler creates a gRPC handler which serves the
+// "sdk-utilities" service "stakingPool" endpoint.
+func NewStakingPoolHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+	if h == nil {
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeStakingPoolRequest, EncodeStakingPoolResponse)
+	}
+	return h
+}
+
+// StakingPool implements the "StakingPool" method in
+// sdk_utilitiespb.SdkUtilitiesServer interface.
+func (s *Server) StakingPool(ctx context.Context, message *sdk_utilitiespb.StakingPoolRequest) (*sdk_utilitiespb.StakingPoolResponse, error) {
+	ctx = context.WithValue(ctx, goa.MethodKey, "stakingPool")
+	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
+	resp, err := s.StakingPoolH.Handle(ctx, message)
+	if err != nil {
+		return nil, goagrpc.EncodeError(err)
+	}
+	return resp.(*sdk_utilitiespb.StakingPoolResponse), nil
 }

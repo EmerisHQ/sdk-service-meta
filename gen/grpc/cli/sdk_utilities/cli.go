@@ -22,17 +22,17 @@ import (
 //    command (subcommand1|subcommand2|...)
 //
 func UsageCommands() string {
-	return `sdk-utilities (account-numbers|supply|query-tx|broadcast-tx|tx-metadata|block|liquidity-params|liquidity-pools|mint-inflation|mint-params|mint-annual-provision|delegator-rewards|estimate-fees|staking-params)
+	return `sdk-utilities (account-numbers|supply|query-tx|broadcast-tx|tx-metadata|block|liquidity-params|liquidity-pools|mint-inflation|mint-params|mint-annual-provision|delegator-rewards|estimate-fees|staking-params|staking-pool)
 `
 }
 
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` sdk-utilities account-numbers --message '{
-      "addresHex": "Consequatur natus animi adipisci repellendus.",
-      "bech32Prefix": "Ea est sed laborum laborum quam.",
-      "chainName": "Dicta explicabo.",
-      "port": 440216803524535827
+      "addresHex": "Et iure.",
+      "bech32Prefix": "Et dolor quisquam est et aspernatur sunt.",
+      "chainName": "Consequatur natus animi adipisci repellendus.",
+      "port": 5475292029636396073
    }'` + "\n" +
 		""
 }
@@ -84,6 +84,9 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 
 		sdkUtilitiesStakingParamsFlags       = flag.NewFlagSet("staking-params", flag.ExitOnError)
 		sdkUtilitiesStakingParamsMessageFlag = sdkUtilitiesStakingParamsFlags.String("message", "", "")
+
+		sdkUtilitiesStakingPoolFlags       = flag.NewFlagSet("staking-pool", flag.ExitOnError)
+		sdkUtilitiesStakingPoolMessageFlag = sdkUtilitiesStakingPoolFlags.String("message", "", "")
 	)
 	sdkUtilitiesFlags.Usage = sdkUtilitiesUsage
 	sdkUtilitiesAccountNumbersFlags.Usage = sdkUtilitiesAccountNumbersUsage
@@ -100,6 +103,7 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 	sdkUtilitiesDelegatorRewardsFlags.Usage = sdkUtilitiesDelegatorRewardsUsage
 	sdkUtilitiesEstimateFeesFlags.Usage = sdkUtilitiesEstimateFeesUsage
 	sdkUtilitiesStakingParamsFlags.Usage = sdkUtilitiesStakingParamsUsage
+	sdkUtilitiesStakingPoolFlags.Usage = sdkUtilitiesStakingPoolUsage
 
 	if err := flag.CommandLine.Parse(os.Args[1:]); err != nil {
 		return nil, nil, err
@@ -177,6 +181,9 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "staking-params":
 				epf = sdkUtilitiesStakingParamsFlags
 
+			case "staking-pool":
+				epf = sdkUtilitiesStakingPoolFlags
+
 			}
 
 		}
@@ -244,6 +251,9 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "staking-params":
 				endpoint = c.StakingParams()
 				data, err = sdkutilitiesc.BuildStakingParamsPayload(*sdkUtilitiesStakingParamsMessageFlag)
+			case "staking-pool":
+				endpoint = c.StakingPool()
+				data, err = sdkutilitiesc.BuildStakingPoolPayload(*sdkUtilitiesStakingPoolMessageFlag)
 			}
 		}
 	}
@@ -276,6 +286,7 @@ COMMAND:
     delegator-rewards: DelegatorRewards implements delegatorRewards.
     estimate-fees: EstimateFees implements estimateFees.
     staking-params: StakingParams implements stakingParams.
+    staking-pool: StakingPool implements stakingPool.
 
 Additional help:
     %[1]s sdk-utilities COMMAND --help
@@ -289,10 +300,10 @@ AccountNumbers implements accountNumbers.
 
 Example:
     %[1]s sdk-utilities account-numbers --message '{
-      "addresHex": "Consequatur natus animi adipisci repellendus.",
-      "bech32Prefix": "Ea est sed laborum laborum quam.",
-      "chainName": "Dicta explicabo.",
-      "port": 440216803524535827
+      "addresHex": "Et iure.",
+      "bech32Prefix": "Et dolor quisquam est et aspernatur sunt.",
+      "chainName": "Consequatur natus animi adipisci repellendus.",
+      "port": 5475292029636396073
    }'
 `, os.Args[0])
 }
@@ -305,9 +316,9 @@ Supply implements supply.
 
 Example:
     %[1]s sdk-utilities supply --message '{
-      "chainName": "Omnis et iure.",
-      "paginationKey": "Accusantium sunt rem voluptas sed.",
-      "port": 6610216662945158602
+      "chainName": "Dicta quia velit.",
+      "paginationKey": "Quis culpa et blanditiis veritatis harum possimus.",
+      "port": 3229902183543090429
    }'
 `, os.Args[0])
 }
@@ -320,9 +331,9 @@ QueryTx implements queryTx.
 
 Example:
     %[1]s sdk-utilities query-tx --message '{
-      "chainName": "Dicta quia velit.",
-      "hash": "Quis culpa et blanditiis veritatis harum possimus.",
-      "port": 3229902183543090429
+      "chainName": "Itaque tenetur explicabo est neque.",
+      "hash": "Deleniti maxime quos consequatur sed ab ut.",
+      "port": 1748383819728833353
    }'
 `, os.Args[0])
 }
@@ -335,9 +346,9 @@ BroadcastTx implements broadcastTx.
 
 Example:
     %[1]s sdk-utilities broadcast-tx --message '{
-      "chainName": "Consequatur sed ab ut sit debitis dicta.",
-      "port": 2949028904261297273,
-      "txBytes": "U3VzY2lwaXQgdm9sdXB0YXMgYWxpYXMgZW5pbSBzaXQgYXQu"
+      "chainName": "Excepturi eos reiciendis natus.",
+      "port": 795517746472964620,
+      "txBytes": "TnVsbGEgY29uc2VxdWF0dXIgc2ludC4="
    }'
 `, os.Args[0])
 }
@@ -350,7 +361,7 @@ TxMetadata implements txMetadata.
 
 Example:
     %[1]s sdk-utilities tx-metadata --message '{
-      "txBytes": "Q3VwaWRpdGF0ZSBudWxsYSBjb25zZXF1YXR1ciBzaW50Lg=="
+      "txBytes": "VGVuZXR1ciBhdXQu"
    }'
 `, os.Args[0])
 }
@@ -363,9 +374,9 @@ Block implements block.
 
 Example:
     %[1]s sdk-utilities block --message '{
-      "chainName": "Praesentium enim.",
-      "height": 8154514054136509861,
-      "port": 3263659220330205886
+      "chainName": "Perferendis recusandae enim recusandae facilis temporibus.",
+      "height": 1117726520142239780,
+      "port": 6273086711467444602
    }'
 `, os.Args[0])
 }
@@ -378,8 +389,8 @@ LiquidityParams implements liquidityParams.
 
 Example:
     %[1]s sdk-utilities liquidity-params --message '{
-      "chainName": "Enim recusandae facilis temporibus amet occaecati.",
-      "port": 7149639189603788787
+      "chainName": "Qui qui aut.",
+      "port": 7298747792563590144
    }'
 `, os.Args[0])
 }
@@ -392,8 +403,8 @@ LiquidityPools implements liquidityPools.
 
 Example:
     %[1]s sdk-utilities liquidity-pools --message '{
-      "chainName": "Qui qui aut.",
-      "port": 7298747792563590144
+      "chainName": "Similique similique ea eaque dolorem.",
+      "port": 3447600267286363243
    }'
 `, os.Args[0])
 }
@@ -406,8 +417,8 @@ MintInflation implements mintInflation.
 
 Example:
     %[1]s sdk-utilities mint-inflation --message '{
-      "chainName": "Similique similique ea eaque dolorem.",
-      "port": 3447600267286363243
+      "chainName": "Autem fugiat optio.",
+      "port": 1436159326253711496
    }'
 `, os.Args[0])
 }
@@ -420,8 +431,8 @@ MintParams implements mintParams.
 
 Example:
     %[1]s sdk-utilities mint-params --message '{
-      "chainName": "Autem fugiat optio.",
-      "port": 1436159326253711496
+      "chainName": "Sequi praesentium veniam ut.",
+      "port": 6079915492823298048
    }'
 `, os.Args[0])
 }
@@ -434,8 +445,8 @@ MintAnnualProvision implements mintAnnualProvision.
 
 Example:
     %[1]s sdk-utilities mint-annual-provision --message '{
-      "chainName": "Sequi praesentium veniam ut.",
-      "port": 6079915492823298048
+      "chainName": "Eum eos maxime esse nulla quis.",
+      "port": 2387078593804772203
    }'
 `, os.Args[0])
 }
@@ -448,10 +459,10 @@ DelegatorRewards implements delegatorRewards.
 
 Example:
     %[1]s sdk-utilities delegator-rewards --message '{
-      "addresHex": "Ut reiciendis ratione voluptatum velit.",
-      "bech32Prefix": "Quis omnis hic eum nostrum.",
-      "chainName": "Eum eos maxime esse nulla quis.",
-      "port": 2387078593804772203
+      "addresHex": "Id et velit occaecati ut veritatis.",
+      "bech32Prefix": "Quo animi.",
+      "chainName": "Ut reiciendis ratione voluptatum velit.",
+      "port": 4588507375292094985
    }'
 `, os.Args[0])
 }
@@ -464,9 +475,9 @@ EstimateFees implements estimateFees.
 
 Example:
     %[1]s sdk-utilities estimate-fees --message '{
-      "chainName": "Animi eos id.",
-      "port": 2856155593357877119,
-      "txBytes": "T2NjYWVjYXRpIHV0IHZlcml0YXRpcyBxdWkgcXVpLg=="
+      "chainName": "Sequi animi vero.",
+      "port": 6451800745679308343,
+      "txBytes": "UmF0aW9uZSBpdGFxdWUgdGVtcG9yaWJ1cyB1dCB2b2x1cHRhdGVzIHF1aWEgb2ZmaWNpaXMu"
    }'
 `, os.Args[0])
 }
@@ -479,8 +490,22 @@ StakingParams implements stakingParams.
 
 Example:
     %[1]s sdk-utilities staking-params --message '{
-      "chainName": "Eaque optio.",
-      "port": 3825090727569516669
+      "chainName": "Ut voluptas aut excepturi.",
+      "port": 5921602754859307309
+   }'
+`, os.Args[0])
+}
+
+func sdkUtilitiesStakingPoolUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities staking-pool -message JSON
+
+StakingPool implements stakingPool.
+    -message JSON: 
+
+Example:
+    %[1]s sdk-utilities staking-pool --message '{
+      "chainName": "Molestias non beatae architecto.",
+      "port": 6434681980998127408
    }'
 `, os.Args[0])
 }

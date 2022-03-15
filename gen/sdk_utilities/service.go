@@ -41,6 +41,8 @@ type Service interface {
 	EstimateFees(context.Context, *EstimateFeesPayload) (res *Simulation, err error)
 	// StakingParams implements stakingParams.
 	StakingParams(context.Context, *StakingParamsPayload) (res *StakingParams2, err error)
+	// StakingPool implements stakingPool.
+	StakingPool(context.Context, *StakingPoolPayload) (res *StakingPool2, err error)
 }
 
 // ServiceName is the name of the service as defined in the design. This is the
@@ -51,7 +53,7 @@ const ServiceName = "sdk-utilities"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [14]string{"accountNumbers", "supply", "queryTx", "broadcastTx", "txMetadata", "block", "liquidityParams", "liquidityPools", "mintInflation", "mintParams", "mintAnnualProvision", "delegatorRewards", "estimateFees", "stakingParams"}
+var MethodNames = [15]string{"accountNumbers", "supply", "queryTx", "broadcastTx", "txMetadata", "block", "liquidityParams", "liquidityPools", "mintInflation", "mintParams", "mintAnnualProvision", "delegatorRewards", "estimateFees", "stakingParams", "stakingPool"}
 
 // AccountNumbers2 is the result type of the sdk-utilities service
 // accountNumbers method.
@@ -276,6 +278,21 @@ type StakingParams2 struct {
 // StakingParamsPayload is the payload type of the sdk-utilities service
 // stakingParams method.
 type StakingParamsPayload struct {
+	// Chain to get data from
+	ChainName string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
+}
+
+// StakingPool2 is the result type of the sdk-utilities service stakingPool
+// method.
+type StakingPool2 struct {
+	StakingPool []byte
+}
+
+// StakingPoolPayload is the payload type of the sdk-utilities service
+// stakingPool method.
+type StakingPoolPayload struct {
 	// Chain to get data from
 	ChainName string
 	// gRPC port for selected chain, defaults to 9090

@@ -253,3 +253,19 @@ func (c *Client) StakingParams() goa.Endpoint {
 		return res, nil
 	}
 }
+
+// StakingPool calls the "StakingPool" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) StakingPool() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildStakingPoolFunc(c.grpccli, c.opts...),
+			EncodeStakingPoolRequest,
+			DecodeStakingPoolResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}

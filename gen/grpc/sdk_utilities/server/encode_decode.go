@@ -444,3 +444,33 @@ func DecodeStakingParamsRequest(ctx context.Context, v interface{}, md metadata.
 	}
 	return payload, nil
 }
+
+// EncodeStakingPoolResponse encodes responses from the "sdk-utilities" service
+// "stakingPool" endpoint.
+func EncodeStakingPoolResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.(*sdkutilities.StakingPool2)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "stakingPool", "*sdkutilities.StakingPool2", v)
+	}
+	resp := NewStakingPoolResponse(result)
+	return resp, nil
+}
+
+// DecodeStakingPoolRequest decodes requests sent to "sdk-utilities" service
+// "stakingPool" endpoint.
+func DecodeStakingPoolRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.StakingPoolRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.StakingPoolRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "stakingPool", "*sdk_utilitiespb.StakingPoolRequest", v)
+		}
+	}
+	var payload *sdkutilities.StakingPoolPayload
+	{
+		payload = NewStakingPoolPayload(message)
+	}
+	return payload, nil
+}

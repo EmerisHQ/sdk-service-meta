@@ -392,6 +392,28 @@ func NewStakingParamsResponse(result *sdkutilities.StakingParams2) *sdk_utilitie
 	return message
 }
 
+// NewStakingPoolPayload builds the payload of the "stakingPool" endpoint of
+// the "sdk-utilities" service from the gRPC request type.
+func NewStakingPoolPayload(message *sdk_utilitiespb.StakingPoolRequest) *sdkutilities.StakingPoolPayload {
+	v := &sdkutilities.StakingPoolPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+	return v
+}
+
+// NewStakingPoolResponse builds the gRPC response type from the result of the
+// "stakingPool" endpoint of the "sdk-utilities" service.
+func NewStakingPoolResponse(result *sdkutilities.StakingPool2) *sdk_utilitiespb.StakingPoolResponse {
+	message := &sdk_utilitiespb.StakingPoolResponse{
+		StakingPool: result.StakingPool,
+	}
+	return message
+}
+
 // ValidateBroadcastTxRequest runs the validations defined on
 // BroadcastTxRequest.
 func ValidateBroadcastTxRequest(message *sdk_utilitiespb.BroadcastTxRequest) (err error) {

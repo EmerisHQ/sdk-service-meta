@@ -378,6 +378,27 @@ func NewStakingParamsResult(message *sdk_utilitiespb.StakingParamsResponse) *sdk
 	return result
 }
 
+// NewStakingPoolRequest builds the gRPC request type from the payload of the
+// "stakingPool" endpoint of the "sdk-utilities" service.
+func NewStakingPoolRequest(payload *sdkutilities.StakingPoolPayload) *sdk_utilitiespb.StakingPoolRequest {
+	message := &sdk_utilitiespb.StakingPoolRequest{
+		ChainName: payload.ChainName,
+	}
+	if payload.Port != nil {
+		message.Port = int32(*payload.Port)
+	}
+	return message
+}
+
+// NewStakingPoolResult builds the result type of the "stakingPool" endpoint of
+// the "sdk-utilities" service from the gRPC response type.
+func NewStakingPoolResult(message *sdk_utilitiespb.StakingPoolResponse) *sdkutilities.StakingPool2 {
+	result := &sdkutilities.StakingPool2{
+		StakingPool: message.StakingPool,
+	}
+	return result
+}
+
 // ValidateSupplyResponse runs the validations defined on SupplyResponse.
 func ValidateSupplyResponse(message *sdk_utilitiespb.SupplyResponse) (err error) {
 	if message.Coins == nil {
@@ -484,6 +505,15 @@ func ValidateMintAnnualProvisionResponse(message *sdk_utilitiespb.MintAnnualProv
 func ValidateStakingParamsResponse(message *sdk_utilitiespb.StakingParamsResponse) (err error) {
 	if message.StakingParams == nil {
 		err = goa.MergeErrors(err, goa.MissingFieldError("stakingParams", "message"))
+	}
+	return
+}
+
+// ValidateStakingPoolResponse runs the validations defined on
+// StakingPoolResponse.
+func ValidateStakingPoolResponse(message *sdk_utilitiespb.StakingPoolResponse) (err error) {
+	if message.StakingPool == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("stakingPool", "message"))
 	}
 	return
 }
