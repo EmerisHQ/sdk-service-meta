@@ -491,9 +491,6 @@ func DecodeDelegatorRewardsResponse(ctx context.Context, v interface{}, hdr, trl
 	if !ok {
 		return nil, goagrpc.ErrInvalidType("sdk-utilities", "delegatorRewards", "*sdk_utilitiespb.DelegatorRewardsResponse", v)
 	}
-	if err := ValidateDelegatorRewardsResponse(message); err != nil {
-		return nil, err
-	}
 	res := NewDelegatorRewardsResult(message)
 	return res, nil
 }

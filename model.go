@@ -148,8 +148,6 @@ var DelegatorRewards = Type("DelegatorRewards", func() {
 
 	Field(1, "rewards", ArrayOf(DelegationDelegatorReward))
 	Field(2, "total", ArrayOf(Coin))
-
-	Required("rewards", "total")
 })
 
 var DelegationDelegatorReward = Type("DelegationDelegatorReward", func() {
