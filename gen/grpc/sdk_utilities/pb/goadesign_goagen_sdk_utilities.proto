@@ -35,6 +35,8 @@ service SdkUtilities {
 	rpc MintParams (MintParamsRequest) returns (MintParamsResponse);
 	// MintAnnualProvision implements mintAnnualProvision.
 	rpc MintAnnualProvision (MintAnnualProvisionRequest) returns (MintAnnualProvisionResponse);
+	// MintEpochProvisions implements mintEpochProvisions.
+	rpc MintEpochProvisions (MintEpochProvisionsRequest) returns (MintEpochProvisionsResponse);
 	// DelegatorRewards implements delegatorRewards.
 	rpc DelegatorRewards (DelegatorRewardsRequest) returns (DelegatorRewardsResponse);
 	// EstimateFees implements estimateFees.
@@ -208,6 +210,17 @@ message MintAnnualProvisionRequest {
 
 message MintAnnualProvisionResponse {
 	bytes mint_annual_provision = 1;
+}
+
+message MintEpochProvisionsRequest {
+	// Chain to get data from
+	string chain_name = 1;
+	// gRPC port for selected chain, defaults to 9090
+	sint32 port = 2;
+}
+
+message MintEpochProvisionsResponse {
+	bytes mint_epoch_provisions = 1;
 }
 
 message DelegatorRewardsRequest {

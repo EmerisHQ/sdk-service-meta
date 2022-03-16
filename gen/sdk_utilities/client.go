@@ -26,6 +26,7 @@ type Client struct {
 	MintInflationEndpoint       goa.Endpoint
 	MintParamsEndpoint          goa.Endpoint
 	MintAnnualProvisionEndpoint goa.Endpoint
+	MintEpochProvisionsEndpoint goa.Endpoint
 	DelegatorRewardsEndpoint    goa.Endpoint
 	EstimateFeesEndpoint        goa.Endpoint
 	StakingParamsEndpoint       goa.Endpoint
@@ -33,7 +34,7 @@ type Client struct {
 }
 
 // NewClient initializes a "sdk-utilities" service client given the endpoints.
-func NewClient(accountNumbers, supply, queryTx, broadcastTx, txMetadata, block, liquidityParams, liquidityPools, mintInflation, mintParams, mintAnnualProvision, delegatorRewards, estimateFees, stakingParams, stakingPool goa.Endpoint) *Client {
+func NewClient(accountNumbers, supply, queryTx, broadcastTx, txMetadata, block, liquidityParams, liquidityPools, mintInflation, mintParams, mintAnnualProvision, mintEpochProvisions, delegatorRewards, estimateFees, stakingParams, stakingPool goa.Endpoint) *Client {
 	return &Client{
 		AccountNumbersEndpoint:      accountNumbers,
 		SupplyEndpoint:              supply,
@@ -46,6 +47,7 @@ func NewClient(accountNumbers, supply, queryTx, broadcastTx, txMetadata, block, 
 		MintInflationEndpoint:       mintInflation,
 		MintParamsEndpoint:          mintParams,
 		MintAnnualProvisionEndpoint: mintAnnualProvision,
+		MintEpochProvisionsEndpoint: mintEpochProvisions,
 		DelegatorRewardsEndpoint:    delegatorRewards,
 		EstimateFeesEndpoint:        estimateFees,
 		StakingParamsEndpoint:       stakingParams,
@@ -166,6 +168,17 @@ func (c *Client) MintAnnualProvision(ctx context.Context, p *MintAnnualProvision
 		return
 	}
 	return ires.(*MintAnnualProvision2), nil
+}
+
+// MintEpochProvisions calls the "mintEpochProvisions" endpoint of the
+// "sdk-utilities" service.
+func (c *Client) MintEpochProvisions(ctx context.Context, p *MintEpochProvisionsPayload) (res *MintEpochProvisions2, err error) {
+	var ires interface{}
+	ires, err = c.MintEpochProvisionsEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*MintEpochProvisions2), nil
 }
 
 // DelegatorRewards calls the "delegatorRewards" endpoint of the

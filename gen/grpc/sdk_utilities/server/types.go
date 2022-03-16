@@ -285,6 +285,29 @@ func NewMintAnnualProvisionResponse(result *sdkutilities.MintAnnualProvision2) *
 	return message
 }
 
+// NewMintEpochProvisionsPayload builds the payload of the
+// "mintEpochProvisions" endpoint of the "sdk-utilities" service from the gRPC
+// request type.
+func NewMintEpochProvisionsPayload(message *sdk_utilitiespb.MintEpochProvisionsRequest) *sdkutilities.MintEpochProvisionsPayload {
+	v := &sdkutilities.MintEpochProvisionsPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+	return v
+}
+
+// NewMintEpochProvisionsResponse builds the gRPC response type from the result
+// of the "mintEpochProvisions" endpoint of the "sdk-utilities" service.
+func NewMintEpochProvisionsResponse(result *sdkutilities.MintEpochProvisions2) *sdk_utilitiespb.MintEpochProvisionsResponse {
+	message := &sdk_utilitiespb.MintEpochProvisionsResponse{
+		MintEpochProvisions: result.MintEpochProvisions,
+	}
+	return message
+}
+
 // NewDelegatorRewardsPayload builds the payload of the "delegatorRewards"
 // endpoint of the "sdk-utilities" service from the gRPC request type.
 func NewDelegatorRewardsPayload(message *sdk_utilitiespb.DelegatorRewardsRequest) *sdkutilities.DelegatorRewardsPayload {

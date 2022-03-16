@@ -35,6 +35,8 @@ type Service interface {
 	MintParams(context.Context, *MintParamsPayload) (res *MintParams2, err error)
 	// MintAnnualProvision implements mintAnnualProvision.
 	MintAnnualProvision(context.Context, *MintAnnualProvisionPayload) (res *MintAnnualProvision2, err error)
+	// MintEpochProvisions implements mintEpochProvisions.
+	MintEpochProvisions(context.Context, *MintEpochProvisionsPayload) (res *MintEpochProvisions2, err error)
 	// DelegatorRewards implements delegatorRewards.
 	DelegatorRewards(context.Context, *DelegatorRewardsPayload) (res *DelegatorRewards2, err error)
 	// EstimateFees implements estimateFees.
@@ -53,7 +55,7 @@ const ServiceName = "sdk-utilities"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [15]string{"accountNumbers", "supply", "queryTx", "broadcastTx", "txMetadata", "block", "liquidityParams", "liquidityPools", "mintInflation", "mintParams", "mintAnnualProvision", "delegatorRewards", "estimateFees", "stakingParams", "stakingPool"}
+var MethodNames = [16]string{"accountNumbers", "supply", "queryTx", "broadcastTx", "txMetadata", "block", "liquidityParams", "liquidityPools", "mintInflation", "mintParams", "mintAnnualProvision", "mintEpochProvisions", "delegatorRewards", "estimateFees", "stakingParams", "stakingPool"}
 
 // AccountNumbers2 is the result type of the sdk-utilities service
 // accountNumbers method.
@@ -202,6 +204,21 @@ type MintAnnualProvision2 struct {
 // MintAnnualProvisionPayload is the payload type of the sdk-utilities service
 // mintAnnualProvision method.
 type MintAnnualProvisionPayload struct {
+	// Chain to get data from
+	ChainName string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
+}
+
+// MintEpochProvisions2 is the result type of the sdk-utilities service
+// mintEpochProvisions method.
+type MintEpochProvisions2 struct {
+	MintEpochProvisions []byte
+}
+
+// MintEpochProvisionsPayload is the payload type of the sdk-utilities service
+// mintEpochProvisions method.
+type MintEpochProvisionsPayload struct {
 	// Chain to get data from
 	ChainName string
 	// gRPC port for selected chain, defaults to 9090

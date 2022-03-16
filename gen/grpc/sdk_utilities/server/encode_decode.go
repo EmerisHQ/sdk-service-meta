@@ -352,6 +352,36 @@ func DecodeMintAnnualProvisionRequest(ctx context.Context, v interface{}, md met
 	return payload, nil
 }
 
+// EncodeMintEpochProvisionsResponse encodes responses from the "sdk-utilities"
+// service "mintEpochProvisions" endpoint.
+func EncodeMintEpochProvisionsResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.(*sdkutilities.MintEpochProvisions2)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "mintEpochProvisions", "*sdkutilities.MintEpochProvisions2", v)
+	}
+	resp := NewMintEpochProvisionsResponse(result)
+	return resp, nil
+}
+
+// DecodeMintEpochProvisionsRequest decodes requests sent to "sdk-utilities"
+// service "mintEpochProvisions" endpoint.
+func DecodeMintEpochProvisionsRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.MintEpochProvisionsRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.MintEpochProvisionsRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "mintEpochProvisions", "*sdk_utilitiespb.MintEpochProvisionsRequest", v)
+		}
+	}
+	var payload *sdkutilities.MintEpochProvisionsPayload
+	{
+		payload = NewMintEpochProvisionsPayload(message)
+	}
+	return payload, nil
+}
+
 // EncodeDelegatorRewardsResponse encodes responses from the "sdk-utilities"
 // service "delegatorRewards" endpoint.
 func EncodeDelegatorRewardsResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {

@@ -125,6 +125,14 @@ var MintAnnualProvision = Type("MintAnnualProvision", func() {
 	Required("mintAnnualProvision")
 })
 
+var MintEpochProvisions = Type("MintEpochProvisions", func() {
+	Description("Mint epoch provisions response")
+
+	Field(1, "mintEpochProvisions", Bytes)
+
+	Required("mintEpochProvisions")
+})
+
 var AccountNumbers = Type("AccountNumbers", func() {
 	Description("Account and sequence numbers for a given account")
 

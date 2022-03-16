@@ -26,6 +26,7 @@ type Endpoints struct {
 	MintInflation       goa.Endpoint
 	MintParams          goa.Endpoint
 	MintAnnualProvision goa.Endpoint
+	MintEpochProvisions goa.Endpoint
 	DelegatorRewards    goa.Endpoint
 	EstimateFees        goa.Endpoint
 	StakingParams       goa.Endpoint
@@ -46,6 +47,7 @@ func NewEndpoints(s Service) *Endpoints {
 		MintInflation:       NewMintInflationEndpoint(s),
 		MintParams:          NewMintParamsEndpoint(s),
 		MintAnnualProvision: NewMintAnnualProvisionEndpoint(s),
+		MintEpochProvisions: NewMintEpochProvisionsEndpoint(s),
 		DelegatorRewards:    NewDelegatorRewardsEndpoint(s),
 		EstimateFees:        NewEstimateFeesEndpoint(s),
 		StakingParams:       NewStakingParamsEndpoint(s),
@@ -67,6 +69,7 @@ func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
 	e.MintInflation = m(e.MintInflation)
 	e.MintParams = m(e.MintParams)
 	e.MintAnnualProvision = m(e.MintAnnualProvision)
+	e.MintEpochProvisions = m(e.MintEpochProvisions)
 	e.DelegatorRewards = m(e.DelegatorRewards)
 	e.EstimateFees = m(e.EstimateFees)
 	e.StakingParams = m(e.StakingParams)
@@ -169,6 +172,15 @@ func NewMintAnnualProvisionEndpoint(s Service) goa.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
 		p := req.(*MintAnnualProvisionPayload)
 		return s.MintAnnualProvision(ctx, p)
+	}
+}
+
+// NewMintEpochProvisionsEndpoint returns an endpoint function that calls the
+// method "mintEpochProvisions" of service "sdk-utilities".
+func NewMintEpochProvisionsEndpoint(s Service) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*MintEpochProvisionsPayload)
+		return s.MintEpochProvisions(ctx, p)
 	}
 }
 

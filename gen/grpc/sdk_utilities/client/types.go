@@ -274,6 +274,28 @@ func NewMintAnnualProvisionResult(message *sdk_utilitiespb.MintAnnualProvisionRe
 	return result
 }
 
+// NewMintEpochProvisionsRequest builds the gRPC request type from the payload
+// of the "mintEpochProvisions" endpoint of the "sdk-utilities" service.
+func NewMintEpochProvisionsRequest(payload *sdkutilities.MintEpochProvisionsPayload) *sdk_utilitiespb.MintEpochProvisionsRequest {
+	message := &sdk_utilitiespb.MintEpochProvisionsRequest{
+		ChainName: payload.ChainName,
+	}
+	if payload.Port != nil {
+		message.Port = int32(*payload.Port)
+	}
+	return message
+}
+
+// NewMintEpochProvisionsResult builds the result type of the
+// "mintEpochProvisions" endpoint of the "sdk-utilities" service from the gRPC
+// response type.
+func NewMintEpochProvisionsResult(message *sdk_utilitiespb.MintEpochProvisionsResponse) *sdkutilities.MintEpochProvisions2 {
+	result := &sdkutilities.MintEpochProvisions2{
+		MintEpochProvisions: message.MintEpochProvisions,
+	}
+	return result
+}
+
 // NewDelegatorRewardsRequest builds the gRPC request type from the payload of
 // the "delegatorRewards" endpoint of the "sdk-utilities" service.
 func NewDelegatorRewardsRequest(payload *sdkutilities.DelegatorRewardsPayload) *sdk_utilitiespb.DelegatorRewardsRequest {
@@ -496,6 +518,15 @@ func ValidateMintParamsResponse(message *sdk_utilitiespb.MintParamsResponse) (er
 func ValidateMintAnnualProvisionResponse(message *sdk_utilitiespb.MintAnnualProvisionResponse) (err error) {
 	if message.MintAnnualProvision == nil {
 		err = goa.MergeErrors(err, goa.MissingFieldError("mintAnnualProvision", "message"))
+	}
+	return
+}
+
+// ValidateMintEpochProvisionsResponse runs the validations defined on
+// MintEpochProvisionsResponse.
+func ValidateMintEpochProvisionsResponse(message *sdk_utilitiespb.MintEpochProvisionsResponse) (err error) {
+	if message.MintEpochProvisions == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("mintEpochProvisions", "message"))
 	}
 	return
 }

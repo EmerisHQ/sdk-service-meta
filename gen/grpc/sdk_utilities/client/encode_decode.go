@@ -422,6 +422,44 @@ func DecodeMintAnnualProvisionResponse(ctx context.Context, v interface{}, hdr, 
 	return res, nil
 }
 
+// BuildMintEpochProvisionsFunc builds the remote method to invoke for
+// "sdk-utilities" service "mintEpochProvisions" endpoint.
+func BuildMintEpochProvisionsFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.MintEpochProvisions(ctx, reqpb.(*sdk_utilitiespb.MintEpochProvisionsRequest), opts...)
+		}
+		return grpccli.MintEpochProvisions(ctx, &sdk_utilitiespb.MintEpochProvisionsRequest{}, opts...)
+	}
+}
+
+// EncodeMintEpochProvisionsRequest encodes requests sent to sdk-utilities
+// mintEpochProvisions endpoint.
+func EncodeMintEpochProvisionsRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.MintEpochProvisionsPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "mintEpochProvisions", "*sdkutilities.MintEpochProvisionsPayload", v)
+	}
+	return NewMintEpochProvisionsRequest(payload), nil
+}
+
+// DecodeMintEpochProvisionsResponse decodes responses from the sdk-utilities
+// mintEpochProvisions endpoint.
+func DecodeMintEpochProvisionsResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.MintEpochProvisionsResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "mintEpochProvisions", "*sdk_utilitiespb.MintEpochProvisionsResponse", v)
+	}
+	if err := ValidateMintEpochProvisionsResponse(message); err != nil {
+		return nil, err
+	}
+	res := NewMintEpochProvisionsResult(message)
+	return res, nil
+}
+
 // BuildDelegatorRewardsFunc builds the remote method to invoke for
 // "sdk-utilities" service "delegatorRewards" endpoint.
 func BuildDelegatorRewardsFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {

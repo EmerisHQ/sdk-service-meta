@@ -188,6 +188,18 @@ var _ = Service(sdkUtilities, func() {
 		})
 	})
 
+	Method("mintEpochProvisions", func() {
+		Payload(func() {
+			_ = standardArguments()
+		})
+
+		Result(MintEpochProvisions)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
 	Method("delegatorRewards", func() {
 		Payload(func() {
 			nextFieldIdx := standardArguments()

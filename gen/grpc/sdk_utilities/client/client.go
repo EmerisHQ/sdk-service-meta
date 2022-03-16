@@ -206,6 +206,22 @@ func (c *Client) MintAnnualProvision() goa.Endpoint {
 	}
 }
 
+// MintEpochProvisions calls the "MintEpochProvisions" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) MintEpochProvisions() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildMintEpochProvisionsFunc(c.grpccli, c.opts...),
+			EncodeMintEpochProvisionsRequest,
+			DecodeMintEpochProvisionsResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
 // DelegatorRewards calls the "DelegatorRewards" function in
 // sdk_utilitiespb.SdkUtilitiesClient interface.
 func (c *Client) DelegatorRewards() goa.Endpoint {
