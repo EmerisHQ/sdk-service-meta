@@ -17,8 +17,8 @@ var Coin = Type("Coin", func() {
 var Pagination = Type("Pagination", func() {
 	Description("Pagination used in the Cosmos SDK")
 
-	Field(1, "next_key", String)
-	Field(2, "total", String)
+	Field(1, "next_key", Bytes)
+	Field(2, "total", UInt64)
 })
 
 var Supply = Type("Supply", func() {

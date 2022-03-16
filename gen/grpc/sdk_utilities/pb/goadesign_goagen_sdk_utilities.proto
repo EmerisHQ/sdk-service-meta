@@ -1,4 +1,4 @@
-// Code generated with goa v3.6.1, DO NOT EDIT.
+// Code generated with goa v3.6.2, DO NOT EDIT.
 //
 // sdk-utilities protocol buffer definition
 //
@@ -82,8 +82,8 @@ message Coin {
 }
 // Pagination used in the Cosmos SDK
 message Pagination {
-	string next_key = 1;
-	string total = 2;
+	bytes next_key = 1;
+	uint64 total = 2;
 }
 
 message QueryTxRequest {
