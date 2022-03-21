@@ -22,7 +22,7 @@ import (
 //    command (subcommand1|subcommand2|...)
 //
 func UsageCommands() string {
-	return `sdk-utilities (account-numbers|supply|supply-chain|query-tx|broadcast-tx|tx-metadata|block|liquidity-params|liquidity-pools|mint-inflation|mint-params|mint-annual-provision|mint-epoch-provisions|delegator-rewards|estimate-fees|staking-params|staking-pool|emoney-inflation)
+	return `sdk-utilities (account-numbers|supply|supply-denom|query-tx|broadcast-tx|tx-metadata|block|liquidity-params|liquidity-pools|mint-inflation|mint-params|mint-annual-provision|mint-epoch-provisions|delegator-rewards|estimate-fees|staking-params|staking-pool|emoney-inflation)
 `
 }
 
@@ -49,8 +49,8 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 		sdkUtilitiesSupplyFlags       = flag.NewFlagSet("supply", flag.ExitOnError)
 		sdkUtilitiesSupplyMessageFlag = sdkUtilitiesSupplyFlags.String("message", "", "")
 
-		sdkUtilitiesSupplyChainFlags       = flag.NewFlagSet("supply-chain", flag.ExitOnError)
-		sdkUtilitiesSupplyChainMessageFlag = sdkUtilitiesSupplyChainFlags.String("message", "", "")
+		sdkUtilitiesSupplyDenomFlags       = flag.NewFlagSet("supply-denom", flag.ExitOnError)
+		sdkUtilitiesSupplyDenomMessageFlag = sdkUtilitiesSupplyDenomFlags.String("message", "", "")
 
 		sdkUtilitiesQueryTxFlags       = flag.NewFlagSet("query-tx", flag.ExitOnError)
 		sdkUtilitiesQueryTxMessageFlag = sdkUtilitiesQueryTxFlags.String("message", "", "")
@@ -100,7 +100,7 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 	sdkUtilitiesFlags.Usage = sdkUtilitiesUsage
 	sdkUtilitiesAccountNumbersFlags.Usage = sdkUtilitiesAccountNumbersUsage
 	sdkUtilitiesSupplyFlags.Usage = sdkUtilitiesSupplyUsage
-	sdkUtilitiesSupplyChainFlags.Usage = sdkUtilitiesSupplyChainUsage
+	sdkUtilitiesSupplyDenomFlags.Usage = sdkUtilitiesSupplyDenomUsage
 	sdkUtilitiesQueryTxFlags.Usage = sdkUtilitiesQueryTxUsage
 	sdkUtilitiesBroadcastTxFlags.Usage = sdkUtilitiesBroadcastTxUsage
 	sdkUtilitiesTxMetadataFlags.Usage = sdkUtilitiesTxMetadataUsage
@@ -157,8 +157,8 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "supply":
 				epf = sdkUtilitiesSupplyFlags
 
-			case "supply-chain":
-				epf = sdkUtilitiesSupplyChainFlags
+			case "supply-denom":
+				epf = sdkUtilitiesSupplyDenomFlags
 
 			case "query-tx":
 				epf = sdkUtilitiesQueryTxFlags
@@ -236,9 +236,9 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 			case "supply":
 				endpoint = c.Supply()
 				data, err = sdkutilitiesc.BuildSupplyPayload(*sdkUtilitiesSupplyMessageFlag)
-			case "supply-chain":
-				endpoint = c.SupplyChain()
-				data, err = sdkutilitiesc.BuildSupplyChainPayload(*sdkUtilitiesSupplyChainMessageFlag)
+			case "supply-denom":
+				endpoint = c.SupplyDenom()
+				data, err = sdkutilitiesc.BuildSupplyDenomPayload(*sdkUtilitiesSupplyDenomMessageFlag)
 			case "query-tx":
 				endpoint = c.QueryTx()
 				data, err = sdkutilitiesc.BuildQueryTxPayload(*sdkUtilitiesQueryTxMessageFlag)
@@ -304,7 +304,7 @@ Usage:
 COMMAND:
     account-numbers: AccountNumbers implements accountNumbers.
     supply: Supply implements supply.
-    supply-chain: SupplyChain implements supplyChain.
+    supply-denom: SupplyDenom implements supplyDenom.
     query-tx: QueryTx implements queryTx.
     broadcast-tx: BroadcastTx implements broadcastTx.
     tx-metadata: TxMetadata implements txMetadata.
@@ -356,14 +356,14 @@ Example:
 `, os.Args[0])
 }
 
-func sdkUtilitiesSupplyChainUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities supply-chain -message JSON
+func sdkUtilitiesSupplyDenomUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] sdk-utilities supply-denom -message JSON
 
-SupplyChain implements supplyChain.
+SupplyDenom implements supplyDenom.
     -message JSON: 
 
 Example:
-    %[1]s sdk-utilities supply-chain --message '{
+    %[1]s sdk-utilities supply-denom --message '{
       "chainName": "Qui aut id.",
       "denom": "Inventore quidem est doloribus similique.",
       "port": 7506591601568592400

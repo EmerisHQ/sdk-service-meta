@@ -398,7 +398,7 @@ func (x *Pagination) GetTotal() string {
 	return ""
 }
 
-type SupplyChainRequest struct {
+type SupplyDenomRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -411,8 +411,8 @@ type SupplyChainRequest struct {
 	Denom string `protobuf:"bytes,3,opt,name=denom,proto3" json:"denom,omitempty"`
 }
 
-func (x *SupplyChainRequest) Reset() {
-	*x = SupplyChainRequest{}
+func (x *SupplyDenomRequest) Reset() {
+	*x = SupplyDenomRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_goadesign_goagen_sdk_utilities_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -420,13 +420,13 @@ func (x *SupplyChainRequest) Reset() {
 	}
 }
 
-func (x *SupplyChainRequest) String() string {
+func (x *SupplyDenomRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SupplyChainRequest) ProtoMessage() {}
+func (*SupplyDenomRequest) ProtoMessage() {}
 
-func (x *SupplyChainRequest) ProtoReflect() protoreflect.Message {
+func (x *SupplyDenomRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_goadesign_goagen_sdk_utilities_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -438,33 +438,33 @@ func (x *SupplyChainRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SupplyChainRequest.ProtoReflect.Descriptor instead.
-func (*SupplyChainRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use SupplyDenomRequest.ProtoReflect.Descriptor instead.
+func (*SupplyDenomRequest) Descriptor() ([]byte, []int) {
 	return file_goadesign_goagen_sdk_utilities_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *SupplyChainRequest) GetChainName() string {
+func (x *SupplyDenomRequest) GetChainName() string {
 	if x != nil {
 		return x.ChainName
 	}
 	return ""
 }
 
-func (x *SupplyChainRequest) GetPort() int32 {
+func (x *SupplyDenomRequest) GetPort() int32 {
 	if x != nil {
 		return x.Port
 	}
 	return 0
 }
 
-func (x *SupplyChainRequest) GetDenom() string {
+func (x *SupplyDenomRequest) GetDenom() string {
 	if x != nil {
 		return x.Denom
 	}
 	return ""
 }
 
-type SupplyChainResponse struct {
+type SupplyDenomResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -473,8 +473,8 @@ type SupplyChainResponse struct {
 	Pagination *Pagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 }
 
-func (x *SupplyChainResponse) Reset() {
-	*x = SupplyChainResponse{}
+func (x *SupplyDenomResponse) Reset() {
+	*x = SupplyDenomResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_goadesign_goagen_sdk_utilities_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -482,13 +482,13 @@ func (x *SupplyChainResponse) Reset() {
 	}
 }
 
-func (x *SupplyChainResponse) String() string {
+func (x *SupplyDenomResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SupplyChainResponse) ProtoMessage() {}
+func (*SupplyDenomResponse) ProtoMessage() {}
 
-func (x *SupplyChainResponse) ProtoReflect() protoreflect.Message {
+func (x *SupplyDenomResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_goadesign_goagen_sdk_utilities_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -500,19 +500,19 @@ func (x *SupplyChainResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SupplyChainResponse.ProtoReflect.Descriptor instead.
-func (*SupplyChainResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use SupplyDenomResponse.ProtoReflect.Descriptor instead.
+func (*SupplyDenomResponse) Descriptor() ([]byte, []int) {
 	return file_goadesign_goagen_sdk_utilities_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *SupplyChainResponse) GetCoins() []*Coin {
+func (x *SupplyDenomResponse) GetCoins() []*Coin {
 	if x != nil {
 		return x.Coins
 	}
 	return nil
 }
 
-func (x *SupplyChainResponse) GetPagination() *Pagination {
+func (x *SupplyDenomResponse) GetPagination() *Pagination {
 	if x != nil {
 		return x.Pagination
 	}
@@ -2594,13 +2594,13 @@ var file_goadesign_goagen_sdk_utilities_proto_rawDesc = []byte{
 	0x19, 0x0a, 0x08, 0x6e, 0x65, 0x78, 0x74, 0x5f, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28,
 	0x09, 0x52, 0x07, 0x6e, 0x65, 0x78, 0x74, 0x4b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f,
 	0x74, 0x61, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c,
-	0x22, 0x5d, 0x0a, 0x12, 0x53, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x52,
+	0x22, 0x5d, 0x0a, 0x12, 0x53, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x44, 0x65, 0x6e, 0x6f, 0x6d, 0x52,
 	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x5f,
 	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x63, 0x68, 0x61, 0x69,
 	0x6e, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x18, 0x02, 0x20,
 	0x01, 0x28, 0x11, 0x52, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x64, 0x65, 0x6e,
 	0x6f, 0x6d, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x64, 0x65, 0x6e, 0x6f, 0x6d, 0x22,
-	0x7b, 0x0a, 0x13, 0x53, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x52, 0x65,
+	0x7b, 0x0a, 0x13, 0x53, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x44, 0x65, 0x6e, 0x6f, 0x6d, 0x52, 0x65,
 	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x29, 0x0a, 0x05, 0x63, 0x6f, 0x69, 0x6e, 0x73, 0x18,
 	0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x73, 0x64, 0x6b, 0x5f, 0x75, 0x74, 0x69, 0x6c,
 	0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x52, 0x05, 0x63, 0x6f, 0x69, 0x6e,
@@ -2824,11 +2824,11 @@ var file_goadesign_goagen_sdk_utilities_proto_rawDesc = []byte{
 	0x69, 0x65, 0x73, 0x2e, 0x53, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
 	0x74, 0x1a, 0x1d, 0x2e, 0x73, 0x64, 0x6b, 0x5f, 0x75, 0x74, 0x69, 0x6c, 0x69, 0x74, 0x69, 0x65,
 	0x73, 0x2e, 0x53, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x12, 0x54, 0x0a, 0x0b, 0x53, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x12,
+	0x12, 0x54, 0x0a, 0x0b, 0x53, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x44, 0x65, 0x6e, 0x6f, 0x6d, 0x12,
 	0x21, 0x2e, 0x73, 0x64, 0x6b, 0x5f, 0x75, 0x74, 0x69, 0x6c, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e,
-	0x53, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x53, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x44, 0x65, 0x6e, 0x6f, 0x6d, 0x52, 0x65, 0x71, 0x75, 0x65,
 	0x73, 0x74, 0x1a, 0x22, 0x2e, 0x73, 0x64, 0x6b, 0x5f, 0x75, 0x74, 0x69, 0x6c, 0x69, 0x74, 0x69,
-	0x65, 0x73, 0x2e, 0x53, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x52, 0x65,
+	0x65, 0x73, 0x2e, 0x53, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x44, 0x65, 0x6e, 0x6f, 0x6d, 0x52, 0x65,
 	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x48, 0x0a, 0x07, 0x51, 0x75, 0x65, 0x72, 0x79, 0x54,
 	0x78, 0x12, 0x1d, 0x2e, 0x73, 0x64, 0x6b, 0x5f, 0x75, 0x74, 0x69, 0x6c, 0x69, 0x74, 0x69, 0x65,
 	0x73, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x54, 0x78, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
@@ -2939,8 +2939,8 @@ var file_goadesign_goagen_sdk_utilities_proto_goTypes = []interface{}{
 	(*SupplyResponse)(nil),              // 3: sdk_utilities.SupplyResponse
 	(*Coin)(nil),                        // 4: sdk_utilities.Coin
 	(*Pagination)(nil),                  // 5: sdk_utilities.Pagination
-	(*SupplyChainRequest)(nil),          // 6: sdk_utilities.SupplyChainRequest
-	(*SupplyChainResponse)(nil),         // 7: sdk_utilities.SupplyChainResponse
+	(*SupplyDenomRequest)(nil),          // 6: sdk_utilities.SupplyDenomRequest
+	(*SupplyDenomResponse)(nil),         // 7: sdk_utilities.SupplyDenomResponse
 	(*QueryTxRequest)(nil),              // 8: sdk_utilities.QueryTxRequest
 	(*QueryTxResponse)(nil),             // 9: sdk_utilities.QueryTxResponse
 	(*BroadcastTxRequest)(nil),          // 10: sdk_utilities.BroadcastTxRequest
@@ -2981,8 +2981,8 @@ var file_goadesign_goagen_sdk_utilities_proto_goTypes = []interface{}{
 var file_goadesign_goagen_sdk_utilities_proto_depIdxs = []int32{
 	4,  // 0: sdk_utilities.SupplyResponse.coins:type_name -> sdk_utilities.Coin
 	5,  // 1: sdk_utilities.SupplyResponse.pagination:type_name -> sdk_utilities.Pagination
-	4,  // 2: sdk_utilities.SupplyChainResponse.coins:type_name -> sdk_utilities.Coin
-	5,  // 3: sdk_utilities.SupplyChainResponse.pagination:type_name -> sdk_utilities.Pagination
+	4,  // 2: sdk_utilities.SupplyDenomResponse.coins:type_name -> sdk_utilities.Coin
+	5,  // 3: sdk_utilities.SupplyDenomResponse.pagination:type_name -> sdk_utilities.Pagination
 	14, // 4: sdk_utilities.TxMetadataResponse.messages_metadata:type_name -> sdk_utilities.MsgMetadata
 	15, // 5: sdk_utilities.MsgMetadata.ibc_transfer_metadata:type_name -> sdk_utilities.IBCTransferMetadata
 	4,  // 6: sdk_utilities.IBCTransferMetadata.token:type_name -> sdk_utilities.Coin
@@ -2995,7 +2995,7 @@ var file_goadesign_goagen_sdk_utilities_proto_depIdxs = []int32{
 	43, // 13: sdk_utilities.EmoneyState.assets:type_name -> sdk_utilities.EmoneyAsset
 	0,  // 14: sdk_utilities.SdkUtilities.AccountNumbers:input_type -> sdk_utilities.AccountNumbersRequest
 	2,  // 15: sdk_utilities.SdkUtilities.Supply:input_type -> sdk_utilities.SupplyRequest
-	6,  // 16: sdk_utilities.SdkUtilities.SupplyChain:input_type -> sdk_utilities.SupplyChainRequest
+	6,  // 16: sdk_utilities.SdkUtilities.SupplyDenom:input_type -> sdk_utilities.SupplyDenomRequest
 	8,  // 17: sdk_utilities.SdkUtilities.QueryTx:input_type -> sdk_utilities.QueryTxRequest
 	10, // 18: sdk_utilities.SdkUtilities.BroadcastTx:input_type -> sdk_utilities.BroadcastTxRequest
 	12, // 19: sdk_utilities.SdkUtilities.TxMetadata:input_type -> sdk_utilities.TxMetadataRequest
@@ -3013,7 +3013,7 @@ var file_goadesign_goagen_sdk_utilities_proto_depIdxs = []int32{
 	40, // 31: sdk_utilities.SdkUtilities.EmoneyInflation:input_type -> sdk_utilities.EmoneyInflationRequest
 	1,  // 32: sdk_utilities.SdkUtilities.AccountNumbers:output_type -> sdk_utilities.AccountNumbersResponse
 	3,  // 33: sdk_utilities.SdkUtilities.Supply:output_type -> sdk_utilities.SupplyResponse
-	7,  // 34: sdk_utilities.SdkUtilities.SupplyChain:output_type -> sdk_utilities.SupplyChainResponse
+	7,  // 34: sdk_utilities.SdkUtilities.SupplyDenom:output_type -> sdk_utilities.SupplyDenomResponse
 	9,  // 35: sdk_utilities.SdkUtilities.QueryTx:output_type -> sdk_utilities.QueryTxResponse
 	11, // 36: sdk_utilities.SdkUtilities.BroadcastTx:output_type -> sdk_utilities.BroadcastTxResponse
 	13, // 37: sdk_utilities.SdkUtilities.TxMetadata:output_type -> sdk_utilities.TxMetadataResponse
@@ -3115,7 +3115,7 @@ func file_goadesign_goagen_sdk_utilities_proto_init() {
 			}
 		}
 		file_goadesign_goagen_sdk_utilities_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SupplyChainRequest); i {
+			switch v := v.(*SupplyDenomRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3127,7 +3127,7 @@ func file_goadesign_goagen_sdk_utilities_proto_init() {
 			}
 		}
 		file_goadesign_goagen_sdk_utilities_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SupplyChainResponse); i {
+			switch v := v.(*SupplyDenomResponse); i {
 			case 0:
 				return &v.state
 			case 1:

@@ -62,14 +62,14 @@ func (c *Client) Supply() goa.Endpoint {
 	}
 }
 
-// SupplyChain calls the "SupplyChain" function in
+// SupplyDenom calls the "SupplyDenom" function in
 // sdk_utilitiespb.SdkUtilitiesClient interface.
-func (c *Client) SupplyChain() goa.Endpoint {
+func (c *Client) SupplyDenom() goa.Endpoint {
 	return func(ctx context.Context, v interface{}) (interface{}, error) {
 		inv := goagrpc.NewInvoker(
-			BuildSupplyChainFunc(c.grpccli, c.opts...),
-			EncodeSupplyChainRequest,
-			DecodeSupplyChainResponse)
+			BuildSupplyDenomFunc(c.grpccli, c.opts...),
+			EncodeSupplyDenomRequest,
+			DecodeSupplyDenomResponse)
 		res, err := inv.Invoke(ctx, v)
 		if err != nil {
 			return nil, goa.Fault(err.Error())

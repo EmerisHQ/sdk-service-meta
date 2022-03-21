@@ -26,8 +26,8 @@ type SdkUtilitiesClient interface {
 	AccountNumbers(ctx context.Context, in *AccountNumbersRequest, opts ...grpc.CallOption) (*AccountNumbersResponse, error)
 	// Supply implements supply.
 	Supply(ctx context.Context, in *SupplyRequest, opts ...grpc.CallOption) (*SupplyResponse, error)
-	// SupplyChain implements supplyChain.
-	SupplyChain(ctx context.Context, in *SupplyChainRequest, opts ...grpc.CallOption) (*SupplyChainResponse, error)
+	// SupplyDenom implements supplyDenom.
+	SupplyDenom(ctx context.Context, in *SupplyDenomRequest, opts ...grpc.CallOption) (*SupplyDenomResponse, error)
 	// QueryTx implements queryTx.
 	QueryTx(ctx context.Context, in *QueryTxRequest, opts ...grpc.CallOption) (*QueryTxResponse, error)
 	// BroadcastTx implements broadcastTx.
@@ -86,9 +86,9 @@ func (c *sdkUtilitiesClient) Supply(ctx context.Context, in *SupplyRequest, opts
 	return out, nil
 }
 
-func (c *sdkUtilitiesClient) SupplyChain(ctx context.Context, in *SupplyChainRequest, opts ...grpc.CallOption) (*SupplyChainResponse, error) {
-	out := new(SupplyChainResponse)
-	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/SupplyChain", in, out, opts...)
+func (c *sdkUtilitiesClient) SupplyDenom(ctx context.Context, in *SupplyDenomRequest, opts ...grpc.CallOption) (*SupplyDenomResponse, error) {
+	out := new(SupplyDenomResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/SupplyDenom", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -238,8 +238,8 @@ type SdkUtilitiesServer interface {
 	AccountNumbers(context.Context, *AccountNumbersRequest) (*AccountNumbersResponse, error)
 	// Supply implements supply.
 	Supply(context.Context, *SupplyRequest) (*SupplyResponse, error)
-	// SupplyChain implements supplyChain.
-	SupplyChain(context.Context, *SupplyChainRequest) (*SupplyChainResponse, error)
+	// SupplyDenom implements supplyDenom.
+	SupplyDenom(context.Context, *SupplyDenomRequest) (*SupplyDenomResponse, error)
 	// QueryTx implements queryTx.
 	QueryTx(context.Context, *QueryTxRequest) (*QueryTxResponse, error)
 	// BroadcastTx implements broadcastTx.
@@ -283,8 +283,8 @@ func (UnimplementedSdkUtilitiesServer) AccountNumbers(context.Context, *AccountN
 func (UnimplementedSdkUtilitiesServer) Supply(context.Context, *SupplyRequest) (*SupplyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Supply not implemented")
 }
-func (UnimplementedSdkUtilitiesServer) SupplyChain(context.Context, *SupplyChainRequest) (*SupplyChainResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SupplyChain not implemented")
+func (UnimplementedSdkUtilitiesServer) SupplyDenom(context.Context, *SupplyDenomRequest) (*SupplyDenomResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SupplyDenom not implemented")
 }
 func (UnimplementedSdkUtilitiesServer) QueryTx(context.Context, *QueryTxRequest) (*QueryTxResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryTx not implemented")
@@ -380,20 +380,20 @@ func _SdkUtilities_Supply_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SdkUtilities_SupplyChain_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SupplyChainRequest)
+func _SdkUtilities_SupplyDenom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SupplyDenomRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SdkUtilitiesServer).SupplyChain(ctx, in)
+		return srv.(SdkUtilitiesServer).SupplyDenom(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sdk_utilities.SdkUtilities/SupplyChain",
+		FullMethod: "/sdk_utilities.SdkUtilities/SupplyDenom",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SdkUtilitiesServer).SupplyChain(ctx, req.(*SupplyChainRequest))
+		return srv.(SdkUtilitiesServer).SupplyDenom(ctx, req.(*SupplyDenomRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -684,8 +684,8 @@ var SdkUtilities_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SdkUtilities_Supply_Handler,
 		},
 		{
-			MethodName: "SupplyChain",
-			Handler:    _SdkUtilities_SupplyChain_Handler,
+			MethodName: "SupplyDenom",
+			Handler:    _SdkUtilities_SupplyDenom_Handler,
 		},
 		{
 			MethodName: "QueryTx",

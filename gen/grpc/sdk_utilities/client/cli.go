@@ -72,20 +72,20 @@ func BuildSupplyPayload(sdkUtilitiesSupplyMessage string) (*sdkutilities.SupplyP
 	return v, nil
 }
 
-// BuildSupplyChainPayload builds the payload for the sdk-utilities supplyChain
+// BuildSupplyDenomPayload builds the payload for the sdk-utilities supplyDenom
 // endpoint from CLI flags.
-func BuildSupplyChainPayload(sdkUtilitiesSupplyChainMessage string) (*sdkutilities.SupplyChainPayload, error) {
+func BuildSupplyDenomPayload(sdkUtilitiesSupplyDenomMessage string) (*sdkutilities.SupplyDenomPayload, error) {
 	var err error
-	var message sdk_utilitiespb.SupplyChainRequest
+	var message sdk_utilitiespb.SupplyDenomRequest
 	{
-		if sdkUtilitiesSupplyChainMessage != "" {
-			err = json.Unmarshal([]byte(sdkUtilitiesSupplyChainMessage), &message)
+		if sdkUtilitiesSupplyDenomMessage != "" {
+			err = json.Unmarshal([]byte(sdkUtilitiesSupplyDenomMessage), &message)
 			if err != nil {
 				return nil, fmt.Errorf("invalid JSON for message, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"chainName\": \"Qui aut id.\",\n      \"denom\": \"Inventore quidem est doloribus similique.\",\n      \"port\": 7506591601568592400\n   }'")
 			}
 		}
 	}
-	v := &sdkutilities.SupplyChainPayload{
+	v := &sdkutilities.SupplyDenomPayload{
 		ChainName: message.ChainName,
 	}
 	if message.Port != 0 {

@@ -76,32 +76,32 @@ func DecodeSupplyRequest(ctx context.Context, v interface{}, md metadata.MD) (in
 	return payload, nil
 }
 
-// EncodeSupplyChainResponse encodes responses from the "sdk-utilities" service
-// "supplyChain" endpoint.
-func EncodeSupplyChainResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+// EncodeSupplyDenomResponse encodes responses from the "sdk-utilities" service
+// "supplyDenom" endpoint.
+func EncodeSupplyDenomResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
 	result, ok := v.(*sdkutilities.Supply2)
 	if !ok {
-		return nil, goagrpc.ErrInvalidType("sdk-utilities", "supplyChain", "*sdkutilities.Supply2", v)
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "supplyDenom", "*sdkutilities.Supply2", v)
 	}
-	resp := NewSupplyChainResponse(result)
+	resp := NewSupplyDenomResponse(result)
 	return resp, nil
 }
 
-// DecodeSupplyChainRequest decodes requests sent to "sdk-utilities" service
-// "supplyChain" endpoint.
-func DecodeSupplyChainRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+// DecodeSupplyDenomRequest decodes requests sent to "sdk-utilities" service
+// "supplyDenom" endpoint.
+func DecodeSupplyDenomRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
 	var (
-		message *sdk_utilitiespb.SupplyChainRequest
+		message *sdk_utilitiespb.SupplyDenomRequest
 		ok      bool
 	)
 	{
-		if message, ok = v.(*sdk_utilitiespb.SupplyChainRequest); !ok {
-			return nil, goagrpc.ErrInvalidType("sdk-utilities", "supplyChain", "*sdk_utilitiespb.SupplyChainRequest", v)
+		if message, ok = v.(*sdk_utilitiespb.SupplyDenomRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "supplyDenom", "*sdk_utilitiespb.SupplyDenomRequest", v)
 		}
 	}
-	var payload *sdkutilities.SupplyChainPayload
+	var payload *sdkutilities.SupplyDenomPayload
 	{
-		payload = NewSupplyChainPayload(message)
+		payload = NewSupplyDenomPayload(message)
 	}
 	return payload, nil
 }

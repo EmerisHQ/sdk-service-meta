@@ -76,10 +76,10 @@ func NewSupplyResult(message *sdk_utilitiespb.SupplyResponse) *sdkutilities.Supp
 	return result
 }
 
-// NewSupplyChainRequest builds the gRPC request type from the payload of the
-// "supplyChain" endpoint of the "sdk-utilities" service.
-func NewSupplyChainRequest(payload *sdkutilities.SupplyChainPayload) *sdk_utilitiespb.SupplyChainRequest {
-	message := &sdk_utilitiespb.SupplyChainRequest{
+// NewSupplyDenomRequest builds the gRPC request type from the payload of the
+// "supplyDenom" endpoint of the "sdk-utilities" service.
+func NewSupplyDenomRequest(payload *sdkutilities.SupplyDenomPayload) *sdk_utilitiespb.SupplyDenomRequest {
+	message := &sdk_utilitiespb.SupplyDenomRequest{
 		ChainName: payload.ChainName,
 	}
 	if payload.Port != nil {
@@ -91,9 +91,9 @@ func NewSupplyChainRequest(payload *sdkutilities.SupplyChainPayload) *sdk_utilit
 	return message
 }
 
-// NewSupplyChainResult builds the result type of the "supplyChain" endpoint of
+// NewSupplyDenomResult builds the result type of the "supplyDenom" endpoint of
 // the "sdk-utilities" service from the gRPC response type.
-func NewSupplyChainResult(message *sdk_utilitiespb.SupplyChainResponse) *sdkutilities.Supply2 {
+func NewSupplyDenomResult(message *sdk_utilitiespb.SupplyDenomResponse) *sdkutilities.Supply2 {
 	result := &sdkutilities.Supply2{}
 	if message.Coins != nil {
 		result.Coins = make([]*sdkutilities.Coin, len(message.Coins))
@@ -497,9 +497,9 @@ func ValidatePagination(message *sdk_utilitiespb.Pagination) (err error) {
 	return
 }
 
-// ValidateSupplyChainResponse runs the validations defined on
-// SupplyChainResponse.
-func ValidateSupplyChainResponse(message *sdk_utilitiespb.SupplyChainResponse) (err error) {
+// ValidateSupplyDenomResponse runs the validations defined on
+// SupplyDenomResponse.
+func ValidateSupplyDenomResponse(message *sdk_utilitiespb.SupplyDenomResponse) (err error) {
 	if message.Coins == nil {
 		err = goa.MergeErrors(err, goa.MissingFieldError("coins", "message"))
 	}

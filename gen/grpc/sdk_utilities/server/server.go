@@ -20,7 +20,7 @@ import (
 type Server struct {
 	AccountNumbersH      goagrpc.UnaryHandler
 	SupplyH              goagrpc.UnaryHandler
-	SupplyChainH         goagrpc.UnaryHandler
+	SupplyDenomH         goagrpc.UnaryHandler
 	QueryTxH             goagrpc.UnaryHandler
 	BroadcastTxH         goagrpc.UnaryHandler
 	TxMetadataH          goagrpc.UnaryHandler
@@ -50,7 +50,7 @@ func New(e *sdkutilities.Endpoints, uh goagrpc.UnaryHandler) *Server {
 	return &Server{
 		AccountNumbersH:      NewAccountNumbersHandler(e.AccountNumbers, uh),
 		SupplyH:              NewSupplyHandler(e.Supply, uh),
-		SupplyChainH:         NewSupplyChainHandler(e.SupplyChain, uh),
+		SupplyDenomH:         NewSupplyDenomHandler(e.SupplyDenom, uh),
 		QueryTxH:             NewQueryTxHandler(e.QueryTx, uh),
 		BroadcastTxH:         NewBroadcastTxHandler(e.BroadcastTx, uh),
 		TxMetadataH:          NewTxMetadataHandler(e.TxMetadata, uh),
@@ -111,25 +111,25 @@ func (s *Server) Supply(ctx context.Context, message *sdk_utilitiespb.SupplyRequ
 	return resp.(*sdk_utilitiespb.SupplyResponse), nil
 }
 
-// NewSupplyChainHandler creates a gRPC handler which serves the
-// "sdk-utilities" service "supplyChain" endpoint.
-func NewSupplyChainHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+// NewSupplyDenomHandler creates a gRPC handler which serves the
+// "sdk-utilities" service "supplyDenom" endpoint.
+func NewSupplyDenomHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
 	if h == nil {
-		h = goagrpc.NewUnaryHandler(endpoint, DecodeSupplyChainRequest, EncodeSupplyChainResponse)
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeSupplyDenomRequest, EncodeSupplyDenomResponse)
 	}
 	return h
 }
 
-// SupplyChain implements the "SupplyChain" method in
+// SupplyDenom implements the "SupplyDenom" method in
 // sdk_utilitiespb.SdkUtilitiesServer interface.
-func (s *Server) SupplyChain(ctx context.Context, message *sdk_utilitiespb.SupplyChainRequest) (*sdk_utilitiespb.SupplyChainResponse, error) {
-	ctx = context.WithValue(ctx, goa.MethodKey, "supplyChain")
+func (s *Server) SupplyDenom(ctx context.Context, message *sdk_utilitiespb.SupplyDenomRequest) (*sdk_utilitiespb.SupplyDenomResponse, error) {
+	ctx = context.WithValue(ctx, goa.MethodKey, "supplyDenom")
 	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
-	resp, err := s.SupplyChainH.Handle(ctx, message)
+	resp, err := s.SupplyDenomH.Handle(ctx, message)
 	if err != nil {
 		return nil, goagrpc.EncodeError(err)
 	}
-	return resp.(*sdk_utilitiespb.SupplyChainResponse), nil
+	return resp.(*sdk_utilitiespb.SupplyDenomResponse), nil
 }
 
 // NewQueryTxHandler creates a gRPC handler which serves the "sdk-utilities"

@@ -69,7 +69,7 @@ var _ = Service(sdkUtilities, func() {
 		})
 	})
 
-	Method("supplyChain", func() {
+	Method("supplyDenom", func() {
 		Payload(func() {
 			nextFieldIdx := standardArguments()
 

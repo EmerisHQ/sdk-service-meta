@@ -17,7 +17,7 @@ import (
 type Endpoints struct {
 	AccountNumbers      goa.Endpoint
 	Supply              goa.Endpoint
-	SupplyChain         goa.Endpoint
+	SupplyDenom         goa.Endpoint
 	QueryTx             goa.Endpoint
 	BroadcastTx         goa.Endpoint
 	TxMetadata          goa.Endpoint
@@ -40,7 +40,7 @@ func NewEndpoints(s Service) *Endpoints {
 	return &Endpoints{
 		AccountNumbers:      NewAccountNumbersEndpoint(s),
 		Supply:              NewSupplyEndpoint(s),
-		SupplyChain:         NewSupplyChainEndpoint(s),
+		SupplyDenom:         NewSupplyDenomEndpoint(s),
 		QueryTx:             NewQueryTxEndpoint(s),
 		BroadcastTx:         NewBroadcastTxEndpoint(s),
 		TxMetadata:          NewTxMetadataEndpoint(s),
@@ -64,7 +64,7 @@ func NewEndpoints(s Service) *Endpoints {
 func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
 	e.AccountNumbers = m(e.AccountNumbers)
 	e.Supply = m(e.Supply)
-	e.SupplyChain = m(e.SupplyChain)
+	e.SupplyDenom = m(e.SupplyDenom)
 	e.QueryTx = m(e.QueryTx)
 	e.BroadcastTx = m(e.BroadcastTx)
 	e.TxMetadata = m(e.TxMetadata)
@@ -100,12 +100,12 @@ func NewSupplyEndpoint(s Service) goa.Endpoint {
 	}
 }
 
-// NewSupplyChainEndpoint returns an endpoint function that calls the method
-// "supplyChain" of service "sdk-utilities".
-func NewSupplyChainEndpoint(s Service) goa.Endpoint {
+// NewSupplyDenomEndpoint returns an endpoint function that calls the method
+// "supplyDenom" of service "sdk-utilities".
+func NewSupplyDenomEndpoint(s Service) goa.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
-		p := req.(*SupplyChainPayload)
-		return s.SupplyChain(ctx, p)
+		p := req.(*SupplyDenomPayload)
+		return s.SupplyDenom(ctx, p)
 	}
 }
 
