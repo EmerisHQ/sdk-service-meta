@@ -1,4 +1,4 @@
-// Code generated with goa v3.6.1, DO NOT EDIT.
+// Code generated with goa v3.6.2, DO NOT EDIT.
 //
 // sdk-utilities protocol buffer definition
 //
@@ -45,6 +45,8 @@ service SdkUtilities {
 	rpc StakingParams (StakingParamsRequest) returns (StakingParamsResponse);
 	// StakingPool implements stakingPool.
 	rpc StakingPool (StakingPoolRequest) returns (StakingPoolResponse);
+	// EmoneyInflation implements emoneyInflation.
+	rpc EmoneyInflation (EmoneyInflationRequest) returns (EmoneyInflationResponse);
 }
 
 message AccountNumbersRequest {
@@ -279,4 +281,27 @@ message StakingPoolRequest {
 
 message StakingPoolResponse {
 	bytes staking_pool = 1;
+}
+
+message EmoneyInflationRequest {
+	// Chain to get data from
+	string chain_name = 1;
+	// gRPC port for selected chain, defaults to 9090
+	sint32 port = 2;
+}
+
+message EmoneyInflationResponse {
+	EmoneyState state = 1;
+}
+// e-money specific inflation parameters (state)
+message EmoneyState {
+	string last_applied = 1;
+	string last_applied_height = 2;
+	repeated EmoneyAsset assets = 3;
+}
+// e-money specific inflation parameters (asset)
+message EmoneyAsset {
+	string denom = 1;
+	string inflation = 2;
+	string accum = 3;
 }

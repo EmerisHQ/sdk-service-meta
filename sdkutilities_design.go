@@ -258,5 +258,18 @@ var _ = Service(sdkUtilities, func() {
 		})
 	})
 
+	Method("emoneyInflation", func() {
+		Payload(func() {
+			_ = standardArguments()
+		})
+
+		Result(EmoneyInflation)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+
+	})
+
 	Files("/openapi.json", "./gen/http/openapi.json")
 })

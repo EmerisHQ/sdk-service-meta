@@ -54,6 +54,8 @@ type SdkUtilitiesClient interface {
 	StakingParams(ctx context.Context, in *StakingParamsRequest, opts ...grpc.CallOption) (*StakingParamsResponse, error)
 	// StakingPool implements stakingPool.
 	StakingPool(ctx context.Context, in *StakingPoolRequest, opts ...grpc.CallOption) (*StakingPoolResponse, error)
+	// EmoneyInflation implements emoneyInflation.
+	EmoneyInflation(ctx context.Context, in *EmoneyInflationRequest, opts ...grpc.CallOption) (*EmoneyInflationResponse, error)
 }
 
 type sdkUtilitiesClient struct {
@@ -208,6 +210,15 @@ func (c *sdkUtilitiesClient) StakingPool(ctx context.Context, in *StakingPoolReq
 	return out, nil
 }
 
+func (c *sdkUtilitiesClient) EmoneyInflation(ctx context.Context, in *EmoneyInflationRequest, opts ...grpc.CallOption) (*EmoneyInflationResponse, error) {
+	out := new(EmoneyInflationResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/EmoneyInflation", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SdkUtilitiesServer is the server API for SdkUtilities service.
 // All implementations must embed UnimplementedSdkUtilitiesServer
 // for forward compatibility
@@ -244,6 +255,8 @@ type SdkUtilitiesServer interface {
 	StakingParams(context.Context, *StakingParamsRequest) (*StakingParamsResponse, error)
 	// StakingPool implements stakingPool.
 	StakingPool(context.Context, *StakingPoolRequest) (*StakingPoolResponse, error)
+	// EmoneyInflation implements emoneyInflation.
+	EmoneyInflation(context.Context, *EmoneyInflationRequest) (*EmoneyInflationResponse, error)
 	mustEmbedUnimplementedSdkUtilitiesServer()
 }
 
@@ -298,6 +311,9 @@ func (UnimplementedSdkUtilitiesServer) StakingParams(context.Context, *StakingPa
 }
 func (UnimplementedSdkUtilitiesServer) StakingPool(context.Context, *StakingPoolRequest) (*StakingPoolResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StakingPool not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) EmoneyInflation(context.Context, *EmoneyInflationRequest) (*EmoneyInflationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EmoneyInflation not implemented")
 }
 func (UnimplementedSdkUtilitiesServer) mustEmbedUnimplementedSdkUtilitiesServer() {}
 
@@ -600,6 +616,24 @@ func _SdkUtilities_StakingPool_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SdkUtilities_EmoneyInflation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmoneyInflationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).EmoneyInflation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/EmoneyInflation",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).EmoneyInflation(ctx, req.(*EmoneyInflationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SdkUtilities_ServiceDesc is the grpc.ServiceDesc for SdkUtilities service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -670,6 +704,10 @@ var SdkUtilities_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StakingPool",
 			Handler:    _SdkUtilities_StakingPool_Handler,
+		},
+		{
+			MethodName: "EmoneyInflation",
+			Handler:    _SdkUtilities_EmoneyInflation_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
