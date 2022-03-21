@@ -78,6 +78,41 @@ func NewSupplyResponse(result *sdkutilities.Supply2) *sdk_utilitiespb.SupplyResp
 	return message
 }
 
+// NewSupplyChainPayload builds the payload of the "supplyChain" endpoint of
+// the "sdk-utilities" service from the gRPC request type.
+func NewSupplyChainPayload(message *sdk_utilitiespb.SupplyChainRequest) *sdkutilities.SupplyChainPayload {
+	v := &sdkutilities.SupplyChainPayload{
+		ChainName: message.ChainName,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
+	}
+	if message.Denom != "" {
+		v.Denom = &message.Denom
+	}
+	return v
+}
+
+// NewSupplyChainResponse builds the gRPC response type from the result of the
+// "supplyChain" endpoint of the "sdk-utilities" service.
+func NewSupplyChainResponse(result *sdkutilities.Supply2) *sdk_utilitiespb.SupplyChainResponse {
+	message := &sdk_utilitiespb.SupplyChainResponse{}
+	if result.Coins != nil {
+		message.Coins = make([]*sdk_utilitiespb.Coin, len(result.Coins))
+		for i, val := range result.Coins {
+			message.Coins[i] = &sdk_utilitiespb.Coin{
+				Denom:  val.Denom,
+				Amount: val.Amount,
+			}
+		}
+	}
+	if result.Pagination != nil {
+		message.Pagination = svcSdkutilitiesPaginationToSdkUtilitiespbPagination(result.Pagination)
+	}
+	return message
+}
+
 // NewQueryTxPayload builds the payload of the "queryTx" endpoint of the
 // "sdk-utilities" service from the gRPC request type.
 func NewQueryTxPayload(message *sdk_utilitiespb.QueryTxRequest) *sdkutilities.QueryTxPayload {

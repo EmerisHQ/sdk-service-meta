@@ -17,6 +17,8 @@ type Service interface {
 	AccountNumbers(context.Context, *AccountNumbersPayload) (res *AccountNumbers2, err error)
 	// Supply implements supply.
 	Supply(context.Context, *SupplyPayload) (res *Supply2, err error)
+	// SupplyChain implements supplyChain.
+	SupplyChain(context.Context, *SupplyChainPayload) (res *Supply2, err error)
 	// QueryTx implements queryTx.
 	QueryTx(context.Context, *QueryTxPayload) (res []byte, err error)
 	// BroadcastTx implements broadcastTx.
@@ -57,7 +59,7 @@ const ServiceName = "sdk-utilities"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [17]string{"accountNumbers", "supply", "queryTx", "broadcastTx", "txMetadata", "block", "liquidityParams", "liquidityPools", "mintInflation", "mintParams", "mintAnnualProvision", "mintEpochProvisions", "delegatorRewards", "estimateFees", "stakingParams", "stakingPool", "emoneyInflation"}
+var MethodNames = [18]string{"accountNumbers", "supply", "supplyChain", "queryTx", "broadcastTx", "txMetadata", "block", "liquidityParams", "liquidityPools", "mintInflation", "mintParams", "mintAnnualProvision", "mintEpochProvisions", "delegatorRewards", "estimateFees", "stakingParams", "stakingPool", "emoneyInflation"}
 
 // AccountNumbers2 is the result type of the sdk-utilities service
 // accountNumbers method.
@@ -351,6 +353,17 @@ type StakingPoolPayload struct {
 type Supply2 struct {
 	Coins      []*Coin
 	Pagination *Pagination
+}
+
+// SupplyChainPayload is the payload type of the sdk-utilities service
+// supplyChain method.
+type SupplyChainPayload struct {
+	// Chain to get data from
+	ChainName string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
+	// Denom name
+	Denom *string
 }
 
 // SupplyPayload is the payload type of the sdk-utilities service supply method.

@@ -76,6 +76,36 @@ func DecodeSupplyRequest(ctx context.Context, v interface{}, md metadata.MD) (in
 	return payload, nil
 }
 
+// EncodeSupplyChainResponse encodes responses from the "sdk-utilities" service
+// "supplyChain" endpoint.
+func EncodeSupplyChainResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
+	result, ok := v.(*sdkutilities.Supply2)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "supplyChain", "*sdkutilities.Supply2", v)
+	}
+	resp := NewSupplyChainResponse(result)
+	return resp, nil
+}
+
+// DecodeSupplyChainRequest decodes requests sent to "sdk-utilities" service
+// "supplyChain" endpoint.
+func DecodeSupplyChainRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
+	var (
+		message *sdk_utilitiespb.SupplyChainRequest
+		ok      bool
+	)
+	{
+		if message, ok = v.(*sdk_utilitiespb.SupplyChainRequest); !ok {
+			return nil, goagrpc.ErrInvalidType("sdk-utilities", "supplyChain", "*sdk_utilitiespb.SupplyChainRequest", v)
+		}
+	}
+	var payload *sdkutilities.SupplyChainPayload
+	{
+		payload = NewSupplyChainPayload(message)
+	}
+	return payload, nil
+}
+
 // EncodeQueryTxResponse encodes responses from the "sdk-utilities" service
 // "queryTx" endpoint.
 func EncodeQueryTxResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {

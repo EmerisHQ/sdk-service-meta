@@ -62,6 +62,22 @@ func (c *Client) Supply() goa.Endpoint {
 	}
 }
 
+// SupplyChain calls the "SupplyChain" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) SupplyChain() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildSupplyChainFunc(c.grpccli, c.opts...),
+			EncodeSupplyChainRequest,
+			DecodeSupplyChainResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
 // QueryTx calls the "QueryTx" function in sdk_utilitiespb.SdkUtilitiesClient
 // interface.
 func (c *Client) QueryTx() goa.Endpoint {

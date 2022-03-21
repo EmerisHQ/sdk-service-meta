@@ -89,6 +89,44 @@ func DecodeSupplyResponse(ctx context.Context, v interface{}, hdr, trlr metadata
 	return res, nil
 }
 
+// BuildSupplyChainFunc builds the remote method to invoke for "sdk-utilities"
+// service "supplyChain" endpoint.
+func BuildSupplyChainFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.SupplyChain(ctx, reqpb.(*sdk_utilitiespb.SupplyChainRequest), opts...)
+		}
+		return grpccli.SupplyChain(ctx, &sdk_utilitiespb.SupplyChainRequest{}, opts...)
+	}
+}
+
+// EncodeSupplyChainRequest encodes requests sent to sdk-utilities supplyChain
+// endpoint.
+func EncodeSupplyChainRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.SupplyChainPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "supplyChain", "*sdkutilities.SupplyChainPayload", v)
+	}
+	return NewSupplyChainRequest(payload), nil
+}
+
+// DecodeSupplyChainResponse decodes responses from the sdk-utilities
+// supplyChain endpoint.
+func DecodeSupplyChainResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.SupplyChainResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "supplyChain", "*sdk_utilitiespb.SupplyChainResponse", v)
+	}
+	if err := ValidateSupplyChainResponse(message); err != nil {
+		return nil, err
+	}
+	res := NewSupplyChainResult(message)
+	return res, nil
+}
+
 // BuildQueryTxFunc builds the remote method to invoke for "sdk-utilities"
 // service "queryTx" endpoint.
 func BuildQueryTxFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
