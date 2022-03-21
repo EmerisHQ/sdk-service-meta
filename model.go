@@ -184,6 +184,8 @@ var StakingPool = Type("StakingPool", func() {
 var EmoneyInflation = Type("EmoneyInflation", func() {
 	Description("e-money specific inflation parameters")
 	Field(1, "state", EmoneyState)
+
+	Required("state")
 })
 
 var EmoneyState = Type("EmoneyState", func() {
@@ -191,6 +193,8 @@ var EmoneyState = Type("EmoneyState", func() {
 	Field(1, "last_applied", String)
 	Field(2, "last_applied_height", String)
 	Field(3, "assets", ArrayOf(EmoneyAsset))
+
+	Required("last_applied", "last_applied_height", "assets")
 })
 
 var EmoneyAsset = Type("EmoneyAsset", func() {
@@ -198,4 +202,6 @@ var EmoneyAsset = Type("EmoneyAsset", func() {
 	Field(1, "denom", String)
 	Field(2, "inflation", String)
 	Field(3, "accum", String)
+
+	Required("denom", "inflation", "accum")
 })

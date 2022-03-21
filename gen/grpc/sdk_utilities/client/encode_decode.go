@@ -637,6 +637,9 @@ func DecodeEmoneyInflationResponse(ctx context.Context, v interface{}, hdr, trlr
 	if !ok {
 		return nil, goagrpc.ErrInvalidType("sdk-utilities", "emoneyInflation", "*sdk_utilitiespb.EmoneyInflationResponse", v)
 	}
+	if err := ValidateEmoneyInflationResponse(message); err != nil {
+		return nil, err
+	}
 	res := NewEmoneyInflationResult(message)
 	return res, nil
 }

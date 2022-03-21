@@ -652,28 +652,17 @@ func protobufSdkUtilitiespbIBCHeightToSdkutilitiesIBCHeight(v *sdk_utilitiespb.I
 // svcSdkutilitiesEmoneyStateToSdkUtilitiespbEmoneyState builds a value of type
 // *sdk_utilitiespb.EmoneyState from a value of type *sdkutilities.EmoneyState.
 func svcSdkutilitiesEmoneyStateToSdkUtilitiespbEmoneyState(v *sdkutilities.EmoneyState) *sdk_utilitiespb.EmoneyState {
-	if v == nil {
-		return nil
-	}
-	res := &sdk_utilitiespb.EmoneyState{}
-	if v.LastApplied != nil {
-		res.LastApplied = *v.LastApplied
-	}
-	if v.LastAppliedHeight != nil {
-		res.LastAppliedHeight = *v.LastAppliedHeight
+	res := &sdk_utilitiespb.EmoneyState{
+		LastApplied:       v.LastApplied,
+		LastAppliedHeight: v.LastAppliedHeight,
 	}
 	if v.Assets != nil {
 		res.Assets = make([]*sdk_utilitiespb.EmoneyAsset, len(v.Assets))
 		for i, val := range v.Assets {
-			res.Assets[i] = &sdk_utilitiespb.EmoneyAsset{}
-			if val.Denom != nil {
-				res.Assets[i].Denom = *val.Denom
-			}
-			if val.Inflation != nil {
-				res.Assets[i].Inflation = *val.Inflation
-			}
-			if val.Accum != nil {
-				res.Assets[i].Accum = *val.Accum
+			res.Assets[i] = &sdk_utilitiespb.EmoneyAsset{
+				Denom:     val.Denom,
+				Inflation: val.Inflation,
+				Accum:     val.Accum,
 			}
 		}
 	}
@@ -685,28 +674,17 @@ func svcSdkutilitiesEmoneyStateToSdkUtilitiespbEmoneyState(v *sdkutilities.Emone
 // type *sdkutilities.EmoneyState from a value of type
 // *sdk_utilitiespb.EmoneyState.
 func protobufSdkUtilitiespbEmoneyStateToSdkutilitiesEmoneyState(v *sdk_utilitiespb.EmoneyState) *sdkutilities.EmoneyState {
-	if v == nil {
-		return nil
-	}
-	res := &sdkutilities.EmoneyState{}
-	if v.LastApplied != "" {
-		res.LastApplied = &v.LastApplied
-	}
-	if v.LastAppliedHeight != "" {
-		res.LastAppliedHeight = &v.LastAppliedHeight
+	res := &sdkutilities.EmoneyState{
+		LastApplied:       v.LastApplied,
+		LastAppliedHeight: v.LastAppliedHeight,
 	}
 	if v.Assets != nil {
 		res.Assets = make([]*sdkutilities.EmoneyAsset, len(v.Assets))
 		for i, val := range v.Assets {
-			res.Assets[i] = &sdkutilities.EmoneyAsset{}
-			if val.Denom != "" {
-				res.Assets[i].Denom = &val.Denom
-			}
-			if val.Inflation != "" {
-				res.Assets[i].Inflation = &val.Inflation
-			}
-			if val.Accum != "" {
-				res.Assets[i].Accum = &val.Accum
+			res.Assets[i] = &sdkutilities.EmoneyAsset{
+				Denom:     val.Denom,
+				Inflation: val.Inflation,
+				Accum:     val.Accum,
 			}
 		}
 	}

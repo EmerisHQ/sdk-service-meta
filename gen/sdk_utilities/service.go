@@ -141,9 +141,9 @@ type DelegatorRewardsPayload struct {
 
 // e-money specific inflation parameters (asset)
 type EmoneyAsset struct {
-	Denom     *string
-	Inflation *string
-	Accum     *string
+	Denom     string
+	Inflation string
+	Accum     string
 }
 
 // EmoneyInflation2 is the result type of the sdk-utilities service
@@ -163,8 +163,8 @@ type EmoneyInflationPayload struct {
 
 // e-money specific inflation parameters (state)
 type EmoneyState struct {
-	LastApplied       *string
-	LastAppliedHeight *string
+	LastApplied       string
+	LastAppliedHeight string
 	Assets            []*EmoneyAsset
 }
 
