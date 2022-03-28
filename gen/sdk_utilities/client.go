@@ -17,6 +17,7 @@ import (
 type Client struct {
 	AccountNumbersEndpoint      goa.Endpoint
 	SupplyEndpoint              goa.Endpoint
+	SupplyDenomEndpoint         goa.Endpoint
 	QueryTxEndpoint             goa.Endpoint
 	BroadcastTxEndpoint         goa.Endpoint
 	TxMetadataEndpoint          goa.Endpoint
@@ -35,10 +36,11 @@ type Client struct {
 }
 
 // NewClient initializes a "sdk-utilities" service client given the endpoints.
-func NewClient(accountNumbers, supply, queryTx, broadcastTx, txMetadata, block, liquidityParams, liquidityPools, mintInflation, mintParams, mintAnnualProvision, mintEpochProvisions, delegatorRewards, estimateFees, stakingParams, stakingPool, emoneyInflation goa.Endpoint) *Client {
+func NewClient(accountNumbers, supply, supplyDenom, queryTx, broadcastTx, txMetadata, block, liquidityParams, liquidityPools, mintInflation, mintParams, mintAnnualProvision, mintEpochProvisions, delegatorRewards, estimateFees, stakingParams, stakingPool, emoneyInflation goa.Endpoint) *Client {
 	return &Client{
 		AccountNumbersEndpoint:      accountNumbers,
 		SupplyEndpoint:              supply,
+		SupplyDenomEndpoint:         supplyDenom,
 		QueryTxEndpoint:             queryTx,
 		BroadcastTxEndpoint:         broadcastTx,
 		TxMetadataEndpoint:          txMetadata,
@@ -72,6 +74,16 @@ func (c *Client) AccountNumbers(ctx context.Context, p *AccountNumbersPayload) (
 func (c *Client) Supply(ctx context.Context, p *SupplyPayload) (res *Supply2, err error) {
 	var ires interface{}
 	ires, err = c.SupplyEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(*Supply2), nil
+}
+
+// SupplyDenom calls the "supplyDenom" endpoint of the "sdk-utilities" service.
+func (c *Client) SupplyDenom(ctx context.Context, p *SupplyDenomPayload) (res *Supply2, err error) {
+	var ires interface{}
+	ires, err = c.SupplyDenomEndpoint(ctx, p)
 	if err != nil {
 		return
 	}

@@ -62,6 +62,22 @@ func (c *Client) Supply() goa.Endpoint {
 	}
 }
 
+// SupplyDenom calls the "SupplyDenom" function in
+// sdk_utilitiespb.SdkUtilitiesClient interface.
+func (c *Client) SupplyDenom() goa.Endpoint {
+	return func(ctx context.Context, v interface{}) (interface{}, error) {
+		inv := goagrpc.NewInvoker(
+			BuildSupplyDenomFunc(c.grpccli, c.opts...),
+			EncodeSupplyDenomRequest,
+			DecodeSupplyDenomResponse)
+		res, err := inv.Invoke(ctx, v)
+		if err != nil {
+			return nil, goa.Fault(err.Error())
+		}
+		return res, nil
+	}
+}
+
 // QueryTx calls the "QueryTx" function in sdk_utilitiespb.SdkUtilitiesClient
 // interface.
 func (c *Client) QueryTx() goa.Endpoint {

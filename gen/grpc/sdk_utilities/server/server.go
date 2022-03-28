@@ -20,6 +20,7 @@ import (
 type Server struct {
 	AccountNumbersH      goagrpc.UnaryHandler
 	SupplyH              goagrpc.UnaryHandler
+	SupplyDenomH         goagrpc.UnaryHandler
 	QueryTxH             goagrpc.UnaryHandler
 	BroadcastTxH         goagrpc.UnaryHandler
 	TxMetadataH          goagrpc.UnaryHandler
@@ -49,6 +50,7 @@ func New(e *sdkutilities.Endpoints, uh goagrpc.UnaryHandler) *Server {
 	return &Server{
 		AccountNumbersH:      NewAccountNumbersHandler(e.AccountNumbers, uh),
 		SupplyH:              NewSupplyHandler(e.Supply, uh),
+		SupplyDenomH:         NewSupplyDenomHandler(e.SupplyDenom, uh),
 		QueryTxH:             NewQueryTxHandler(e.QueryTx, uh),
 		BroadcastTxH:         NewBroadcastTxHandler(e.BroadcastTx, uh),
 		TxMetadataH:          NewTxMetadataHandler(e.TxMetadata, uh),
@@ -107,6 +109,27 @@ func (s *Server) Supply(ctx context.Context, message *sdk_utilitiespb.SupplyRequ
 		return nil, goagrpc.EncodeError(err)
 	}
 	return resp.(*sdk_utilitiespb.SupplyResponse), nil
+}
+
+// NewSupplyDenomHandler creates a gRPC handler which serves the
+// "sdk-utilities" service "supplyDenom" endpoint.
+func NewSupplyDenomHandler(endpoint goa.Endpoint, h goagrpc.UnaryHandler) goagrpc.UnaryHandler {
+	if h == nil {
+		h = goagrpc.NewUnaryHandler(endpoint, DecodeSupplyDenomRequest, EncodeSupplyDenomResponse)
+	}
+	return h
+}
+
+// SupplyDenom implements the "SupplyDenom" method in
+// sdk_utilitiespb.SdkUtilitiesServer interface.
+func (s *Server) SupplyDenom(ctx context.Context, message *sdk_utilitiespb.SupplyDenomRequest) (*sdk_utilitiespb.SupplyDenomResponse, error) {
+	ctx = context.WithValue(ctx, goa.MethodKey, "supplyDenom")
+	ctx = context.WithValue(ctx, goa.ServiceKey, "sdk-utilities")
+	resp, err := s.SupplyDenomH.Handle(ctx, message)
+	if err != nil {
+		return nil, goagrpc.EncodeError(err)
+	}
+	return resp.(*sdk_utilitiespb.SupplyDenomResponse), nil
 }
 
 // NewQueryTxHandler creates a gRPC handler which serves the "sdk-utilities"

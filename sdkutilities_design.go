@@ -69,6 +69,20 @@ var _ = Service(sdkUtilities, func() {
 		})
 	})
 
+	Method("supplyDenom", func() {
+		Payload(func() {
+			nextFieldIdx := standardArguments()
+
+			Field(nextFieldIdx, "denom", String, "Denom name")
+		})
+
+		Result(Supply)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
 	Method("queryTx", func() {
 		Payload(func() {
 			nextFieldIdx := standardArguments()

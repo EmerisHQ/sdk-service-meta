@@ -76,6 +76,40 @@ func NewSupplyResult(message *sdk_utilitiespb.SupplyResponse) *sdkutilities.Supp
 	return result
 }
 
+// NewSupplyDenomRequest builds the gRPC request type from the payload of the
+// "supplyDenom" endpoint of the "sdk-utilities" service.
+func NewSupplyDenomRequest(payload *sdkutilities.SupplyDenomPayload) *sdk_utilitiespb.SupplyDenomRequest {
+	message := &sdk_utilitiespb.SupplyDenomRequest{
+		ChainName: payload.ChainName,
+	}
+	if payload.Port != nil {
+		message.Port = int32(*payload.Port)
+	}
+	if payload.Denom != nil {
+		message.Denom = *payload.Denom
+	}
+	return message
+}
+
+// NewSupplyDenomResult builds the result type of the "supplyDenom" endpoint of
+// the "sdk-utilities" service from the gRPC response type.
+func NewSupplyDenomResult(message *sdk_utilitiespb.SupplyDenomResponse) *sdkutilities.Supply2 {
+	result := &sdkutilities.Supply2{}
+	if message.Coins != nil {
+		result.Coins = make([]*sdkutilities.Coin, len(message.Coins))
+		for i, val := range message.Coins {
+			result.Coins[i] = &sdkutilities.Coin{
+				Denom:  val.Denom,
+				Amount: val.Amount,
+			}
+		}
+	}
+	if message.Pagination != nil {
+		result.Pagination = protobufSdkUtilitiespbPaginationToSdkutilitiesPagination(message.Pagination)
+	}
+	return result
+}
+
 // NewQueryTxRequest builds the gRPC request type from the payload of the
 // "queryTx" endpoint of the "sdk-utilities" service.
 func NewQueryTxRequest(payload *sdkutilities.QueryTxPayload) *sdk_utilitiespb.QueryTxRequest {
@@ -460,6 +494,15 @@ func ValidateCoin(message *sdk_utilitiespb.Coin) (err error) {
 // ValidatePagination runs the validations defined on Pagination.
 func ValidatePagination(message *sdk_utilitiespb.Pagination) (err error) {
 
+	return
+}
+
+// ValidateSupplyDenomResponse runs the validations defined on
+// SupplyDenomResponse.
+func ValidateSupplyDenomResponse(message *sdk_utilitiespb.SupplyDenomResponse) (err error) {
+	if message.Coins == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("coins", "message"))
+	}
 	return
 }
 

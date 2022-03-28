@@ -89,6 +89,44 @@ func DecodeSupplyResponse(ctx context.Context, v interface{}, hdr, trlr metadata
 	return res, nil
 }
 
+// BuildSupplyDenomFunc builds the remote method to invoke for "sdk-utilities"
+// service "supplyDenom" endpoint.
+func BuildSupplyDenomFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
+	return func(ctx context.Context, reqpb interface{}, opts ...grpc.CallOption) (interface{}, error) {
+		for _, opt := range cliopts {
+			opts = append(opts, opt)
+		}
+		if reqpb != nil {
+			return grpccli.SupplyDenom(ctx, reqpb.(*sdk_utilitiespb.SupplyDenomRequest), opts...)
+		}
+		return grpccli.SupplyDenom(ctx, &sdk_utilitiespb.SupplyDenomRequest{}, opts...)
+	}
+}
+
+// EncodeSupplyDenomRequest encodes requests sent to sdk-utilities supplyDenom
+// endpoint.
+func EncodeSupplyDenomRequest(ctx context.Context, v interface{}, md *metadata.MD) (interface{}, error) {
+	payload, ok := v.(*sdkutilities.SupplyDenomPayload)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "supplyDenom", "*sdkutilities.SupplyDenomPayload", v)
+	}
+	return NewSupplyDenomRequest(payload), nil
+}
+
+// DecodeSupplyDenomResponse decodes responses from the sdk-utilities
+// supplyDenom endpoint.
+func DecodeSupplyDenomResponse(ctx context.Context, v interface{}, hdr, trlr metadata.MD) (interface{}, error) {
+	message, ok := v.(*sdk_utilitiespb.SupplyDenomResponse)
+	if !ok {
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "supplyDenom", "*sdk_utilitiespb.SupplyDenomResponse", v)
+	}
+	if err := ValidateSupplyDenomResponse(message); err != nil {
+		return nil, err
+	}
+	res := NewSupplyDenomResult(message)
+	return res, nil
+}
+
 // BuildQueryTxFunc builds the remote method to invoke for "sdk-utilities"
 // service "queryTx" endpoint.
 func BuildQueryTxFunc(grpccli sdk_utilitiespb.SdkUtilitiesClient, cliopts ...grpc.CallOption) goagrpc.RemoteFunc {
