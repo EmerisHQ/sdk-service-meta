@@ -9,6 +9,7 @@ pull_request_rules:
       - label=automerge
       - base=main
       - "#approved-reviews-by>=2"
+      - check-success=goa-generate
     actions:
       queue:
         name: default
