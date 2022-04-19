@@ -204,6 +204,8 @@ type IBCTransferMetadata struct {
 // ibcChannelClientState method.
 type IbcChannelClientState2 struct {
 	IdentifiedClientState []byte
+	Proof                 []byte
+	ProofHeight           []byte
 }
 
 // IbcChannelClientStatePayload is the payload type of the sdk-utilities
@@ -211,10 +213,12 @@ type IbcChannelClientState2 struct {
 type IbcChannelClientStatePayload struct {
 	// Chain to get data from
 	ChainName string
-	// port
-	Port string
+	// gRPC port for selected chain, defaults to 9090
+	Port *int
 	// channel
-	Channel string
+	ChannelID string
+	// port
+	PortID string
 }
 
 // LiquidityParams2 is the result type of the sdk-utilities service

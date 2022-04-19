@@ -501,8 +501,12 @@ func NewProtoEmoneyInflationResponse(result *sdkutilities.EmoneyInflation2) *sdk
 func NewIbcChannelClientStatePayload(message *sdk_utilitiespb.IbcChannelClientStateRequest) *sdkutilities.IbcChannelClientStatePayload {
 	v := &sdkutilities.IbcChannelClientStatePayload{
 		ChainName: message.ChainName,
-		Port:      message.Port,
-		Channel:   message.Channel,
+		ChannelID: message.ChannelId,
+		PortID:    message.PortId,
+	}
+	if message.Port != 0 {
+		portptr := int(message.Port)
+		v.Port = &portptr
 	}
 	return v
 }
@@ -513,6 +517,8 @@ func NewIbcChannelClientStatePayload(message *sdk_utilitiespb.IbcChannelClientSt
 func NewProtoIbcChannelClientStateResponse(result *sdkutilities.IbcChannelClientState2) *sdk_utilitiespb.IbcChannelClientStateResponse {
 	message := &sdk_utilitiespb.IbcChannelClientStateResponse{
 		IdentifiedClientState: result.IdentifiedClientState,
+		Proof:                 result.Proof,
+		ProofHeight:           result.ProofHeight,
 	}
 	return message
 }

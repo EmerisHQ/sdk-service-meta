@@ -287,12 +287,12 @@ var _ = Service(sdkUtilities, func() {
 	Method("ibcChannelClientState", func() {
 		Payload(func() {
 			nextFieldIdx := standardArguments()
-			Field(nextFieldIdx, "channel", String, "channel")
+			Field(nextFieldIdx, "channel_id", String, "channel")
 			nextFieldIdx++
-			Field(nextFieldIdx, "port", String, "port")
+			Field(nextFieldIdx, "port_id", String, "port")
 
-			Required("channel")
-			Required("port")
+			Required("channel_id")
+			Required("port_id")
 		})
 
 		Result(IbcChannelClientState)

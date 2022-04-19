@@ -209,4 +209,6 @@ var EmoneyAsset = Type("EmoneyAsset", func() {
 var IbcChannelClientState = Type("IbcChannelClientState", func() {
 	Description("client state for an ibc channel/port")
 	Field(1, "identifiedClientState", Bytes)
+	Field(2, "proof", Bytes)
+	Field(3, "proofHeight", Bytes)
 })
