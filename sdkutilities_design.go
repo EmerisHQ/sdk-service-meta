@@ -282,7 +282,18 @@ var _ = Service(sdkUtilities, func() {
 		GRPC(func() {
 			Response(CodeOK)
 		})
+	})
 
+	Method("ibcChannelClientState", func() {
+		Payload(func() {
+			_ = standardArguments()
+		})
+
+		Result(IBCChannelClientState)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
 	})
 
 	Files("/openapi.json", "./gen/http/openapi.json")
