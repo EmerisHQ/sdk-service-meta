@@ -206,7 +206,7 @@ var EmoneyAsset = Type("EmoneyAsset", func() {
 	Required("denom", "inflation", "accum")
 })
 
-var IBCChannelClientState = Type("IBCChannelClientState", func() {
+var IbcChannelClientState = Type("IbcChannelClientState", func() {
 	Description("client state for an ibc channel/port")
 	Field(1, "identifiedClientState", Bytes)
 })

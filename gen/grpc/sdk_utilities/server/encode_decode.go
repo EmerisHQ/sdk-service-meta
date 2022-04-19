@@ -568,9 +568,9 @@ func DecodeEmoneyInflationRequest(ctx context.Context, v interface{}, md metadat
 // EncodeIbcChannelClientStateResponse encodes responses from the
 // "sdk-utilities" service "ibcChannelClientState" endpoint.
 func EncodeIbcChannelClientStateResponse(ctx context.Context, v interface{}, hdr, trlr *metadata.MD) (interface{}, error) {
-	result, ok := v.(*sdkutilities.IBCChannelClientState)
+	result, ok := v.(*sdkutilities.IbcChannelClientState2)
 	if !ok {
-		return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibcChannelClientState", "*sdkutilities.IBCChannelClientState", v)
+		return nil, goagrpc.ErrInvalidType("sdk-utilities", "ibcChannelClientState", "*sdkutilities.IbcChannelClientState2", v)
 	}
 	resp := NewProtoIbcChannelClientStateResponse(result)
 	return resp, nil

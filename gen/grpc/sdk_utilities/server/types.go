@@ -501,10 +501,8 @@ func NewProtoEmoneyInflationResponse(result *sdkutilities.EmoneyInflation2) *sdk
 func NewIbcChannelClientStatePayload(message *sdk_utilitiespb.IbcChannelClientStateRequest) *sdkutilities.IbcChannelClientStatePayload {
 	v := &sdkutilities.IbcChannelClientStatePayload{
 		ChainName: message.ChainName,
-	}
-	if message.Port != 0 {
-		portptr := int(message.Port)
-		v.Port = &portptr
+		Port:      message.Port,
+		Channel:   message.Channel,
 	}
 	return v
 }
@@ -512,7 +510,7 @@ func NewIbcChannelClientStatePayload(message *sdk_utilitiespb.IbcChannelClientSt
 // NewProtoIbcChannelClientStateResponse builds the gRPC response type from the
 // result of the "ibcChannelClientState" endpoint of the "sdk-utilities"
 // service.
-func NewProtoIbcChannelClientStateResponse(result *sdkutilities.IBCChannelClientState) *sdk_utilitiespb.IbcChannelClientStateResponse {
+func NewProtoIbcChannelClientStateResponse(result *sdkutilities.IbcChannelClientState2) *sdk_utilitiespb.IbcChannelClientStateResponse {
 	message := &sdk_utilitiespb.IbcChannelClientStateResponse{
 		IdentifiedClientState: result.IdentifiedClientState,
 	}

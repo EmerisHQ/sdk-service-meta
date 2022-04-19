@@ -50,7 +50,7 @@ type Service interface {
 	// EmoneyInflation implements emoneyInflation.
 	EmoneyInflation(context.Context, *EmoneyInflationPayload) (res *EmoneyInflation2, err error)
 	// IbcChannelClientState implements ibcChannelClientState.
-	IbcChannelClientState(context.Context, *IbcChannelClientStatePayload) (res *IBCChannelClientState, err error)
+	IbcChannelClientState(context.Context, *IbcChannelClientStatePayload) (res *IbcChannelClientState2, err error)
 }
 
 // ServiceName is the name of the service as defined in the design. This is the
@@ -183,12 +183,6 @@ type EstimateFeesPayload struct {
 	TxBytes []byte
 }
 
-// IBCChannelClientState is the result type of the sdk-utilities service
-// ibcChannelClientState method.
-type IBCChannelClientState struct {
-	IdentifiedClientState []byte
-}
-
 // The plain type associated with ibc-go types.Height struct
 type IBCHeight struct {
 	RevisionNumber *uint64
@@ -206,13 +200,21 @@ type IBCTransferMetadata struct {
 	TiemoutTimestamp *uint64
 }
 
+// IbcChannelClientState2 is the result type of the sdk-utilities service
+// ibcChannelClientState method.
+type IbcChannelClientState2 struct {
+	IdentifiedClientState []byte
+}
+
 // IbcChannelClientStatePayload is the payload type of the sdk-utilities
 // service ibcChannelClientState method.
 type IbcChannelClientStatePayload struct {
 	// Chain to get data from
 	ChainName string
-	// gRPC port for selected chain, defaults to 9090
-	Port *int
+	// port
+	Port string
+	// channel
+	Channel string
 }
 
 // LiquidityParams2 is the result type of the sdk-utilities service

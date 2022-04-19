@@ -286,10 +286,16 @@ var _ = Service(sdkUtilities, func() {
 
 	Method("ibcChannelClientState", func() {
 		Payload(func() {
-			_ = standardArguments()
+			nextFieldIdx := standardArguments()
+			Field(nextFieldIdx, "channel", String, "channel")
+			nextFieldIdx++
+			Field(nextFieldIdx, "port", String, "port")
+
+			Required("channel")
+			Required("port")
 		})
 
-		Result(IBCChannelClientState)
+		Result(IbcChannelClientState)
 
 		GRPC(func() {
 			Response(CodeOK)

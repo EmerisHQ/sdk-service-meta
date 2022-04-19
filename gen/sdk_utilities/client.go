@@ -253,11 +253,11 @@ func (c *Client) EmoneyInflation(ctx context.Context, p *EmoneyInflationPayload)
 
 // IbcChannelClientState calls the "ibcChannelClientState" endpoint of the
 // "sdk-utilities" service.
-func (c *Client) IbcChannelClientState(ctx context.Context, p *IbcChannelClientStatePayload) (res *IBCChannelClientState, err error) {
+func (c *Client) IbcChannelClientState(ctx context.Context, p *IbcChannelClientStatePayload) (res *IbcChannelClientState2, err error) {
 	var ires interface{}
 	ires, err = c.IbcChannelClientStateEndpoint(ctx, p)
 	if err != nil {
 		return
 	}
-	return ires.(*IBCChannelClientState), nil
+	return ires.(*IbcChannelClientState2), nil
 }

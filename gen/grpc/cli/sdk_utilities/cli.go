@@ -29,10 +29,10 @@ func UsageCommands() string {
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` sdk-utilities account-numbers --message '{
-      "addresHex": "Recusandae facilis temporibus.",
-      "bech32Prefix": "Aut ducimus voluptatibus perferendis recusandae.",
-      "chainName": "Eius praesentium enim.",
-      "port": 3263659220330205886
+      "addresHex": "Occaecati dolorem tenetur cum dolores veniam.",
+      "bech32Prefix": "Recusandae facilis temporibus.",
+      "chainName": "Voluptatibus perferendis.",
+      "port": 4590398434326812352
    }'` + "\n" +
 		""
 }
@@ -344,10 +344,10 @@ AccountNumbers implements accountNumbers.
 
 Example:
     %[1]s sdk-utilities account-numbers --message '{
-      "addresHex": "Recusandae facilis temporibus.",
-      "bech32Prefix": "Aut ducimus voluptatibus perferendis recusandae.",
-      "chainName": "Eius praesentium enim.",
-      "port": 3263659220330205886
+      "addresHex": "Occaecati dolorem tenetur cum dolores veniam.",
+      "bech32Prefix": "Recusandae facilis temporibus.",
+      "chainName": "Voluptatibus perferendis.",
+      "port": 4590398434326812352
    }'
 `, os.Args[0])
 }
@@ -360,9 +360,9 @@ Supply implements supply.
 
 Example:
     %[1]s sdk-utilities supply --message '{
-      "chainName": "Id possimus aliquam inventore.",
-      "paginationKey": "Doloribus similique similique ea eaque.",
-      "port": 5612232130949980025
+      "chainName": "Est doloribus similique similique ea eaque dolorem.",
+      "paginationKey": "Quo dolorum.",
+      "port": 3447600267286363243
    }'
 `, os.Args[0])
 }
@@ -375,9 +375,9 @@ SupplyDenom implements supplyDenom.
 
 Example:
     %[1]s sdk-utilities supply-denom --message '{
-      "chainName": "Et quo dolorum.",
-      "denom": "Fugiat optio velit est voluptatibus non aperiam.",
-      "port": 6526670691226631718
+      "chainName": "Fugiat optio velit est voluptatibus non aperiam.",
+      "denom": "Veniam ut sapiente amet nostrum.",
+      "port": 991976292470651970
    }'
 `, os.Args[0])
 }
@@ -390,9 +390,9 @@ QueryTx implements queryTx.
 
 Example:
     %[1]s sdk-utilities query-tx --message '{
-      "chainName": "Veniam ut sapiente amet nostrum.",
-      "hash": "Nihil error odit qui eum.",
-      "port": 4294209001670606572
+      "chainName": "Nihil error odit qui eum.",
+      "hash": "Esse nulla quis blanditiis aspernatur quis omnis.",
+      "port": 6756764320862431917
    }'
 `, os.Args[0])
 }
@@ -405,9 +405,9 @@ BroadcastTx implements broadcastTx.
 
 Example:
     %[1]s sdk-utilities broadcast-tx --message '{
-      "chainName": "Ut reiciendis ratione voluptatum velit.",
-      "port": 4588507375292094985,
-      "txBytes": "UXVvIGFuaW1pLg=="
+      "chainName": "Tempore alias quo animi eos.",
+      "port": 4553934225864173458,
+      "txBytes": "VmVsaXQgb2NjYWVjYXRpIHV0Lg=="
    }'
 `, os.Args[0])
 }
@@ -420,7 +420,7 @@ TxMetadata implements txMetadata.
 
 Example:
     %[1]s sdk-utilities tx-metadata --message '{
-      "txBytes": "UXVpIHV0IHNlcXVpIGFuaW1pIHZlcm8gZWFxdWUu"
+      "txBytes": "U2VxdWkgYW5pbWkgdmVyby4="
    }'
 `, os.Args[0])
 }
@@ -433,9 +433,9 @@ Block implements block.
 
 Example:
     %[1]s sdk-utilities block --message '{
-      "chainName": "Itaque temporibus.",
-      "height": 3191013297610478676,
-      "port": 4642367785878612762
+      "chainName": "Ratione itaque temporibus ut voluptates quia officiis.",
+      "height": 2274637546814150776,
+      "port": 2477448663619511809
    }'
 `, os.Args[0])
 }
@@ -448,8 +448,8 @@ LiquidityParams implements liquidityParams.
 
 Example:
     %[1]s sdk-utilities liquidity-params --message '{
-      "chainName": "Ut voluptas aut excepturi.",
-      "port": 5921602754859307309
+      "chainName": "Facere fuga.",
+      "port": 8186270742502271766
    }'
 `, os.Args[0])
 }
@@ -462,8 +462,8 @@ LiquidityPools implements liquidityPools.
 
 Example:
     %[1]s sdk-utilities liquidity-pools --message '{
-      "chainName": "Molestias non beatae architecto.",
-      "port": 6434681980998127408
+      "chainName": "Beatae architecto sint.",
+      "port": 1830542922074293562
    }'
 `, os.Args[0])
 }
@@ -606,7 +606,8 @@ IbcChannelClientState implements ibcChannelClientState.
 Example:
     %[1]s sdk-utilities ibc-channel-client-state --message '{
       "chainName": "Consequatur sequi eveniet.",
-      "port": 1909085993711873214
+      "channel": "Magnam at sint.",
+      "port": "Aut aut aliquid vero sapiente adipisci."
    }'
 `, os.Args[0])
 }
