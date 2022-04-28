@@ -515,10 +515,7 @@ func NewProtoDistributionParamsRequest(payload *sdkutilities.DistributionParamsP
 // response type.
 func NewDistributionParamsResult(message *sdk_utilitiespb.DistributionParamsResponse) *sdkutilities.DistributionParams2 {
 	result := &sdkutilities.DistributionParams2{
-		CommunityTax:        message.CommunityTax,
-		BaseProposerReward:  message.BaseProposerReward,
-		BonusProposerReward: message.BonusProposerReward,
-		WithdrawAddrEnabled: message.WithdrawAddrEnabled,
+		DistributionParams: message.DistributionParams,
 	}
 	return result
 }
@@ -693,6 +690,15 @@ func ValidateEmoneyAsset(message *sdk_utilitiespb.EmoneyAsset) (err error) {
 func ValidateBudgetParamsResponse(message *sdk_utilitiespb.BudgetParamsResponse) (err error) {
 	if message.BudgetParams == nil {
 		err = goa.MergeErrors(err, goa.MissingFieldError("budgetParams", "message"))
+	}
+	return
+}
+
+// ValidateDistributionParamsResponse runs the validations defined on
+// DistributionParamsResponse.
+func ValidateDistributionParamsResponse(message *sdk_utilitiespb.DistributionParamsResponse) (err error) {
+	if message.DistributionParams == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("distributionParams", "message"))
 	}
 	return
 }

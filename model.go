@@ -214,10 +214,6 @@ var BudgetParams = Type("BudgetParams", func() {
 
 var DistributionParams = Type("DistributionParams", func() {
 	Description("Distribution params response")
-	Field(1, "communityTax", String)
-	Field(2, "baseProposerReward", String)
-	Field(3, "bonusProposerReward", String)
-	Field(4, "withdrawAddrEnabled", Boolean)
-
-	Required("communityTax", "baseProposerReward", "bonusProposerReward", "withdrawAddrEnabled")
+	Field(1, "distributionParams", Bytes)
+	Required("distributionParams")
 })

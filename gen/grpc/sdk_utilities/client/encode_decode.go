@@ -751,6 +751,9 @@ func DecodeDistributionParamsResponse(ctx context.Context, v interface{}, hdr, t
 	if !ok {
 		return nil, goagrpc.ErrInvalidType("sdk-utilities", "distributionParams", "*sdk_utilitiespb.DistributionParamsResponse", v)
 	}
+	if err := ValidateDistributionParamsResponse(message); err != nil {
+		return nil, err
+	}
 	res := NewDistributionParamsResult(message)
 	return res, nil
 }

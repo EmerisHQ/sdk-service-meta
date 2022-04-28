@@ -29,10 +29,10 @@ func UsageCommands() string {
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` sdk-utilities account-numbers --message '{
-      "addresHex": "Pariatur et quo dolorum.",
-      "bech32Prefix": "Doloribus similique similique ea eaque.",
-      "chainName": "Aut id possimus aliquam inventore.",
-      "port": 5612232130949980025
+      "addresHex": "Qui aut id.",
+      "bech32Prefix": "Dolorem tenetur cum dolores veniam.",
+      "chainName": "Recusandae facilis temporibus.",
+      "port": 6273086711467444602
    }'` + "\n" +
 		""
 }
@@ -355,10 +355,10 @@ AccountNumbers implements accountNumbers.
 
 Example:
     %[1]s sdk-utilities account-numbers --message '{
-      "addresHex": "Pariatur et quo dolorum.",
-      "bech32Prefix": "Doloribus similique similique ea eaque.",
-      "chainName": "Aut id possimus aliquam inventore.",
-      "port": 5612232130949980025
+      "addresHex": "Qui aut id.",
+      "bech32Prefix": "Dolorem tenetur cum dolores veniam.",
+      "chainName": "Recusandae facilis temporibus.",
+      "port": 6273086711467444602
    }'
 `, os.Args[0])
 }
@@ -371,9 +371,9 @@ Supply implements supply.
 
 Example:
     %[1]s sdk-utilities supply --message '{
-      "chainName": "Voluptatibus non.",
-      "paginationKey": "Praesentium veniam ut sapiente.",
-      "port": 5216597109840528200
+      "chainName": "Ea eaque.",
+      "paginationKey": "Et quo dolorum.",
+      "port": 3852088934630280001
    }'
 `, os.Args[0])
 }
@@ -386,9 +386,9 @@ SupplyDenom implements supplyDenom.
 
 Example:
     %[1]s sdk-utilities supply-denom --message '{
-      "chainName": "Sed est.",
-      "denom": "Odit qui eum eos.",
-      "port": 4300982344369403870
+      "chainName": "Fugiat optio velit est voluptatibus non aperiam.",
+      "denom": "Veniam ut sapiente amet nostrum.",
+      "port": 991976292470651970
    }'
 `, os.Args[0])
 }
@@ -401,9 +401,9 @@ QueryTx implements queryTx.
 
 Example:
     %[1]s sdk-utilities query-tx --message '{
-      "chainName": "Nulla quis blanditiis.",
-      "hash": "Omnis hic eum nostrum.",
-      "port": 8938264753766179716
+      "chainName": "Nihil error odit qui eum.",
+      "hash": "Esse nulla quis blanditiis aspernatur quis omnis.",
+      "port": 6756764320862431917
    }'
 `, os.Args[0])
 }
@@ -416,9 +416,9 @@ BroadcastTx implements broadcastTx.
 
 Example:
     %[1]s sdk-utilities broadcast-tx --message '{
-      "chainName": "Ut veritatis.",
-      "port": 2137229365261254041,
-      "txBytes": "VXQgc2VxdWkgYW5pbWkgdmVybyBlYXF1ZSBvcHRpby4="
+      "chainName": "Tempore alias quo animi eos.",
+      "port": 4553934225864173458,
+      "txBytes": "VmVsaXQgb2NjYWVjYXRpIHV0Lg=="
    }'
 `, os.Args[0])
 }
@@ -431,7 +431,7 @@ TxMetadata implements txMetadata.
 
 Example:
     %[1]s sdk-utilities tx-metadata --message '{
-      "txBytes": "Vm9sdXB0YXRlcyBxdWlhIG9mZmljaWlzIHJhdGlvbmUgcGVyZmVyZW5kaXMgZGVsZW5pdGkgZXQu"
+      "txBytes": "U2VxdWkgYW5pbWkgdmVyby4="
    }'
 `, os.Args[0])
 }
@@ -444,9 +444,9 @@ Block implements block.
 
 Example:
     %[1]s sdk-utilities block --message '{
-      "chainName": "Aut excepturi id facere.",
-      "height": 8186270742502271766,
-      "port": 1764121703371227045
+      "chainName": "Ratione itaque temporibus ut voluptates quia officiis.",
+      "height": 2274637546814150776,
+      "port": 2477448663619511809
    }'
 `, os.Args[0])
 }
@@ -459,8 +459,8 @@ LiquidityParams implements liquidityParams.
 
 Example:
     %[1]s sdk-utilities liquidity-params --message '{
-      "chainName": "Architecto sint quidem.",
-      "port": 3457099712160767516
+      "chainName": "Facere fuga.",
+      "port": 8186270742502271766
    }'
 `, os.Args[0])
 }
@@ -473,8 +473,8 @@ LiquidityPools implements liquidityPools.
 
 Example:
     %[1]s sdk-utilities liquidity-pools --message '{
-      "chainName": "Hic non sit sunt.",
-      "port": 4297245491416268488
+      "chainName": "Beatae architecto sint.",
+      "port": 1830542922074293562
    }'
 `, os.Args[0])
 }
@@ -487,8 +487,8 @@ MintInflation implements mintInflation.
 
 Example:
     %[1]s sdk-utilities mint-inflation --message '{
-      "chainName": "Eos odio est vero velit quibusdam illum.",
-      "port": 3434698023359210906
+      "chainName": "Hic non sit sunt.",
+      "port": 4297245491416268488
    }'
 `, os.Args[0])
 }
@@ -501,8 +501,8 @@ MintParams implements mintParams.
 
 Example:
     %[1]s sdk-utilities mint-params --message '{
-      "chainName": "Nihil unde dolorem voluptatem dignissimos nam.",
-      "port": 4837104213295428999
+      "chainName": "Eos odio est vero velit quibusdam illum.",
+      "port": 3434698023359210906
    }'
 `, os.Args[0])
 }
@@ -515,8 +515,8 @@ MintAnnualProvision implements mintAnnualProvision.
 
 Example:
     %[1]s sdk-utilities mint-annual-provision --message '{
-      "chainName": "Laudantium est cumque.",
-      "port": 419520256451477429
+      "chainName": "Nihil unde dolorem voluptatem dignissimos nam.",
+      "port": 4837104213295428999
    }'
 `, os.Args[0])
 }
@@ -529,8 +529,8 @@ MintEpochProvisions implements mintEpochProvisions.
 
 Example:
     %[1]s sdk-utilities mint-epoch-provisions --message '{
-      "chainName": "Laborum aperiam et assumenda fugiat.",
-      "port": 3777367582328580731
+      "chainName": "Laudantium est cumque.",
+      "port": 419520256451477429
    }'
 `, os.Args[0])
 }
@@ -543,10 +543,10 @@ DelegatorRewards implements delegatorRewards.
 
 Example:
     %[1]s sdk-utilities delegator-rewards --message '{
-      "addresHex": "Commodi vel.",
-      "bech32Prefix": "Repellat quam sint nihil iure culpa.",
-      "chainName": "Similique ex voluptatem dolorum ipsam assumenda perferendis.",
-      "port": 5815409125182454944
+      "addresHex": "Similique ex voluptatem dolorum ipsam assumenda perferendis.",
+      "bech32Prefix": "Rerum nihil voluptatem id dolore iure illum.",
+      "chainName": "Laborum aperiam et assumenda fugiat.",
+      "port": 3777367582328580731
    }'
 `, os.Args[0])
 }
@@ -559,9 +559,9 @@ EstimateFees implements estimateFees.
 
 Example:
     %[1]s sdk-utilities estimate-fees --message '{
-      "chainName": "Doloremque architecto aut asperiores et expedita quibusdam.",
-      "port": 7735830947852742027,
-      "txBytes": "TWluaW1hIGVsaWdlbmRpIGl0YXF1ZS4="
+      "chainName": "Quam sint nihil iure.",
+      "port": 7375012018611562704,
+      "txBytes": "Q29tbW9kaSB2ZWwu"
    }'
 `, os.Args[0])
 }
@@ -574,8 +574,8 @@ StakingParams implements stakingParams.
 
 Example:
     %[1]s sdk-utilities staking-params --message '{
-      "chainName": "Enim voluptates rerum est vel.",
-      "port": 5512773892388447471
+      "chainName": "Architecto aut asperiores et expedita quibusdam.",
+      "port": 7735830947852742027
    }'
 `, os.Args[0])
 }
@@ -588,8 +588,8 @@ StakingPool implements stakingPool.
 
 Example:
     %[1]s sdk-utilities staking-pool --message '{
-      "chainName": "Asperiores accusamus.",
-      "port": 6039659910429854130
+      "chainName": "Vero quis.",
+      "port": 4226319990021956930
    }'
 `, os.Args[0])
 }
@@ -602,8 +602,8 @@ EmoneyInflation implements emoneyInflation.
 
 Example:
     %[1]s sdk-utilities emoney-inflation --message '{
-      "chainName": "Aut aut aliquid vero sapiente adipisci.",
-      "port": 4841070916416226514
+      "chainName": "Sunt veniam non architecto asperiores accusamus.",
+      "port": 6039659910429854130
    }'
 `, os.Args[0])
 }
@@ -616,8 +616,8 @@ BudgetParams implements budgetParams.
 
 Example:
     %[1]s sdk-utilities budget-params --message '{
-      "chainName": "At sint numquam dolore.",
-      "port": 899490261567344834
+      "chainName": "Consequatur sequi eveniet.",
+      "port": 1909085993711873214
    }'
 `, os.Args[0])
 }
@@ -630,8 +630,8 @@ DistributionParams implements distributionParams.
 
 Example:
     %[1]s sdk-utilities distribution-params --message '{
-      "chainName": "Porro nostrum error suscipit necessitatibus nemo.",
-      "port": 581536277305980658
+      "chainName": "Qui magnam.",
+      "port": 1604212906980434993
    }'
 `, os.Args[0])
 }

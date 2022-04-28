@@ -534,10 +534,7 @@ func NewDistributionParamsPayload(message *sdk_utilitiespb.DistributionParamsReq
 // result of the "distributionParams" endpoint of the "sdk-utilities" service.
 func NewProtoDistributionParamsResponse(result *sdkutilities.DistributionParams2) *sdk_utilitiespb.DistributionParamsResponse {
 	message := &sdk_utilitiespb.DistributionParamsResponse{
-		CommunityTax:        result.CommunityTax,
-		BaseProposerReward:  result.BaseProposerReward,
-		BonusProposerReward: result.BonusProposerReward,
-		WithdrawAddrEnabled: result.WithdrawAddrEnabled,
+		DistributionParams: result.DistributionParams,
 	}
 	return message
 }

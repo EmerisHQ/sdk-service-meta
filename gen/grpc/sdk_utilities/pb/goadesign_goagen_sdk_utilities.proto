@@ -345,8 +345,5 @@ message DistributionParamsRequest {
 }
 
 message DistributionParamsResponse {
-	string community_tax = 1;
-	string base_proposer_reward = 2;
-	string bonus_proposer_reward = 3;
-	bool withdraw_addr_enabled = 4;
+	bytes distribution_params = 1;
 }

@@ -163,10 +163,7 @@ type DelegatorRewardsPayload struct {
 // DistributionParams2 is the result type of the sdk-utilities service
 // distributionParams method.
 type DistributionParams2 struct {
-	CommunityTax        string
-	BaseProposerReward  string
-	BonusProposerReward string
-	WithdrawAddrEnabled bool
+	DistributionParams []byte
 }
 
 // DistributionParamsPayload is the payload type of the sdk-utilities service
