@@ -205,3 +205,19 @@ var EmoneyAsset = Type("EmoneyAsset", func() {
 
 	Required("denom", "inflation", "accum")
 })
+
+var BudgetParams = Type("BudgetParams", func() {
+	Description("Budget params response")
+	Field(1, "budgetParams", Bytes)
+	Required("budgetParams")
+})
+
+var DistributionParams = Type("DistributionParams", func() {
+	Description("Distribution params response")
+	Field(1, "communityTax", String)
+	Field(2, "baseProposerReward", String)
+	Field(3, "bonusProposerReward", String)
+	Field(4, "withdrawAddrEnabled", Boolean)
+
+	Required("communityTax", "baseProposerReward", "bonusProposerReward", "withdrawAddrEnabled")
+})
