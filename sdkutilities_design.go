@@ -285,5 +285,29 @@ var _ = Service(sdkUtilities, func() {
 
 	})
 
+	Method("budgetParams", func() {
+		Payload(func() {
+			_ = standardArguments()
+		})
+
+		Result(BudgetParams)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
+	Method("distributionParams", func() {
+		Payload(func() {
+			_ = standardArguments()
+		})
+
+		Result(DistributionParams)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
 	Files("/openapi.json", "./gen/http/openapi.json")
 })
