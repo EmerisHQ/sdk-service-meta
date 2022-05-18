@@ -217,3 +217,9 @@ var DistributionParams = Type("DistributionParams", func() {
 	Field(1, "distributionParams", Bytes)
 	Required("distributionParams")
 })
+
+var OsmoPools = Type("OsmoPools", func() {
+	Description("Osmosis pools response")
+	Field(1, "osmoPools", Bytes)
+	Required("osmoPools")
+})

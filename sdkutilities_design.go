@@ -309,5 +309,17 @@ var _ = Service(sdkUtilities, func() {
 		})
 	})
 
+	Method("osmoPools", func() {
+		Payload(func() {
+			_ = standardArguments()
+		})
+
+		Result(OsmoPools)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
 	Files("/openapi.json", "./gen/http/openapi.json")
 })
