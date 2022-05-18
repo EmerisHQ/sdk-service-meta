@@ -217,3 +217,9 @@ var DistributionParams = Type("DistributionParams", func() {
 	Field(1, "distributionParams", Bytes)
 	Required("distributionParams")
 })
+
+var CrescentPools = Type("CrescentPools", func() {
+	Description("Crescent pools response")
+	Field(1, "crescentPools", Bytes)
+	Required("crescentPools")
+})
