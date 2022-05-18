@@ -309,5 +309,17 @@ var _ = Service(sdkUtilities, func() {
 		})
 	})
 
+	Method("crescentPools", func() {
+		Payload(func() {
+			_ = standardArguments()
+		})
+
+		Result(CrescentPools)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
 	Files("/openapi.json", "./gen/http/openapi.json")
 })
