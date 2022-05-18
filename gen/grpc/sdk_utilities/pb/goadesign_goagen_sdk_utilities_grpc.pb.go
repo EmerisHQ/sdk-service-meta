@@ -64,6 +64,8 @@ type SdkUtilitiesClient interface {
 	DistributionParams(ctx context.Context, in *DistributionParamsRequest, opts ...grpc.CallOption) (*DistributionParamsResponse, error)
 	// OsmoPools implements osmoPools.
 	OsmoPools(ctx context.Context, in *OsmoPoolsRequest, opts ...grpc.CallOption) (*OsmoPoolsResponse, error)
+	// CrescentPools implements crescentPools.
+	CrescentPools(ctx context.Context, in *CrescentPoolsRequest, opts ...grpc.CallOption) (*CrescentPoolsResponse, error)
 }
 
 type sdkUtilitiesClient struct {
@@ -263,6 +265,15 @@ func (c *sdkUtilitiesClient) OsmoPools(ctx context.Context, in *OsmoPoolsRequest
 	return out, nil
 }
 
+func (c *sdkUtilitiesClient) CrescentPools(ctx context.Context, in *CrescentPoolsRequest, opts ...grpc.CallOption) (*CrescentPoolsResponse, error) {
+	out := new(CrescentPoolsResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/CrescentPools", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SdkUtilitiesServer is the server API for SdkUtilities service.
 // All implementations must embed UnimplementedSdkUtilitiesServer
 // for forward compatibility
@@ -309,6 +320,8 @@ type SdkUtilitiesServer interface {
 	DistributionParams(context.Context, *DistributionParamsRequest) (*DistributionParamsResponse, error)
 	// OsmoPools implements osmoPools.
 	OsmoPools(context.Context, *OsmoPoolsRequest) (*OsmoPoolsResponse, error)
+	// CrescentPools implements crescentPools.
+	CrescentPools(context.Context, *CrescentPoolsRequest) (*CrescentPoolsResponse, error)
 	mustEmbedUnimplementedSdkUtilitiesServer()
 }
 
@@ -378,6 +391,9 @@ func (UnimplementedSdkUtilitiesServer) DistributionParams(context.Context, *Dist
 }
 func (UnimplementedSdkUtilitiesServer) OsmoPools(context.Context, *OsmoPoolsRequest) (*OsmoPoolsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OsmoPools not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) CrescentPools(context.Context, *CrescentPoolsRequest) (*CrescentPoolsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CrescentPools not implemented")
 }
 func (UnimplementedSdkUtilitiesServer) mustEmbedUnimplementedSdkUtilitiesServer() {}
 
@@ -770,6 +786,24 @@ func _SdkUtilities_OsmoPools_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SdkUtilities_CrescentPools_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CrescentPoolsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).CrescentPools(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/CrescentPools",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).CrescentPools(ctx, req.(*CrescentPoolsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SdkUtilities_ServiceDesc is the grpc.ServiceDesc for SdkUtilities service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -860,6 +894,10 @@ var SdkUtilities_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "OsmoPools",
 			Handler:    _SdkUtilities_OsmoPools_Handler,
+		},
+		{
+			MethodName: "CrescentPools",
+			Handler:    _SdkUtilities_CrescentPools_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -3,7 +3,6 @@ package sdkservicemeta
 import (
 	"fmt"
 
-	//nolint this is a DSL definition, nothing to worry about
 	. "goa.design/goa/v3/dsl"
 
 	// we need the init() side effect of this import
@@ -315,6 +314,18 @@ var _ = Service(sdkUtilities, func() {
 		})
 
 		Result(OsmoPools)
+
+		GRPC(func() {
+			Response(CodeOK)
+		})
+	})
+
+	Method("crescentPools", func() {
+		Payload(func() {
+			_ = standardArguments()
+		})
+
+		Result(CrescentPools)
 
 		GRPC(func() {
 			Response(CodeOK)

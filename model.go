@@ -223,3 +223,9 @@ var OsmoPools = Type("OsmoPools", func() {
 	Field(1, "osmoPools", Bytes)
 	Required("osmoPools")
 })
+
+var CrescentPools = Type("CrescentPools", func() {
+	Description("Crescent pools response")
+	Field(1, "crescentPools", Bytes)
+	Required("crescentPools")
+})
