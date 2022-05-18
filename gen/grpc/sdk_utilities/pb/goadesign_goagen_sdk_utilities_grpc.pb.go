@@ -62,6 +62,8 @@ type SdkUtilitiesClient interface {
 	BudgetParams(ctx context.Context, in *BudgetParamsRequest, opts ...grpc.CallOption) (*BudgetParamsResponse, error)
 	// DistributionParams implements distributionParams.
 	DistributionParams(ctx context.Context, in *DistributionParamsRequest, opts ...grpc.CallOption) (*DistributionParamsResponse, error)
+	// OsmoPools implements osmoPools.
+	OsmoPools(ctx context.Context, in *OsmoPoolsRequest, opts ...grpc.CallOption) (*OsmoPoolsResponse, error)
 	// CrescentPools implements crescentPools.
 	CrescentPools(ctx context.Context, in *CrescentPoolsRequest, opts ...grpc.CallOption) (*CrescentPoolsResponse, error)
 }
@@ -254,6 +256,15 @@ func (c *sdkUtilitiesClient) DistributionParams(ctx context.Context, in *Distrib
 	return out, nil
 }
 
+func (c *sdkUtilitiesClient) OsmoPools(ctx context.Context, in *OsmoPoolsRequest, opts ...grpc.CallOption) (*OsmoPoolsResponse, error) {
+	out := new(OsmoPoolsResponse)
+	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/OsmoPools", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *sdkUtilitiesClient) CrescentPools(ctx context.Context, in *CrescentPoolsRequest, opts ...grpc.CallOption) (*CrescentPoolsResponse, error) {
 	out := new(CrescentPoolsResponse)
 	err := c.cc.Invoke(ctx, "/sdk_utilities.SdkUtilities/CrescentPools", in, out, opts...)
@@ -307,6 +318,8 @@ type SdkUtilitiesServer interface {
 	BudgetParams(context.Context, *BudgetParamsRequest) (*BudgetParamsResponse, error)
 	// DistributionParams implements distributionParams.
 	DistributionParams(context.Context, *DistributionParamsRequest) (*DistributionParamsResponse, error)
+	// OsmoPools implements osmoPools.
+	OsmoPools(context.Context, *OsmoPoolsRequest) (*OsmoPoolsResponse, error)
 	// CrescentPools implements crescentPools.
 	CrescentPools(context.Context, *CrescentPoolsRequest) (*CrescentPoolsResponse, error)
 	mustEmbedUnimplementedSdkUtilitiesServer()
@@ -375,6 +388,9 @@ func (UnimplementedSdkUtilitiesServer) BudgetParams(context.Context, *BudgetPara
 }
 func (UnimplementedSdkUtilitiesServer) DistributionParams(context.Context, *DistributionParamsRequest) (*DistributionParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DistributionParams not implemented")
+}
+func (UnimplementedSdkUtilitiesServer) OsmoPools(context.Context, *OsmoPoolsRequest) (*OsmoPoolsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OsmoPools not implemented")
 }
 func (UnimplementedSdkUtilitiesServer) CrescentPools(context.Context, *CrescentPoolsRequest) (*CrescentPoolsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CrescentPools not implemented")
@@ -752,6 +768,24 @@ func _SdkUtilities_DistributionParams_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SdkUtilities_OsmoPools_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OsmoPoolsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SdkUtilitiesServer).OsmoPools(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sdk_utilities.SdkUtilities/OsmoPools",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SdkUtilitiesServer).OsmoPools(ctx, req.(*OsmoPoolsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SdkUtilities_CrescentPools_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CrescentPoolsRequest)
 	if err := dec(in); err != nil {
@@ -856,6 +890,10 @@ var SdkUtilities_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DistributionParams",
 			Handler:    _SdkUtilities_DistributionParams_Handler,
+		},
+		{
+			MethodName: "OsmoPools",
+			Handler:    _SdkUtilities_OsmoPools_Handler,
 		},
 		{
 			MethodName: "CrescentPools",
