@@ -3,7 +3,7 @@ module github.com/emerishq/sdk-service-meta
 go 1.17
 
 require (
-	go.uber.org/zap v1.21.0
+	go.uber.org/zap v1.23.0
 	goa.design/goa/v3 v3.7.6
 	goa.design/plugins/v3 v3.7.6
 	google.golang.org/grpc v1.47.0
