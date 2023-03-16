@@ -7,7 +7,7 @@ require (
 	goa.design/goa/v3 v3.7.6
 	goa.design/plugins/v3 v3.7.6
 	google.golang.org/grpc v1.47.0
-	google.golang.org/protobuf v1.28.0
+	google.golang.org/protobuf v1.30.0
 )
 
 require (
